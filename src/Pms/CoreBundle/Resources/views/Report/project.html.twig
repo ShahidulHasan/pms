@@ -26,22 +26,41 @@
     <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
         <thead>
         <tr>
-            <th>Item</th>
             <th>Total</th>
         </tr>
         </thead>
         <tbody>
 
-        {% for item in items %}
+        {% for costs in cost %}
 
             <tr>
-                <td style="width: 150px;">{{ item.itemName }}</td>
-                <td style="width: 90px;">{{ item.total }}</td>
+                <td style="width: 90px;">{{ costs.total }}</td>
             </tr>
 
         {% endfor %}
 
         </tbody>
     </table>
+
+    {#<table class="table table-striped bold" style="border: 1px solid ghostwhite;">#}
+        {#<thead>#}
+        {#<tr>#}
+            {#<th>Item</th>#}
+            {#<th>Total</th>#}
+        {#</tr>#}
+        {#</thead>#}
+        {#<tbody>#}
+
+        {#{% for item in items %}#}
+
+            {#<tr>#}
+                {#<td style="width: 150px;">{{ item.itemName }}</td>#}
+                {#<td style="width: 90px;">{{ item.total }}</td>#}
+            {#</tr>#}
+
+        {#{% endfor %}#}
+
+        {#</tbody>#}
+    {#</table>#}
 
 {% endblock %}

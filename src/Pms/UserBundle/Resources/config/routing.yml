@@ -6,6 +6,12 @@ user_add:
     pattern: /user
     defaults: { _controller: UserBundle:User:userAdd }
 
+user_edit:
+    pattern: /user/edit/{id}
+    defaults: { _controller: UserBundle:User:userEdit }
+    requirements:
+          id: \d+
+
 user_deactive:
     pattern: /user/deactive/{id}
     defaults: { _controller: UserBundle:User:userDeactive }

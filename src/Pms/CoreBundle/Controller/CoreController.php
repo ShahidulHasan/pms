@@ -23,21 +23,30 @@ class CoreController extends Controller
             ->createQueryBuilder('pc')
             ->select('p.projectName')
             ->addSelect('SUM(pc.lineTotal) as total')
+            ->where('pc.status = 1')
             ->join('pc.project', 'p')
             ->groupBy('p.id');
         $projectCost = $query->getQuery()->getResult();
 
-        $query1 = $em->getRepository('PmsCoreBundle:ProjectCost')
-            ->createQueryBuilder('pc')
-            ->select('p.itemName')
-            ->addSelect('SUM(pc.lineTotal) as total')
-            ->join('pc.item', 'p')
-            ->groupBy('p.id');
-        $item = $query1->getQuery()->getResult();
+//        $query1 = $em->getRepository('PmsCoreBundle:ProjectCost')
+//            ->createQueryBuilder('pc')
+//            ->select('p.itemName')
+//            ->addSelect('SUM(pc.lineTotal) as total')
+//            ->join('pc.item', 'p')
+//            ->groupBy('p.id');
+//        $item = $query1->getQuery()->getResult();
+
+        $query2 = $em->getRepository('PmsCoreBundle:ProjectCost')
+            ->createQueryBuilder('p')
+            ->Select('SUM(p.lineTotal) as total')
+            ->where('p.status = 1')
+            ->getQuery();
+        $cost = $query2->getResult();
 
         return $this->render('PmsCoreBundle:Report:project.html.twig', array(
             'projectcosts' => $projectCost,
-            'items' => $item,
+//            'items' => $item,
+            'cost' => $cost,
         ));
     }
 

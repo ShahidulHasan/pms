@@ -86,6 +86,7 @@
                                                 <th>Sl</th>
                                                 <th>User Name</th>
                                                 <th>Access Role</th>
+                                                <th>Edit</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -123,6 +124,10 @@
                                                         <a href="/user/active/{{ user.id }}" style="width: 100px;" class="btn default btn-xs red-stripe"><i
                                                                     class="fa fa-hand-o-right"></i> Activate</a>
                                                     {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        <a href="/user/edit/{{ user.id }}" style="width: 100px;" class="btn default btn-xs green-stripe"><i
+                                                                    class="fa fa-edit"></i> Edit</a>
                                                     </td>
                                                 </tr>
 
