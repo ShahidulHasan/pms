@@ -116,12 +116,13 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                 </div>
             </li>
 
-            {% set Route, Dashboard, User, Item, Project, Cost, Report = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "], [" "] %}
+            {% set Route, Dashboard, User, Item, Project, Cost, Report, Category = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "], [" "], [" "] %}
             {% set Url = Route|split('_') %}
             {% if Url[0] == 'homepage' %}{% set Dashboard = Dashboard|merge(["active"]) %}
             {% elseif Url[0] == 'fos' %}{% set Dashboard = Dashboard|merge(["active"]) %}
             {% elseif Url[0] == 'user' %}{% set User = User|merge(["active"]) %}
             {% elseif Url[0] == 'item' %}{% set Item = Item|merge(["active"]) %}
+            {% elseif Url[0] == 'category' %}{% set Item = Category|merge(["active"]) %}
             {% elseif Url[0] == 'project' %}{% set Project = Project|merge(["active"]) %}
             {% elseif Url[0] == 'cost' %}{% set Cost = Cost|merge(["active"]) %}
             {% elseif Url[0] == 'report' %}{% set Report = Report|merge(["active"]) %}
@@ -151,6 +152,15 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                     <span class="selected"></span>
                 </a>
             </li>
+            {% endif %}
+            {% if is_granted("ROLE_ADMIN") %}
+                <li class="{{ Category|join(" ") }}">
+                    <a href="/category">
+                        <i class="fa fa-gift"></i>
+                        <span class="title"> Category </span>
+                        <span class="selected"></span>
+                    </a>
+                </li>
             {% endif %}
             {% if is_granted("ROLE_ADMIN") %}
             <li class="{{ Project|join(" ") }}">
@@ -363,6 +373,58 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                 }
             });
 
+        });
+
+        $("#ajaxSaveCategory").click(function () {
+            var sPageURL = window.location.pathname;
+            var sURLVariables = sPageURL.split('/');
+            var categoryName = $("#category_categoryName").val();
+
+            var categoryArray = new Array(categoryName, sURLVariables[3]);
+            $.ajax({
+                type: "post",
+                url: Routing.generate('category_ajax_add'),
+                data: "categoryArray=" + categoryArray,
+                dataType: 'json',
+                success: function (msg) {
+                    if(msg.responseCode == 200) {
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Category already exist</span></div>');
+                        $('.categoryMessege').css('color', 'red').html(msg.category_ajax_add).fadeIn(1000).append($addLink);
+                        $(':input','#category-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
+                    } else if(msg.responseCode == 204) {
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Insert Category</span></div>');
+                        $('.categoryMessege').css('color', 'red').html(msg.category_ajax_add).fadeIn(1000).append($addLink);
+                        $(':input','#category-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
+                    } else if(msg.responseCode == 202) {
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Category Update Successfully</span></div>');
+                        $('.categoryMessege').css('color', 'green').html(msg.category_ajax_add).fadeIn(1000).append($addLink);
+                        $(':input','#category-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
+                    } else {
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Category Add Successfully</span></div>');
+                        $('.categoryMessege').css('color', 'green').html(msg.category_ajax_add).fadeIn(1000).append($addLink);
+                        $(':input','#category-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
+                    }
+
+                    $('.userMessege').fadeOut();
+                    $("#category-list-div").load("/category/list")
+                }
+            });
         });
 
         $("#ajaxSaveItem").click(function () {

@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button>
+            <strong></strong> {{ flashMessage }}.
+        </div>
+    {% endfor %}
+
+    <span class="categoryMessege"></span>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="portlet box light-grey">
+
+                <div class="portlet-title">
+                    <div class="caption"><i class="fa fa-reorder"></i>Category</div>
+                </div>
+
+                <div class="portlet-body form">
+
+                    <div class="form-body left">
+
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            Please check below.
+                        </div>
+                        <div class="alert alert-success display-hide">
+                            <button class="close" data-close="alert"></button>
+                            Successfully insert.
+                        </div>
+
+                        <div class="form-actions fluid">
+                            {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'category-form', 'novalidate': 'novalidate'} }) }}
+                            <div class="form-group">
+                                {{ form_label(form.categoryName, 'Category Name :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'margin-right:-50px;font-weight:bold;' } }
+                                ) }}
+                                <div class="col-md-8">
+                                    <div class="input-icon">
+                                        {{ form_widget(form.categoryName, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;' } }) }}
+                                    </div>
+                                </div>
+                                <input type="button" name="ajaxSaveCategory" value="Save" id="ajaxSaveCategory" class="btn green button-width col-md-1" style="margin-top:2px;margin-left:10px;height:32px;">
+                                <span class="userMessege" style="margin-left: 185px;"></span>
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+
+                        <div class="form-actions fluid" id="category-list-div">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="col-md-11" style="margin-top: 30px;margin-left: 4%;">
+
+                                        <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
+                                            <thead>
+                                            <tr>
+                                                <th>Sl</th>
+                                                <th>Category Name</th>
+                                                <th>Status</th>
+                                                <th>Edit</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            {% if page == 1 %}{% set i = 0 %}
+                                            {% else %}{% set i = (page * 10) -10 %}
+                                            {% endif %}
+
+                                            {% for category in categories %}
+                                                {% set i = i + 1 %}
+                                                {% set color = [" "] %}
+
+                                                {% if category.status == 0 %}{% set color = color|merge(["red"]) %}
+                                                {% elseif category.status == 1 %}{% set color = color|merge(["green"]) %}
+                                                {% endif %}
+
+                                                <tr>
+                                                    <td style="width: 60px;">{{ i }} .</td>
+                                                    <td style="width: 622px; color: {{ color|join("") }};">{{ category.categoryName }}</td>
+                                                    {% if category.status == 1 %}
+                                                        <td style="width: 80px;">
+                                                            <a href="/category/delete/{{ category.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
+                                                                        class="fa fa-trash-o"></i> Delete</a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="/category/update/{{ category.id }}" style="width: 85px;" class="btn default btn-xs blue-stripe"><i
+                                                                        class="fa fa-edit"></i> Update</a>
+                                                        </td>
+                                                    {% endif %}
+                                                    {% if category.status == 0 %}
+                                                        <td style="color: red;">
+                                                            <a href="#" class="btn default btn-xs red-stripe" style="width: 85px;"><i
+                                                                        class="fa fa-times"></i> Deleted</a>
+                                                        </td>
+                                                        <td style="width: 85px;">
+
+                                                        </td>
+                                                    {% endif %}
+                                                </tr>
+
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        <div class="navigation" style="text-align: right">
+                                            {{ knp_pagination_render(categories) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -3,9 +3,11 @@
 namespace Pms\CoreBundle\Controller;
 
 use Doctrine\ORM\Repository;
+use Pms\CoreBundle\Entity\Category;
 use Pms\CoreBundle\Entity\Item;
 use Pms\CoreBundle\Entity\Project;
 use Pms\CoreBundle\Entity\ProjectCost;
+use Pms\CoreBundle\Form\CategoryType;
 use Pms\CoreBundle\Form\ItemType;
 use Pms\CoreBundle\Form\ProjectCostType;
 use Pms\CoreBundle\Form\ProjectType;
@@ -28,14 +30,6 @@ class CoreController extends Controller
             ->groupBy('p.id');
         $projectCost = $query->getQuery()->getResult();
 
-//        $query1 = $em->getRepository('PmsCoreBundle:ProjectCost')
-//            ->createQueryBuilder('pc')
-//            ->select('p.itemName')
-//            ->addSelect('SUM(pc.lineTotal) as total')
-//            ->join('pc.item', 'p')
-//            ->groupBy('p.id');
-//        $item = $query1->getQuery()->getResult();
-
         $query2 = $em->getRepository('PmsCoreBundle:ProjectCost')
             ->createQueryBuilder('p')
             ->Select('SUM(p.lineTotal) as total')
@@ -45,8 +39,116 @@ class CoreController extends Controller
 
         return $this->render('PmsCoreBundle:Report:project.html.twig', array(
             'projectcosts' => $projectCost,
-//            'items' => $item,
             'cost' => $cost,
+        ));
+    }
+
+    public function categoryListAction()
+    {
+        $dql = "SELECT a FROM PmsCoreBundle:Category a ORDER BY a.id DESC";
+
+        list($category, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:Category:list.html.twig', array(
+            'category' => $category,
+            'page' => $page,
+        ));
+    }
+
+    public function categoryAjaxAddAction(Request $request)
+    {
+        $categoryArray = $request->request->get('categoryArray');
+        $categoryArray = explode(',',$categoryArray);
+
+        $categoryName = $categoryArray[0];
+        $updateId = $categoryArray[1];
+
+        if($categoryName) {
+            $category = $this->getDoctrine()->getRepository('PmsCoreBundle:Category')->find($updateId);
+            $categoryNameCheck = $this->getDoctrine()->getRepository('PmsCoreBundle:Category')->findOneBy(
+                array('categoryName' => $categoryName )
+            );
+            if($category) {
+                $category->setCategoryName($categoryName);
+                $this->getDoctrine()->getManager()->persist($category);
+                $this->getDoctrine()->getManager()->flush();
+
+                $return = array("responseCode" => 202);
+                $return = json_encode($return);
+
+                return new Response($return, 200, array('Content-Type' => 'application/json'));
+            } elseif($categoryNameCheck) {
+                $return = array("responseCode" => 200);
+                $return = json_encode($return);
+
+                return new Response($return, 200, array('Content-Type' => 'application/json'));
+            } else {
+                $entity = new Category();
+                $entity->setCategoryName($categoryName);
+                $user = $this->get('security.context')->getToken()->getUser()->getId();
+                $entity->setCreatedBy($user);
+                $entity->setCreatedDate(new \DateTime());
+                $entity->setStatus(1);
+
+                $this->getDoctrine()->getRepository("PmsCoreBundle:Category")->create($entity);
+
+                $return = array("responseCode" => 404);
+                $return = json_encode($return);
+
+                return new Response($return, 200, array('Content-Type' => 'application/json'));
+            }
+        } else{
+            $return = array("responseCode" => 204);
+            $return = json_encode($return);
+
+            return new Response($return, 200, array('Content-Type' => 'application/json'));
+        }
+    }
+
+    public function categoryAddAction(Request $request)
+    {
+        $entity = new Category();
+
+        $form = $this->createForm(new CategoryType(), $entity);
+
+        $dql = "SELECT a FROM PmsCoreBundle:Category a ORDER BY a.id DESC";
+
+        list($category, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:Category:add.html.twig', array(
+            'categories' => $category,
+            'entity' => $entity,
+            'form' => $form->createView(),
+            'page' => $page,
+        ));
+    }
+
+    public function categoryDeleteAction(Category $entity)
+    {
+        $entity->setStatus(0);
+        $this->getDoctrine()->getRepository('PmsCoreBundle:Category')->update($entity);
+
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            'Category Successfully Deleted'
+        );
+
+        return $this->redirect($this->generateUrl('category_add'));
+    }
+
+    public function categoryUpdateAction(Request $request, Category $entity)
+    {
+        $form = $this->createForm(new CategoryType(), $entity);
+
+        $dql = "SELECT a FROM PmsCoreBundle:Category a ORDER BY a.id DESC";
+
+        list($category, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:Category:add.html.twig', array(
+            'categories' => $category,
+            'entity' => $entity,
+            'form' => $form->createView(),
+            'page' => $page,
         ));
     }
 
