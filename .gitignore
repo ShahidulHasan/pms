@@ -18,8 +18,8 @@ app/config/parameters.yml
 composer.phar
 
 # IDE
-.idea
-.nbproject
+.idea/*
+.nbproject/*
 
 # OS
 .DS_Store
