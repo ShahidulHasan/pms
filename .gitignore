@@ -7,6 +7,9 @@ vendor/*
 */cache/*
 web/uploads/*
 web/bundles/*
+web/css/*
+web/img/*
+wed/js/*
 
 bin/*
 
