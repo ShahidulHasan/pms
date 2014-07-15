@@ -17,9 +17,9 @@ var FormValidation = function () {
             ignore: "",
             rules: {
                 'bcl_supplierclientbundle_supplierclient[firstName]': {
+                    uidValid:true,
                     minlength: 2,
-                    required: true,
-                    uidValid:true
+                    required: true
                 },
                 'bcl_supplierclientbundle_supplierclient[companyName]': {
                     minlength: 2,
@@ -86,9 +86,9 @@ var FormValidation = function () {
         ignore: "",
         rules: {
             'bcl_userbundle_user[firstName]': {
+                uidValid:true,
                 minlength: 2,
-                required: true,
-                uidValid:true
+                required: true
             },
             'bcl_userbundle_user[username]': {
                 minlength: 2,
@@ -225,27 +225,24 @@ var FormValidation = function () {
         focusInvalid: false, // do not focus the last invalid input
         ignore: "",
         rules: {
-            'bcl_offerbundle_offer[isPi]':{
-                required: false
-            },
-            'bcl_offerbundle_offer[title]': {
+            'bcl_filebundle_file[title]': {
                 minlength: 2,
                 required: true
             },
-            'bcl_offerbundle_offer[description]': {
+            'bcl_filebundle_file[description]': {
                 minlength: 2,
                 required: true
             },
-            'bcl_offerbundle_offer[price]': {
+            'bcl_filebundle_file[price]': {
                 required: true
             },
-            'bcl_offerbundle_offer[commission]': {
+            'bcl_filebundle_file[commission]': {
                 required: true
             },
-            'bcl_offerbundle_offer[quantity]': {
+            'bcl_filebundle_file[quantity]': {
                 required: true
             },
-            'bcl_offerbundle_offer[lineTotal]': {
+            'bcl_filebundle_file[lineTotal]': {
                 required: true
             }
         },
