@@ -4,7 +4,7 @@ namespace Pms\UserBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class PmsUserBundle extends Bundle
+class UserBundle extends Bundle
 {
     public function getParent()
     {

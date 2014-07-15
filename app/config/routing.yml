@@ -1,5 +1,5 @@
 Pms_user_bundle:
-    resource: "@PmsUserBundle/Resources/config/routing.yml"
+    resource: "@UserBundle/Resources/config/routing.yml"
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
