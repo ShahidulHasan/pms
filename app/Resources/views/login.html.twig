@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--
+Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.0
+Version: 1.5.3
+Author: KeenThemes
+Website: http://www.keenthemes.com/
+Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
+-->
+<!--[if IE 8]>
+<html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en" class="no-js"> <!--<![endif]-->
+
+<head>
+    <meta charset="utf-8"/>
+    <title>PMS | Admin Panel</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <meta name="MobileOptimized" content="320">
+
+    {% stylesheets
+    '../app/Resources/plugins/select2/select2_metro.css'
+    '../app/Resources/plugins/font-awesome/css/font-awesome.min.css'
+    '../app/Resources/plugins/bootstrap/css/bootstrap.min.css'
+    '../app/Resources/plugins/uniform/css/uniform.default.css'
+    '../app/Resources/css/style-metronic.css'
+    '../app/Resources/css/style.css'
+    '../app/Resources/css/style-responsive.css'
+    '../app/Resources/css/plugins.css'
+    '../app/Resources/css/themes/default.css'
+    '../app/Resources/css/pages/login-soft.css'
+    '../app/Resources/plugins/uniform/css/uniform.default.css'
+    '../app/Resources/css/custom.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+    <link rel="shortcut icon" href="favicon.ico"/>
+</head>
+
+<body class="login">
+
+<div class="logo">
+
+</div>
+
+{% block body %}{% endblock %}
+<div class="copyright">
+    2013 &copy; right brain solution ltd
+</div>
+{% javascripts
+'../app/Resources/plugins/respond.min.js'
+'../app/Resources/plugins/excanvas.min.js'
+
+'../app/Resources/plugins/jquery-1.10.2.min.js'
+'../app/Resources/plugins/jquery-migrate-1.2.1.min.js'
+'../app/Resources/plugins/bootstrap/js/bootstrap.min.js'
+'../app/Resources/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js'
+'../app/Resources/plugins/jquery-slimscroll/jquery.slimscroll.min.js'
+'../app/Resources/plugins/jquery.blockui.min.js'
+'../app/Resources/plugins/jquery.cookie.min.js'
+'../app/Resources/plugins/uniform/jquery.uniform.min.js'
+'../app/Resources/plugins/jquery-validation/dist/jquery.validate.min.js'
+'../app/Resources/plugins/backstretch/jquery.backstretch.min.js'
+'../app/Resources/plugins/select2/select2.min.js'
+'../app/Resources/scripts/app.js'
+'../app/Resources/scripts/login-soft.js' %}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+<script>
+    jQuery(document).ready(function () {
+        App.init();
+        Login.init();
+    });
+</script>
+</body>
+</html>

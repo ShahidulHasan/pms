@@ -1,0 +1,17 @@
+parameters:
+#    user.example.class: Pms\UserBundle\Example
+
+services:
+#    user.example:
+#        class: %user.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+
+services:
+    pms_user.registration.form.type:
+        class: Pms\UserBundle\Form\UserType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: pms_userbundle_user }
+
+

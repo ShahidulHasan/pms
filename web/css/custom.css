@@ -1,0 +1,31 @@
+/* here you can put your own css to customize and override the theme */
+
+.left_top {
+    margin-left: 14px !important;
+    margin-top: 12px !important;
+}
+
+.border_cat {
+    border: 1px solid lightgray;
+}
+
+.margin_cat {
+    margin: 10px;
+}
+
+textarea {
+    height: 100px;
+}
+
+.control-label {
+    text-align: left !important;
+    margin-left: 60px;
+}
+
+.height-div {
+    height: 50px;
+}
+
+.form-actions {
+    margin-top: 10px !important;
+}

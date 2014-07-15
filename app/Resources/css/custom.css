@@ -1,0 +1,115 @@
+/* here you can put your own css to customize and override the theme */
+
+.left_top {
+    margin-left: 14px !important;
+    margin-top: 30px !important;
+}
+
+textarea {
+    height: 100px;
+}
+
+.control-label {
+    text-align: left !important;
+    margin-left: 60px;
+}
+
+.height-div {
+    height: 50px;
+}
+
+.border_cat {
+    border: 1px solid lightgray;
+}
+
+.margin_cat {
+    margin-left: 10px;
+}
+
+.margin_cat_top {
+    margin: 10px;
+}
+
+.add_withcategory {
+    margin: 50px;
+}
+
+.add_withoutcategory {
+    margin: 50px;
+}
+
+.form-actions {
+    margin-top: 10px !important;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.margin-left-radio {
+    margin-left: -55px;
+}
+
+.margin-top-radio {
+    margin-top: 8px;
+}
+
+.button-width {
+    width: 100px;
+}
+
+#forget-password {
+    text-decoration: none !important;
+}
+
+.fullName-space{
+    width: 140px;
+}
+
+.serial{
+    width: 15px;
+}
+
+.phone{
+    width: 110px;
+}
+
+.address{
+    width: 180px;
+}
+
+.type{
+    width: 80px;
+}
+
+.description{
+    width: 250px;
+}
+
+.product-space{
+    width: 170px;
+}
+
+.date{
+    width: 90px;
+}
+
+.title{
+    width: 140px;
+}
+
+.total{
+    width: 90px;
+}
+
+.created{
+    width: 120px;
+}
+
+.fileAddProduct{
+     padding-right: 0;
+}
+
+.fileAddProductMargin{
+    margin-left: 3px;
+}
