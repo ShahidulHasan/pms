@@ -51,3 +51,9 @@ item_check:
     defaults: { _controller: PmsCoreBundle:Core:itemCheck }
     options:
             expose: true
+
+project_check:
+    pattern: /project/check
+    defaults: { _controller: PmsCoreBundle:Core:projectCheck }
+    options:
+            expose: true

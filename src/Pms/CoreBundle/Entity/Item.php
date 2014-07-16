@@ -57,7 +57,6 @@ class Item
      */
     private $status;
 
-
     /**
      * Get id
      *

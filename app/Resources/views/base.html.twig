@@ -265,27 +265,49 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             $('input[type=text].lineTotal').val(lineTotal);
         });
 
-//        $("#item_itemName").change(function () {
-//            var itemName = $(this).val();
-//
-//            $.ajax({
-//                type: "post",
-//                url: Routing.generate('item_check'),
-//                data: "itemName=" + itemName,
-//                dataType: 'json',
-//                success: function (msg) {
-//                    if (msg.responseCode == 200) {
-//                        $('.userMessege').css('color', 'red').html(msg.user_name).fadeIn(1000);
-//                    }
-//                    else {
-//                        $('.userMessege').css('color', 'green').html(msg.user_name).fadeIn(1000);
-//                    }
-//                },
-//                error: function () {
-//                    alert('Script Error');
-//                }
-//            });
-//        });
+        $("#item_itemName").change(function () {
+            var itemName = $(this).val();
+
+            $.ajax({
+                type: "post",
+                url: Routing.generate('item_check'),
+                data: "itemName=" + itemName,
+                dataType: 'json',
+                success: function (msg) {
+                    if (msg.responseCode == 200) {
+                        $('.userMessege').css('color', 'red').html(msg.item_name).fadeIn(1000);
+                    }
+                    else {
+                        $('.userMessege').css('color', 'green').html(msg.item_name).fadeIn(1000);
+                    }
+                },
+                error: function () {
+                    alert('Script Error');
+                }
+            });
+        });
+
+        $("#project_projectName").change(function () {
+            var projectName = $(this).val();
+
+            $.ajax({
+                type: "post",
+                url: Routing.generate('project_check'),
+                data: "projectName=" + projectName,
+                dataType: 'json',
+                success: function (msg) {
+                    if (msg.responseCode == 200) {
+                        $('.userMessege').css('color', 'red').html(msg.project_name).fadeIn(1000);
+                    }
+                    else {
+                        $('.userMessege').css('color', 'green').html(msg.project_name).fadeIn(1000);
+                    }
+                },
+                error: function () {
+                    alert('Script Error');
+                }
+            });
+        });
 
         {% endblock %}
     });

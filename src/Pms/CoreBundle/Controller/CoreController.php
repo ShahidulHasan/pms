@@ -27,9 +27,23 @@ class CoreController extends Controller
 
             if ($form->isValid()) {
 
+//                $var = $form->get('itemName')->getData();
+//                var_dump($var);die;
+
+
+
+
+//                $product = $this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneBy(
+//                    array('itemName' => 'shanto1')
+//                );
+//                if($product == true){
+//                echo('ok');die;
+//                }
+//                echo('no');die;
+
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
                 $entity->setCreatedBy($user);
-                $entity->setCreatedDate(new \DateTime(date('Y-m-d')));
+                $entity->setCreatedDate(new \DateTime(date('Y-m-d H:i:s')));
                 $entity->setStatus(1);
 
                 $this->getDoctrine()->getRepository("PmsCoreBundle:Item")->create($entity);
@@ -117,14 +131,20 @@ class CoreController extends Controller
 
     public function itemCheckAction(Request $request)
     {
-        $user = $this->get('fos_user.user_manager')->findUserByUsername(trim($request->request->get('itemName')));
+//      $item = $this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneBy(trim($request->request->get('itemName')));
 
-        if ($user) {
-            $return = array("responseCode" => 200, "user_name" => "User name already exist.");
+        $itemName = $request->request->get('itemName');
+
+        $item = $this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneBy(
+        array('itemName' => $itemName )
+        );
+
+        if ($item) {
+            $return = array("responseCode" => 200, "item_name" => "Item name already exist.");
             $return = json_encode($return);
             return new Response($return, 200, array('Content-Type' => 'application/json'));
         } else {
-            $return = array("responseCode" => '404', "user_name" => "User name available.");
+            $return = array("responseCode" => '404', "item_name" => "Item name available.");
             $return = json_encode($return);
             return new Response($return, 200, array('Content-Type' => 'application/json'));
         }
@@ -144,7 +164,7 @@ class CoreController extends Controller
 
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
                 $entity->setCreatedBy($user);
-                $entity->setCreatedDate(new \DateTime(date('Y-m-d')));
+                $entity->setCreatedDate(new \DateTime(date('Y-m-d H:i:s')));
                 $entity->setStatus(1);
 
                 $this->getDoctrine()->getRepository("PmsCoreBundle:Project")->create($entity);
@@ -229,6 +249,27 @@ class CoreController extends Controller
         ));
     }
 
+    public function projectCheckAction(Request $request)
+    {
+//      $project = $this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneBy(trim($request->request->get('projectName')));
+
+        $projectName = $request->request->get('projectName');
+
+        $project = $this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneBy(
+            array('projectName' => $projectName )
+        );
+
+        if ($project) {
+            $return = array("responseCode" => 200, "project_name" => "Project name already exist.");
+            $return = json_encode($return);
+            return new Response($return, 200, array('Content-Type' => 'application/json'));
+        } else {
+            $return = array("responseCode" => '404', "project_name" => "Project name available.");
+            $return = json_encode($return);
+            return new Response($return, 200, array('Content-Type' => 'application/json'));
+        }
+    }
+
     public function projectCostAddAction(Request $request)
     {
         $entity = new ProjectCost();
@@ -243,7 +284,7 @@ class CoreController extends Controller
 
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
                 $entity->setCreatedBy($user);
-                $entity->setCreatedDate(new \DateTime(date('Y-m-d')));
+                $entity->setCreatedDate(new \DateTime(date('Y-m-d H:i:s')));
                 $entity->setStatus(0);
 
                 $this->getDoctrine()->getRepository("PmsCoreBundle:ProjectCost")->create($entity);
@@ -282,7 +323,7 @@ class CoreController extends Controller
 
         $user = $this->get('security.context')->getToken()->getUser()->getId();
         $entity->setApprovedBy($user);
-        $entity->setApprovedDate(new \DateTime(date('Y-m-d')));
+        $entity->setApprovedDate(new \DateTime(date('Y-m-d H:i:s')));
 
         $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCost')->update($entity);
 
