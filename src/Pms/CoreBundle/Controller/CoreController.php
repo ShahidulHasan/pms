@@ -41,7 +41,18 @@ class CoreController extends Controller
             }
         }
 
-        $item = $this->getDoctrine()->getRepository("PmsCoreBundle:Item")->getAll();
+//        $item = $this->getDoctrine()->getRepository("PmsCoreBundle:Item")->getAll();
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = "SELECT a FROM PmsCoreBundle:Item a ";
+        $query = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $item = $paginator->paginate(
+            $query,
+            $this->get('request')->query->get('page', 1) /*page number*/,
+            10/*limit per page*/
+        );
 
         return $this->render('PmsCoreBundle:Item:add.html.twig', array(
             'item' => $item,
@@ -82,7 +93,18 @@ class CoreController extends Controller
             }
         }
 
-        $item = $this->getDoctrine()->getRepository("PmsCoreBundle:Item")->getAll();
+//        $item = $this->getDoctrine()->getRepository("PmsCoreBundle:Item")->getAll();
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = "SELECT a FROM PmsCoreBundle:Item a ";
+        $query = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $item = $paginator->paginate(
+            $query,
+            $this->get('request')->query->get('page', 1) /*page number*/,
+            10/*limit per page*/
+        );
 
         return $this->render('PmsCoreBundle:Item:add.html.twig', array(
             'item' => $item,
@@ -118,7 +140,18 @@ class CoreController extends Controller
             }
         }
 
-        $project = $this->getDoctrine()->getRepository("PmsCoreBundle:Project")->getAll();
+//        $project = $this->getDoctrine()->getRepository("PmsCoreBundle:Project")->getAll();
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = "SELECT a FROM PmsCoreBundle:Project a ";
+        $query = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $project = $paginator->paginate(
+            $query,
+            $this->get('request')->query->get('page', 1) /*page number*/,
+            10/*limit per page*/
+        );
 
         return $this->render('PmsCoreBundle:Project:add.html.twig', array(
             'project' => $project,
@@ -159,7 +192,18 @@ class CoreController extends Controller
             }
         }
 
-        $project = $this->getDoctrine()->getRepository("PmsCoreBundle:Project")->getAll();
+//        $project = $this->getDoctrine()->getRepository("PmsCoreBundle:Project")->getAll();
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = "SELECT a FROM PmsCoreBundle:Project a ";
+        $query = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $project = $paginator->paginate(
+            $query,
+            $this->get('request')->query->get('page', 1) /*page number*/,
+            10/*limit per page*/
+        );
 
         return $this->render('PmsCoreBundle:Project:add.html.twig', array(
             'project' => $project,
@@ -195,7 +239,18 @@ class CoreController extends Controller
             }
         }
 
-        $projectcost = $this->getDoctrine()->getRepository("PmsCoreBundle:ProjectCost")->getAll();
+//        $projectcost = $this->getDoctrine()->getRepository("PmsCoreBundle:ProjectCost")->getAll();
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a ";
+        $query = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $projectcost = $paginator->paginate(
+            $query,
+            $this->get('request')->query->get('page', 1) /*page number*/,
+            10/*limit per page*/
+        );
 
         return $this->render('PmsCoreBundle:ProjectCost:add.html.twig', array(
             'projectcost' => $projectcost,
@@ -242,7 +297,18 @@ class CoreController extends Controller
             }
         }
 
-        $projectcost = $this->getDoctrine()->getRepository("PmsCoreBundle:ProjectCost")->getAll();
+//        $projectcost = $this->getDoctrine()->getRepository("PmsCoreBundle:ProjectCost")->getAll();
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a ";
+        $query = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $projectcost = $paginator->paginate(
+            $query,
+            $this->get('request')->query->get('page', 1) /*page number*/,
+            10/*limit per page*/
+        );
 
         return $this->render('PmsCoreBundle:ProjectCost:add.html.twig', array(
             'projectcost' => $projectcost,

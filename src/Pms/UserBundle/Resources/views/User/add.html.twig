@@ -4,31 +4,15 @@
 
     <div class="row">
         <div class="col-md-12">
-            <h3 class="page-title">Users</h3>
-            <ul class="page-breadcrumb breadcrumb">
-                <li>
-                    <i class="fa fa-user"></i>
-                    <a href="/user/list">Users List</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
 
             <div class="portlet box light-grey">
 
                 <div class="portlet-title">
-                    <div class="caption"><i class="fa fa-reorder"></i>Add User</div>
-                    <div class="tools">
-                        <a href="javascript:;" class="reload"></a>
-                        <a href="javascript:;" class="collapse"></a>
-                    </div>
+                    <div class="caption"><i class="fa fa-reorder"></i>User</div>
                 </div>
 
                 <div class="portlet-body form">
-                    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'user-form', 'novalidate': 'novalidate'} }) }}
+                    {#{{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': '', 'novalidate': 'novalidate'} }) }}#}
                     <div class="form-body left">
 
                         <div class="alert alert-danger display-hide">
@@ -40,185 +24,66 @@
                             Successfully insert.
                         </div>
 
-                        {{ form_widget(form.status, { 'attr': { 'value': '1' } }) }}
-                        {{ form_widget(form.enabled, { 'attr': { 'value': '1' } }) }}
-
                         <div class="form-actions fluid">
-                            <div class="form-group">
-                                {{ form_label(form.firstName, 'First Name :', {'label_attr': {'class': 'control-label col-md-2' }}
-                                ) }}
-                                <div class="col-md-6">
-                                    <div class="input-icon right">
-                                        <i class="fa"></i>
-                                        {{ form_widget(form.firstName, { 'attr': {'class': 'form-control'} }) }}
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="form-group">
-                                {{ form_label(form.lastName, 'Last Name :', {'label_attr': {'class': 'control-label col-md-2' }}
-                                ) }}
-                                <div class="col-md-6">
-                                    <div class="input-icon right">
-                                        <i class="fa"></i>
-                                        {{ form_widget(form.lastName, { 'attr': {'class': 'form-control'} }) }}
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="portlet-body">
+                                <div class="col-md-11" style="margin-left: 40px;">
 
-                            <div class="form-group">
-                                {{ form_label(form.username, 'Username :', {'label_attr': {'class': 'control-label col-md-2' }}
-                                ) }}
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    {#<table id="table_project_cost">#}
+                                        {#<thead>#}
+                                        {#<tr>#}
+                                            {#<th>Name</th>#}
+                                            {#<th>Email</th>#}
+                                            {#<th>Role</th>#}
+                                            {#<th></th>#}
+                                        {#</tr>#}
+                                        {#</thead>#}
+                                        {#<tbody>#}
+                                        {#<tr>#}
+                                            {#<td>#}
 
-                                        <div class="input-icon right">
-                                            <i class="fa"></i>
-                                            {{ form_widget(form.username, { 'attr': {'class': 'form-control'} }) }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <span class="userMessege"></span>
-                            </div>
+                                            {#</td>#}
+                                            {#<td>#}
 
-                            <div class="form-group">
-                                <label class="control-label col-md-2">Sex :</label>
-                                <div class="col-md-6">
-                                    <div>
-                                        <div class="make-switch has-switch" data-on-label="Male" data-off-label="Female">
-                                            {{ form_widget(form.sex, { 'attr': {'class': 'toggle'} }) }}
-                                        </div>
-                                    </div>
+                                            {#</td>#}
+                                            {#<td>#}
+
+                                            {#</td>#}
+                                            {#<td>#}
+
+                                            {#</td>#}
+                                        {#</tr>#}
+                                        {#</tbody>#}
+                                    {#</table>#}
+
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-actions fluid">
                             <div class="form-group">
-                                {{ form_label(form.country, 'Country :', {'label_attr': {'class': 'control-label col-md-2' }}
-                                ) }}
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-                                        {{ form_widget(form.country, { 'attr': {'class': 'form-control'} }) }}
+                                <div class="col-md-12">
+                                    <div class="col-md-9" style="margin-left: 12%;">
+
+                                        {#<table class="table table-striped bold" style="border: 1px solid ghostwhite;">#}
+                                            {#<tbody>#}
+                                            {#{% set i = 0 %}#}
+                                            {#{% for user in users %}#}
+
+                                            {#{% endfor %}#}
+                                            {#</tbody>#}
+                                        {#</table>#}
+
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                {{ form_label(form.email, 'E-mail :', {'label_attr': {'class': 'control-label col-md-2' }}
-                                ) }}
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-
-                                        <div class="input-icon right">
-                                            <i class="fa"></i>
-                                            {{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <span class="emailMessege"></span>
-                            </div>
-
-                            <div class="form-group">
-                                {{ form_label(form.phoneNumber, 'Phone Number :', {'label_attr': {'class': 'control-label col-md-2' }}
-                                ) }}
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-
-                                        <div class="input-icon right">
-                                            <i class="fa"></i>
-                                            {{ form_widget(form.phoneNumber, { 'attr': {'class': 'form-control'} }) }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                {{ form_label(form.address, 'Address :', { 'label_attr': {'class': 'control-label col-md-2' }}
-                                ) }}
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-home"></i></span>
-
-                                        <div class="input-icon right">
-                                            <i class="fa"></i>
-                                            {{ form_widget(form.address, { 'attr': {'class': 'form-control'} }) }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-actions fluid">
-                            <div class="form-group">
-                                {{ form_label(form.role, 'User Group :', {'label_attr': {'class': 'control-label col-md-2' }}
-                                ) }}
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-sitemap"></i></span>
-                                        {{ form_widget(form.role, { 'attr': {'class': 'form-control'} }) }}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                {{ form_label(form.designation, 'Designation :', {'label_attr': {'class': 'control-label col-md-2' }}
-                                ) }}
-                                <div class="col-md-6">
-                                    <div class="input-icon right">
-                                        <i class="fa"></i>
-                                        {{ form_widget(form.designation, { 'attr': {'class': 'form-control'} }) }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-actions fluid">
-                            {% for passwordField in form.passwords %}
-
-                                {% set placeholder, label = [" "], [" "] %}
-                                {% set id = passwordField.vars.id %}
-                                {% if id == 'pms_userbundle_user_passwords_Password' %}{% set placeholder, label = placeholder|merge(["Password"]), label|merge(["Password :"]) %}
-                                {% else %}{% set placeholder, label = placeholder|merge(["Confirm Password"]), label|merge(["Confirm Password :"]) %}
-                                {% endif %}
-
-                                <div class="form-group">
-                                    {{ form_label(passwordField, label|join(" "), { 'label_attr': {'class': 'control-label col-md-2'} }) }}
-                                    <div class="col-md-6">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-
-                                            <div class="input-icon right">
-                                                <i class="fa"></i>
-                                                {{ form_widget(passwordField, { 'attr': {'class': 'form-control', 'placeholder': placeholder|join(" ") } }) }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-
-                        <div class="form-actions fluid">
-                            <div class="form-group">
-                                <div class="col-md-12 text-align-center">
-                                    {{ form_widget(form.save, { 'attr': {'class': 'btn green button-width'} }) }}
-                                    <a href="{{ path('user_list') }}">
-                                        {{ form_widget(form.cancel, { 'attr': {'class': 'btn green button-width'} }) }}
-                                    </a>
                                 </div>
                             </div>
                         </div>
 
                     </div>
-                    {{ form_end(form) }}
+                    {#{{ form_end(form) }}#}
                 </div>
             </div>
         </div>
     </div>
 
 {% endblock %}
-

@@ -61,11 +61,12 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 <div class="header navbar navbar-inverse navbar-fixed-top">
     <div class="header-inner">
 
-        <a class="navbar-brand" href="index.html">
-            {% image 'assets/img/logo.png'
-            filter='' output='/img/logo.png' %}
-            <img src="{{ asset_url }}" alt="logo" class="img-responsive"/>
-            {% endimage %}
+        <a class="navbar-brand" href="#">
+            <div style="margin-left: 25px; font-size: 25px; color: royalblue;">PMS</div>
+            {#{% image 'assets/img/logo.png'#}
+            {#filter='' output='/img/logo.png' %}#}
+            {#<img src="{{ asset_url }}" alt="logo" class="img-responsive"/>#}
+            {#{% endimage %}#}
         </a>
 
         <a href="javascript:;" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -115,11 +116,14 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                 </div>
             </li>
 
-            {% set Route, Dashboard, User, Client, Supplier, Product, File = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "], [" "] %}
+            {% set Route, Dashboard, User, Item, Project, Cost = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "] %}
             {% set Url = Route|split('_') %}
             {% if Url[0] == 'homepage' %}{% set Dashboard = Dashboard|merge(["active"]) %}
             {% elseif Url[0] == 'fos' %}{% set Dashboard = Dashboard|merge(["active"]) %}
             {% elseif Url[0] == 'user' %}{% set User = User|merge(["active"]) %}
+            {% elseif Url[0] == 'item' %}{% set Item = Item|merge(["active"]) %}
+            {% elseif Url[0] == 'project' %}{% set Project = Project|merge(["active"]) %}
+            {% elseif Url[0] == 'cost' %}{% set Cost = Cost|merge(["active"]) %}
             {% endif %}
 
             <li class="{{ Dashboard|join(" ") }}">
@@ -129,10 +133,31 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                     <span class="selected"></span>
                 </a>
             </li>
-            <li class="{{ User|join(" ") }}">
-                <a href="/user/list">
-                    <i class="fa fa-user"></i>
-                    <span class="title"> User </span>
+            {#<li class="{{ User|join(" ") }}">#}
+                {#<a href="/user">#}
+                    {#<i class="fa fa-user"></i>#}
+                    {#<span class="title"> User </span>#}
+                    {#<span class="selected"></span>#}
+                {#</a>#}
+            {#</li>#}
+            <li class="{{ Item|join(" ") }}">
+                <a href="/item">
+                    <i class="fa fa-gift"></i>
+                    <span class="title"> Item </span>
+                    <span class="selected"></span>
+                </a>
+            </li>
+            <li class="{{ Project|join(" ") }}">
+                <a href="/project">
+                    <i class="fa fa-gift"></i>
+                    <span class="title"> Project </span>
+                    <span class="selected"></span>
+                </a>
+            </li>
+            <li class="{{ Cost|join(" ") }}">
+                <a href="/project-cost">
+                    <i class="fa fa-gift"></i>
+                    <span class="title"> Project-cost </span>
                     <span class="selected"></span>
                 </a>
             </li>

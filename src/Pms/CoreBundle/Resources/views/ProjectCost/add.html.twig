@@ -63,7 +63,6 @@
                                                 <td>
                                                     {{ form_widget(form.lineTotal, { 'attr': {'class': 'form-control lineTotal'} }) }}
                                                 </td>
-
                                                 <td>
                                                     {{ form_widget(form.save, { 'attr': {'class': 'btn green button-width', 'style': 'margin-left:10px;height:32px;' } } ) }}
                                                 </td>
@@ -119,7 +118,9 @@
                                             {% endfor %}
                                             </tbody>
                                         </table>
-
+                                        <div class="navigation" style="text-align: right">
+                                            {{ knp_pagination_render(projectcost) }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

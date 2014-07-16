@@ -2,12 +2,8 @@ homepage:
     pattern: /
     defaults: { _controller: UserBundle:Default:index }
 
-user_list:
-    pattern: /user/list
-    defaults: { _controller: UserBundle:User:index }
-
 user_add:
-    pattern: /user/add
+    pattern: /user
     defaults: { _controller: UserBundle:User:userAdd }
 
 user_update:
@@ -16,55 +12,11 @@ user_update:
     requirements:
           id: \d+
 
-user_active:
-    pattern: /user/active/{id}
-    defaults: { _controller: UserBundle:User:userActive }
-    requirements:
-          id: \d+
-
-user_deactivated:
-    pattern: /user/deactivated
-    defaults: { _controller: UserBundle:User:userDeactivated }
-
-user_deactivate:
-    pattern: /user/deactivate/{id}
-    defaults: { _controller: UserBundle:User:userDeactivate }
-    requirements:
-          id: \d+
-
 user_delete:
     pattern: /user/delete/{id}
     defaults: { _controller: UserBundle:User:userDelete }
     requirements:
           id: \d+
-
-user_deleted:
-    pattern: /user/deleted
-    defaults: { _controller: UserBundle:User:userDeleted }
-
-user_archive:
-    pattern: /user/archive/{id}
-    defaults: { _controller: UserBundle:User:userArchive }
-    requirements:
-          id: \d+
-
-user_view:
-    pattern: /user/view/{id}
-    defaults: { _controller: UserBundle:User:userView }
-    requirements:
-          id: \d+
-
-username_check:
-    pattern: /username/check
-    defaults: { _controller: UserBundle:User:usernameCheck }
-    options:
-            expose: true
-
-email_check:
-    pattern: /email/check
-    defaults: { _controller: UserBundle:User:emailCheck }
-    options:
-            expose: true
 
 fos_user_security:
      resource: "@FOSUserBundle/Resources/config/routing/security.xml"
