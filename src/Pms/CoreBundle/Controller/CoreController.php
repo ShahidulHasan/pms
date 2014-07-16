@@ -27,36 +27,42 @@ class CoreController extends Controller
 
             if ($form->isValid()) {
 
-//                $var = $form->get('itemName')->getData();
-//                var_dump($var);die;
+                $itemName = $form->get('itemName')->getData();
 
-
-
-
-//                $product = $this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneBy(
-//                    array('itemName' => 'shanto1')
-//                );
-//                if($product == true){
-//                echo('ok');die;
-//                }
-//                echo('no');die;
-
-                $user = $this->get('security.context')->getToken()->getUser()->getId();
-                $entity->setCreatedBy($user);
-                $entity->setCreatedDate(new \DateTime(date('Y-m-d H:i:s')));
-                $entity->setStatus(1);
-
-                $this->getDoctrine()->getRepository("PmsCoreBundle:Item")->create($entity);
-                $this->get('session')->getFlashBag()->add(
-                    'notice',
-                    'Item Successfully Add'
+                $item = $this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneBy(
+                    array('itemName' => $itemName )
                 );
+
+                if ($item == null) {
+
+    //                $var = $form->get('itemName')->getData();
+    //                var_dump($var);die;
+
+    //                $product = $this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneBy(
+    //                    array('itemName' => 'shanto')
+    //                );
+    //                if($product == true){
+    //                echo('ok');die;
+    //                }
+    //                echo('no');die;
+
+                    $user = $this->get('security.context')->getToken()->getUser()->getId();
+                    $entity->setCreatedBy($user);
+                    $entity->setCreatedDate(new \DateTime(date('Y-m-d H:i:s')));
+                    $entity->setStatus(1);
+
+                    $this->getDoctrine()->getRepository("PmsCoreBundle:Item")->create($entity);
+                    $this->get('session')->getFlashBag()->add(
+                        'notice',
+                        'Item Successfully Add'
+                    );
+                 }
 
                 return $this->redirect($this->generateUrl('item_add'));
             }
         }
 
-//        $item = $this->getDoctrine()->getRepository("PmsCoreBundle:Item")->getAll();
+//      $item = $this->getDoctrine()->getRepository("PmsCoreBundle:Item")->getAll();
 
         $em = $this->get('doctrine.orm.entity_manager');
         $dql = "SELECT a FROM PmsCoreBundle:Item a ";
@@ -109,7 +115,7 @@ class CoreController extends Controller
             }
         }
 
-//        $item = $this->getDoctrine()->getRepository("PmsCoreBundle:Item")->getAll();
+//      $item = $this->getDoctrine()->getRepository("PmsCoreBundle:Item")->getAll();
 
         $em = $this->get('doctrine.orm.entity_manager');
         $dql = "SELECT a FROM PmsCoreBundle:Item a ";
@@ -162,22 +168,31 @@ class CoreController extends Controller
 
             if ($form->isValid()) {
 
-                $user = $this->get('security.context')->getToken()->getUser()->getId();
-                $entity->setCreatedBy($user);
-                $entity->setCreatedDate(new \DateTime(date('Y-m-d H:i:s')));
-                $entity->setStatus(1);
+                $projectName = $form->get('projectName')->getData();
 
-                $this->getDoctrine()->getRepository("PmsCoreBundle:Project")->create($entity);
-                $this->get('session')->getFlashBag()->add(
-                    'notice',
-                    'Item Successfully Add'
+                $item = $this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneBy(
+                    array('projectName' => $projectName )
                 );
+
+                if ($item == null) {
+
+                    $user = $this->get('security.context')->getToken()->getUser()->getId();
+                    $entity->setCreatedBy($user);
+                    $entity->setCreatedDate(new \DateTime(date('Y-m-d H:i:s')));
+                    $entity->setStatus(1);
+
+                    $this->getDoctrine()->getRepository("PmsCoreBundle:Project")->create($entity);
+                    $this->get('session')->getFlashBag()->add(
+                        'notice',
+                        'Item Successfully Add'
+                    );
+                }
 
                 return $this->redirect($this->generateUrl('project_add'));
             }
         }
 
-//        $project = $this->getDoctrine()->getRepository("PmsCoreBundle:Project")->getAll();
+//      $project = $this->getDoctrine()->getRepository("PmsCoreBundle:Project")->getAll();
 
         $em = $this->get('doctrine.orm.entity_manager');
         $dql = "SELECT a FROM PmsCoreBundle:Project a ";
@@ -355,7 +370,7 @@ class CoreController extends Controller
             }
         }
 
-//        $projectcost = $this->getDoctrine()->getRepository("PmsCoreBundle:ProjectCost")->getAll();
+//      $projectcost = $this->getDoctrine()->getRepository("PmsCoreBundle:ProjectCost")->getAll();
 
         $em = $this->get('doctrine.orm.entity_manager');
         $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a ";
