@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="portlet box light-grey">
+
+                <div class="portlet-title">
+                    <div class="caption"><i class="fa fa-reorder"></i>Cost</div>
+                </div>
+
+                <div class="portlet-body form">
+                    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': '', 'novalidate': 'novalidate'} }) }}
+                    <div class="form-body left">
+
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            Please check below.
+                        </div>
+                        <div class="alert alert-success display-hide">
+                            <button class="close" data-close="alert"></button>
+                            Successfully insert.
+                        </div>
+
+                        <div class="form-actions fluid">
+
+                            <div class="portlet-body">
+                                <div class="col-md-11" style="margin-left: 40px;">
+
+                                    <table id="table_project_cost">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Project</th>
+                                                <th>Item</th>
+                                                <th>Quantity</th>
+                                                <th>Unite Price</th>
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                                                        <span class="input-group-btn"></span>
+                                                        {{ form_widget(form.dateOfCost, { 'attr': {'class': 'form-control'} }) }}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    {{ form_widget(form.project, { 'attr': {'class': 'form-control', 'style': 'width:140px;' } }) }}
+                                                </td>
+                                                <td>
+                                                    {{ form_widget(form.item, { 'attr': {'class': 'form-control', 'style': 'width:140px;' } }) }}
+                                                </td>
+                                                <td>
+                                                    {{ form_widget(form.quantity, { 'attr': {'class': 'form-control quantity'} }) }}
+                                                </td>
+                                                <td>
+                                                    {{ form_widget(form.unitPrice, { 'attr': {'class': 'form-control unitPrice'} }) }}
+                                                </td>
+                                                <td>
+                                                    {{ form_widget(form.lineTotal, { 'attr': {'class': 'form-control lineTotal'} }) }}
+                                                </td>
+
+                                                <td>
+                                                    {{ form_widget(form.save, { 'attr': {'class': 'btn green button-width', 'style': 'margin-left:10px;height:32px;' } } ) }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions fluid">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="col-md-9" style="margin-left: 12%;">
+
+                                        <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
+                                            <tbody>
+                                            {% set i = 0 %}
+                                            {% for projectcosts in projectcost %}
+                                                {% set i = i + 1 %}
+                                                {% set color = [" "] %}
+
+                                                {% if projectcosts.status == 0 %}{% set color = color|merge(["red"]) %}
+                                                {% elseif projectcosts.status == 1 %}{% set color = color|merge(["green"]) %}
+                                                {% endif %}
+
+                                                <tr>
+                                                    <td style="width: 50px;">{{ i }} .</td>
+                                                    <td style="width: 100px; color: {{ color|join(" ") }}">{{ projectcosts.dateOfCost | default() }}</td>
+                                                    <td style="width: 250px; color: {{ color|join(" ") }}">{{ projectcosts.project.projectName | default() }}</td>
+                                                    <td style="width: 100px; color: {{ color|join(" ") }}">{{ projectcosts.lineTotal | default() }}</td>
+                                                    {% if projectcosts.status == 0 %}
+                                                        <td style="width: 80px;">
+                                                            <a href="/project-cost/update/{{ projectcosts.id }}" class="btn default btn-xs green-stripe"><i
+                                                                        class="fa fa-edit"></i> Update</a>
+                                                        </td>
+                                                        <td style="width: 80px;">
+                                                            <a href="/project-cost/approved/{{ projectcosts.id }}" class="btn default btn-xs blue-stripe"><i
+                                                                        class="fa fa-ok"></i> Approved</a>
+                                                        </td>
+                                                    {% endif %}
+                                                    {% if projectcosts.status == 1 %}
+                                                        <td style="width: 80px; color: red;">
+                                                            <a href="#" class="btn default btn-xs red-stripe"> The project cost Is Approved</a>
+                                                        </td>
+                                                        <td style="width: 80px;">
+
+                                                        </td>
+                                                    {% endif %}
+                                                </tr>
+
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

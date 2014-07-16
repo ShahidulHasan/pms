@@ -33,8 +33,6 @@ class UserRepository extends EntityRepository
     {
         $this->_em->persist($data);
         $this->_em->flush();
-
         return $this->_em;
     }
-
 }

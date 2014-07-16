@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="portlet box light-grey">
+
+                <div class="portlet-title">
+                    <div class="caption"><i class="fa fa-reorder"></i>Item</div>
+                </div>
+
+                <div class="portlet-body form">
+                    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': '', 'novalidate': 'novalidate'} }) }}
+                    <div class="form-body left">
+
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            Please check below.
+                        </div>
+                        <div class="alert alert-success display-hide">
+                            <button class="close" data-close="alert"></button>
+                            Successfully insert.
+                        </div>
+
+                        <div class="form-actions fluid">
+
+                            <div class="form-group">
+                                {{ form_label(form.itemName, 'Item Name :', {'label_attr': {'class': 'control-label col-md-2', 'style' : 'margin-right:-60px;font-weight:bold;' } }
+                                ) }}
+                                <div class="col-md-7">
+                                    <div class="input-icon">
+                                        <i class="fa"></i>
+                                        {{ form_widget(form.itemName, { 'attr': {'class': 'form-control'} }) }}
+                                    </div>
+                                </div>
+                                {{ form_widget(form.save, { 'attr': {'class': 'btn green button-width col-md-1', 'style' : 'margin-top:2px;margin-left:10px;height:32px;' } }
+                                ) }}
+                            </div>
+
+                        </div>
+
+                        <div class="form-actions fluid">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                <div class="col-md-8" style="margin-left: 12%;">
+
+                                    <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
+                                        <tbody>
+                                        {% set i = 0 %}
+                                        {% for items in item %}
+                                            {% set i = i + 1 %}
+                                            {% set color = [" "] %}
+
+                                            {% if items.status == 0 %}{% set color = color|merge(["red"]) %}
+                                            {% elseif items.status == 1 %}{% set color = color|merge(["green"]) %}
+                                            {% endif %}
+
+                                            <tr>
+                                                <td style="width: 50px;">{{ i }} .</td>
+                                                <td style="width: 250px; color: {{ color|join("") }};">{{ items.itemName }}</td>
+                                                {% if items.status == 1 %}
+                                                    <td style="width: 80px;">
+                                                        <a href="/item/update/{{ items.id }}" class="btn default btn-xs green-stripe"><i
+                                                                    class="fa fa-edit"></i> Update</a>
+                                                    </td>
+                                                    <td style="width: 80px;">
+                                                        <a href="/item/delete/{{ items.id }}" class="btn default btn-xs blue-stripe"><i
+                                                                    class="fa fa-trash-o"></i> Delete</a>
+                                                    </td>
+                                                {% endif %}
+                                                {% if items.status == 0 %}
+                                                    <td style="width: 80px; color: red;">
+                                                        <a href="#" class="btn default btn-xs red-stripe"> The Item Is Deleted</a>
+                                                    </td>
+                                                    <td style="width: 80px;">
+
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -120,7 +120,6 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             {% if Url[0] == 'homepage' %}{% set Dashboard = Dashboard|merge(["active"]) %}
             {% elseif Url[0] == 'fos' %}{% set Dashboard = Dashboard|merge(["active"]) %}
             {% elseif Url[0] == 'user' %}{% set User = User|merge(["active"]) %}
-            {% elseif Url[0] == 'client' %}{% set Client = Client|merge(["active"]) %}
             {% endif %}
 
             <li class="{{ Dashboard|join(" ") }}">
@@ -137,15 +136,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                     <span class="selected"></span>
                 </a>
             </li>
-            <li class="{{ Client|join(" ") }}">
-                <a href="/client/list">
-                    <i class="fa fa-user"></i>
-                    <span class="title"> Client </span>
-                    <span class="selected"></span>
-                </a>
-            </li>
-                </a>
-            </li>
+
         </ul>
     </div>
 
@@ -240,6 +231,15 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
         App.init();
         FormValidation.init();
         FormComponents.init();
+        TableManaged.init();
+
+        $(".unitPrice").change(function () {
+            var quantity = $("#table_project_cost").find('.quantity').val();
+            var unitPrice = $("#table_project_cost").find('.unitPrice').val();
+            var lineTotal = quantity * unitPrice;
+            $('input[type=text].lineTotal').val(lineTotal);
+        });
+
         {% endblock %}
     });
 </script>

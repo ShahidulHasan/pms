@@ -1,0 +1,47 @@
+item_add:
+    pattern: /item
+    defaults: { _controller: PmsCoreBundle:Core:itemAdd }
+
+item_delete:
+    pattern: /item/delete/{id}
+    defaults: { _controller: PmsCoreBundle:Core:itemDelete }
+    requirements:
+          id: \d+
+
+item_update:
+    pattern: /item/update/{id}
+    defaults: { _controller: PmsCoreBundle:Core:itemUpdate }
+    requirements:
+          id:  \d+
+
+project_add:
+    pattern: /project
+    defaults: { _controller: PmsCoreBundle:Core:projectAdd }
+
+project_delete:
+    pattern: /project/delete/{id}
+    defaults: { _controller: PmsCoreBundle:Core:projectDelete }
+    requirements:
+          id: \d+
+
+project_update:
+    pattern: /project/update/{id}
+    defaults: { _controller: PmsCoreBundle:Core:projectUpdate }
+    requirements:
+          id:  \d+
+
+cost_add:
+    pattern: /project-cost
+    defaults: { _controller: PmsCoreBundle:Core:projectCostAdd }
+
+cost_approved:
+    pattern: /project-cost/approved/{id}
+    defaults: { _controller: PmsCoreBundle:Core:projectCostApproved }
+    requirements:
+          id: \d+
+
+cost_update:
+    pattern: /project-cost/update/{id}
+    defaults: { _controller: PmsCoreBundle:Core:projectCostUpdate }
+    requirements:
+          id:  \d+

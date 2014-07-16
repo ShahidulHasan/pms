@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
+            new Pms\CoreBundle\PmsCoreBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
