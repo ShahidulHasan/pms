@@ -81,7 +81,14 @@
 
                                         <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
                                             <tbody>
-                                            {% set i = 0 %}
+
+                                            {% set Route = app.request.uri %}
+                                            {% set Url = Route|split('=') %}
+
+                                            {% if Url[1] | default() == null %}{% set i = 0 %}
+                                            {% elseif Url[1] != null %}{% set i = (Url[1]*10)-10 %}
+                                            {% endif %}
+
                                             {% for projectcosts in projectcost %}
                                                 {% set i = i + 1 %}
                                                 {% set color = [" "] %}
