@@ -45,3 +45,9 @@ cost_update:
     defaults: { _controller: PmsCoreBundle:Core:projectCostUpdate }
     requirements:
           id:  \d+
+
+item_check:
+    pattern: /item/check
+    defaults: { _controller: PmsCoreBundle:Core:itemCheck }
+    options:
+            expose: true

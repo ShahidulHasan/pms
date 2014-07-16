@@ -11,6 +11,7 @@ use Doctrine\ORM\Repository;
 use Symfony\Component\HttpFoundation\Request;
 use Pms\CoreBundle\Entity\Item;
 use Pms\CoreBundle\Form\ItemType;
+use Symfony\Component\HttpFoundation\Response;
 
 class CoreController extends Controller
 {
@@ -79,6 +80,7 @@ class CoreController extends Controller
         $form = $this->createForm(new ItemType(), $entity);
 
         if ($request->getMethod() == 'POST') {
+
             $form->submit($request);
 
             if ($form->isValid()) {
@@ -111,6 +113,21 @@ class CoreController extends Controller
             'entity' => $entity,
             'form' => $form->createView(),
         ));
+    }
+
+    public function itemCheckAction(Request $request)
+    {
+        $user = $this->get('fos_user.user_manager')->findUserByUsername(trim($request->request->get('itemName')));
+
+        if ($user) {
+            $return = array("responseCode" => 200, "user_name" => "User name already exist.");
+            $return = json_encode($return);
+            return new Response($return, 200, array('Content-Type' => 'application/json'));
+        } else {
+            $return = array("responseCode" => '404', "user_name" => "User name available.");
+            $return = json_encode($return);
+            return new Response($return, 200, array('Content-Type' => 'application/json'));
+        }
     }
 
     public function projectAddAction(Request $request)
