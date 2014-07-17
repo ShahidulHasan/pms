@@ -82,7 +82,7 @@
                                 <form name="search" action="{{ path('cost_add') }}" method="get">
 
                                         <div class="portlet-body">
-                                            <div class="col-md-5" style="float: right; margin-right: 110px;">
+                                            <div class="col-md-5" style="float: right; margin-right: 25px;">
 
                                                 <table id="table_project_cost">
                                                     <tbody>
@@ -114,9 +114,22 @@
 
                                 </form>
 
-                                    <div class="col-md-9" style="margin-left: 12%;margin-top: 30px;">
+                                    <div class="col-md-11" style="margin-top: 30px; margin-left: 4%;">
 
                                         <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
+                                            <thead>
+                                            <tr>
+                                                <th>Sl</th>
+                                                <th>Date</th>
+                                                <th>Project</th>
+                                                <th>Item</th>
+                                                <th>Quantity</th>
+                                                <th>Unite Price</th>
+                                                <th>Total</th>
+                                                <th>Status</th>
+                                                <th>Edit</th>
+                                            </tr>
+                                            </thead>
                                             <tbody>
 
                                             {% set i = 0 %}
@@ -137,25 +150,28 @@
                                                 {% endif %}
 
                                                 <tr>
-                                                    <td style="width: 80px;">{{ i }} .</td>
-                                                    <td style="width: 100px; color: {{ color|join(" ") }}">{{ projectcosts.dateOfCost|date('Y-m-d') }}</td>
-                                                    <td style="width: 250px; color: {{ color|join(" ") }}">{{ projectcosts.project.projectName | default() }}</td>
-                                                    <td style="width: 100px; color: {{ color|join(" ") }}">{{ projectcosts.lineTotal | default() }}</td>
+                                                    <td style="width: 60px;">{{ i }} .</td>
+                                                    <td style="width: 105px; color: {{ color|join(" ") }}">{{ projectcosts.dateOfCost|date('Y-m-d') }}</td>
+                                                    <td style="width: 150px; color: {{ color|join(" ") }}">{{ projectcosts.project.projectName | default() }}</td>
+                                                    <td style="width: 150px; color: {{ color|join(" ") }}">{{ projectcosts.item.itemName | default() }}</td>
+                                                    <td style="width: 100px; color: {{ color|join(" ") }}">{{ projectcosts.quantity | default() }}</td>
+                                                    <td style="width: 110px; color: {{ color|join(" ") }}">{{ projectcosts.unitPrice | default() }}</td>
+                                                    <td style="width: 90px; color: {{ color|join(" ") }}">{{ projectcosts.lineTotal | default() }}</td>
                                                     {% if projectcosts.status == 0 %}
-                                                        <td style="width: 80px;">
-                                                            <a href="/project-cost/update/{{ projectcosts.id }}" class="btn default btn-xs green-stripe"><i
-                                                                        class="fa fa-edit"></i> Update</a>
+                                                        <td>
+                                                            <a href="/project-cost/approved/{{ projectcosts.id }}" style="width: 85px;" class="btn default btn-xs red-stripe"><i
+                                                                        class="fa fa-plus"></i> Check</a>
                                                         </td>
-                                                        <td style="width: 80px;">
-                                                            <a href="/project-cost/approved/{{ projectcosts.id }}" class="btn default btn-xs blue-stripe"><i
-                                                                        class="fa fa-ok"></i> Approved</a>
+                                                        <td>
+                                                            <a href="/project-cost/update/{{ projectcosts.id }}" style="width: 80px;" class="btn default btn-xs blue-stripe"><i
+                                                                        class="fa fa-edit"></i> Update</a>
                                                         </td>
                                                     {% endif %}
                                                     {% if projectcosts.status == 1 %}
-                                                        <td style="width: 80px; color: red;">
-                                                            <a href="#" class="btn default btn-xs red-stripe"> The project cost Is Approved</a>
+                                                        <td style=" color: red;">
+                                                            <a href="#" class="btn default btn-xs green-stripe" style="width: 85px;"><i class="fa fa-check"></i> Approved</a>
                                                         </td>
-                                                        <td style="width: 80px;">
+                                                        <td>
 
                                                         </td>
                                                     {% endif %}
