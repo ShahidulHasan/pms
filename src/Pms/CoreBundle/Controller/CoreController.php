@@ -48,7 +48,7 @@ class CoreController extends Controller
 
                     $user = $this->get('security.context')->getToken()->getUser()->getId();
                     $entity->setCreatedBy($user);
-                    $entity->setCreatedDate(new \DateTime(date('Y-m-d H:i:s')));
+                    $entity->setCreatedDate(new \DateTime());
                     $entity->setStatus(1);
 
                     $this->getDoctrine()->getRepository("PmsCoreBundle:Item")->create($entity);
@@ -133,8 +133,6 @@ class CoreController extends Controller
 
     public function itemCheckAction(Request $request)
     {
-//      $item = $this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneBy(trim($request->request->get('itemName')));
-
         $itemName = $request->request->get('itemName');
 
         $item = $this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneBy(
@@ -174,7 +172,7 @@ class CoreController extends Controller
 
                     $user = $this->get('security.context')->getToken()->getUser()->getId();
                     $entity->setCreatedBy($user);
-                    $entity->setCreatedDate(new \DateTime(date('Y-m-d H:i:s')));
+                    $entity->setCreatedDate(new \DateTime());
                     $entity->setStatus(1);
 
                     $this->getDoctrine()->getRepository("PmsCoreBundle:Project")->create($entity);
@@ -224,6 +222,7 @@ class CoreController extends Controller
         $form = $this->createForm(new ProjectType(), $entity);
 
         if ($request->getMethod() == 'POST') {
+
             $form->submit($request);
 
             if ($form->isValid()) {
@@ -340,7 +339,7 @@ class CoreController extends Controller
 
         $user = $this->get('security.context')->getToken()->getUser()->getId();
         $entity->setApprovedBy($user);
-        $entity->setApprovedDate(new \DateTime(date('Y-m-d H:i:s')));
+        $entity->setApprovedDate(new \DateTime());
 
         $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCost')->update($entity);
 
@@ -354,6 +353,14 @@ class CoreController extends Controller
 
     public function projectCostUpdateAction(Request $request, ProjectCost $entity)
     {
+//        $request = $this->getRequest();
+//        $id = $request->get('id');
+//        $date = $entity->getLineTotal();
+
+        $date = $entity->getDateOfCost();
+        $date1 =  $date->format('Y-m-d');
+        $date1 = $entity->setDateOfCost($date1);
+
         $form = $this->createForm(new ProjectCostType(), $entity);
 
         if ($request->getMethod() == 'POST') {
@@ -361,7 +368,7 @@ class CoreController extends Controller
             $form->submit($request);
 
             if ($form->isValid()) {
-
+                $entity->setDateOfCost(new \DateTime($form->getData()->getDateOfCost()));
                 $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCost')->update($entity);
                 $this->get('session')->getFlashBag()->add(
                     'notice',
@@ -388,12 +395,5 @@ class CoreController extends Controller
             'entity' => $entity,
             'form' => $form->createView(),
         ));
-    }
-
-    public function searchProjectAction($date)
-    {
-        $start = $this->get('request')->get('start_date');
-        $end = $this->get('request')->get('end_date');
-echo($start);
     }
 }

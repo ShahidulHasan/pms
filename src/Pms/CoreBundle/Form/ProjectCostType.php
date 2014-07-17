@@ -20,6 +20,7 @@ class ProjectCostType extends AbstractType
                 'constraints' => array(
                     new NotBlank()
                 ),
+                'data_class' => null,
                 'read_only' => true
             ))
             ->add('project', 'entity', array(

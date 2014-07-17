@@ -113,7 +113,7 @@ class ProjectCost
     /**
      * Set dateOfCost
      *
-     * @param string $dateOfCost
+     * @param /DateTime $dateOfCost
      * @return ProjectCost
      */
     public function setDateOfCost($dateOfCost)
@@ -126,7 +126,7 @@ class ProjectCost
     /**
      * Get dateOfCost
      *
-     * @return string
+     * @return /DateTime
      */
     public function getDateOfCost()
     {
