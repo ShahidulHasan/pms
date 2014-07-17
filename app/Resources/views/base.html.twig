@@ -258,7 +258,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
         FormComponents.init();
         TableManaged.init();
 
-        $(".unitPrice").change(function () {
+        $(".unitPrice").keyup(function () {
             var quantity = $("#table_project_cost").find('.quantity').val();
             var unitPrice = $("#table_project_cost").find('.unitPrice').val();
             var lineTotal = quantity * unitPrice;

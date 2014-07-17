@@ -22,9 +22,9 @@ class ProjectCost
     private $id;
 
     /**
-     * @var string
+     * @var /DateTime
      *
-     * @ORM\Column(name="date_of_cost", type="string")
+     * @ORM\Column(name="date_of_cost", type="date")
      */
     private $dateOfCost;
 

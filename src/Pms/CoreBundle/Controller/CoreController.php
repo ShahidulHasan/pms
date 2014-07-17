@@ -62,8 +62,6 @@ class CoreController extends Controller
             }
         }
 
-//      $item = $this->getDoctrine()->getRepository("PmsCoreBundle:Item")->getAll();
-
         $em = $this->get('doctrine.orm.entity_manager');
         $dql = "SELECT a FROM PmsCoreBundle:Item a ";
         $query = $em->createQuery($dql);
@@ -114,8 +112,6 @@ class CoreController extends Controller
                 return $this->redirect($this->generateUrl('item_add'));
             }
         }
-
-//      $item = $this->getDoctrine()->getRepository("PmsCoreBundle:Item")->getAll();
 
         $em = $this->get('doctrine.orm.entity_manager');
         $dql = "SELECT a FROM PmsCoreBundle:Item a ";
@@ -192,8 +188,6 @@ class CoreController extends Controller
             }
         }
 
-//      $project = $this->getDoctrine()->getRepository("PmsCoreBundle:Project")->getAll();
-
         $em = $this->get('doctrine.orm.entity_manager');
         $dql = "SELECT a FROM PmsCoreBundle:Project a ";
         $query = $em->createQuery($dql);
@@ -244,8 +238,6 @@ class CoreController extends Controller
             }
         }
 
-//        $project = $this->getDoctrine()->getRepository("PmsCoreBundle:Project")->getAll();
-
         $em = $this->get('doctrine.orm.entity_manager');
         $dql = "SELECT a FROM PmsCoreBundle:Project a ";
         $query = $em->createQuery($dql);
@@ -266,8 +258,6 @@ class CoreController extends Controller
 
     public function projectCheckAction(Request $request)
     {
-//      $project = $this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneBy(trim($request->request->get('projectName')));
-
         $projectName = $request->request->get('projectName');
 
         $project = $this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneBy(
@@ -298,8 +288,9 @@ class CoreController extends Controller
             if ($form->isValid()) {
 
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
+                $entity->setDateOfCost(new \DateTime($form->getData()->getDateOfCost()));
                 $entity->setCreatedBy($user);
-                $entity->setCreatedDate(new \DateTime(date('Y-m-d H:i:s')));
+                $entity->setCreatedDate(new \DateTime());
                 $entity->setStatus(0);
 
                 $this->getDoctrine()->getRepository("PmsCoreBundle:ProjectCost")->create($entity);
@@ -312,10 +303,21 @@ class CoreController extends Controller
             }
         }
 
-//        $projectcost = $this->getDoctrine()->getRepository("PmsCoreBundle:ProjectCost")->getAll();
+        $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1=1 ";
 
-        $em = $this->get('doctrine.orm.entity_manager');
-        $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a ";
+        $em  = $this->get('doctrine.orm.entity_manager');
+
+        if(!empty($_GET['start_date']) && !empty($_GET['end_date'])){
+            $start_date = $_GET['start_date'];
+            $end_date = $_GET['end_date'];
+            if ($start_date) {
+                $dql .= "AND a.dateOfCost >= '{$start_date}'";
+            }
+            if ($end_date) {
+                $dql .= "AND a.dateOfCost <= '{$end_date}'";
+            }
+        }
+
         $query = $em->createQuery($dql);
 
         $paginator = $this->get('knp_paginator');
@@ -370,8 +372,6 @@ class CoreController extends Controller
             }
         }
 
-//      $projectcost = $this->getDoctrine()->getRepository("PmsCoreBundle:ProjectCost")->getAll();
-
         $em = $this->get('doctrine.orm.entity_manager');
         $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a ";
         $query = $em->createQuery($dql);
@@ -388,5 +388,12 @@ class CoreController extends Controller
             'entity' => $entity,
             'form' => $form->createView(),
         ));
+    }
+
+    public function searchProjectAction($date)
+    {
+        $start = $this->get('request')->get('start_date');
+        $end = $this->get('request')->get('end_date');
+echo($start);
     }
 }

@@ -57,3 +57,7 @@ project_check:
     defaults: { _controller: PmsCoreBundle:Core:projectCheck }
     options:
             expose: true
+
+search_cost:
+    pattern: /search/{date}
+    defaults: { _controller: PmsCoreBundle:Core:searchProject }

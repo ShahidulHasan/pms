@@ -73,21 +73,61 @@
                                 </div>
                             </div>
                         </div>
+                        {{ form_end(form) }}
 
-                        <div class="form-actions fluid">
+                        <div class="form-actions">
                             <div class="form-group">
                                 <div class="col-md-12">
+
+
+                                <form name="search" action="{{ path('cost_add') }}" method="get">
+                                    <div class="form-actions fluid">
+                                        <div class="portlet-body">
+                                            <div class="col-md-5" style="float: right;">
+
+                                                <table id="table_project_cost">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                                                                    <span class="input-group-btn"></span>
+                                                                    <input type="text" name="start_date" class="form-control"/>
+                                                                </div>
+                                                            </td>
+                                                            <td style="font-size: 16px; font-weight: bold;">
+                                                                To
+                                                            </td>
+                                                            <td>
+                                                                <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                                                                    <span class="input-group-btn"></span>
+                                                                    <input type="text" name="end_date" class="form-control"/>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <button type="submit" class="btn grey" style="margin-left:10px;height:32px;">Search</button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
                                     <div class="col-md-9" style="margin-left: 12%;">
 
                                         <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
                                             <tbody>
 
-                                            {% set Route = app.request.uri %}
-                                            {% set Url = Route|split('=') %}
+                                            {% set i = 0 %}
 
-                                            {% if Url[1] | default() == null %}{% set i = 0 %}
-                                            {% elseif Url[1] != null %}{% set i = (Url[1]*10)-10 %}
-                                            {% endif %}
+                                            {#{% set Route = app.request.uri %}#}
+                                            {#{% set Url = Route|split('=') %}#}
+
+                                            {#{% if Url[1] | default() == null %}{% set i = 0 %}#}
+                                            {#{% elseif Url[1] != null %}{% set i = (Url[1]*10)-10 %}#}
+                                            {#{% endif %}#}
 
                                             {% for projectcosts in projectcost %}
                                                 {% set i = i + 1 %}
@@ -98,8 +138,8 @@
                                                 {% endif %}
 
                                                 <tr>
-                                                    <td style="width: 50px;">{{ i }} .</td>
-                                                    <td style="width: 100px; color: {{ color|join(" ") }}">{{ projectcosts.dateOfCost | default() }}</td>
+                                                    <td style="width: 80px;">{{ i }} .</td>
+                                                    <td style="width: 100px; color: {{ color|join(" ") }}">{{ projectcosts.dateOfCost|date('Y-m-d') }}</td>
                                                     <td style="width: 250px; color: {{ color|join(" ") }}">{{ projectcosts.project.projectName | default() }}</td>
                                                     <td style="width: 100px; color: {{ color|join(" ") }}">{{ projectcosts.lineTotal | default() }}</td>
                                                     {% if projectcosts.status == 0 %}
@@ -134,7 +174,7 @@
                         </div>
 
                     </div>
-                    {{ form_end(form) }}
+
                 </div>
             </div>
         </div>

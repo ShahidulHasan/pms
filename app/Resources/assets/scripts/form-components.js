@@ -99,7 +99,8 @@ var FormComponents = function () {
         if (jQuery().datepicker) {
             $('.date-picker').datepicker({
                 rtl: App.isRTL(),
-                autoclose: true
+                autoclose: true,
+                format: 'yyyy-mm-dd'
             });
             $('body').removeClass("modal-open"); // fix bug when inline picker is used in modal
         }
