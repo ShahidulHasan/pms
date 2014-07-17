@@ -560,7 +560,7 @@ Page sidebar
     display: block;
     width: 8px;
     height: 25px;
-    background-image: url("../../img/sidebar-menu-arrow.png");
+    background-image: url("../img/sidebar-menu-arrow.png");
     float: right;
     position: absolute;
     right: 0px;
