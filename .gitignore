@@ -9,8 +9,8 @@ web/uploads/*
 web/bundles/*
 web/css/*
 web/img/*
-wed/js/*
-we/assets/*
+web/js/*
+web/assets
 web/fonts/*
 
 bin/*
