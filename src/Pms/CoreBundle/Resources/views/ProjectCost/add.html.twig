@@ -77,13 +77,13 @@
 
                         <div class="form-actions">
                             <div class="form-group">
-                                <div class="col-md-12">
+
 
 
                                 <form name="search" action="{{ path('cost_add') }}" method="get">
-                                    <div class="form-actions fluid">
+                                    <div class="form-actions ">
                                         <div class="portlet-body">
-                                            <div class="col-md-5" style="float: right;">
+                                            <div class="col-md-5" style="float: right; margin-right: 100px;">
 
                                                 <table id="table_project_cost">
                                                     <tbody>
@@ -91,7 +91,7 @@
                                                             <td>
                                                                 <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
                                                                     <span class="input-group-btn"></span>
-                                                                    <input type="text" name="start_date" class="form-control"/>
+                                                                    <input type="text" name="start_date" class="form-control" readonly/>
                                                                 </div>
                                                             </td>
                                                             <td style="font-size: 16px; font-weight: bold;">
@@ -100,11 +100,11 @@
                                                             <td>
                                                                 <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
                                                                     <span class="input-group-btn"></span>
-                                                                    <input type="text" name="end_date" class="form-control"/>
+                                                                    <input type="text" name="end_date" class="form-control" readonly/>
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <button type="submit" class="btn grey" style="margin-left:10px;height:32px;">Search</button>
+                                                                <button type="submit" class="btn grey" style="margin-left:20px;height:32px;">Search</button>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -169,7 +169,7 @@
                                             {{ knp_pagination_render(projectcost) }}
                                         </div>
                                     </div>
-                                </div>
+
                             </div>
                         </div>
 
