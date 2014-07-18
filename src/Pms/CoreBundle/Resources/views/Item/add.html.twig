@@ -43,9 +43,17 @@
                         <div class="form-actions fluid">
                             <div class="form-group">
                                 <div class="col-md-12">
-                                <div class="col-md-8" style="margin-left: 12%;">
+                                <div class="col-md-11" style="margin-top: 30px;margin-left: 4%;">
 
                                     <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
+                                        <thead>
+                                        <tr>
+                                            <th>Sl</th>
+                                            <th>Item Name</th>
+                                            <th>Status</th>
+                                            <th>Edit</th>
+                                        </tr>
+                                        </thead>
                                         <tbody>
 
                                         {% set Route = app.request.uri %}
@@ -64,23 +72,24 @@
                                             {% endif %}
 
                                             <tr>
-                                                <td style="width: 50px;">{{ i }} .</td>
-                                                <td style="width: 250px; color: {{ color|join("") }};">{{ items.itemName }}</td>
+                                                <td style="width: 60px;">{{ i }} .</td>
+                                                <td style="width: 622px; color: {{ color|join("") }};">{{ items.itemName }}</td>
                                                 {% if items.status == 1 %}
                                                     <td style="width: 80px;">
-                                                        <a href="/item/update/{{ items.id }}" class="btn default btn-xs green-stripe"><i
-                                                                    class="fa fa-edit"></i> Update</a>
-                                                    </td>
-                                                    <td style="width: 80px;">
-                                                        <a href="/item/delete/{{ items.id }}" class="btn default btn-xs blue-stripe"><i
+                                                        <a href="/item/delete/{{ items.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
                                                                     class="fa fa-trash-o"></i> Delete</a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="/item/update/{{ items.id }}" style="width: 85px;" class="btn default btn-xs blue-stripe"><i
+                                                                    class="fa fa-edit"></i> Update</a>
                                                     </td>
                                                 {% endif %}
                                                 {% if items.status == 0 %}
-                                                    <td style="width: 80px; color: red;">
-                                                        <a href="#" class="btn default btn-xs red-stripe"> The Item Is Deleted</a>
+                                                    <td style="color: red;">
+                                                        <a href="#" class="btn default btn-xs red-stripe" style="width: 85px;"><i
+                                                                    class="fa fa-times"></i> Deleted</a>
                                                     </td>
-                                                    <td style="width: 80px;">
+                                                    <td>
 
                                                     </td>
                                                 {% endif %}
