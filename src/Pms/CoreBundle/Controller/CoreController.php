@@ -62,16 +62,9 @@ class CoreController extends Controller
             }
         }
 
-        $em = $this->get('doctrine.orm.entity_manager');
         $dql = "SELECT a FROM PmsCoreBundle:Item a ";
-        $query = $em->createQuery($dql);
 
-        $paginator = $this->get('knp_paginator');
-        $item = $paginator->paginate(
-            $query,
-            $page = $this->get('request')->query->get('page', 1) /*page number*/,
-            10/*limit per page*/
-        );
+        list($item, $page) = $this->paginate($dql);
 
         return $this->render('PmsCoreBundle:Item:add.html.twig', array(
             'item' => $item,
@@ -114,16 +107,9 @@ class CoreController extends Controller
             }
         }
 
-        $em = $this->get('doctrine.orm.entity_manager');
         $dql = "SELECT a FROM PmsCoreBundle:Item a ";
-        $query = $em->createQuery($dql);
 
-        $paginator = $this->get('knp_paginator');
-        $item = $paginator->paginate(
-            $query,
-            $page = $this->get('request')->query->get('page', 1) /*page number*/,
-            10/*limit per page*/
-        );
+        list($item, $page) = $this->paginate($dql);
 
         return $this->render('PmsCoreBundle:Item:add.html.twig', array(
             'item' => $item,
@@ -188,16 +174,9 @@ class CoreController extends Controller
             }
         }
 
-        $em = $this->get('doctrine.orm.entity_manager');
         $dql = "SELECT a FROM PmsCoreBundle:Project a ";
-        $query = $em->createQuery($dql);
 
-        $paginator = $this->get('knp_paginator');
-        $project = $paginator->paginate(
-            $query,
-            $page = $this->get('request')->query->get('page', 1) /*page number*/,
-            10/*limit per page*/
-        );
+        list($project, $page) = $this->paginate($dql);
 
         return $this->render('PmsCoreBundle:Project:add.html.twig', array(
             'project' => $project,
@@ -240,16 +219,9 @@ class CoreController extends Controller
             }
         }
 
-        $em = $this->get('doctrine.orm.entity_manager');
         $dql = "SELECT a FROM PmsCoreBundle:Project a ";
-        $query = $em->createQuery($dql);
 
-        $paginator = $this->get('knp_paginator');
-        $project = $paginator->paginate(
-            $query,
-            $page = $this->get('request')->query->get('page', 1) /*page number*/,
-            10/*limit per page*/
-        );
+        list($project, $page) = $this->paginate($dql);
 
         return $this->render('PmsCoreBundle:Project:add.html.twig', array(
             'project' => $project,
@@ -306,29 +278,14 @@ class CoreController extends Controller
             }
         }
 
-        $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1=1 ";
+        $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1 = 1 ";
 
-        $em  = $this->get('doctrine.orm.entity_manager');
+        if(!empty($_GET['start_date']) && !empty($_GET['end_date'])) {
 
-        if(!empty($_GET['start_date']) && !empty($_GET['end_date'])){
-            $start_date = $_GET['start_date'];
-            $end_date = $_GET['end_date'];
-            if ($start_date) {
-                $dql .= "AND a.dateOfCost >= '{$start_date}'";
-            }
-            if ($end_date) {
-                $dql .= "AND a.dateOfCost <= '{$end_date}'";
-            }
+            $dql = $this->searchByDate($_GET['start_date'], $_GET['end_date'], $dql);
         }
 
-        $query = $em->createQuery($dql);
-
-        $paginator = $this->get('knp_paginator');
-        $projectcost = $paginator->paginate(
-            $query,
-            $page = $this->get('request')->query->get('page', 1) /*page number*/,
-            10/*limit per page*/
-        );
+        list($projectcost, $page) = $this->paginate($dql);
 
         return $this->render('PmsCoreBundle:ProjectCost:add.html.twig', array(
             'projectcost' => $projectcost,
@@ -384,16 +341,14 @@ class CoreController extends Controller
             }
         }
 
-        $em = $this->get('doctrine.orm.entity_manager');
-        $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a ";
-        $query = $em->createQuery($dql);
+        $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1 = 1 ";
 
-        $paginator = $this->get('knp_paginator');
-        $projectcost = $paginator->paginate(
-            $query,
-            $page = $this->get('request')->query->get('page', 1) /*page number*/,
-            10/*limit per page*/
-        );
+        if(!empty($_GET['start_date']) && !empty($_GET['end_date'])) {
+
+            $dql = $this->searchByDate($_GET['start_date'], $_GET['end_date'], $dql);
+        }
+
+        list($projectcost, $page) = $this->paginate($dql);
 
         return $this->render('PmsCoreBundle:ProjectCost:add.html.twig', array(
             'projectcost' => $projectcost,
@@ -401,5 +356,27 @@ class CoreController extends Controller
             'form' => $form->createView(),
             'page' => $page,
         ));
+    }
+
+    public function paginate($dql)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $query = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $value = $paginator->paginate(
+            $query,
+            $page = $this->get('request')->query->get('page', 1) /*page number*/,
+            10/*limit per page*/
+        );
+
+        return array($value, $page);
+    }
+
+    public function searchByDate($start_date, $end_date, $dql)
+    {
+        $dql .= "AND a.dateOfCost >= '{$start_date}' AND a.dateOfCost <= '{$end_date}'";
+
+        return $dql;
     }
 }
