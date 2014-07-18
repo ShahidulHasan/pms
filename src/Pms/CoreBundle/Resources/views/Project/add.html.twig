@@ -58,11 +58,8 @@
                                             </thead>
                                             <tbody>
 
-                                            {% set Route = app.request.uri %}
-                                            {% set Url = Route|split('=') %}
-
-                                            {% if Url[1] | default() == null %}{% set i = 0 %}
-                                            {% elseif Url[1] != null %}{% set i = (Url[1]*10)-10 %}
+                                            {% if page == 1 %}{% set i = 0 %}
+                                            {% else %}{% set i = (page * 10) -10 %}
                                             {% endif %}
 
                                             {% for projects in project %}

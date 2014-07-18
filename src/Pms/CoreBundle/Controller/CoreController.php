@@ -69,7 +69,7 @@ class CoreController extends Controller
         $paginator = $this->get('knp_paginator');
         $item = $paginator->paginate(
             $query,
-            $this->get('request')->query->get('page', 1) /*page number*/,
+            $page = $this->get('request')->query->get('page', 1) /*page number*/,
             10/*limit per page*/
         );
 
@@ -77,6 +77,7 @@ class CoreController extends Controller
             'item' => $item,
             'entity' => $entity,
             'form' => $form->createView(),
+            'page' => $page,
         ));
     }
 
@@ -120,7 +121,7 @@ class CoreController extends Controller
         $paginator = $this->get('knp_paginator');
         $item = $paginator->paginate(
             $query,
-            $this->get('request')->query->get('page', 1) /*page number*/,
+            $page = $this->get('request')->query->get('page', 1) /*page number*/,
             10/*limit per page*/
         );
 
@@ -128,6 +129,7 @@ class CoreController extends Controller
             'item' => $item,
             'entity' => $entity,
             'form' => $form->createView(),
+            'page' => $page,
         ));
     }
 
@@ -193,7 +195,7 @@ class CoreController extends Controller
         $paginator = $this->get('knp_paginator');
         $project = $paginator->paginate(
             $query,
-            $this->get('request')->query->get('page', 1) /*page number*/,
+            $page = $this->get('request')->query->get('page', 1) /*page number*/,
             10/*limit per page*/
         );
 
@@ -201,6 +203,7 @@ class CoreController extends Controller
             'project' => $project,
             'entity' => $entity,
             'form' => $form->createView(),
+            'page' => $page,
         ));
     }
 
@@ -244,7 +247,7 @@ class CoreController extends Controller
         $paginator = $this->get('knp_paginator');
         $project = $paginator->paginate(
             $query,
-            $this->get('request')->query->get('page', 1) /*page number*/,
+            $page = $this->get('request')->query->get('page', 1) /*page number*/,
             10/*limit per page*/
         );
 
@@ -252,6 +255,7 @@ class CoreController extends Controller
             'project' => $project,
             'entity' => $entity,
             'form' => $form->createView(),
+            'page' => $page,
         ));
     }
 
@@ -322,7 +326,7 @@ class CoreController extends Controller
         $paginator = $this->get('knp_paginator');
         $projectcost = $paginator->paginate(
             $query,
-            $this->get('request')->query->get('page', 1) /*page number*/,
+            $page = $this->get('request')->query->get('page', 1) /*page number*/,
             10/*limit per page*/
         );
 
@@ -330,6 +334,7 @@ class CoreController extends Controller
             'projectcost' => $projectcost,
             'entity' => $entity,
             'form' => $form->createView(),
+            'page' => $page,
         ));
     }
 
@@ -386,7 +391,7 @@ class CoreController extends Controller
         $paginator = $this->get('knp_paginator');
         $projectcost = $paginator->paginate(
             $query,
-            $this->get('request')->query->get('page', 1) /*page number*/,
+            $page = $this->get('request')->query->get('page', 1) /*page number*/,
             10/*limit per page*/
         );
 
@@ -394,6 +399,7 @@ class CoreController extends Controller
             'projectcost' => $projectcost,
             'entity' => $entity,
             'form' => $form->createView(),
+            'page' => $page,
         ));
     }
 }
