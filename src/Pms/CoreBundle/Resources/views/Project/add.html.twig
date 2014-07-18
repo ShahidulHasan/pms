@@ -29,7 +29,7 @@
                             <div class="form-group">
                                 {{ form_label(form.projectName, 'Project Name :', {'label_attr': {'class': 'control-label col-md-2', 'style' : 'margin-right:-60px;font-weight:bold;' } }
                                 ) }}
-                                <div class="col-md-7">
+                                <div class="col-md-8">
                                     <div class="input-icon">
                                         <i class="fa"></i>
                                         {{ form_widget(form.projectName, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
@@ -45,9 +45,17 @@
                         <div class="form-actions fluid">
                             <div class="form-group">
                                 <div class="col-md-12">
-                                    <div class="col-md-8" style="margin-left: 12%;">
+                                    <div class="col-md-11" style="margin-left: 4%; margin-top: 30px;">
 
                                         <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
+                                            <thead>
+                                            <tr>
+                                                <th>Sl</th>
+                                                <th>Item Name</th>
+                                                <th>Status</th>
+                                                <th>Edit</th>
+                                            </tr>
+                                            </thead>
                                             <tbody>
 
                                             {% set Route = app.request.uri %}
@@ -66,23 +74,24 @@
                                                 {% endif %}
 
                                                 <tr>
-                                                    <td style="width: 50px;">{{ i }} .</td>
-                                                    <td style="width: 250px; color: {{ color|join("") }};">{{ projects.projectName }}</td>
+                                                    <td style="width: 60px;">{{ i }} .</td>
+                                                    <td style="width: 622px; color: {{ color|join("") }};">{{ projects.projectName }}</td>
                                                     {% if projects.status == 1 %}
-                                                        <td style="width: 80px;">
-                                                            <a href="/project/update/{{ projects.id }}" class="btn default btn-xs green-stripe"><i
-                                                                        class="fa fa-edit"></i> Update</a>
-                                                        </td>
-                                                        <td style="width: 80px;">
-                                                            <a href="/project/delete/{{ projects.id }}" class="btn default btn-xs blue-stripe"><i
+                                                        <td>
+                                                            <a href="/project/delete/{{ projects.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
                                                                         class="fa fa-trash-o"></i> Delete</a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="/project/update/{{ projects.id }}" style="width: 85px;" class="btn default btn-xs blue-stripe"><i
+                                                                        class="fa fa-edit"></i> Update</a>
                                                         </td>
                                                     {% endif %}
                                                     {% if projects.status == 0 %}
-                                                        <td style="width: 80px; color: red;">
-                                                            <a href="#" class="btn default btn-xs red-stripe"> The Item Is Deleted</a>
+                                                        <td style="color: red;">
+                                                            <a href="#" style="width: 85px;" class="btn default btn-xs red-stripe"><i
+                                                                        class="fa fa-times"></i> Deleted</a>
                                                         </td>
-                                                        <td style="width: 80px;">
+                                                        <td style="width: 85px;">
 
                                                         </td>
                                                     {% endif %}
