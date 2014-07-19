@@ -33,7 +33,7 @@ class CoreController extends Controller
                     array('itemName' => $itemName )
                 );
 
-                if ($item == null) {
+               if ($item == null) {
 
     //                $var = $form->get('itemName')->getData();
     //                var_dump($var);die;
@@ -56,7 +56,12 @@ class CoreController extends Controller
                         'notice',
                         'Item Successfully Add'
                     );
-                 }
+                }else{
+                   $this->get('session')->getFlashBag()->add(
+                       'notice',
+                       'Item Error For Duplicat Entry'
+                   );
+                }
 
                 return $this->redirect($this->generateUrl('item_add'));
             }
@@ -166,7 +171,12 @@ class CoreController extends Controller
                     $this->getDoctrine()->getRepository("PmsCoreBundle:Project")->create($entity);
                     $this->get('session')->getFlashBag()->add(
                         'notice',
-                        'Item Successfully Add'
+                        'Project Successfully Add'
+                    );
+                }else{
+                    $this->get('session')->getFlashBag()->add(
+                        'notice',
+                        'Project Error For Duplicat Entry'
                     );
                 }
 
@@ -193,7 +203,7 @@ class CoreController extends Controller
 
         $this->get('session')->getFlashBag()->add(
             'notice',
-            'Item Successfully Deleted'
+            'Project Successfully Deleted'
         );
 
         return $this->redirect($this->generateUrl('project_add'));
@@ -212,7 +222,7 @@ class CoreController extends Controller
                 $this->getDoctrine()->getRepository('PmsCoreBundle:Project')->update($entity);
                 $this->get('session')->getFlashBag()->add(
                     'notice',
-                    'Item Successfully Updated'
+                    'Project Successfully Updated'
                 );
 
                 return $this->redirect($this->generateUrl('project_add'));
@@ -271,7 +281,7 @@ class CoreController extends Controller
                 $this->getDoctrine()->getRepository("PmsCoreBundle:ProjectCost")->create($entity);
                 $this->get('session')->getFlashBag()->add(
                     'notice',
-                    'Item Successfully Add'
+                    'Project Cost Successfully Add'
                 );
 
                 return $this->redirect($this->generateUrl('cost_add'));
@@ -307,7 +317,7 @@ class CoreController extends Controller
 
         $this->get('session')->getFlashBag()->add(
             'notice',
-            'Item Successfully Deleted'
+            'Project Cost Successfully Deleted'
         );
 
         return $this->redirect($this->generateUrl('cost_add'));
@@ -334,7 +344,7 @@ class CoreController extends Controller
                 $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCost')->update($entity);
                 $this->get('session')->getFlashBag()->add(
                     'notice',
-                    'Item Successfully Updated'
+                    'Project Cost Successfully Updated'
                 );
 
                 return $this->redirect($this->generateUrl('cost_add'));
