@@ -291,7 +291,7 @@ class CoreController extends Controller
             }
         }
 
-        $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1 = 1 ORDER BY a.id DESC";
+        $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1 = 1 ";
 
         if(!empty($_GET['start_date']) && !empty($_GET['end_date'])) {
 
@@ -355,7 +355,7 @@ class CoreController extends Controller
             }
         }
 
-        $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1 = 1 ORDER BY a.id DESC";
+        $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1 = 1 ";
 
         if(!empty($_GET['start_date']) && !empty($_GET['end_date'])) {
 
@@ -389,7 +389,7 @@ class CoreController extends Controller
 
     public function searchByDate($start_date, $end_date, $dql)
     {
-        $dql .= "AND a.dateOfCost >= '{$start_date}' AND a.dateOfCost <= '{$end_date}'";
+        $dql .= "AND a.dateOfCost >= '{$start_date}' AND a.dateOfCost <= '{$end_date}' ORDER BY a.id DESC";
 
         return $dql;
     }
