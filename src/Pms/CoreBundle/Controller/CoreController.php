@@ -6,6 +6,7 @@ use Pms\CoreBundle\Entity\Project;
 use Pms\CoreBundle\Entity\ProjectCost;
 use Pms\CoreBundle\Form\ProjectCostType;
 use Pms\CoreBundle\Form\ProjectType;
+use Pms\CoreBundle\Form\SearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\ORM\Repository;
 use Symfony\Component\HttpFoundation\Request;
@@ -67,7 +68,7 @@ class CoreController extends Controller
             }
         }
 
-        $dql = "SELECT a FROM PmsCoreBundle:Item a ";
+        $dql = "SELECT a FROM PmsCoreBundle:Item a ORDER BY a.id DESC";
 
         list($item, $page) = $this->paginate($dql);
 
@@ -112,7 +113,7 @@ class CoreController extends Controller
             }
         }
 
-        $dql = "SELECT a FROM PmsCoreBundle:Item a ";
+        $dql = "SELECT a FROM PmsCoreBundle:Item a ORDER BY a.id DESC";
 
         list($item, $page) = $this->paginate($dql);
 
@@ -184,7 +185,7 @@ class CoreController extends Controller
             }
         }
 
-        $dql = "SELECT a FROM PmsCoreBundle:Project a ";
+        $dql = "SELECT a FROM PmsCoreBundle:Project a ORDER BY a.id DESC";
 
         list($project, $page) = $this->paginate($dql);
 
@@ -229,7 +230,7 @@ class CoreController extends Controller
             }
         }
 
-        $dql = "SELECT a FROM PmsCoreBundle:Project a ";
+        $dql = "SELECT a FROM PmsCoreBundle:Project a ORDER BY a.id DESC";
 
         list($project, $page) = $this->paginate($dql);
 
@@ -266,6 +267,8 @@ class CoreController extends Controller
 
         $form = $this->createForm(new ProjectCostType(), $entity);
 
+        $formSearch = $this->createForm(new SearchType());
+
         if ($request->getMethod() == 'POST') {
 
             $form->handleRequest($request);
@@ -288,7 +291,7 @@ class CoreController extends Controller
             }
         }
 
-        $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1 = 1 ";
+        $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1 = 1 ORDER BY a.id DESC";
 
         if(!empty($_GET['start_date']) && !empty($_GET['end_date'])) {
 
@@ -301,6 +304,7 @@ class CoreController extends Controller
             'projectcost' => $projectcost,
             'entity' => $entity,
             'form' => $form->createView(),
+            'formSearch' => $formSearch->createView(),
             'page' => $page,
         ));
     }
@@ -351,7 +355,7 @@ class CoreController extends Controller
             }
         }
 
-        $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1 = 1 ";
+        $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1 = 1 ORDER BY a.id DESC";
 
         if(!empty($_GET['start_date']) && !empty($_GET['end_date'])) {
 

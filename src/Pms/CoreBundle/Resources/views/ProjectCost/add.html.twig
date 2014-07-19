@@ -71,7 +71,7 @@
                                                     {{ form_widget(form.lineTotal, { 'attr': {'class': 'form-control lineTotal'} }) }}
                                                 </td>
                                                 <td>
-                                                    {{ form_widget(form.save, { 'attr': {'class': 'btn green button-width', 'style': 'margin-left:10px;height:32px;' } } ) }}
+                                                    {{ form_widget(form.save, { 'attr': {'class': 'btn green button-width', 'style': 'height:32px;' } } ) }}
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -86,14 +86,20 @@
                             <div class="form-group">
                                 <div class="col-md-12">
 
-                                <form name="search" action="{{ path('cost_add') }}" method="get">
+                                    <form action="{{ path('cost_add') }}" method="get" {{ form_enctype(formSearch) }} name="search">
 
                                         <div class="portlet-body">
-                                            <div class="col-md-5" style="float: right; margin-right: 25px;">
+                                            <div class="col-md-9" style="float: right; margin-right: -35px;">
 
                                                 <table id="table_project_cost">
                                                     <tbody>
                                                         <tr>
+                                                            <td>
+                                                                {{ form_widget(formSearch.project, { 'attr': {'class': 'form-control', 'style': 'width:140px;' } }) }}
+                                                            </td>
+                                                            <td>
+                                                                {{ form_widget(formSearch.item, { 'attr': {'class': 'form-control', 'style': 'width:140px;' } }) }}
+                                                            </td>
                                                             <td>
                                                                 <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
                                                                     <span class="input-group-btn"></span>
@@ -110,7 +116,7 @@
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <button type="submit" class="btn grey" style="margin-left:20px;height:32px;">Search</button>
+                                                                {{ form_widget(formSearch.search, { 'attr': {'class': 'btn grey button-width', 'style': 'height:32px;' } } ) }}
                                                             </td>
                                                         </tr>
                                                     </tbody>
