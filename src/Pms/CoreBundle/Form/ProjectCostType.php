@@ -48,7 +48,8 @@ class ProjectCostType extends AbstractType
                     new NotBlank()
                 ),
                 'attr' => array(
-                    'placeholder' => ''
+                    'placeholder' => 'Quantity',
+                    'autocomplete' => 'off'
                 )
             ))
             ->add('unitPrice', 'text', array(
@@ -56,7 +57,8 @@ class ProjectCostType extends AbstractType
                     new NotBlank()
                 ),
                 'attr' => array(
-                    'placeholder' => ''
+                    'placeholder' => 'Unit Price',
+                    'autocomplete' => 'off'
                 )
             ))
             ->add('lineTotal', 'text', array(

@@ -21,7 +21,8 @@ class ProjectType extends AbstractType
                     new NotBlank()
                 ),
                 'attr' => array(
-                    'placeholder' => 'Add project name'
+                    'placeholder' => 'Add project name',
+                    'autocomplete' => 'off'
                 )
             ))
             ->add('save', 'submit')

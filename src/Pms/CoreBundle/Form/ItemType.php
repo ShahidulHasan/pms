@@ -21,13 +21,14 @@ class ItemType extends AbstractType
                     new NotBlank()
                 ),
                 'attr' => array(
-                    'placeholder' => 'Add item name'
+                    'placeholder' => 'Add item name',
+                    'autocomplete' => 'off'
                 )
             ))
             ->add('save', 'submit')
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */
