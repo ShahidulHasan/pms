@@ -265,7 +265,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             $('input[type=text].lineTotal').val(lineTotal);
         });
 
-        $("#item_itemName").change(function () {
+        $("#item_itemName").keyup(function () {
             var itemName = $(this).val();
 
             $.ajax({
@@ -284,7 +284,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             });
         });
 
-        $("#project_projectName").change(function () {
+        $("#project_projectName").keyup(function () {
             var projectName = $(this).val();
 
             $.ajax({
