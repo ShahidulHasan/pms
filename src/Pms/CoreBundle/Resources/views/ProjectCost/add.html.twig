@@ -9,6 +9,8 @@
         </div>
     {% endfor %}
 
+    <span class="projectCostMessege"></span>
+
     <div class="row">
         <div class="col-md-12">
 
@@ -71,7 +73,8 @@
                                                     {{ form_widget(form.lineTotal, { 'attr': {'class': 'form-control lineTotal'} }) }}
                                                 </td>
                                                 <td>
-                                                    {{ form_widget(form.save, { 'attr': {'class': 'btn green button-width', 'style': 'height:32px;' } } ) }}
+                                                    {#{{ form_widget(form.save, { 'attr': {'class': 'btn green button-width', 'style': 'height:32px;' } } ) }}#}
+                                                    <input type="button" name="ajaxSaveProjectCost" value="Save" id="ajaxSaveProjectCost" class="btn green button-width" style="height:32px;">
                                                 </td>
                                             </tr>
                                         </tbody>

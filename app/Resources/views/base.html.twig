@@ -303,6 +303,85 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             });
         });
 
+        $("#ajaxSaveItem").click(function () {
+            var itemName = $("#item_itemName").val();
+            $.ajax({
+                type: "post",
+                url: Routing.generate('item_ajax_add'),
+                data: "itemName=" + itemName,
+                dataType: 'json',
+                success: function (msg) {
+                    if (msg.responseCode == 200) {
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><strong><span style="color:red;font-size:12px; margin-left: 185px;">Item already exist</span></strong></div>');
+                        $('.itemMessege').css('color', 'red').html(msg.item_ajax_add).fadeIn(1000).append($addLink);
+                        $('.alert').fadeOut(5000);
+                    } else if (msg.responseCode == 204){
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><strong><span style="color:red;font-size:12px; margin-left: 185px;">Please Insert Item</span></strong></div>');
+                        $('.itemMessege').css('color', 'red').html(msg.item_ajax_add).fadeIn(1000).append($addLink);
+                        $('.alert').fadeOut(5000);
+                    } else{
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><strong><span style="color:blue;font-size:12px; margin-left: 185px;">Item Add Successfully</span></strong></div>');
+                        $('.itemMessege').css('color', 'green').html(msg.item_ajax_add).fadeIn(1000).append($addLink);
+                        $('.alert').fadeOut(5000);
+                    }
+                }
+            });
+        });
+
+        $("#ajaxSaveProject").click(function () {
+            var projectName = $("#project_projectName").val();
+            $.ajax({
+                type: "post",
+                url: Routing.generate('project_ajax_add'),
+                data: "projectName=" + projectName,
+                dataType: 'json',
+                success: function (msg) {
+                    if (msg.responseCode == 200) {
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><strong><span style="color:red;font-size:12px; margin-left: 185px;">Project already exist</span></strong></div>');
+                        $('.projectMessege').css('color', 'red').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
+                        $('.alert').fadeOut(5000);
+                    } else if (msg.responseCode == 204){
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><strong><span style="color:red;font-size:12px; margin-left: 185px;">Please Insert Project</span></strong></div>');
+                        $('.projectMessege').css('color', 'red').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
+                        $('.alert').fadeOut(5000);
+                    } else{
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><strong><span style="color:blue;font-size:12px; margin-left: 185px;">Project Add Successfully</span></strong></div>');
+                        $('.projectMessege').css('color', 'green').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
+                        $('.alert').fadeOut(5000);
+                    }
+                }
+            });
+        });
+
+        $("#ajaxSaveProjectCost").click(function () {
+            var dateOfCost = $("#projectcost_dateOfCost").val();
+            var project = $("#projectcost_project").val();
+            var item = $("#projectcost_item").val();
+            var quantity = $("#projectcost_quantity").val();
+            var unitPrice = $("#projectcost_unitPrice").val();
+            var lineTotal = $("#projectcost_lineTotal").val();
+
+            var projectCostArray = new Array(dateOfCost, project, item, quantity, unitPrice, lineTotal);
+
+            $.ajax({
+                type: "post",
+                url: Routing.generate('project_cost_ajax_add'),
+                data: "projectCostArray=" + projectCostArray,
+                dataType: 'json',
+                success: function (msg) {
+                    if (msg.responseCode == 204){
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><strong><span style="color:red;font-size:12px; margin-left: 185px;">Please Fill The Blank Field</span></strong></div>');
+                        $('.projectCostMessege').css('color', 'red').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
+                        $('.alert').fadeOut(5000);
+                    } else{
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><strong><span style="color:blue;font-size:12px; margin-left: 185px;">Project Cost Add Successfully</span></strong></div>');
+                        $('.projectCostMessege').css('color', 'green').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
+                        $('.alert').fadeOut(5000);
+                    }
+                }
+            });
+        });
+
         {% endblock %}
     });
 </script>

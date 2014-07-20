@@ -58,6 +58,20 @@ project_check:
     options:
             expose: true
 
-search_cost:
-    pattern: /search/{date}
-    defaults: { _controller: PmsCoreBundle:Core:searchProject }
+item_ajax_add:
+    pattern: /item/add
+    defaults: { _controller: PmsCoreBundle:Core:itemAjaxAdd }
+    options:
+            expose: true
+
+project_ajax_add:
+    pattern: /project/add
+    defaults: { _controller: PmsCoreBundle:Core:projectAjaxAdd }
+    options:
+            expose: true
+
+project_cost_ajax_add:
+    pattern: /project-cost/add
+    defaults: { _controller: PmsCoreBundle:Core:projectCostAjaxAdd }
+    options:
+            expose: true

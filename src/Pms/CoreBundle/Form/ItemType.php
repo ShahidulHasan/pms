@@ -25,7 +25,7 @@ class ItemType extends AbstractType
                     'autocomplete' => 'off'
                 )
             ))
-            ->add('save', 'submit')
+//            ->add('save', 'submit')
         ;
     }
 

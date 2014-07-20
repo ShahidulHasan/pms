@@ -9,6 +9,8 @@
         </div>
     {% endfor %}
 
+    <span class="itemMessege"></span>
+
     <div class="row">
         <div class="col-md-12">
 
@@ -41,8 +43,9 @@
                                         {{ form_widget(form.itemName, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;' } }) }}
                                     </div>
                                 </div>
-                                {{ form_widget(form.save, { 'attr': {'class': 'btn green button-width col-md-1', 'style': 'margin-top:2px;margin-left:10px;height:32px;' } }
-                                ) }}
+                                {#{{ form_widget(form.save, { 'attr': {'class': 'btn green button-width col-md-1', 'style': 'margin-top:2px;margin-left:10px;height:32px;' } }#}
+                                {#) }}#}
+                                <input type="button" name="ajaxSaveItem" value="Save" id="ajaxSaveItem" class="btn green button-width col-md-1" style="margin-top:2px;margin-left:10px;height:32px;">
                                 <span class="userMessege" style="margin-left: 185px;"></span>
                             </div>
                         </div>

@@ -70,7 +70,7 @@ class ProjectCostType extends AbstractType
                 ),
                 'read_only' => true
             ))
-            ->add('save', 'submit')
+//            ->add('save', 'submit')
         ;
     }
     
