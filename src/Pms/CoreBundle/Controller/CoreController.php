@@ -2,6 +2,7 @@
 
 namespace Pms\CoreBundle\Controller;
 
+use ___PHPSTORM_HELPERS\object;
 use Pms\CoreBundle\Entity\Project;
 use Pms\CoreBundle\Entity\ProjectCost;
 use Pms\CoreBundle\Form\ProjectCostType;
@@ -97,21 +98,21 @@ class CoreController extends Controller
     {
         $form = $this->createForm(new ItemType(), $entity);
 
-        if ($request->getMethod() == 'POST') {
-
-            $form->submit($request);
-
-            if ($form->isValid()) {
-
-                $this->getDoctrine()->getRepository('PmsCoreBundle:Item')->update($entity);
-                $this->get('session')->getFlashBag()->add(
-                    'notice',
-                    'Item Successfully Updated'
-                );
-
-                return $this->redirect($this->generateUrl('item_add'));
-            }
-        }
+//        if ($request->getMethod() == 'POST') {
+//
+//            $form->submit($request);
+//
+//            if ($form->isValid()) {
+//
+//                $this->getDoctrine()->getRepository('PmsCoreBundle:Item')->update($entity);
+//                $this->get('session')->getFlashBag()->add(
+//                    'notice',
+//                    'Item Successfully Updated'
+//                );
+//
+//                return $this->redirect($this->generateUrl('item_add'));
+//            }
+//        }
 
         $dql = "SELECT a FROM PmsCoreBundle:Item a ORDER BY a.id DESC";
 
@@ -146,19 +147,32 @@ class CoreController extends Controller
 
     public function itemAjaxAddAction(Request $request)
     {
-        $itemName = $request->request->get('itemName');
+        $itemArray = $request->request->get('itemArray');
+        $itemArray = explode(',',$itemArray);
 
-        if($itemName){
-            $item = $this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneBy(
+        $itemName = $itemArray[0];
+        $updateId = $itemArray[1];
+
+        if($itemName) {
+            $item = $this->getDoctrine()->getRepository('PmsCoreBundle:Item')->find($updateId);
+            $itemNameCheck = $this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneBy(
                 array('itemName' => $itemName )
             );
+            if($item) {
+                $item->setItemName($itemName);
+                $this->getDoctrine()->getManager()->persist($item);
+                $this->getDoctrine()->getManager()->flush();
 
-            if ($item) {
+                $return = array("responseCode" => 202);
+                $return = json_encode($return);
+
+                return new Response($return, 200, array('Content-Type' => 'application/json'));
+            } elseif($itemNameCheck) {
                 $return = array("responseCode" => 200);
                 $return = json_encode($return);
+
                 return new Response($return, 200, array('Content-Type' => 'application/json'));
             } else {
-
                 $entity = new Item();
                 $entity->setItemName($itemName);
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
@@ -168,13 +182,15 @@ class CoreController extends Controller
 
                 $this->getDoctrine()->getRepository("PmsCoreBundle:Item")->create($entity);
 
-                $return = array("responseCode" => '404');
+                $return = array("responseCode" => 404);
                 $return = json_encode($return);
+
                 return new Response($return, 200, array('Content-Type' => 'application/json'));
             }
         } else{
             $return = array("responseCode" => 204);
             $return = json_encode($return);
+
             return new Response($return, 200, array('Content-Type' => 'application/json'));
         }
     }
@@ -249,21 +265,21 @@ class CoreController extends Controller
     {
         $form = $this->createForm(new ProjectType(), $entity);
 
-        if ($request->getMethod() == 'POST') {
-
-            $form->submit($request);
-
-            if ($form->isValid()) {
-
-                $this->getDoctrine()->getRepository('PmsCoreBundle:Project')->update($entity);
-                $this->get('session')->getFlashBag()->add(
-                    'notice',
-                    'Project Successfully Updated'
-                );
-
-                return $this->redirect($this->generateUrl('project_add'));
-            }
-        }
+//        if ($request->getMethod() == 'POST') {
+//
+//            $form->submit($request);
+//
+//            if ($form->isValid()) {
+//
+//                $this->getDoctrine()->getRepository('PmsCoreBundle:Project')->update($entity);
+//                $this->get('session')->getFlashBag()->add(
+//                    'notice',
+//                    'Project Successfully Updated'
+//                );
+//
+//                return $this->redirect($this->generateUrl('project_add'));
+//            }
+//        }
 
         $dql = "SELECT a FROM PmsCoreBundle:Project a ORDER BY a.id DESC";
 
@@ -298,14 +314,28 @@ class CoreController extends Controller
 
     public function projectAjaxAddAction(Request $request)
     {
-        $projectName = $request->request->get('projectName');
+        $projectArray = $request->request->get('projectArray');
+        $projectArray = explode(',',$projectArray);
 
-        if($projectName){
-            $project = $this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneBy(
+        $projectName = $projectArray[0];
+        $updateId = $projectArray[1];
+
+        if($projectName) {
+            $project = $this->getDoctrine()->getRepository('PmsCoreBundle:Project')->find($updateId);
+            $projectNameCheck = $this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneBy(
                 array('projectName' => $projectName )
             );
+            if($project) {
+                $project->setProjectName($projectName);
+                $this->getDoctrine()->getManager()->persist($project);
+                $this->getDoctrine()->getManager()->flush();
 
-            if ($project) {
+                $return = array("responseCode" => 202);
+                $return = json_encode($return);
+
+                return new Response($return, 200, array('Content-Type' => 'application/json'));
+            } elseif($projectNameCheck) {
+
                 $return = array("responseCode" => 200);
                 $return = json_encode($return);
                 return new Response($return, 200, array('Content-Type' => 'application/json'));
@@ -323,7 +353,7 @@ class CoreController extends Controller
                 $return = json_encode($return);
                 return new Response($return, 200, array('Content-Type' => 'application/json'));
             }
-        } else{
+        } else {
             $return = array("responseCode" => 204);
             $return = json_encode($return);
             return new Response($return, 200, array('Content-Type' => 'application/json'));
@@ -426,6 +456,8 @@ class CoreController extends Controller
 
         $form = $this->createForm(new ProjectCostType(), $entity);
 
+        $formSearch = $this->createForm(new SearchType());
+
         if ($request->getMethod() == 'POST') {
 
             $form->submit($request);
@@ -474,6 +506,7 @@ class CoreController extends Controller
             'projectcost' => $projectcost,
             'entity' => $entity,
             'form' => $form->createView(),
+            'formSearch' => $formSearch->createView(),
             'page' => $page,
         ));
     }
@@ -489,32 +522,57 @@ class CoreController extends Controller
         $quantity = $projectCostArray[3];
         $unitPrice = $projectCostArray[4];
         $lineTotal = $projectCostArray[5];
+        $updateId = $projectCostArray[6];
 
-        if(!empty($dateOfCost) && !empty($project) && !empty($item) && !empty($quantity) && !empty($unitPrice) && !empty($lineTotal)){
+        if(!empty($dateOfCost) && !empty($project) && !empty($item) && !empty($quantity) && !empty($unitPrice) && !empty($lineTotal)) {
 
-            $entity = new ProjectCost();
+            if($updateId) {
+                $projectcost = $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCost')->find($updateId);
 
-            $user = $this->get('security.context')->getToken()->getUser()->getId();
-            $entity->setDateOfCost(new \DateTime($dateOfCost));
-            $entity->setCreatedBy($user);
-            $entity->setCreatedDate(new \DateTime());
-            $entity->setStatus(0);
+                $user = $this->get('security.context')->getToken()->getUser()->getId();
+                $projectcost->setDateOfCost(new \DateTime($dateOfCost));
+                $projectcost->setApprovedBy($user);
+                $projectcost->setApprovedDate(new \DateTime());
 
-            $entity->setProject($this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneById($project));
-            $entity->setItem($this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneById($item));
-            $entity->setQuantity($quantity);
-            $entity->setUnitPrice($unitPrice);
-            $entity->setLineTotal($lineTotal);
+                $projectcost->setProject($this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneById($project));
+                $projectcost->setItem($this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneById($item));
+                $projectcost->setQuantity($quantity);
+                $projectcost->setUnitPrice($unitPrice);
+                $projectcost->setLineTotal($lineTotal);
 
-            $this->getDoctrine()->getRepository("PmsCoreBundle:ProjectCost")->create($entity);
+                $this->getDoctrine()->getManager()->persist($projectcost);
+                $this->getDoctrine()->getManager()->flush();
 
-            $return = array("responseCode" => '404');
-            $return = json_encode($return);
-            return new Response($return, 200, array('Content-Type' => 'application/json'));
+                $return = array("responseCode" => 202);
+                $return = json_encode($return);
 
+                return new Response($return, 200, array('Content-Type' => 'application/json'));
+            } else {
+                $entity = new ProjectCost();
+
+                $user = $this->get('security.context')->getToken()->getUser()->getId();
+                $entity->setDateOfCost(new \DateTime($dateOfCost));
+                $entity->setCreatedBy($user);
+                $entity->setCreatedDate(new \DateTime());
+                $entity->setStatus(0);
+
+                $entity->setProject($this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneById($project));
+                $entity->setItem($this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneById($item));
+                $entity->setQuantity($quantity);
+                $entity->setUnitPrice($unitPrice);
+                $entity->setLineTotal($lineTotal);
+
+                $this->getDoctrine()->getRepository("PmsCoreBundle:ProjectCost")->create($entity);
+
+                $return = array("responseCode" => '404');
+                $return = json_encode($return);
+
+                return new Response($return, 200, array('Content-Type' => 'application/json'));
+            }
         } else{
             $return = array("responseCode" => 204);
             $return = json_encode($return);
+
             return new Response($return, 200, array('Content-Type' => 'application/json'));
         }
     }
