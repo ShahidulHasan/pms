@@ -1,0 +1,62 @@
+<table class="table table-striped bold" style="border: 1px solid ghostwhite;">
+    <thead>
+    <tr>
+        <th>Sl</th>
+        <th>Date</th>
+        <th>Project</th>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Unite Price</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th>Edit</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% if page == 1 %}{% set i = 0 %}
+    {% else %}{% set i = (page * 10) -10 %}
+    {% endif %}
+
+    {% for projectcosts in projectcost %}
+        {% set i = i + 1 %}
+        {% set color = [" "] %}
+
+        {% if projectcosts.status == 0 %}{% set color = color|merge(["red"]) %}
+        {% elseif projectcosts.status == 1 %}{% set color = color|merge(["green"]) %}
+        {% endif %}
+
+        <tr>
+            <td style="width: 60px;">{{ i }} .</td>
+            <td style="width: 105px; color: {{ color|join(" ") }}">{{ projectcosts.dateOfCost|date('Y-m-d') }}</td>
+            <td style="width: 150px; color: {{ color|join(" ") }}">{{ projectcosts.project.projectName | length > 12 ? projectcosts.project.projectName | slice(0, 12) ~ ' ...' : projectcosts.project.projectName }}</td>
+            <td style="width: 150px; color: {{ color|join(" ") }}">{{ projectcosts.item.itemName | length > 11 ? projectcosts.item.itemName | slice(0, 11) ~ ' ...' : projectcosts.item.itemName }}</td>
+            <td style="width: 100px; color: {{ color|join(" ") }}">{{ projectcosts.quantity | default() }}</td>
+            <td style="width: 110px; color: {{ color|join(" ") }}">{{ projectcosts.unitPrice | default() }}</td>
+            <td style="width: 90px; color: {{ color|join(" ") }}">{{ projectcosts.lineTotal | default() }}</td>
+            {% if projectcosts.status == 0 %}
+                <td>
+                    <a href="/project-cost/approved/{{ projectcosts.id }}" style="width: 85px;" class="btn default btn-xs red-stripe"><i
+                                class="fa fa-plus"></i> Check</a>
+                </td>
+                <td>
+                    <a href="/project-cost/update/{{ projectcosts.id }}" style="width: 80px;" class="btn default btn-xs blue-stripe"><i
+                                class="fa fa-edit"></i> Update</a>
+                </td>
+            {% endif %}
+            {% if projectcosts.status == 1 %}
+                <td style=" color: red;">
+                    <a href="#" class="btn default btn-xs green-stripe" style="width: 85px;"><i class="fa fa-check"></i> Approved</a>
+                </td>
+                <td style="width: 85px;">
+
+                </td>
+            {% endif %}
+        </tr>
+
+    {% endfor %}
+    </tbody>
+</table>
+<div class="navigation" style="text-align: right">
+    {{ knp_pagination_render(projectcost) }}
+</div>

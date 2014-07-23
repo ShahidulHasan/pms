@@ -21,7 +21,7 @@
                 </div>
 
                 <div class="portlet-body form">
-                    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': '', 'novalidate': 'novalidate'} }) }}
+                    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'cost-form', 'novalidate': 'novalidate'} }) }}
                     <div class="form-body left">
 
                         <div class="alert alert-danger display-hide">
@@ -74,7 +74,7 @@
                                                 </td>
                                                 <td>
                                                     {#{{ form_widget(form.save, { 'attr': {'class': 'btn green button-width', 'style': 'height:32px;' } } ) }}#}
-                                                    <input type="button" name="ajaxSaveProjectCost" onclick="this.form.reset();" value="Save" id="ajaxSaveProjectCost" class="btn green button-width" style="height:32px;">
+                                                    <input type="button" name="ajaxSaveProjectCost" value="Save" id="ajaxSaveProjectCost" class="btn green button-width" style="height:32px;">
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -130,7 +130,7 @@
 
                                 </form>
 
-                                    <div class="col-md-11" style="margin-top: 30px; margin-left: 4%;">
+                                    <div class="col-md-11" style="margin-top: 30px; margin-left: 4%;" id="cost-list-div">
 
                                         <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
                                             <thead>

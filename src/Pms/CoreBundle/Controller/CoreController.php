@@ -17,6 +17,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CoreController extends Controller
 {
+    public function itemListAction()
+    {
+        $dql = "SELECT a FROM PmsCoreBundle:Item a ORDER BY a.id DESC";
+
+        list($item, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:Item:list.html.twig', array(
+            'item' => $item,
+            'page' => $page,
+        ));
+    }
+
     public function itemAddAction(Request $request)
     {
         $entity = new Item();
@@ -195,6 +207,18 @@ class CoreController extends Controller
         }
     }
 
+    public function projectListAction()
+    {
+        $dql = "SELECT a FROM PmsCoreBundle:Project a ORDER BY a.id DESC";
+
+        list($project, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:Project:list.html.twig', array(
+            'project' => $project,
+            'page' => $page,
+        ));
+    }
+
     public function projectAddAction(Request $request)
     {
         $entity = new Project();
@@ -358,6 +382,18 @@ class CoreController extends Controller
             $return = json_encode($return);
             return new Response($return, 200, array('Content-Type' => 'application/json'));
         }
+    }
+
+    public function projectCostListAction()
+    {
+        $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a ORDER BY a.id DESC";
+
+        list($projectcost, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:ProjectCost:list.html.twig', array(
+            'projectcost' => $projectcost,
+            'page' => $page,
+        ));
     }
 
     public function projectCostAddAction(Request $request)

@@ -316,22 +316,40 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                 dataType: 'json',
                 success: function (msg) {
                     if(msg.responseCode == 200) {
-                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><strong><span style="color:red;font-size:12px; margin-left: 185px;">Item already exist</span></strong></div>');
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Item already exist</span></div>');
                         $('.itemMessege').css('color', 'red').html(msg.item_ajax_add).fadeIn(1000).append($addLink);
-                        $('.alert').fadeOut(5000);
+                        $(':input','#item-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
                     } else if(msg.responseCode == 204) {
-                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><strong><span style="color:red;font-size:12px; margin-left: 185px;">Please Insert Item</span></strong></div>');
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Insert Item</span></div>');
                         $('.itemMessege').css('color', 'red').html(msg.item_ajax_add).fadeIn(1000).append($addLink);
-                        $('.alert').fadeOut(5000);
+                        $(':input','#item-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
                     } else if(msg.responseCode == 202) {
-                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><strong><span style="color:green;font-size:12px; margin-left: 185px;">Item Update Successfully</span></strong></div>');
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Item Update Successfully</span></div>');
                         $('.itemMessege').css('color', 'green').html(msg.item_ajax_add).fadeIn(1000).append($addLink);
-                        $('.alert').fadeOut(5000);
+                        $(':input','#item-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
                     } else {
-                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><strong><span style="color:blue;font-size:12px; margin-left: 185px;">Item Add Successfully</span></strong></div>');
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Item Add Successfully</span></div>');
                         $('.itemMessege').css('color', 'green').html(msg.item_ajax_add).fadeIn(1000).append($addLink);
-                        $('.alert').fadeOut(5000);
+                        $(':input','#item-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
                     }
+
+                    $("#item-list-div").load("/item/list")
                 }
             });
         });
@@ -350,22 +368,40 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                 dataType: 'json',
                 success: function (msg) {
                     if(msg.responseCode == 200) {
-                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><strong><span style="color:red;font-size:12px; margin-left: 185px;">Project already exist</span></strong></div>');
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Project already exist</span></div>');
                         $('.projectMessege').css('color', 'red').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
-                        $('.alert').fadeOut(5000);
+                        $(':input','#project-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
                     } else if(msg.responseCode == 204) {
-                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><strong><span style="color:red;font-size:12px; margin-left: 185px;">Please Insert Project</span></strong></div>');
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Insert Project</span></div>');
                         $('.projectMessege').css('color', 'red').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
-                        $('.alert').fadeOut(5000);
+                        $(':input','#project-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
                     } else if(msg.responseCode == 202) {
-                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><strong><span style="color:green;font-size:12px; margin-left: 185px;">Project Update Successfully</span></strong></div>');
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Project Update Successfully</span></div>');
                         $('.projectMessege').css('color', 'green').html(msg.item_ajax_add).fadeIn(1000).append($addLink);
-                        $('.alert').fadeOut(5000);
+                        $(':input','#project-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
                     } else {
-                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><strong><span style="color:blue;font-size:12px; margin-left: 185px;">Project Add Successfully</span></strong></div>');
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Project Add Successfully</span></div>');
                         $('.projectMessege').css('color', 'green').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
-                        $('.alert').fadeOut(5000);
+                        $(':input','#project-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
                     }
+
+                    $("#project-list-div").load("/project/list")
                 }
             });
         });
@@ -390,18 +426,32 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                 dataType: 'json',
                 success: function (msg) {
                     if(msg.responseCode == 204) {
-                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><strong><span style="color:red;font-size:12px; margin-left: 185px;">Please Fill The Blank Field</span></strong></div>');
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Fill The Blank Field</span></div>');
                         $('.projectCostMessege').css('color', 'red').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
-                        $('.alert').fadeOut(5000);
+                        $(':input','#cost-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
                     } else if(msg.responseCode == 202) {
-                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><strong><span style="color:green;font-size:12px; margin-left: 185px;">Project Cost Update Successfully</span></strong></div>');
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Project Cost Update Successfully</span></div>');
                         $('.projectCostMessege').css('color', 'green').html(msg.item_ajax_add).fadeIn(1000).append($addLink);
-                        $('.alert').fadeOut(5000);
+                        $(':input','#cost-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
                     } else {
-                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><strong><span style="color:blue;font-size:12px; margin-left: 185px;">Project Cost Add Successfully</span></strong></div>');
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Project Cost Add Successfully</span></div>');
                         $('.projectCostMessege').css('color', 'green').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
-                        $('.alert').fadeOut(5000);
+                        $(':input','#cost-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
                     }
+
+                    $("#cost-list-div").load("/cost/list")
                 }
             });
         });

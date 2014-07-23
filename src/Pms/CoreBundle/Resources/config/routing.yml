@@ -2,6 +2,10 @@ item_add:
     pattern: /item
     defaults: { _controller: PmsCoreBundle:Core:itemAdd }
 
+item_list:
+    pattern: /item/list
+    defaults: { _controller: PmsCoreBundle:Core:itemList }
+
 item_delete:
     pattern: /item/delete/{id}
     defaults: { _controller: PmsCoreBundle:Core:itemDelete }
@@ -18,6 +22,10 @@ project_add:
     pattern: /project
     defaults: { _controller: PmsCoreBundle:Core:projectAdd }
 
+project_list:
+    pattern: /project/list
+    defaults: { _controller: PmsCoreBundle:Core:projectList }
+
 project_delete:
     pattern: /project/delete/{id}
     defaults: { _controller: PmsCoreBundle:Core:projectDelete }
@@ -33,6 +41,10 @@ project_update:
 cost_add:
     pattern: /project-cost
     defaults: { _controller: PmsCoreBundle:Core:projectCostAdd }
+
+cost_list:
+    pattern: /cost/list
+    defaults: { _controller: PmsCoreBundle:Core:projectCostList }
 
 cost_approved:
     pattern: /project-cost/approved/{id}

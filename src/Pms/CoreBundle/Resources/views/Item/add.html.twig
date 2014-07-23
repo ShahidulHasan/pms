@@ -21,7 +21,7 @@
                 </div>
 
                 <div class="portlet-body form">
-                    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': '', 'novalidate': 'novalidate'} }) }}
+                    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'item-form', 'novalidate': 'novalidate'} }) }}
                     <div class="form-body left">
 
                         <div class="alert alert-danger display-hide">
@@ -45,12 +45,12 @@
                                 </div>
                                 {#{{ form_widget(form.save, { 'attr': {'class': 'btn green button-width col-md-1', 'style': 'margin-top:2px;margin-left:10px;height:32px;' } }#}
                                 {#) }}#}
-                                <input type="button" name="ajaxSaveItem" onclick="this.form.reset();" value="Save" id="ajaxSaveItem" class="btn green button-width col-md-1" style="margin-top:2px;margin-left:10px;height:32px;">
+                                <input type="button" name="ajaxSaveItem" value="Save" id="ajaxSaveItem" class="btn green button-width col-md-1" style="margin-top:2px;margin-left:10px;height:32px;">
                                 <span class="userMessege" style="margin-left: 185px;"></span>
                             </div>
                         </div>
 
-                        <div class="form-actions fluid">
+                        <div class="form-actions fluid" id="item-list-div">
                             <div class="form-group">
                                 <div class="col-md-12">
                                 <div class="col-md-11" style="margin-top: 30px;margin-left: 4%;">
