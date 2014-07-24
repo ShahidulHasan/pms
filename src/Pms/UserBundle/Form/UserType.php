@@ -19,11 +19,11 @@ class UserType extends BaseType
             ->add('role', 'choice', array(
                 'mapped' => true,
                 'choices' => array(
-                    'ROLE_USER' => 'Data User',
+                    'ROLE_DATA' => 'Data User',
                     'ROLE_ADMIN' => 'Admin User'
                 ),
                 'required' => false,
-                'empty_value' => 'Select User Role',
+                'empty_value' => 'Select Role',
                 'empty_data' => null
             ))
             ->add('save', 'submit');

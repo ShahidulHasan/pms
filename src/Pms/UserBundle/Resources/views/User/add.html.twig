@@ -51,7 +51,7 @@
                                         <tbody>
                                         <tr>
                                             <td>
-                                                {{ form_widget(form.username, { 'attr': {'class': 'form-control', 'style': 'width:180px;' } }) }}
+                                                {{ form_widget(form.username, { 'attr': {'class': 'form-control', 'style': 'width:160px;' } }) }}
                                             </td>
                                             <td>
                                                 {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'style': 'width:220px;' } }) }}
@@ -63,7 +63,7 @@
                                                 {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control', 'style': 'width:140px;' } }) }}
                                             </td>
                                             <td>
-                                                {{ form_widget(form.role, { 'attr': {'class': 'form-control', 'style': 'width:140px;' } }) }}
+                                                {{ form_widget(form.role, { 'attr': {'class': 'form-control', 'style': 'width:160px;' } }) }}
                                             </td>
                                             <td>
                                                 {{ form_widget(form.save, { 'attr': {'class': 'btn green button-width', 'style': 'height:32px;' } } ) }}
@@ -96,12 +96,35 @@
                                             {% endif %}
 
                                             {% for user in users %}
+
                                                 {% set i = i + 1 %}
+                                                {% set color = [" "] %}
+
+                                                {% set role = user.roles[0] %}
+                                                {% set roles = [" "] %}
+                                                {% if role == 'ROLE_SUPER_ADMIN' %}{% set roles = roles|merge(["SUPER ADMIN"]) %}
+                                                {% elseif role == 'ROLE_ADMIN' %}{% set roles = roles|merge(["ADMIN"]) %}
+                                                {% elseif role == 'ROLE_DATA'  %}{% set roles = roles|merge(["USER"]) %}
+                                                {% endif %}
+
+                                                {% if user.enabled == 0 %}{% set color = color|merge(["red"]) %}
+                                                {% elseif user.enabled == 1 %}{% set color = color|merge(["green"]) %}
+                                                {% endif %}
 
                                                 <tr>
                                                     <td style="width: 60px;">{{ i }} .</td>
-                                                    <td style="width: 622px;">{{ user.username }}</td>
-                                                    <td style="width: 622px;">{{ user.role }}</td>
+                                                    <td style="width: 622px; color: {{ color|join(" ") }}">{{ user.username }}</td>
+                                                    <td style="width: 622px; color: {{ color|join(" ") }}">{{ roles | join(" ") }}</td>
+                                                    <td>
+                                                    {% if user.enabled == 1 %}
+                                                        <a href="/user/deactive/{{ user.id }}" style="width: 100px;" class="btn default btn-xs green-stripe"><i
+                                                                    class="fa fa-hand-o-right"></i> Deactivate</a>
+                                                    {% endif %}
+                                                    {% if user.enabled == 0 %}
+                                                        <a href="/user/active/{{ user.id }}" style="width: 100px;" class="btn default btn-xs red-stripe"><i
+                                                                    class="fa fa-hand-o-right"></i> Activate</a>
+                                                    {% endif %}
+                                                    </td>
                                                 </tr>
 
                                             {% endfor %}

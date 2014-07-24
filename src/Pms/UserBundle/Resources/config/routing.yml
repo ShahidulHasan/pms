@@ -6,6 +6,18 @@ user_add:
     pattern: /user
     defaults: { _controller: UserBundle:User:userAdd }
 
+user_deactive:
+    pattern: /user/deactive/{id}
+    defaults: { _controller: UserBundle:User:userDeactive }
+    requirements:
+          id: \d+
+
+user_active:
+    pattern: /user/active/{id}
+    defaults: { _controller: UserBundle:User:userActive }
+    requirements:
+          id: \d+
+
 fos_user_security:
      resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
