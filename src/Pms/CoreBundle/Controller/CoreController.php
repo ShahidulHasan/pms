@@ -2,7 +2,6 @@
 
 namespace Pms\CoreBundle\Controller;
 
-use ___PHPSTORM_HELPERS\object;
 use Pms\CoreBundle\Entity\Project;
 use Pms\CoreBundle\Entity\ProjectCost;
 use Pms\CoreBundle\Form\ProjectCostType;
@@ -474,7 +473,7 @@ class CoreController extends Controller
 
         $this->get('session')->getFlashBag()->add(
             'notice',
-            'Project Cost Successfully Deleted'
+            'Project Cost Successfully Approved'
         );
 
         return $this->redirect($this->generateUrl('cost_add'));
