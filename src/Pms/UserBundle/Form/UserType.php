@@ -4,9 +4,6 @@ namespace Pms\UserBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Regex;
 use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
 
 class UserType extends BaseType
@@ -19,6 +16,16 @@ class UserType extends BaseType
     {
         parent::buildForm($builder, $options);
         $builder
+            ->add('role', 'choice', array(
+                'mapped' => true,
+                'choices' => array(
+                    'ROLE_USER' => 'Data User',
+                    'ROLE_ADMIN' => 'Admin User'
+                ),
+                'required' => false,
+                'empty_value' => 'Select User Role',
+                'empty_data' => null
+            ))
             ->add('save', 'submit');
     }
 
