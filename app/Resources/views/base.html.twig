@@ -310,6 +310,51 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             });
         });
 
+        $("#username").change(function () {
+            var userName = $(this).val();
+
+            $.ajax({
+                type: "post",
+                url: Routing.generate('username_check'),
+                data: "userName=" + userName,
+                dataType: 'json',
+                success: function (msg) {
+                    if (msg.responseCode == 200) {
+                        $('.userMessege').css('color', 'red').html(msg.user_name).fadeIn(1000);
+                    }
+                    else {
+                        $('.userMessege').css('color', 'green').html(msg.user_name).fadeIn(1000);
+                    }
+                },
+                error: function () {
+                    alert('Script Error');
+                }
+            });
+        });
+
+        $("#email").change(function () {
+            var email = $(this).val();
+
+            $.ajax({
+                type: "post",
+                url: Routing.generate('email_check'),
+                data: "email=" + email,
+                dataType: 'json',
+                success: function (msg) {
+                    if (msg.responseCode == 200) {
+                        $('.emailMessege').css('color', 'red').html(msg.email_check).fadeIn(1000);
+                    }
+                    else {
+                        $('.emailMessege').css('color', 'green').html(msg.email_check).fadeIn(1000);
+                    }
+                },
+                error: function () {
+                    alert('Script Error');
+                }
+            });
+
+        });
+
         $("#ajaxSaveItem").click(function () {
             var sPageURL = window.location.pathname;
             var sURLVariables = sPageURL.split('/');
@@ -463,6 +508,29 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                     $("#cost-list-div").load("/cost/list")
                 }
             });
+        });
+
+        $("#user_save").click(function () {
+            var username = $("#user_username").val();
+            var email = $("#user_email").val();
+            var Password_first = $("#user_plainPassword_first").val();
+            var Password_second = $("#user_plainPassword_second").val();
+
+            if(!username){
+                return username;
+            }
+            if(!email){
+                return email;
+            }
+            if(!Password_first){
+                return Password_first;
+            }
+            if(!Password_second){
+                return Password_second;
+            }
+            if(Password_first === Password_second){
+                return Password_first;
+            }
         });
 
         {% endblock %}

@@ -17,11 +17,10 @@
             <div class="portlet box light-grey">
 
                 <div class="portlet-title">
-                    <div class="caption"><i class="fa fa-reorder"></i>Item</div>
+                    <div class="caption"><i class="fa fa-reorder"></i>User</div>
                 </div>
 
                 <div class="portlet-body form">
-                    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'item-form', 'novalidate': 'novalidate'} }) }}
                     <div class="form-body left">
 
                         <div class="alert alert-danger display-hide">
@@ -34,7 +33,7 @@
                         </div>
 
                         <div class="form-actions fluid">
-
+                            {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'user-form', 'novalidate': 'novalidate'} }) }}
                             <div class="portlet-body">
                                 <div class="col-md-11" style="margin-left: 40px;">
 
@@ -51,10 +50,10 @@
                                         <tbody>
                                         <tr>
                                             <td>
-                                                {{ form_widget(form.username, { 'attr': {'class': 'form-control', 'style': 'width:160px;' } }) }}
+                                                {{ form_widget(form.username, { 'attr': {'class': 'form-control', 'style': 'width:160px;', 'id': 'username' } }) }}
                                             </td>
                                             <td>
-                                                {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'style': 'width:220px;' } }) }}
+                                                {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'style': 'width:220px;', 'id': 'email' } }) }}
                                             </td>
                                             <td>
                                                 {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control', 'style': 'width:140px;' } }) }}
@@ -71,9 +70,9 @@
                                         </tr>
                                         </tbody>
                                     </table>
-
                                 </div>
                             </div>
+                            {{ form_end(form) }}
                         </div>
 
                         <div class="form-actions fluid" id="item-list-div">
@@ -139,7 +138,6 @@
                         </div>
 
                     </div>
-                    {{ form_end(form) }}
                 </div>
             </div>
         </div>

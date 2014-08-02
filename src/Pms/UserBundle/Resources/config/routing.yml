@@ -18,6 +18,12 @@ user_active:
     requirements:
           id: \d+
 
+username_check:
+    pattern: /username/check
+    defaults: { _controller: UserBundle:User:usernameCheck }
+    options:
+            expose: true
+
 fos_user_security:
      resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
