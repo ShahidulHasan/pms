@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
+        <thead>
+        <tr>
+            <th>Project</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for projectcost in projectcosts %}
+
+            <tr>
+                <td style="width: 150px;">{{ projectcost.projectName }}</td>
+                <td style="width: 90px;">{{ projectcost.total }}</td>
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+    <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
+        <thead>
+        <tr>
+            <th>Item</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for item in items %}
+
+            <tr>
+                <td style="width: 150px;">{{ item.itemName }}</td>
+                <td style="width: 90px;">{{ item.total }}</td>
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+{% endblock %}

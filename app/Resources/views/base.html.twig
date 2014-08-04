@@ -116,7 +116,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                 </div>
             </li>
 
-            {% set Route, Dashboard, User, Item, Project, Cost = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "] %}
+            {% set Route, Dashboard, User, Item, Project, Cost, Report = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "], [" "] %}
             {% set Url = Route|split('_') %}
             {% if Url[0] == 'homepage' %}{% set Dashboard = Dashboard|merge(["active"]) %}
             {% elseif Url[0] == 'fos' %}{% set Dashboard = Dashboard|merge(["active"]) %}
@@ -124,6 +124,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             {% elseif Url[0] == 'item' %}{% set Item = Item|merge(["active"]) %}
             {% elseif Url[0] == 'project' %}{% set Project = Project|merge(["active"]) %}
             {% elseif Url[0] == 'cost' %}{% set Cost = Cost|merge(["active"]) %}
+            {% elseif Url[0] == 'report' %}{% set Report = Report|merge(["active"]) %}
             {% endif %}
 
             <li class="{{ Dashboard|join(" ") }}">
@@ -168,6 +169,15 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                     <span class="selected"></span>
                 </a>
             </li>
+            {% endif %}
+            {% if is_granted("ROLE_DATA") %}
+                <li class="{{ Report|join(" ") }}">
+                    <a href="/report/project">
+                        <i class="fa fa-file-text"></i>
+                        <span class="title"> Report </span>
+                        <span class="selected"></span>
+                    </a>
+                </li>
             {% endif %}
         </ul>
     </div>

@@ -87,3 +87,6 @@ project_cost_ajax_add:
     defaults: { _controller: PmsCoreBundle:Core:projectCostAjaxAdd }
     options:
             expose: true
+report_project:
+    pattern: /report/project
+    defaults: { _controller: PmsCoreBundle:Core:projectReport }

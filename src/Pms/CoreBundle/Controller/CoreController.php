@@ -2,20 +2,45 @@
 
 namespace Pms\CoreBundle\Controller;
 
+use Doctrine\ORM\Repository;
+use Pms\CoreBundle\Entity\Item;
 use Pms\CoreBundle\Entity\Project;
 use Pms\CoreBundle\Entity\ProjectCost;
+use Pms\CoreBundle\Form\ItemType;
 use Pms\CoreBundle\Form\ProjectCostType;
 use Pms\CoreBundle\Form\ProjectType;
 use Pms\CoreBundle\Form\SearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Doctrine\ORM\Repository;
 use Symfony\Component\HttpFoundation\Request;
-use Pms\CoreBundle\Entity\Item;
-use Pms\CoreBundle\Form\ItemType;
 use Symfony\Component\HttpFoundation\Response;
 
 class CoreController extends Controller
 {
+    public function projectReportAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->getRepository('PmsCoreBundle:ProjectCost')
+            ->createQueryBuilder('pc')
+            ->select('p.projectName')
+            ->addSelect('SUM(pc.lineTotal) as total')
+            ->join('pc.project', 'p')
+            ->groupBy('p.id');
+        $projectCost = $query->getQuery()->getResult();
+
+        $query1 = $em->getRepository('PmsCoreBundle:ProjectCost')
+            ->createQueryBuilder('pc')
+            ->select('p.itemName')
+            ->addSelect('SUM(pc.lineTotal) as total')
+            ->join('pc.item', 'p')
+            ->groupBy('p.id');
+        $item = $query1->getQuery()->getResult();
+
+        return $this->render('PmsCoreBundle:Report:project.html.twig', array(
+            'projectcosts' => $projectCost,
+            'items' => $item,
+        ));
+    }
+
     public function itemListAction()
     {
         $dql = "SELECT a FROM PmsCoreBundle:Item a ORDER BY a.id DESC";
@@ -509,7 +534,7 @@ class CoreController extends Controller
             }
         }
 
-        $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1 = 1 ";
+        $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1 = 1";
 
         if(!empty($_GET['search']['project']) && !empty($_GET['search']['item']) && !empty($_GET['start_date']) && !empty($_GET['end_date']) ){
 
@@ -611,6 +636,17 @@ class CoreController extends Controller
             return new Response($return, 200, array('Content-Type' => 'application/json'));
         }
     }
+
+//    public function queryBuild($dql)
+//    {
+//        return $this->getEntityManager()
+//            ->createQuery(
+//                'SELECT p FROM AcmeStoreBundle:Product p ORDER BY p.name ASC'
+//            )
+//            ->getResult();
+//
+//        return array($value, $page);
+//    }
 
     public function paginate($dql)
     {
