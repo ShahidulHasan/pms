@@ -28,7 +28,7 @@ class CoreController extends Controller
             ->where('pc.status = 1')
             ->join('pc.project', 'p')
             ->groupBy('p.id');
-        $projectCost = $query->getQuery()->getResult();
+        $projectCosts = $query->getQuery()->getResult();
 
         $query2 = $em->getRepository('PmsCoreBundle:ProjectCost')
             ->createQueryBuilder('p')
@@ -37,8 +37,12 @@ class CoreController extends Controller
             ->getQuery();
         $cost = $query2->getResult();
 
+        foreach($projectCosts as $key => $projectCost){
+            $projectCosts[$key]['percentage'] = ($projectCost['total']*100)/$cost[0]['total'];
+        }
+
         return $this->render('PmsCoreBundle:Report:project.html.twig', array(
-            'projectcosts' => $projectCost,
+            'projectcosts' => $projectCosts,
             'cost' => $cost,
         ));
     }

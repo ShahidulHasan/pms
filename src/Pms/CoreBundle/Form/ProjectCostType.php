@@ -70,6 +70,24 @@ class ProjectCostType extends AbstractType
                 ),
                 'read_only' => true
             ))
+            ->add('invoice', 'text', array(
+                'constraints' => array(
+                    new NotBlank()
+                ),
+                'attr' => array(
+                    'placeholder' => 'Invoice',
+                    'autocomplete' => 'off'
+                )
+            ))
+            ->add('gsn', 'text', array(
+                'constraints' => array(
+                    new NotBlank()
+                ),
+                'attr' => array(
+                    'placeholder' => 'Gsn',
+                    'autocomplete' => 'off'
+                )
+            ))
 //            ->add('save', 'submit')
         ;
     }

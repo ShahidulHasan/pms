@@ -101,6 +101,20 @@ class ProjectCost
     private $status;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="invoice", type="string", length=255)
+     */
+    private $invoice;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="gsn", type="string", length=255)
+     */
+    private $gsn;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -361,5 +375,51 @@ class ProjectCost
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set invoice
+     *
+     * @param string $invoice
+     * @return ProjectCost
+     */
+    public function setInvoice($invoice)
+    {
+        $this->invoice = $invoice;
+
+        return $this;
+    }
+
+    /**
+     * Get invoice
+     *
+     * @return string
+     */
+    public function getInvoice()
+    {
+        return $this->invoice;
+    }
+
+    /**
+     * Set gsn
+     *
+     * @param string $gsn
+     * @return ProjectCost
+     */
+    public function setGsn($gsn)
+    {
+        $this->gsn = $gsn;
+
+        return $this;
+    }
+
+    /**
+     * Get gsn
+     *
+     * @return string
+     */
+    public function getGsn()
+    {
+        return $this->gsn;
     }
 }
