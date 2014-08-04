@@ -2,7 +2,14 @@
 
 {% block body %}
 
-    <div id="pie_chart" class="chart"></div>
+    <div class="portlet box red">
+        <div class="portlet-title">
+            <div class="caption"><i class="fa fa-reorder"></i>Graph11</div>
+        </div>
+        <div class="portlet-body">
+            <div id="interactive" class="chart"></div>
+        </div>
+    </div>
 
     <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
         <thead>
@@ -17,7 +24,7 @@
 
             <tr>
                 <td style="width: 150px;">{{ projectcost.projectName }}</td>
-                <td style="width: 90px;">{{ projectcost.total }}</td>
+                <td style="width: 90px;">{{ projectcost.percentage }}</td>
             </tr>
 
         {% endfor %}

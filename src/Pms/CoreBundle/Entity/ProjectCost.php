@@ -115,6 +115,22 @@ class ProjectCost
     private $gsn;
 
     /**
+     * @var Project
+     *
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Category", inversedBy="projectCost")
+     * @ORM\JoinColumn(name="category")
+     */
+    private $category;
+
+    /**
+     * @var Project
+     *
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\SubCategory", inversedBy="projectCost")
+     * @ORM\JoinColumn(name="sub_category")
+     */
+    private $subCategory;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -421,5 +437,51 @@ class ProjectCost
     public function getGsn()
     {
         return $this->gsn;
+    }
+
+    /**
+     * Set category
+     *
+     * @param integer $category
+     * @return ProjectCost
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return integer
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set subCategory
+     *
+     * @param integer $subCategory
+     * @return ProjectCost
+     */
+    public function setSubCategory($subCategory)
+    {
+        $this->subCategory = $subCategory;
+
+        return $this;
+    }
+
+    /**
+     * Get subCategory
+     *
+     * @return integer
+     */
+    public function getSubCategory()
+    {
+        return $this->subCategory;
     }
 }

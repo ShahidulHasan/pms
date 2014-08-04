@@ -54,7 +54,7 @@ class CoreController extends Controller
         list($category, $page) = $this->paginate($dql);
 
         return $this->render('PmsCoreBundle:Category:list.html.twig', array(
-            'category' => $category,
+            'categories' => $category,
             'page' => $page,
         ));
     }
@@ -698,6 +698,8 @@ class CoreController extends Controller
         $unitPrice = $projectCostArray[4];
         $lineTotal = $projectCostArray[5];
         $updateId = $projectCostArray[6];
+        $invoice = $projectCostArray[7];
+        $gsn = $projectCostArray[8];
 
         if(!empty($dateOfCost) && !empty($project) && !empty($item) && !empty($quantity) && !empty($unitPrice) && !empty($lineTotal)) {
 
@@ -714,6 +716,8 @@ class CoreController extends Controller
                 $projectcost->setQuantity($quantity);
                 $projectcost->setUnitPrice($unitPrice);
                 $projectcost->setLineTotal($lineTotal);
+                $projectcost->setInvoice($invoice);
+                $projectcost->setGsn($gsn);
 
                 $this->getDoctrine()->getManager()->persist($projectcost);
                 $this->getDoctrine()->getManager()->flush();
@@ -736,6 +740,8 @@ class CoreController extends Controller
                 $entity->setQuantity($quantity);
                 $entity->setUnitPrice($unitPrice);
                 $entity->setLineTotal($lineTotal);
+                $entity->setInvoice($invoice);
+                $entity->setGsn($gsn);
 
                 $this->getDoctrine()->getRepository("PmsCoreBundle:ProjectCost")->create($entity);
 
@@ -751,17 +757,6 @@ class CoreController extends Controller
             return new Response($return, 200, array('Content-Type' => 'application/json'));
         }
     }
-
-//    public function queryBuild($dql)
-//    {
-//        return $this->getEntityManager()
-//            ->createQuery(
-//                'SELECT p FROM AcmeStoreBundle:Product p ORDER BY p.name ASC'
-//            )
-//            ->getResult();
-//
-//        return array($value, $page);
-//    }
 
     public function paginate($dql)
     {

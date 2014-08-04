@@ -6,12 +6,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Category
+ * SubCategory
  *
- * @ORM\Table(name="category")
+ * @ORM\Table(name="sub_category")
  * @ORM\Entity(repositoryClass="Pms\UserBundle\Entity\UserRepository")
  */
-class Category
+class SubCategory
 {
     /**
      * @var integer
@@ -25,23 +25,24 @@ class Category
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\ProjectCost", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\ProjectCost", mappedBy="subCategory")
      */
     private $projectCost;
 
     /**
-     * @var ArrayCollection
+     * @var Project
      *
-     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\SubCategory", mappedBy="subCategory")
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Category", inversedBy="category")
+     * @ORM\JoinColumn(name="category")
      */
-    private $category;
+    private $subCategory;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="category_name", type="string", length=255)
+     * @ORM\Column(name="sub_category_name", type="string", length=255)
      */
-    private $categoryName;
+    private $subCategoryName;
 
     /**
      * @var string
@@ -63,7 +64,6 @@ class Category
      * @ORM\Column(name="status", type="integer")
      */
     private $status;
-
     /**
      * Get id
      *
@@ -75,33 +75,33 @@ class Category
     }
 
     /**
-     * Set categoryName
+     * Set subCategoryName
      *
-     * @param string $categoryName
-     * @return Category
+     * @param string $subCategoryName
+     * @return SubCategory
      */
-    public function setCategoryName($categoryName)
+    public function setSubCategoryName($subCategoryName)
     {
-        $this->categoryName = $categoryName;
+        $this->subCategoryName = $subCategoryName;
 
         return $this;
     }
 
     /**
-     * Get categoryName
+     * Get subCategoryName
      *
      * @return string
      */
-    public function getCategoryName()
+    public function getSubCategoryName()
     {
-        return $this->categoryName;
+        return $this->subCategoryName;
     }
 
     /**
      * Set createdBy
      *
      * @param string $createdBy
-     * @return Category
+     * @return SubCategory
      */
     public function setCreatedBy($createdBy)
     {
@@ -124,7 +124,7 @@ class Category
      * Set createdDate
      *
      * @param \DateTime $createdDate
-     * @return Category
+     * @return SubCategory
      */
     public function setCreatedDate($createdDate)
     {
@@ -147,7 +147,7 @@ class Category
      * Set status
      *
      * @param integer $status
-     * @return Category
+     * @return SubCategory
      */
     public function setStatus($status)
     {
@@ -174,11 +174,27 @@ class Category
         return $this->projectCost;
     }
 
+
     /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
+     * Set subCategory
+     *
+     * @param integer $subCategory
+     * @return SubCategory
      */
-    public function getCategory()
+    public function setSubCategory($subCategory)
     {
-        return $this->category;
+        $this->subCategory = $subCategory;
+
+        return $this;
+    }
+
+    /**
+     * Get subCategory
+     *
+     * @return integer
+     */
+    public function getSubCategory()
+    {
+        return $this->subCategory;
     }
 }

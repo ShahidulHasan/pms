@@ -54,14 +54,14 @@
                                                 <td>
                                                     <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
                                                         <span class="input-group-btn"></span>
-                                                        {{ form_widget(form.dateOfCost, { 'attr': {'class': 'form-control'} }) }}
+                                                        {{ form_widget(form.dateOfCost, { 'attr': {'class': 'form-control', 'style': 'width:152px;'} }) }}
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    {{ form_widget(form.project, { 'attr': {'class': 'form-control', 'style': 'width:140px;' } }) }}
+                                                    {{ form_widget(form.project, { 'attr': {'class': 'form-control', 'style': 'width:152px;' } }) }}
                                                 </td>
                                                 <td>
-                                                    {{ form_widget(form.item, { 'attr': {'class': 'form-control', 'style': 'width:140px;' } }) }}
+                                                    {{ form_widget(form.item, { 'attr': {'class': 'form-control', 'style': 'width:152px;' } }) }}
                                                 </td>
                                                 <td>
                                                     {{ form_widget(form.quantity, { 'attr': {'class': 'form-control quantity'} }) }}
@@ -74,18 +74,18 @@
                                                 </td>
                                             </tr>
                                             <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td>
-                                                    {{ form_widget(form.invoice, { 'attr': {'class': 'form-control unitPrice'} }) }}
+                                                    {{ form_widget(form.invoice, { 'attr': {'class': 'form-control'} }) }}
                                                 </td>
                                                 <td>
-                                                    {{ form_widget(form.gsn, { 'attr': {'class': 'form-control lineTotal'} }) }}
+                                                    {{ form_widget(form.gsn, { 'attr': {'class': 'form-control'} }) }}
                                                 </td>
                                                 <td>
                                                     <input type="button" name="ajaxSaveProjectCost" value="Save" id="ajaxSaveProjectCost" class="btn green button-width" style="height:32px;">
                                                 </td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
                                             </tr>
                                         </tbody>
                                     </table>

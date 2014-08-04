@@ -122,7 +122,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             {% elseif Url[0] == 'fos' %}{% set Dashboard = Dashboard|merge(["active"]) %}
             {% elseif Url[0] == 'user' %}{% set User = User|merge(["active"]) %}
             {% elseif Url[0] == 'item' %}{% set Item = Item|merge(["active"]) %}
-            {% elseif Url[0] == 'category' %}{% set Item = Category|merge(["active"]) %}
+            {% elseif Url[0] == 'category' %}{% set Category = Category|merge(["active"]) %}
             {% elseif Url[0] == 'project' %}{% set Project = Project|merge(["active"]) %}
             {% elseif Url[0] == 'cost' %}{% set Cost = Cost|merge(["active"]) %}
             {% elseif Url[0] == 'report' %}{% set Report = Report|merge(["active"]) %}
@@ -544,8 +544,10 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             var quantity = $("#projectcost_quantity").val();
             var unitPrice = $("#projectcost_unitPrice").val();
             var lineTotal = $("#projectcost_lineTotal").val();
+            var invoice = $("#projectcost_invoice").val();
+            var gsn = $("#projectcost_gsn").val();
 
-            var projectCostArray = new Array(dateOfCost, project, item, quantity, unitPrice, lineTotal, sURLVariables[3]);
+            var projectCostArray = new Array(dateOfCost, project, item, quantity, unitPrice, lineTotal, sURLVariables[3], invoice, gsn);
 
             $.ajax({
                 type: "post",
@@ -607,61 +609,61 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             }
         });
 
+//            Charts.initPieCharts();
 
-            Charts.initPieCharts();
-//        var data = [];
-//        var series = Math.floor(Math.random() * 10) + 1;
-//        series = series < 5 ? 5 : series;
-//
-//        for (var i = 0; i < series; i++) {
-//            data[i] = {
-//                label: "Series" + (i + 1),
-//                data: Math.floor(Math.random() * 100) + 1
-//            }
-//        }
-//
+        var data = [];
+        var series = Math.floor(Math.random() * 10) + 1;
+        series = series < 5 ? 5 : series;
+
+        for (var i = 0; i < series; i++) {
+            data[i] = {
+                label: "Series" + (i + 1),
+                data: Math.floor(Math.random() * 100) + 1
+            }
+        }
+
 //        console.log(data);
-//
-//        $.plot($("#interactive"), data, {
-//
-//            series: {
-//                pie: {
-//                    show: true,
-//                    label: {
-//                        show: true,
-//                        radius: 3 / 4,
-//                        formatter: function (label, series) {
-//
-//                            return '<div style="font-size:8pt;text-align:center;padding:2px;color:white;">' + label + '<br/>' + Math.round(series.percent) + '%</div>';
-//                        },
-//                        background: {
-//                            opacity: 0.8
-//                        }
-//                    }
-//                }
-//            },
-//            grid: {
-//                hoverable: true,
-//                clickable: true
-//            }
-//        });
-//        $("#interactive").bind("plothover", pieHover);
-//        $("#interactive").bind("plotclick", pieClick);
-//
-//        function pieHover(event, pos, obj) {
-//
-//            if (!obj)
-//                return;
-//            percent = parseFloat(obj.series.percent).toFixed(2);
-//            $("#hover").html('<span style="font-weight: bold; color: ' + obj.series.color + '">' + obj.series.label + ' (' + percent + '%)</span>');
-//        }
-//
-//        function pieClick(event, pos, obj) {
-//            if (!obj)
-//                return;
-//            percent = parseFloat(obj.series.percent).toFixed(2);
-//            alert('' + obj.series.label + ': ' + percent + '%');
-//        }
+
+        $.plot($("#interactive"), data, {
+
+            series: {
+                pie: {
+                    show: true,
+                    label: {
+                        show: true,
+                        radius: 3 / 4,
+                        formatter: function (label, series) {
+
+                            return '<div style="font-size:8pt;text-align:center;padding:2px;color:white;">' + label + '<br/>' + Math.round(series.percent) + '%</div>';
+                        },
+                        background: {
+                            opacity: 0.8
+                        }
+                    }
+                }
+            },
+            grid: {
+                hoverable: true,
+                clickable: true
+            }
+        });
+        $("#interactive").bind("plothover", pieHover);
+        $("#interactive").bind("plotclick", pieClick);
+
+        function pieHover(event, pos, obj) {
+
+            if (!obj)
+                return;
+            percent = parseFloat(obj.series.percent).toFixed(2);
+            $("#hover").html('<span style="font-weight: bold; color: ' + obj.series.color + '">' + obj.series.label + ' (' + percent + '%)</span>');
+        }
+
+        function pieClick(event, pos, obj) {
+            if (!obj)
+                return;
+            percent = parseFloat(obj.series.percent).toFixed(2);
+            alert('' + obj.series.label + ': ' + percent + '%');
+        }
 
         {% endblock %}
     });

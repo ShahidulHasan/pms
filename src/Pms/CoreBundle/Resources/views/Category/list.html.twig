@@ -27,14 +27,14 @@
 
                     <tr>
                         <td style="width: 60px;">{{ i }} .</td>
-                        <td style="width: 622px; color: {{ color|join("") }};">{{ category.itemName }}</td>
+                        <td style="width: 622px; color: {{ color|join("") }};">{{ category.categoryName }}</td>
                         {% if category.status == 1 %}
                             <td style="width: 80px;">
-                                <a href="/item/delete/{{ category.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
+                                <a href="/category/delete/{{ category.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
                                             class="fa fa-trash-o"></i> Delete</a>
                             </td>
                             <td>
-                                <a href="/item/update/{{ category.id }}" style="width: 85px;" class="btn default btn-xs blue-stripe"><i
+                                <a href="/category/update/{{ category.id }}" style="width: 85px;" class="btn default btn-xs blue-stripe"><i
                                             class="fa fa-edit"></i> Update</a>
                             </td>
                         {% endif %}

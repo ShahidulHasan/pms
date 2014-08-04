@@ -31,7 +31,12 @@ class ProjectCostType extends AbstractType
                 'property' => 'projectName',
                 'required' => false,
                 'empty_value' => 'Select Project',
-                'empty_data' => null
+                'empty_data' => null,
+                'query_builder' => function (\Pms\UserBundle\Entity\UserRepository $repository)
+                    {
+                        return $repository->createQueryBuilder('s')
+                            ->where('s.status = 1');
+                    }
             ))
             ->add('item', 'entity', array(
                 'constraints' => array(
@@ -41,7 +46,12 @@ class ProjectCostType extends AbstractType
                 'property' => 'itemName',
                 'required' => false,
                 'empty_value' => 'Select Item',
-                'empty_data' => null
+                'empty_data' => null,
+                'query_builder' => function (\Pms\UserBundle\Entity\UserRepository $repository)
+                    {
+                        return $repository->createQueryBuilder('s')
+                            ->where('s.status = 1');
+                    }
             ))
             ->add('quantity', 'text', array(
                 'constraints' => array(
