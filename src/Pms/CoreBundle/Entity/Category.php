@@ -29,12 +29,12 @@ class Category
      */
     private $projectCost;
 
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\SubCategory", mappedBy="subCategory")
-     */
-    private $category;
+//    /**
+//     * @var ArrayCollection
+//     *
+//     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\SubCategory", mappedBy="subCategory")
+//     */
+//    private $category;
 
     /**
      * @var string
@@ -63,6 +63,13 @@ class Category
      * @ORM\Column(name="status", type="integer")
      */
     private $status;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="parent", type="integer")
+     */
+    private $parent;
 
     /**
      * Get id
@@ -167,6 +174,19 @@ class Category
     }
 
     /**
+     * Set projectCost
+     *
+     * @param integer $projectCost
+     * @return Category
+     */
+    public function setProjectCost($projectCost)
+    {
+        $this->projectCost = $projectCost;
+
+        return $this;
+    }
+
+    /**
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function getProjectCost()
@@ -175,10 +195,33 @@ class Category
     }
 
     /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
+     * Set parent
+     *
+     * @param integer $parent
+     * @return Category
      */
-    public function getCategory()
+    public function setParent($parent)
     {
-        return $this->category;
+        $this->parent = $parent;
+
+        return $this;
     }
+
+    /**
+     * Get parent
+     *
+     * @return integer
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+//    /**
+//     * @return \Doctrine\Common\Collections\ArrayCollection
+//     */
+//    public function getCategory()
+//    {
+//        return $this->category;
+//    }
 }

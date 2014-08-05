@@ -115,10 +115,8 @@ category_update:
           id:  \d+
 
 sub_category_add:
-    pattern: /sub-category/add/{id}
+    pattern: /sub-category
     defaults: { _controller: PmsCoreBundle:Core:subCategoryAdd }
-    requirements:
-          id:  \d+
 
 report_project:
     pattern: /report/project

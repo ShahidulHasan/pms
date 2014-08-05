@@ -116,13 +116,14 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                 </div>
             </li>
 
-            {% set Route, Dashboard, User, Item, Project, Cost, Report, Category = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "], [" "], [" "] %}
+            {% set Route, Dashboard, User, Item, Project, Cost, Report, Category, SubCategory = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "] %}
             {% set Url = Route|split('_') %}
             {% if Url[0] == 'homepage' %}{% set Dashboard = Dashboard|merge(["active"]) %}
             {% elseif Url[0] == 'fos' %}{% set Dashboard = Dashboard|merge(["active"]) %}
             {% elseif Url[0] == 'user' %}{% set User = User|merge(["active"]) %}
             {% elseif Url[0] == 'item' %}{% set Item = Item|merge(["active"]) %}
             {% elseif Url[0] == 'category' %}{% set Category = Category|merge(["active"]) %}
+            {% elseif Url[0] == 'sub' %}{% set SubCategory = SubCategory|merge(["active"]) %}
             {% elseif Url[0] == 'project' %}{% set Project = Project|merge(["active"]) %}
             {% elseif Url[0] == 'cost' %}{% set Cost = Cost|merge(["active"]) %}
             {% elseif Url[0] == 'report' %}{% set Report = Report|merge(["active"]) %}
@@ -158,6 +159,15 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                     <a href="/category">
                         <i class="fa fa-gift"></i>
                         <span class="title"> Category </span>
+                        <span class="selected"></span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if is_granted("ROLE_ADMIN") %}
+                <li class="{{ SubCategory|join(" ") }}">
+                    <a href="/sub-category">
+                        <i class="fa fa-gift"></i>
+                        <span class="title"> Sub-Category </span>
                         <span class="selected"></span>
                     </a>
                 </li>

@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button>
+            <strong></strong> {{ flashMessage }}.
+        </div>
+    {% endfor %}
+
+    <span class="categoryMessege"></span>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="portlet box light-grey">
+
+                <div class="portlet-title">
+                    <div class="caption"><i class="fa fa-reorder"></i>Category</div>
+                </div>
+
+                <div class="portlet-body form">
+
+                    <div class="form-body left">
+
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            Please check below.
+                        </div>
+                        <div class="alert alert-success display-hide">
+                            <button class="close" data-close="alert"></button>
+                            Successfully insert.
+                        </div>
+
+                        <div class="form-actions fluid">
+                            {{ form_start(sub, { 'attr': {'class': 'form-horizontal', 'id': 'category-form', 'novalidate': 'novalidate'} }) }}
+                            <div class="form-group">
+                                {{ form_label(sub.subcategory, 'Category Name :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'margin-right:-50px;font-weight:bold;' } }
+                                ) }}
+                                <div class="col-md-8">
+                                    <div class="input-icon">
+                                        {{ form_widget(sub.subcategory, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;' } }) }}
+                                    </div>
+                                </div>
+                                <input type="button" name="ajaxSaveCategory" value="Save" id="ajaxSaveCategory" class="btn green button-width col-md-1" style="margin-top:2px;margin-left:10px;height:32px;">
+                                <span class="userMessege" style="margin-left: 185px;"></span>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="input-icon">
+                                    {{ form_widget(sub.category, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;' } }) }}
+                                </div>
+                            </div>
+                            {{ form_end(sub) }}
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

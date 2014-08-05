@@ -12,6 +12,7 @@ use Pms\CoreBundle\Form\ItemType;
 use Pms\CoreBundle\Form\ProjectCostType;
 use Pms\CoreBundle\Form\ProjectType;
 use Pms\CoreBundle\Form\SearchType;
+use Pms\CoreBundle\Form\SubCategoryType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -145,6 +146,7 @@ class CoreController extends Controller
                 $entity->setCreatedBy($user);
                 $entity->setCreatedDate(new \DateTime());
                 $entity->setStatus(1);
+                $entity->setParent(0);
 
                 $this->getDoctrine()->getRepository("PmsCoreBundle:Category")->create($entity);
 
@@ -208,19 +210,12 @@ class CoreController extends Controller
         ));
     }
 
-    public function subCategoryAddAction(Request $request, Category $entity)
+    public function subCategoryAddAction()
     {
-        $form = $this->createForm(new CategoryType(), $entity);
-
-        $dql = "SELECT a FROM PmsCoreBundle:Category a ORDER BY a.id DESC";
-
-        list($category, $page) = $this->paginate($dql);
+        $sub = $this->createForm(new SubCategoryType());
 
         return $this->render('PmsCoreBundle:Category:subcategory.html.twig', array(
-            'categories' => $category,
-            'entity' => $entity,
-            'form' => $form->createView(),
-            'page' => $page,
+            'sub' => $sub->createView(),
         ));
     }
 
