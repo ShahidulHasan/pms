@@ -59,7 +59,7 @@
                                             <tr>
                                                 <th>Sl</th>
                                                 <th>Category Name</th>
-                                                <th>Sub-Category</th>
+                                                {#<th>Sub-Category</th>#}
                                                 <th>Status</th>
                                                 <th>Edit</th>
                                             </tr>
@@ -81,10 +81,10 @@
                                                 <tr>
                                                     <td style="width: 60px;">{{ i }} .</td>
                                                     <td style="width: 622px; color: {{ color|join("") }};">{{ category.categoryName }}</td>
-                                                    <td>
-                                                        <a href="/sub-category/add/{{ category.id }}" style="width: 85px;" class="btn default btn-xs blue-stripe"><i
-                                                                    class="fa fa-plus"></i> Add</a>
-                                                    </td>
+                                                    {#<td>#}
+                                                        {#<a href="/sub-category/add/{{ category.id }}" style="width: 85px;" class="btn default btn-xs blue-stripe"><i#}
+                                                                    {#class="fa fa-plus"></i> Add</a>#}
+                                                    {#</td>#}
                                                     {% if category.status == 1 %}
                                                         <td style="width: 80px;">
                                                             <a href="/category/delete/{{ category.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
