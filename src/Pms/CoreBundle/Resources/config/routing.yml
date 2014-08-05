@@ -117,3 +117,9 @@ category_update:
 report_project:
     pattern: /report/project
     defaults: { _controller: PmsCoreBundle:Core:projectReport }
+
+report_project_details:
+    pattern: /report/project/details/{projectName}
+    defaults: { _controller: PmsCoreBundle:Core:projectDetails }
+    requirements:
+          id:  \d+

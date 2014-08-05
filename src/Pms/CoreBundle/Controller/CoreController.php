@@ -18,6 +18,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CoreController extends Controller
 {
+    public function projectDetailsAction($projectName)
+    {
+        return $this->render('PmsCoreBundle:Report:project_details.html.twig', array(
+        ));
+    }
+
     public function projectReportAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -37,13 +43,20 @@ class CoreController extends Controller
             ->getQuery();
         $cost = $query2->getResult();
 
+        $reportData = array();
+
         foreach($projectCosts as $key => $projectCost){
+            $data = array();
+            $data['data'] = ($projectCost['total']*100)/$cost[0]['total'];
+            $data['label'] = $projectCost['projectName'];
+            $reportData[] = $data;
             $projectCosts[$key]['percentage'] = ($projectCost['total']*100)/$cost[0]['total'];
         }
 
         return $this->render('PmsCoreBundle:Report:project.html.twig', array(
             'projectcosts' => $projectCosts,
             'cost' => $cost,
+            'reportData' => $reportData,
         ));
     }
 
