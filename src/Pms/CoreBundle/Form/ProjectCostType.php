@@ -89,12 +89,12 @@ class ProjectCostType extends AbstractType
                     'autocomplete' => 'off'
                 )
             ))
-            ->add('gsn', 'text', array(
+            ->add('grn', 'text', array(
                 'constraints' => array(
                     new NotBlank()
                 ),
                 'attr' => array(
-                    'placeholder' => 'Gsn',
+                    'placeholder' => 'Grn',
                     'autocomplete' => 'off'
                 )
             ))

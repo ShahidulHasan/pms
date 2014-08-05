@@ -208,6 +208,22 @@ class CoreController extends Controller
         ));
     }
 
+    public function subCategoryAddAction(Request $request, Category $entity)
+    {
+        $form = $this->createForm(new CategoryType(), $entity);
+
+        $dql = "SELECT a FROM PmsCoreBundle:Category a ORDER BY a.id DESC";
+
+        list($category, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:Category:subcategory.html.twig', array(
+            'categories' => $category,
+            'entity' => $entity,
+            'form' => $form->createView(),
+            'page' => $page,
+        ));
+    }
+
     public function itemListAction()
     {
         $dql = "SELECT a FROM PmsCoreBundle:Item a ORDER BY a.id DESC";
@@ -751,7 +767,7 @@ class CoreController extends Controller
         $lineTotal = $projectCostArray[5];
         $updateId = $projectCostArray[6];
         $invoice = $projectCostArray[7];
-        $gsn = $projectCostArray[8];
+        $grn = $projectCostArray[8];
 
         if(!empty($dateOfCost) && !empty($project) && !empty($item) && !empty($quantity) && !empty($unitPrice) && !empty($lineTotal)) {
 
@@ -769,7 +785,7 @@ class CoreController extends Controller
                 $projectcost->setUnitPrice($unitPrice);
                 $projectcost->setLineTotal($lineTotal);
                 $projectcost->setInvoice($invoice);
-                $projectcost->setGsn($gsn);
+                $projectcost->setGrn($grn);
 
                 $this->getDoctrine()->getManager()->persist($projectcost);
                 $this->getDoctrine()->getManager()->flush();
@@ -793,7 +809,7 @@ class CoreController extends Controller
                 $entity->setUnitPrice($unitPrice);
                 $entity->setLineTotal($lineTotal);
                 $entity->setInvoice($invoice);
-                $entity->setGsn($gsn);
+                $entity->setGrn($grn);
 
                 $this->getDoctrine()->getRepository("PmsCoreBundle:ProjectCost")->create($entity);
 

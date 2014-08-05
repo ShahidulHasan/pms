@@ -114,6 +114,12 @@ category_update:
     requirements:
           id:  \d+
 
+sub_category_add:
+    pattern: /sub-category/add/{id}
+    defaults: { _controller: PmsCoreBundle:Core:subCategoryAdd }
+    requirements:
+          id:  \d+
+
 report_project:
     pattern: /report/project
     defaults: { _controller: PmsCoreBundle:Core:projectReport }

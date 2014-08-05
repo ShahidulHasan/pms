@@ -110,9 +110,9 @@ class ProjectCost
     /**
      * @var string
      *
-     * @ORM\Column(name="gsn", type="string", length=255)
+     * @ORM\Column(name="grn", type="string", length=255)
      */
-    private $gsn;
+    private $grn;
 
     /**
      * @var Project
@@ -417,26 +417,26 @@ class ProjectCost
     }
 
     /**
-     * Set gsn
+     * Set grn
      *
-     * @param string $gsn
+     * @param string $grn
      * @return ProjectCost
      */
-    public function setGsn($gsn)
+    public function setGrn($grn)
     {
-        $this->gsn = $gsn;
+        $this->grn = $grn;
 
         return $this;
     }
 
     /**
-     * Get gsn
+     * Get grn
      *
      * @return string
      */
-    public function getGsn()
+    public function getGrn()
     {
-        return $this->gsn;
+        return $this->grn;
     }
 
     /**

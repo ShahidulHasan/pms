@@ -545,9 +545,9 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             var unitPrice = $("#projectcost_unitPrice").val();
             var lineTotal = $("#projectcost_lineTotal").val();
             var invoice = $("#projectcost_invoice").val();
-            var gsn = $("#projectcost_gsn").val();
+            var grn = $("#projectcost_grn").val();
 
-            var projectCostArray = new Array(dateOfCost, project, item, quantity, unitPrice, lineTotal, sURLVariables[3], invoice, gsn);
+            var projectCostArray = new Array(dateOfCost, project, item, quantity, unitPrice, lineTotal, sURLVariables[3], invoice, grn);
 
             $.ajax({
                 type: "post",
