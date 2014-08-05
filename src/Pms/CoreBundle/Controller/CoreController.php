@@ -18,9 +18,47 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CoreController extends Controller
 {
-    public function projectDetailsAction($projectName)
+    public function projectDetailsAction($id)
     {
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->getRepository('PmsCoreBundle:ProjectCost')
+            ->createQueryBuilder('pc')
+            ->select('p.projectName')
+            ->addSelect('i.itemName')
+            ->addSelect('i.id')
+            ->addSelect('SUM(pc.lineTotal) as total')
+            ->where('pc.status = 1')
+            ->andWhere('pc.project = ?1')
+            ->setParameter('1', $id)
+            ->join('pc.project', 'p')
+            ->join('pc.item', 'i')
+            ->groupBy('i.id');
+        $projectItems = $query->getQuery()->getResult();
+
+        $query2 = $em->getRepository('PmsCoreBundle:ProjectCost')
+            ->createQueryBuilder('pc')
+            ->Select('SUM(pc.lineTotal) as total')
+            ->where('pc.status = 1')
+            ->andWhere('pc.project = ?1')
+            ->setParameter('1', $id)
+            ->join('pc.project', 'p')
+            ->join('pc.item', 'i');
+        $projectItems2 = $query2->getQuery()->getResult();
+
+        $reportData = array();
+
+        foreach($projectItems as $key => $projectItem){
+            $data = array();
+            $data['data'] = ($projectItem['total']*100)/$projectItems2[0]['total'];
+            $data['label'] = $projectItem['itemName'];
+            $reportData[] = $data;
+            $projectItems[$key]['percentage'] = ($projectItem['total']*100)/$projectItems2[0]['total'];
+        }
+
         return $this->render('PmsCoreBundle:Report:project_details.html.twig', array(
+            'projectItems' => $projectItems,
+            'projectTotal' => $projectItems2,
+            'reportData' => $reportData,
         ));
     }
 
@@ -30,6 +68,7 @@ class CoreController extends Controller
         $query = $em->getRepository('PmsCoreBundle:ProjectCost')
             ->createQueryBuilder('pc')
             ->select('p.projectName')
+            ->addSelect('p.id')
             ->addSelect('SUM(pc.lineTotal) as total')
             ->where('pc.status = 1')
             ->join('pc.project', 'p')

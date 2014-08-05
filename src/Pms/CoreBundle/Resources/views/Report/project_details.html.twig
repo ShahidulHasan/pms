@@ -9,7 +9,7 @@
             </div>
             <div class="portlet-body">
                 <div id="interactive" class="chart"></div>
-                {#<div style="text-align: center;font-weight: bold">Total spent in project : {{ cost[0].total }}</div>#}
+                <div style="text-align: center;font-weight: bold">Total cost in this project : {{ projectTotal[0].total }}</div>
             </div>
         </div>
     </div>
@@ -24,18 +24,16 @@
             </thead>
             <tbody>
 
-            {#{% for projectcost in projectcosts %}#}
+            {% for projectItem in projectItems %}
 
-                {#<tr>#}
-                    {#<td style="width: 150px;">#}
-                        {#<a href="/project/details/{{ projectcost.projectName }}" style="width: 85px;">#}
-                            {#{{ projectcost.projectName }}#}
-                        {#</a>#}
-                    {#</td>#}
-                    {#<td style="width: 90px;">{{ projectcost.total }}</td>#}
-                {#</tr>#}
+                <tr>
+                    <td style="width: 150px;">
+                        {{ projectItem.itemName }}
+                    </td>
+                    <td style="width: 90px;">{{ projectItem.total }}</td>
+                </tr>
 
-            {#{% endfor %}#}
+            {% endfor %}
 
             </tbody>
         </table>
@@ -46,17 +44,7 @@
 {% block documentready %}
     {{ parent() }}
 
-    var data = [];
-    var series = Math.floor(Math.random() * 10) + 1;
-    series = series < 5 ? 5 : series;
-
-    for (var i = 0; i < series; i++) {
-    data[i] = {
-    label: "Series" + (i + 1),
-    data: Math.floor(Math.random() * 100) + 1
-    }
-    }
-
+    var data = {{ reportData|json_encode|raw }}
     $.plot($("#interactive"), data, {
 
     series: {
