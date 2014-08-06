@@ -98,6 +98,32 @@ class ProjectCostType extends AbstractType
                     'autocomplete' => 'off'
                 )
             ))
+            ->add('category', 'entity', array(
+                'class' => 'PmsCoreBundle:Category',
+                'property' => 'categoryName',
+                'required' => false,
+                'empty_value' => 'Select Category',
+                'empty_data' => null,
+                'query_builder' => function (\Pms\UserBundle\Entity\UserRepository $repository)
+                {
+                    return $repository->createQueryBuilder('s')
+                        ->where('s.parent = 0')
+                        ->andWhere('s.status = 1');
+                }
+            ))
+            ->add('subCategory', 'entity', array(
+                'class' => 'PmsCoreBundle:Category',
+                'property' => 'categoryName',
+                'required' => false,
+                'empty_value' => 'Select Sub-category',
+                'empty_data' => null,
+                'query_builder' => function (\Pms\UserBundle\Entity\UserRepository $repository)
+                {
+                    return $repository->createQueryBuilder('s')
+                        ->where('s.parent > 0')
+                        ->andWhere('s.status = 1');
+                }
+            ))
 //            ->add('save', 'submit')
         ;
     }

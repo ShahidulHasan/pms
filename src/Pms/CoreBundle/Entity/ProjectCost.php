@@ -103,32 +103,30 @@ class ProjectCost
     /**
      * @var string
      *
-     * @ORM\Column(name="invoice", type="string", length=255)
+     * @ORM\Column(name="sub_category", type="string", length=255, nullable=true)
+     */
+    private $subCategory;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="category", type="string", length=255, nullable=true)
+     */
+    private $category;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="invoice", type="string", length=255, nullable=true)
      */
     private $invoice;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="grn", type="string", length=255)
+     * @ORM\Column(name="grn", type="string", length=255, nullable=true)
      */
     private $grn;
-
-    /**
-     * @var Project
-     *
-     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Category", inversedBy="projectCost")
-     * @ORM\JoinColumn(name="category")
-     */
-    private $category;
-//
-//    /**
-//     * @var Project
-//     *
-//     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\SubCategory", inversedBy="projectCost")
-//     * @ORM\JoinColumn(name="sub_category")
-//     */
-//    private $subCategory;
 
     /**
      * Get id
@@ -232,6 +230,51 @@ class ProjectCost
         return $this->quantity;
     }
 
+    /**
+     * Set subCategory
+     *
+     * @param string $subCategory
+     * @return ProjectCost
+     */
+    public function setSubCategory($subCategory)
+    {
+        $this->subCategory = $subCategory;
+
+        return $this;
+    }
+
+    /**
+     * Get subCategory
+     *
+     * @return string
+     */
+    public function getSubCategory()
+    {
+        return $this->subCategory;
+    }
+
+    /**
+     * Set category
+     *
+     * @param string $category
+     * @return ProjectCost
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return string
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
     /**
      * Set unitPrice
      *
@@ -438,50 +481,4 @@ class ProjectCost
     {
         return $this->grn;
     }
-
-    /**
-     * Set category
-     *
-     * @param integer $category
-     * @return ProjectCost
-     */
-    public function setCategory($category)
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Get category
-     *
-     * @return integer
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-//    /**
-//     * Set subCategory
-//     *
-//     * @param integer $subCategory
-//     * @return ProjectCost
-//     */
-//    public function setSubCategory($subCategory)
-//    {
-//        $this->subCategory = $subCategory;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get subCategory
-//     *
-//     * @return integer
-//     */
-//    public function getSubCategory()
-//    {
-//        return $this->subCategory;
-//    }
 }

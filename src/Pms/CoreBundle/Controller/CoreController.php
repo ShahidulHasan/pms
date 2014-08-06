@@ -169,7 +169,7 @@ class CoreController extends Controller
 
         $form = $this->createForm(new CategoryType(), $entity);
 
-        $dql = "SELECT a FROM PmsCoreBundle:Category a ORDER BY a.id DESC";
+        $dql = "SELECT a FROM PmsCoreBundle:Category a WHERE a.parent = 0 ORDER BY a.id DESC";
 
         list($category, $page) = $this->paginate($dql);
 
@@ -179,6 +179,26 @@ class CoreController extends Controller
             'form' => $form->createView(),
             'page' => $page,
         ));
+    }
+
+    public function getSubcategoryByCategoryAction(Request $request) {
+        $categoryId = $request->request->get('category');
+
+        $categories = $this->getDoctrine()->getRepository('PmsCoreBundle:Category')->findByParent($categoryId);
+        $subCat = array();
+        foreach ($categories as $category) {
+            $subCat[] = array('id' => $category->getId(), 'categoryName' => $category->getCategoryName());
+        }
+
+        $data = array(
+            'responseCode' => 200,
+            'subCats' => $subCat
+        );
+
+        $response = new Response(json_encode($data));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
     }
 
     public function categoryDeleteAction(Category $entity)
@@ -763,6 +783,18 @@ class CoreController extends Controller
         ));
     }
 
+    public function findSubCategoryAction(Request $request)
+    {
+        $subcategoryArray = $request->request->get('subcategoryArray');
+        $subcategoryArray = explode(',',$subcategoryArray);
+
+        $subCategoryName = $subcategoryArray[0];
+        $parent = $subcategoryArray[1];
+        $updateId = $subcategoryArray[2];
+
+
+    }
+
     public function projectCostApprovedAction(ProjectCost $entity)
     {
         $entity->setStatus(1);
@@ -862,6 +894,8 @@ class CoreController extends Controller
         $updateId = $projectCostArray[6];
         $invoice = $projectCostArray[7];
         $grn = $projectCostArray[8];
+        $category = $projectCostArray[9];
+        $subcategory = $projectCostArray[10];
 
         if(!empty($dateOfCost) && !empty($project) && !empty($item) && !empty($quantity) && !empty($unitPrice) && !empty($lineTotal)) {
 
@@ -880,6 +914,8 @@ class CoreController extends Controller
                 $projectcost->setLineTotal($lineTotal);
                 $projectcost->setInvoice($invoice);
                 $projectcost->setGrn($grn);
+                $projectcost->setCategory($category);
+                $projectcost->setSubCategory($subcategory);
 
                 $this->getDoctrine()->getManager()->persist($projectcost);
                 $this->getDoctrine()->getManager()->flush();
@@ -904,6 +940,8 @@ class CoreController extends Controller
                 $entity->setLineTotal($lineTotal);
                 $entity->setInvoice($invoice);
                 $entity->setGrn($grn);
+                $entity->setCategory($category);
+                $entity->setSubCategory($subcategory);
 
                 $this->getDoctrine()->getRepository("PmsCoreBundle:ProjectCost")->create($entity);
 

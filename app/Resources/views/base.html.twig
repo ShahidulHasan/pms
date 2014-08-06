@@ -304,6 +304,29 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             $('input[type=text].lineTotal').val(lineTotal);
         });
 
+        $("#projectcost_category").change(function () {
+            var category = $(this).val();
+
+            $.ajax({
+                type: "post",
+                url: Routing.generate('get_subcategory'),
+                data: "category=" + category,
+                dataType: 'json',
+                success: function (response, status) {
+                    if (response.responseCode == 200) {
+                        $('#projectcost_subCategory').html('');
+                        for (var i=0; i < response.subCats.length; i++){
+                            var cat = response.subCats[i];
+                            $('#projectcost_subCategory').append('<option value="'+cat.id+'">'+cat.categoryName+'</option>');
+                        }
+                    } else {
+                        $('.userMessege').css('color', 'green').html(msg.item_name).fadeIn(1000);
+                    }
+                }
+            });
+
+        });
+
         $("#item_itemName").keyup(function () {
             var itemName = $(this).val();
 
@@ -461,7 +484,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                                 .removeAttr('checked')
                                 .removeAttr('selected');
                     } else if(msg.responseCode == 204) {
-                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Insert Sub-category</span></div>');
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Insert Sub-category or select Category</span></div>');
                         $('.subCategoryMessege').css('color', 'red').html(msg.item_ajax_add).fadeIn(1000).append($addLink);
                         $(':input','#sub-category-form')
                                 .not(':button, :submit, :reset, :hidden')
@@ -609,8 +632,10 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             var lineTotal = $("#projectcost_lineTotal").val();
             var invoice = $("#projectcost_invoice").val();
             var grn = $("#projectcost_grn").val();
+            var category = $("#projectcost_category").val();
+            var subcategory = $("#projectcost_subCategory").val();
 
-            var projectCostArray = new Array(dateOfCost, project, item, quantity, unitPrice, lineTotal, sURLVariables[3], invoice, grn);
+            var projectCostArray = new Array(dateOfCost, project, item, quantity, unitPrice, lineTotal, sURLVariables[3], invoice, grn, category, subcategory);
 
             $.ajax({
                 type: "post",

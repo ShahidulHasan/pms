@@ -44,9 +44,9 @@
                                                 <th>Date</th>
                                                 <th>Project</th>
                                                 <th>Item</th>
-                                                <th>Quantity</th>
-                                                <th>Unite Price</th>
-                                                <th>Total</th>
+                                                <th>Category</th>
+                                                <th>Sub-category</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -54,15 +54,26 @@
                                                 <td>
                                                     <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
                                                         <span class="input-group-btn"></span>
-                                                        {{ form_widget(form.dateOfCost, { 'attr': {'class': 'form-control', 'style': 'width:152px;'} }) }}
+                                                        {{ form_widget(form.dateOfCost, { 'attr': {'class': 'form-control', 'style': 'width:165px;'} }) }}
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    {{ form_widget(form.project, { 'attr': {'class': 'form-control', 'style': 'width:152px;' } }) }}
+                                                    {{ form_widget(form.project, { 'attr': {'class': 'form-control', 'style': 'width:166px;' } }) }}
                                                 </td>
                                                 <td>
-                                                    {{ form_widget(form.item, { 'attr': {'class': 'form-control', 'style': 'width:152px;' } }) }}
+                                                    {{ form_widget(form.item, { 'attr': {'class': 'form-control', 'style': 'width:166px;' } }) }}
                                                 </td>
+                                                <td>
+                                                    {{ form_widget(form.category, { 'attr': {'class': 'form-control'} }) }}
+                                                </td>
+                                                <td>
+                                                    {{ form_widget(form.subCategory, { 'attr': {'class': 'form-control'} }) }}
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <td>
                                                     {{ form_widget(form.quantity, { 'attr': {'class': 'form-control quantity'} }) }}
                                                 </td>
@@ -72,11 +83,6 @@
                                                 <td>
                                                     {{ form_widget(form.lineTotal, { 'attr': {'class': 'form-control lineTotal'} }) }}
                                                 </td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
                                                 <td>
                                                     {{ form_widget(form.invoice, { 'attr': {'class': 'form-control'} }) }}
                                                 </td>

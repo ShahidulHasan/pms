@@ -23,20 +23,6 @@ class Category
     private $id;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\ProjectCost", mappedBy="category")
-     */
-    private $projectCost;
-
-//    /**
-//     * @var ArrayCollection
-//     *
-//     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\SubCategory", mappedBy="subCategory")
-//     */
-//    private $category;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="category_name", type="string", length=255)
@@ -174,27 +160,6 @@ class Category
     }
 
     /**
-     * Set projectCost
-     *
-     * @param integer $projectCost
-     * @return Category
-     */
-    public function setProjectCost($projectCost)
-    {
-        $this->projectCost = $projectCost;
-
-        return $this;
-    }
-
-    /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function getProjectCost()
-    {
-        return $this->projectCost;
-    }
-
-    /**
      * Set parent
      *
      * @param integer $parent
@@ -216,12 +181,4 @@ class Category
     {
         return $this->parent;
     }
-
-//    /**
-//     * @return \Doctrine\Common\Collections\ArrayCollection
-//     */
-//    public function getCategory()
-//    {
-//        return $this->category;
-//    }
 }
