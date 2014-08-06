@@ -20,8 +20,10 @@ class CategoryType extends AbstractType
                 'constraints' => array(
                     new NotBlank()
                 ),
+                'label_attr' => array(
+                    'class' => 'hidden'
+                ),
                 'attr' => array(
-                    'placeholder' => 'Add category name',
                     'autocomplete' => 'off'
                 )
             ))

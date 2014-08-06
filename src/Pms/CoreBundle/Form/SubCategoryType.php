@@ -24,18 +24,13 @@ class SubCategoryType extends AbstractType
                 'query_builder' => function (\Pms\UserBundle\Entity\UserRepository $repository)
                     {
                         return $repository->createQueryBuilder('s')
-                            ->where('s.parent = 0');
+                            ->where('s.parent = 0')
+                            ->andWhere('s.status = 1');
                     }
             ))
-//            ->add('add', 'submit')
         ;
         $builder
-            ->add('category', new CategoryType(), array(
-                'label_attr' => array(
-                    'class' => 'hidden'
-                )
-            ))
-        ;
+            ->add('category', new CategoryType());
     }
 
     /**

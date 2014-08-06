@@ -118,6 +118,28 @@ sub_category_add:
     pattern: /sub-category
     defaults: { _controller: PmsCoreBundle:Core:subCategoryAdd }
 
+sub_category_ajax_add:
+    pattern: /sub-category/add
+    defaults: { _controller: PmsCoreBundle:Core:subCategoryAjaxAdd }
+    options:
+            expose: true
+
+sub_category_list:
+    pattern: /sub-category/list
+    defaults: { _controller: PmsCoreBundle:Core:subCategoryList }
+
+sub_category_delete:
+    pattern: /sub-category/delete/{id}
+    defaults: { _controller: PmsCoreBundle:Core:subCategoryDelete }
+    requirements:
+          id: \d+
+
+#sub_category_update:
+#    pattern: /sub-category/update/{id}
+#    defaults: { _controller: PmsCoreBundle:Core:subCategoryUpdate }
+#    requirements:
+#          id:  \d+
+
 report_project:
     pattern: /report/project
     defaults: { _controller: PmsCoreBundle:Core:projectReport }

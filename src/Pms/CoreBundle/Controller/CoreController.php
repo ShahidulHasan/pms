@@ -210,14 +210,113 @@ class CoreController extends Controller
         ));
     }
 
-    public function subCategoryAddAction()
+    public function subCategoryAddAction(Request $request)
     {
-        $sub = $this->createForm(new SubCategoryType());
+        $form = $this->createForm(new SubCategoryType());
+
+        $dql = "SELECT a FROM PmsCoreBundle:Category a WHERE a.parent > 0 ORDER BY a.id DESC";
+
+        list($category, $page) = $this->paginate($dql);
 
         return $this->render('PmsCoreBundle:Category:subcategory.html.twig', array(
-            'sub' => $sub->createView(),
+            'form' => $form->createView(),
+            'categories' => $category,
+            'page' => $page,
         ));
     }
+
+    public function subCategoryAjaxAddAction(Request $request)
+    {
+        $subcategoryArray = $request->request->get('subcategoryArray');
+        $subcategoryArray = explode(',',$subcategoryArray);
+
+        $subCategoryName = $subcategoryArray[0];
+        $parent = $subcategoryArray[1];
+        $updateId = $subcategoryArray[2];
+
+        if(($subCategoryName) && ($parent > 0) ) {
+            $category = $this->getDoctrine()->getRepository('PmsCoreBundle:Category')->find($updateId);
+            $categoryNameCheck = $this->getDoctrine()->getRepository('PmsCoreBundle:Category')->findOneBy(
+                array('categoryName' => $subCategoryName )
+            );
+            if($category) {
+                $category->setCategoryName($subCategoryName);
+                $this->getDoctrine()->getManager()->persist($category);
+                $this->getDoctrine()->getManager()->flush();
+
+                $return = array("responseCode" => 202);
+                $return = json_encode($return);
+
+                return new Response($return, 200, array('Content-Type' => 'application/json'));
+            } elseif($categoryNameCheck) {
+                $return = array("responseCode" => 200);
+                $return = json_encode($return);
+
+                return new Response($return, 200, array('Content-Type' => 'application/json'));
+            } else {
+                $entity = new Category();
+                $entity->setCategoryName($subCategoryName);
+                $user = $this->get('security.context')->getToken()->getUser()->getId();
+                $entity->setCreatedBy($user);
+                $entity->setCreatedDate(new \DateTime());
+                $entity->setStatus(1);
+                $entity->setParent($parent);
+
+                $this->getDoctrine()->getRepository("PmsCoreBundle:Category")->create($entity);
+
+                $return = array("responseCode" => 404);
+                $return = json_encode($return);
+
+                return new Response($return, 200, array('Content-Type' => 'application/json'));
+            }
+        } else{
+            $return = array("responseCode" => 204);
+            $return = json_encode($return);
+
+            return new Response($return, 200, array('Content-Type' => 'application/json'));
+        }
+    }
+
+    public function subCategoryListAction()
+    {
+        $dql = "SELECT a FROM PmsCoreBundle:Category a WHERE a.parent > 0 ORDER BY a.id DESC";
+
+        list($category, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:Category:subList.html.twig', array(
+            'categories' => $category,
+            'page' => $page,
+        ));
+    }
+
+    public function subCategoryDeleteAction(Category $entity)
+    {
+        $entity->setStatus(0);
+        $this->getDoctrine()->getRepository('PmsCoreBundle:Category')->update($entity);
+
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            'Sub Category Successfully Deleted'
+        );
+
+        return $this->redirect($this->generateUrl('sub_category_add'));
+    }
+
+//    public function subCategoryUpdateAction(Request $request, Category $entity)
+//    {
+//        $form = $this->createForm(new SubCategoryType(), $entity);
+//
+//        $dql = "SELECT a FROM PmsCoreBundle:Category a WHERE a.parent > 0 ORDER BY a.id DESC";
+//
+//        list($category, $page) = $this->paginate($dql);
+//
+//        return $this->render('PmsCoreBundle:Category:subcategory.html.twig', array(
+//            'categories' => $category,
+//            'entity' => $entity,
+//            'form' => $form->createView(),
+//            'page' => $page,
+//        ));
+//    }
 
     public function itemListAction()
     {

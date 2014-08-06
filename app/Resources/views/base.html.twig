@@ -439,6 +439,59 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             });
         });
 
+        $("#ajaxSaveSubCategory").click(function () {
+            var sPageURL = window.location.pathname;
+            var sURLVariables = sPageURL.split('/');
+            var subcategory = $("#subcategory_category_categoryName").val();
+            var category = $("#subcategory_subcategory").val();
+
+            var subcategoryArray = new Array(subcategory, category, sURLVariables[3]);
+            $.ajax({
+                type: "post",
+                url: Routing.generate('sub_category_ajax_add'),
+                data: "subcategoryArray=" + subcategoryArray,
+                dataType: 'json',
+                success: function (msg) {
+                    if(msg.responseCode == 200) {
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Sub-category/category already exist</span></div>');
+                        $('.subCategoryMessege').css('color', 'red').html(msg.item_ajax_add).fadeIn(1000).append($addLink);
+                        $(':input','#sub-category-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
+                    } else if(msg.responseCode == 204) {
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Insert Sub-category</span></div>');
+                        $('.subCategoryMessege').css('color', 'red').html(msg.item_ajax_add).fadeIn(1000).append($addLink);
+                        $(':input','#sub-category-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
+                    } else if(msg.responseCode == 202) {
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Sub-category Update Successfully</span></div>');
+                        $('.subCategoryMessege').css('color', 'green').html(msg.item_ajax_add).fadeIn(1000).append($addLink);
+                        $(':input','#sub-category-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
+                    } else {
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Sub-category Add Successfully</span></div>');
+                        $('.subCategoryMessege').css('color', 'green').html(msg.item_ajax_add).fadeIn(1000).append($addLink);
+                        $(':input','#sub-category-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
+                    }
+
+                    $('.userMessege').fadeOut();
+                    $("#sub-category-list-div").load("/sub-category/list")
+                }
+            });
+        });
+
         $("#ajaxSaveItem").click(function () {
             var sPageURL = window.location.pathname;
             var sURLVariables = sPageURL.split('/');
