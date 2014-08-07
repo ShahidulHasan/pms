@@ -29,6 +29,19 @@ class SearchType extends AbstractType
                 'empty_value' => 'Select Item',
                 'empty_data' => null
             ))
+            ->add('categoryWise', 'entity', array(
+                'class' => 'PmsCoreBundle:Category',
+                'property' => 'categoryName',
+                'required' => false,
+                'empty_value' => 'Select Category',
+                'empty_data' => null,
+                'query_builder' => function (\Pms\UserBundle\Entity\UserRepository $repository)
+                {
+                    return $repository->createQueryBuilder('s')
+                        ->where('s.parent = 0')
+                        ->andWhere('s.status = 1');
+                }
+            ))
             ->add('search', 'submit')
         ;
     }

@@ -122,7 +122,7 @@
                                                             <td>
                                                                 <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
                                                                     <span class="input-group-btn"></span>
-                                                                    <input type="text" name="start_date" class="form-control" readonly/>
+                                                                    <input type="text" name="start_date" class="form-control" style="width: 140px;" readonly/>
                                                                 </div>
                                                             </td>
                                                             <td style="font-size: 16px; font-weight: bold;">
@@ -131,8 +131,23 @@
                                                             <td>
                                                                 <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
                                                                     <span class="input-group-btn"></span>
-                                                                    <input type="text" name="end_date" class="form-control" readonly/>
+                                                                    <input type="text" name="end_date" class="form-control" style="width: 140px;" readonly/>
                                                                 </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                {{ form_widget(formSearch.categoryWise, { 'attr': {'class': 'form-control', 'style': 'width:140px;' } }) }}
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" name="invoice" placeholder="invoice" class="form-control" style="width: 140px;"/>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" name="grn" placeholder="grn" class="form-control" style="width: 140px;"/>
+                                                            </td>
+                                                            <td>
+
                                                             </td>
                                                             <td>
                                                                 {{ form_widget(formSearch.search, { 'attr': {'class': 'btn grey button-width', 'style': 'height:32px;' } } ) }}

@@ -751,27 +751,45 @@ class CoreController extends Controller
 
         $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1 = 1 ";
 
-        if(!empty($_GET['search']['project']) && !empty($_GET['search']['item']) && !empty($_GET['start_date']) && !empty($_GET['end_date']) ){
+        if(!empty($_GET['search']['categoryWise'])){
 
-            $dql = $this->searchByDateProjectItem($_GET['start_date'], $_GET['end_date'], $_GET['search']['project'], $_GET['search']['item'], $dql);
-        }elseif(!empty($_GET['search']['project']) && !empty($_GET['start_date']) && !empty($_GET['end_date'])) {
-
-            $dql = $this->searchByDateProject($_GET['start_date'], $_GET['end_date'], $_GET['search']['project'], $dql);
-        }elseif(!empty($_GET['search']['item']) && !empty($_GET['start_date']) && !empty($_GET['end_date'])){
-
-            $dql = $this->searchByDateItem($_GET['start_date'], $_GET['end_date'], $_GET['search']['item'], $dql);
-        }elseif(!empty($_GET['start_date']) && !empty($_GET['end_date'])){
-
-            $dql = $this->searchByDate($_GET['start_date'], $_GET['end_date'], $dql);
-        }elseif(!empty($_GET['search']['project'])){
-
-            $dql = $this->searchByProject($_GET['search']['project'], $dql);
-        }elseif(!empty($_GET['search']['item'])){
-
-            $dql = $this->searchByItem($_GET['search']['item'], $dql);
+            $dql = $this->searchByCategoryWise($_GET['search']['categoryWise'], $dql);
         }else{
 
-            $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1 = 1 ORDER BY a.id DESC";
+            if(!empty($_GET['invoice']) && !empty($_GET['grn'])){
+
+                $dql = $this->searchByInvoiceGrn($_GET['invoice'], $_GET['grn'], $dql);
+            }elseif(!empty($_GET['invoice'])){
+
+                $dql = $this->searchByInvoice($_GET['invoice'], $dql);
+            }elseif(!empty($_GET['grn'])){
+
+                $dql = $this->searchByGrn($_GET['grn'], $dql);
+            }else{
+
+                if(!empty($_GET['search']['project']) && !empty($_GET['search']['item']) && !empty($_GET['start_date']) && !empty($_GET['end_date']) ){
+
+                    $dql = $this->searchByDateProjectItem($_GET['start_date'], $_GET['end_date'], $_GET['search']['project'], $_GET['search']['item'], $dql);
+                }elseif(!empty($_GET['search']['project']) && !empty($_GET['start_date']) && !empty($_GET['end_date'])) {
+
+                    $dql = $this->searchByDateProject($_GET['start_date'], $_GET['end_date'], $_GET['search']['project'], $dql);
+                }elseif(!empty($_GET['search']['item']) && !empty($_GET['start_date']) && !empty($_GET['end_date'])){
+
+                    $dql = $this->searchByDateItem($_GET['start_date'], $_GET['end_date'], $_GET['search']['item'], $dql);
+                }elseif(!empty($_GET['start_date']) && !empty($_GET['end_date'])){
+
+                    $dql = $this->searchByDate($_GET['start_date'], $_GET['end_date'], $dql);
+                }elseif(!empty($_GET['search']['project'])){
+
+                    $dql = $this->searchByProject($_GET['search']['project'], $dql);
+                }elseif(!empty($_GET['search']['item'])){
+
+                    $dql = $this->searchByItem($_GET['search']['item'], $dql);
+                }else{
+
+                    $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1 = 1 ORDER BY a.id DESC";
+                }
+            }
         }
 
         list($projectcost, $page) = $this->paginate($dql);
@@ -783,18 +801,6 @@ class CoreController extends Controller
             'formSearch' => $formSearch->createView(),
             'page' => $page,
         ));
-    }
-
-    public function findSubCategoryAction(Request $request)
-    {
-        $subcategoryArray = $request->request->get('subcategoryArray');
-        $subcategoryArray = explode(',',$subcategoryArray);
-
-        $subCategoryName = $subcategoryArray[0];
-        $parent = $subcategoryArray[1];
-        $updateId = $subcategoryArray[2];
-
-
     }
 
     public function projectCostApprovedAction(ProjectCost $entity)
@@ -847,27 +853,45 @@ class CoreController extends Controller
 
         $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1 = 1";
 
-        if(!empty($_GET['search']['project']) && !empty($_GET['search']['item']) && !empty($_GET['start_date']) && !empty($_GET['end_date']) ){
+        if(!empty($_GET['search']['categoryWise'])){
 
-            $dql = $this->searchByDateProjectItem($_GET['start_date'], $_GET['end_date'], $_GET['search']['project'], $_GET['search']['item'], $dql);
-        }elseif(!empty($_GET['search']['project']) && !empty($_GET['start_date']) && !empty($_GET['end_date'])) {
-
-            $dql = $this->searchByDateProject($_GET['start_date'], $_GET['end_date'], $_GET['search']['project'], $dql);
-        }elseif(!empty($_GET['search']['item']) && !empty($_GET['start_date']) && !empty($_GET['end_date'])){
-
-            $dql = $this->searchByDateItem($_GET['start_date'], $_GET['end_date'], $_GET['search']['item'], $dql);
-        }elseif(!empty($_GET['start_date']) && !empty($_GET['end_date'])){
-
-            $dql = $this->searchByDate($_GET['start_date'], $_GET['end_date'], $dql);
-        }elseif(!empty($_GET['search']['project'])){
-
-            $dql = $this->searchByProject($_GET['search']['project'], $dql);
-        }elseif(!empty($_GET['search']['item'])){
-
-            $dql = $this->searchByItem($_GET['search']['item'], $dql);
+            $dql = $this->searchByCategoryWise($_GET['search']['categoryWise'], $dql);
         }else{
 
-            $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1 = 1 ORDER BY a.id DESC";
+            if(!empty($_GET['invoice']) && !empty($_GET['grn'])){
+
+                $dql = $this->searchByInvoiceGrn($_GET['invoice'], $_GET['grn'], $dql);
+            }elseif(!empty($_GET['invoice'])){
+
+                $dql = $this->searchByInvoice($_GET['invoice'], $dql);
+            }elseif(!empty($_GET['grn'])){
+
+                $dql = $this->searchByGrn($_GET['grn'], $dql);
+            }else{
+
+                if(!empty($_GET['search']['project']) && !empty($_GET['search']['item']) && !empty($_GET['start_date']) && !empty($_GET['end_date']) ){
+
+                    $dql = $this->searchByDateProjectItem($_GET['start_date'], $_GET['end_date'], $_GET['search']['project'], $_GET['search']['item'], $dql);
+                }elseif(!empty($_GET['search']['project']) && !empty($_GET['start_date']) && !empty($_GET['end_date'])) {
+
+                    $dql = $this->searchByDateProject($_GET['start_date'], $_GET['end_date'], $_GET['search']['project'], $dql);
+                }elseif(!empty($_GET['search']['item']) && !empty($_GET['start_date']) && !empty($_GET['end_date'])){
+
+                    $dql = $this->searchByDateItem($_GET['start_date'], $_GET['end_date'], $_GET['search']['item'], $dql);
+                }elseif(!empty($_GET['start_date']) && !empty($_GET['end_date'])){
+
+                    $dql = $this->searchByDate($_GET['start_date'], $_GET['end_date'], $dql);
+                }elseif(!empty($_GET['search']['project'])){
+
+                    $dql = $this->searchByProject($_GET['search']['project'], $dql);
+                }elseif(!empty($_GET['search']['item'])){
+
+                    $dql = $this->searchByItem($_GET['search']['item'], $dql);
+                }else{
+
+                    $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1 = 1 ORDER BY a.id DESC";
+                }
+            }
         }
 
         list($projectcost, $page) = $this->paginate($dql);
@@ -973,6 +997,34 @@ class CoreController extends Controller
         );
 
         return array($value, $page);
+    }
+
+    public function searchByCategoryWise($category, $dql){
+
+        $dql .= "AND a.category = '{$category}' ORDER BY a.id DESC";
+
+        return $dql;
+    }
+
+    public function searchByInvoiceGrn($invoice, $grn, $dql){
+
+        $dql .= "AND a.invoice = '{$invoice}' AND a.grn = '{$grn}' ORDER BY a.id DESC";
+
+        return $dql;
+    }
+
+    public function searchByInvoice($invoice, $dql){
+
+        $dql .= "AND a.invoice = '{$invoice}' ORDER BY a.id DESC";
+
+        return $dql;
+    }
+
+    public function searchByGrn($grn, $dql){
+
+        $dql .= "AND a.grn = '{$grn}' ORDER BY a.id DESC";
+
+        return $dql;
     }
 
     public function searchByDateProjectItem($start_date, $end_date, $project, $item, $dql)

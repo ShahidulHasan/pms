@@ -81,18 +81,12 @@ class ProjectCostType extends AbstractType
                 'read_only' => true
             ))
             ->add('invoice', 'text', array(
-                'constraints' => array(
-                    new NotBlank()
-                ),
                 'attr' => array(
                     'placeholder' => 'Invoice',
                     'autocomplete' => 'off'
                 )
             ))
             ->add('grn', 'text', array(
-                'constraints' => array(
-                    new NotBlank()
-                ),
                 'attr' => array(
                     'placeholder' => 'Grn',
                     'autocomplete' => 'off'
