@@ -19,6 +19,50 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CoreController extends Controller
 {
+    public function itemDetailsAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->getRepository('PmsCoreBundle:ProjectCost')
+            ->createQueryBuilder('pc')
+            ->select('p.projectName')
+            ->addSelect('i.itemName')
+            ->addSelect('p.id')
+            ->addSelect('SUM(pc.lineTotal) as total')
+            ->where('pc.status = 1')
+            ->andWhere('pc.item = ?1')
+            ->setParameter('1', $id)
+            ->join('pc.project', 'p')
+            ->join('pc.item', 'i')
+            ->groupBy('p.id')
+            ->orderBy('p.id', 'DESC');
+        $itemUses = $query->getQuery()->getResult();
+
+        $query2 = $em->getRepository('PmsCoreBundle:ProjectCost')
+            ->createQueryBuilder('pc')
+            ->Select('SUM(pc.lineTotal) as total')
+            ->where('pc.status = 1')
+            ->andWhere('pc.item = ?1')
+            ->setParameter('1', $id)
+            ->join('pc.item', 'p');
+        $itemTotal = $query2->getQuery()->getResult();
+
+        $reportData = array();
+
+        foreach($itemUses as $key => $itemUse){
+            $data = array();
+            $data['data'] = ($itemUse['total']*100)/$itemTotal[0]['total'];
+            $data['label'] = $itemUse['projectName'];
+            $reportData[] = $data;
+            $projectItems[$key]['percentage'] = ($itemUse['total']*100)/$itemTotal[0]['total'];
+        }
+
+        return $this->render('PmsCoreBundle:Report:item_details.html.twig', array(
+            'itemUses' => $itemUses,
+            'itemTotal' => $itemTotal,
+            'reportData' => $reportData,
+        ));
+    }
+
     public function projectDetailsAction($id)
     {
         $em = $this->getDoctrine()->getManager();

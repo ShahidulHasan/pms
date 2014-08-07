@@ -5,11 +5,11 @@
     <div class="col-md-6">
         <div class="portlet box grey">
             <div class="portlet-title">
-                <div class="caption"><i class="fa fa-reorder"></i>Project Items Chart</div>
+                <div class="caption"><i class="fa fa-reorder"></i>Item uses Chart</div>
             </div>
             <div class="portlet-body">
                 <div id="interactive" class="chart"></div>
-                <div style="text-align: center;font-weight: bold">Total cost in this project : {{ projectTotal[0].total }}</div>
+                <div style="text-align: center;font-weight: bold">This item spent : {{ itemTotal[0].total }}</div>
             </div>
         </div>
     </div>
@@ -18,21 +18,19 @@
         <table class="table table-striped" style="border: 1px solid ghostwhite;">
             <thead>
             <tr>
-                <th>Item</th>
+                <th>Project</th>
                 <th>Total</th>
             </tr>
             </thead>
             <tbody>
 
-            {% for projectItem in projectItems %}
+            {% for itemUse in itemUses %}
 
                 <tr>
                     <td style="width: 150px;">
-                        <a href="/report/item/details/{{ projectItem.id }}" style="width: 85px;">
-                            {{ projectItem.itemName }}
-                        </a?
+                        {{ itemUse.projectName }}
                     </td>
-                    <td style="width: 90px;">{{ projectItem.total }}</td>
+                    <td style="width: 90px;">{{ itemUse.total }}</td>
                 </tr>
 
             {% endfor %}
