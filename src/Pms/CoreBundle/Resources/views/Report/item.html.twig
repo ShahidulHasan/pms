@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="col-md-6">
+        <div class="portlet box grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-reorder"></i>Projects Chart</div>
+            </div>
+            <div class="portlet-body">
+                <div id="interactive" class="chart"></div>
+                <div style="text-align: center;font-weight: bold">Total spent for item : {{ itemTotal[0].total }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <table class="table table-striped" style="border: 1px solid ghostwhite;">
+            <thead>
+            <tr>
+                <th>Project</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for itemUse in itemUses %}
+
+                <tr>
+                    <td style="width: 150px;">
+                        <a href="/report/item/details/{{ itemUse.id }}" style="width: 85px;">
+                            {{ itemUse.itemName }}
+                        </a>
+                    </td>
+                    <td style="width: 90px;">{{ itemUse.total }}</td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
+
+{% block documentready %}
+    {{ parent() }}
+
+    var data = {{ reportData|json_encode|raw }}
+    $.plot($("#interactive"), data, {
+
+    series: {
+    pie: {
+    show: true,
+    label: {
+    show: true,
+    radius: 3 / 4,
+    formatter: function (label, series) {
+
+    return '<div style="font-size:8pt;text-align:center;padding:2px;color:white;">' + label + '<br/>' + Math.round(series.percent) + '%</div>';
+    },
+    background: {
+    opacity: 0.8
+    }
+    }
+    }
+    },
+    grid: {
+    hoverable: true,
+    clickable: true
+    }
+    });
+    $("#interactive").bind("plothover", pieHover);
+    $("#interactive").bind("plotclick", pieClick);
+
+    function pieHover(event, pos, obj) {
+
+    if (!obj)
+    return;
+    percent = parseFloat(obj.series.percent).toFixed(2);
+    $("#hover").html('<span style="font-weight: bold; color: ' + obj.series.color + '">' + obj.series.label + ' (' + percent + '%)</span>');
+    }
+
+    function pieClick(event, pos, obj) {
+    if (!obj)
+    return;
+    percent = parseFloat(obj.series.percent).toFixed(2);
+    alert('' + obj.series.label + ': ' + percent + '%');
+    }
+{% endblock documentready %}

@@ -150,6 +150,12 @@ report_project_details:
     requirements:
           id:  \d+
 
+report_item:
+    pattern: /report/item
+    defaults: { _controller: PmsCoreBundle:Core:itemReport }
+    requirements:
+          id:  \d+
+
 report_item_details:
     pattern: /report/item/details/{id}
     defaults: { _controller: PmsCoreBundle:Core:itemDetails }
