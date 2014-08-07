@@ -33,7 +33,8 @@ class CoreController extends Controller
             ->setParameter('1', $id)
             ->join('pc.project', 'p')
             ->join('pc.item', 'i')
-            ->groupBy('i.id');
+            ->groupBy('i.id')
+            ->orderBy('i.id', 'DESC');
         $projectItems = $query->getQuery()->getResult();
 
         $query2 = $em->getRepository('PmsCoreBundle:ProjectCost')
@@ -73,7 +74,8 @@ class CoreController extends Controller
             ->addSelect('SUM(pc.lineTotal) as total')
             ->where('pc.status = 1')
             ->join('pc.project', 'p')
-            ->groupBy('p.id');
+            ->groupBy('p.id')
+            ->orderBy('p.id', 'DESC');
         $projectCosts = $query->getQuery()->getResult();
 
         $query2 = $em->getRepository('PmsCoreBundle:ProjectCost')
