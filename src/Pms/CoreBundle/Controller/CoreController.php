@@ -19,6 +19,46 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CoreController extends Controller
 {
+    public function overViewAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->getRepository('PmsCoreBundle:ProjectCost')
+            ->createQueryBuilder('pc')
+            ->select('p.projectName')
+            ->addSelect('i.itemName')
+            ->addSelect('p.id')
+            ->addSelect('SUM(pc.lineTotal) as total')
+            ->where('pc.status = 1')
+            ->join('pc.project', 'p')
+            ->join('pc.item', 'i')
+            ->groupBy('i.id')
+            ->orderBy('i.id', 'DESC');
+        $itemUses = $query->getQuery()->getResult();
+
+        $query2 = $em->getRepository('PmsCoreBundle:ProjectCost')
+            ->createQueryBuilder('pc')
+            ->Select('SUM(pc.lineTotal) as total')
+            ->where('pc.status = 1')
+            ->join('pc.item', 'p');
+        $itemTotal = $query2->getQuery()->getResult();
+
+        $reportData = array();
+
+        foreach($itemUses as $key => $itemUse){
+            $data = array();
+            $data['data'] = ($itemUse['total']*100)/$itemTotal[0]['total'];
+            $data['label'] = $itemUse['itemName'];
+            $reportData[] = $data;
+            $projectItems[$key]['percentage'] = ($itemUse['total']*100)/$itemTotal[0]['total'];
+        }
+
+        return $this->render('PmsCoreBundle:Report:over_view.html.twig', array(
+            'itemUses' => $itemUses,
+            'itemTotal' => $itemTotal,
+            'reportData' => $reportData,
+        ));
+    }
+
     public function itemReportAction()
     {
         $em = $this->getDoctrine()->getManager();
