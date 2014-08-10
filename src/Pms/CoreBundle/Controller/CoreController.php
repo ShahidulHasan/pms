@@ -22,11 +22,13 @@ class CoreController extends Controller
     public function overViewAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $connection = $em->getConnection();
+
         $query = $em->getRepository('PmsCoreBundle:ProjectCost')
             ->createQueryBuilder('pc')
             ->select('p.projectName')
             ->addSelect('i.itemName')
-            ->addSelect('p.id')
+            ->addSelect('i.id')
             ->addSelect('SUM(pc.lineTotal) as total')
             ->addSelect('SUM(pc.quantity) as quantity')
             ->where('pc.status = 1')
@@ -36,6 +38,18 @@ class CoreController extends Controller
             ->orderBy('i.id', 'DESC');
         $itemUses = $query->getQuery()->getResult();
 
+        foreach ($itemUses as $key => $item) {
+
+            $statement = $connection->prepare("SELECT project.project_name, MAX(project_cost.unit_price) as projectHighest, MIN(project_cost.unit_price) as projectLowest, project_cost.item
+            FROM project_cost
+            JOIN project ON project.id = project_cost.project
+            WHERE project_cost.item = :itemId
+            GROUP BY project_cost.project");
+            $statement->bindValue('itemId', $item['id']);
+            $statement->execute();
+            $itemUses[$key]['projectSummary'] = $statement->fetchAll();
+        }
+
         $query2 = $em->getRepository('PmsCoreBundle:ProjectCost')
             ->createQueryBuilder('pc')
             ->Select('SUM(pc.lineTotal) as total')
@@ -43,20 +57,9 @@ class CoreController extends Controller
             ->join('pc.item', 'p');
         $itemTotal = $query2->getQuery()->getResult();
 
-        $reportData = array();
-
-        foreach($itemUses as $key => $itemUse){
-            $data = array();
-            $data['data'] = ($itemUse['total']*100)/$itemTotal[0]['total'];
-            $data['label'] = $itemUse['itemName'];
-            $reportData[] = $data;
-            $projectItems[$key]['percentage'] = ($itemUse['total']*100)/$itemTotal[0]['total'];
-        }
-
         return $this->render('PmsCoreBundle:Report:over_view.html.twig', array(
             'itemUses' => $itemUses,
             'itemTotal' => $itemTotal,
-            'reportData' => $reportData,
         ));
     }
 

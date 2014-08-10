@@ -2,13 +2,14 @@
 
 {% block body %}
 
-    <div class="col-md-6">
+    <div class="col-md-12">
         <table class="table table-striped" style="border: 1px solid ghostwhite;">
             <thead>
             <tr>
                 <th>Project</th>
                 <th>Total</th>
                 <th>Quantity</th>
+                <th>Project Summary</th>
             </tr>
             </thead>
             <tbody>
@@ -23,6 +24,27 @@
                     </td>
                     <td style="width: 90px;">{{ itemUse.total }}</td>
                     <td style="width: 90px;">{{ itemUse.quantity }}</td>
+                    <td style="width: 90px;">
+
+                        <table class="table table-striped" style="border: 1px solid #808080;">
+
+                            <tr>
+                                <th>Project Name</th>
+                                <th>Hightest</th>
+                                <th>Lowest</th>
+                            </tr>
+
+                            {% for ps in itemUse.projectSummary %}
+                            <tr>
+                                <td>{{ ps.project_name }}</td>
+                                <td>{{ ps.projectHighest }}</td>
+                                <td>{{ ps.projectLowest }}</td>
+                            </tr>
+                            {% endfor %}
+
+                        </table>
+
+                    </td>
                 </tr>
 
             {% endfor %}
