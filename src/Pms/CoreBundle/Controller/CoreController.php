@@ -28,6 +28,7 @@ class CoreController extends Controller
             ->addSelect('i.itemName')
             ->addSelect('p.id')
             ->addSelect('SUM(pc.lineTotal) as total')
+            ->addSelect('SUM(pc.quantity) as quantity')
             ->where('pc.status = 1')
             ->join('pc.project', 'p')
             ->join('pc.item', 'i')
@@ -62,25 +63,8 @@ class CoreController extends Controller
     public function itemReportAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $query = $em->getRepository('PmsCoreBundle:ProjectCost')
-            ->createQueryBuilder('pc')
-            ->select('p.projectName')
-            ->addSelect('i.itemName')
-            ->addSelect('p.id')
-            ->addSelect('SUM(pc.lineTotal) as total')
-            ->where('pc.status = 1')
-            ->join('pc.project', 'p')
-            ->join('pc.item', 'i')
-            ->groupBy('i.id')
-            ->orderBy('i.id', 'DESC');
-        $itemUses = $query->getQuery()->getResult();
 
-        $query2 = $em->getRepository('PmsCoreBundle:ProjectCost')
-            ->createQueryBuilder('pc')
-            ->Select('SUM(pc.lineTotal) as total')
-            ->where('pc.status = 1')
-            ->join('pc.item', 'p');
-        $itemTotal = $query2->getQuery()->getResult();
+        list($itemUses, $itemTotal) = $this->getDoctrine()->getRepository('UserBundle:User')->itemReport($em);
 
         $reportData = array();
 
@@ -102,29 +86,8 @@ class CoreController extends Controller
     public function itemDetailsAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $query = $em->getRepository('PmsCoreBundle:ProjectCost')
-            ->createQueryBuilder('pc')
-            ->select('p.projectName')
-            ->addSelect('i.itemName')
-            ->addSelect('p.id')
-            ->addSelect('SUM(pc.lineTotal) as total')
-            ->where('pc.status = 1')
-            ->andWhere('pc.item = ?1')
-            ->setParameter('1', $id)
-            ->join('pc.project', 'p')
-            ->join('pc.item', 'i')
-            ->groupBy('p.id')
-            ->orderBy('p.id', 'DESC');
-        $itemUses = $query->getQuery()->getResult();
 
-        $query2 = $em->getRepository('PmsCoreBundle:ProjectCost')
-            ->createQueryBuilder('pc')
-            ->Select('SUM(pc.lineTotal) as total')
-            ->where('pc.status = 1')
-            ->andWhere('pc.item = ?1')
-            ->setParameter('1', $id)
-            ->join('pc.item', 'p');
-        $itemTotal = $query2->getQuery()->getResult();
+        list($itemUses, $itemTotal) = $this->getDoctrine()->getRepository('UserBundle:User')->itemDetails($id, $em);
 
         $reportData = array();
 
@@ -146,30 +109,8 @@ class CoreController extends Controller
     public function projectDetailsAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $query = $em->getRepository('PmsCoreBundle:ProjectCost')
-            ->createQueryBuilder('pc')
-            ->select('p.projectName')
-            ->addSelect('i.itemName')
-            ->addSelect('i.id')
-            ->addSelect('SUM(pc.lineTotal) as total')
-            ->where('pc.status = 1')
-            ->andWhere('pc.project = ?1')
-            ->setParameter('1', $id)
-            ->join('pc.project', 'p')
-            ->join('pc.item', 'i')
-            ->groupBy('i.id')
-            ->orderBy('i.id', 'DESC');
-        $projectItems = $query->getQuery()->getResult();
 
-        $query2 = $em->getRepository('PmsCoreBundle:ProjectCost')
-            ->createQueryBuilder('pc')
-            ->Select('SUM(pc.lineTotal) as total')
-            ->where('pc.status = 1')
-            ->andWhere('pc.project = ?1')
-            ->setParameter('1', $id)
-            ->join('pc.project', 'p')
-            ->join('pc.item', 'i');
-        $projectItems2 = $query2->getQuery()->getResult();
+        list($projectItems, $projectItems2) = $this->getDoctrine()->getRepository('UserBundle:User')->projectDetails($id, $em);
 
         $reportData = array();
 
@@ -191,23 +132,8 @@ class CoreController extends Controller
     public function projectReportAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $query = $em->getRepository('PmsCoreBundle:ProjectCost')
-            ->createQueryBuilder('pc')
-            ->select('p.projectName')
-            ->addSelect('p.id')
-            ->addSelect('SUM(pc.lineTotal) as total')
-            ->where('pc.status = 1')
-            ->join('pc.project', 'p')
-            ->groupBy('p.id')
-            ->orderBy('p.id', 'DESC');
-        $projectCosts = $query->getQuery()->getResult();
 
-        $query2 = $em->getRepository('PmsCoreBundle:ProjectCost')
-            ->createQueryBuilder('p')
-            ->Select('SUM(p.lineTotal) as total')
-            ->where('p.status = 1')
-            ->getQuery();
-        $cost = $query2->getResult();
+        list($projectCosts, $cost) = $this->getDoctrine()->getRepository('UserBundle:User')->projectReport($em);
 
         $reportData = array();
 

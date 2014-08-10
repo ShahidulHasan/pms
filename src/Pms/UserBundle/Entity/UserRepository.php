@@ -35,4 +35,111 @@ class UserRepository extends EntityRepository
         $this->_em->flush();
         return $this->_em;
     }
+
+    public function itemReport($em){
+
+        $query = $em->getRepository('PmsCoreBundle:ProjectCost')
+            ->createQueryBuilder('pc')
+            ->select('p.projectName')
+            ->addSelect('i.itemName')
+            ->addSelect('p.id')
+            ->addSelect('SUM(pc.lineTotal) as total')
+            ->where('pc.status = 1')
+            ->join('pc.project', 'p')
+            ->join('pc.item', 'i')
+            ->groupBy('i.id')
+            ->orderBy('i.id', 'DESC');
+        $itemUses = $query->getQuery()->getResult();
+
+        $query2 = $em->getRepository('PmsCoreBundle:ProjectCost')
+            ->createQueryBuilder('pc')
+            ->Select('SUM(pc.lineTotal) as total')
+            ->where('pc.status = 1')
+            ->join('pc.item', 'p');
+        $itemTotal = $query2->getQuery()->getResult();
+
+        return array($itemUses, $itemTotal);
+    }
+
+    public function itemDetails($id, $em){
+
+        $query = $em->getRepository('PmsCoreBundle:ProjectCost')
+            ->createQueryBuilder('pc')
+            ->select('p.projectName')
+            ->addSelect('i.itemName')
+            ->addSelect('p.id')
+            ->addSelect('SUM(pc.lineTotal) as total')
+            ->where('pc.status = 1')
+            ->andWhere('pc.item = ?1')
+            ->setParameter('1', $id)
+            ->join('pc.project', 'p')
+            ->join('pc.item', 'i')
+            ->groupBy('p.id')
+            ->orderBy('p.id', 'DESC');
+        $itemUses = $query->getQuery()->getResult();
+
+        $query2 = $em->getRepository('PmsCoreBundle:ProjectCost')
+            ->createQueryBuilder('pc')
+            ->Select('SUM(pc.lineTotal) as total')
+            ->where('pc.status = 1')
+            ->andWhere('pc.item = ?1')
+            ->setParameter('1', $id)
+            ->join('pc.item', 'p');
+        $itemTotal = $query2->getQuery()->getResult();
+
+        return array($itemUses, $itemTotal);
+    }
+
+    public function projectDetails($id, $em){
+
+        $query = $em->getRepository('PmsCoreBundle:ProjectCost')
+            ->createQueryBuilder('pc')
+            ->select('p.projectName')
+            ->addSelect('i.itemName')
+            ->addSelect('i.id')
+            ->addSelect('SUM(pc.lineTotal) as total')
+            ->where('pc.status = 1')
+            ->andWhere('pc.project = ?1')
+            ->setParameter('1', $id)
+            ->join('pc.project', 'p')
+            ->join('pc.item', 'i')
+            ->groupBy('i.id')
+            ->orderBy('i.id', 'DESC');
+        $projectItems = $query->getQuery()->getResult();
+
+        $query2 = $em->getRepository('PmsCoreBundle:ProjectCost')
+            ->createQueryBuilder('pc')
+            ->Select('SUM(pc.lineTotal) as total')
+            ->where('pc.status = 1')
+            ->andWhere('pc.project = ?1')
+            ->setParameter('1', $id)
+            ->join('pc.project', 'p')
+            ->join('pc.item', 'i');
+        $projectItems2 = $query2->getQuery()->getResult();
+
+        return array($projectItems, $projectItems2);
+    }
+
+    public function projectReport($em){
+
+        $query = $em->getRepository('PmsCoreBundle:ProjectCost')
+            ->createQueryBuilder('pc')
+            ->select('p.projectName')
+            ->addSelect('p.id')
+            ->addSelect('SUM(pc.lineTotal) as total')
+            ->where('pc.status = 1')
+            ->join('pc.project', 'p')
+            ->groupBy('p.id')
+            ->orderBy('p.id', 'DESC');
+        $projectCosts = $query->getQuery()->getResult();
+
+        $query2 = $em->getRepository('PmsCoreBundle:ProjectCost')
+            ->createQueryBuilder('p')
+            ->Select('SUM(p.lineTotal) as total')
+            ->where('p.status = 1')
+            ->getQuery();
+        $cost = $query2->getResult();
+
+        return array($projectCosts, $cost);
+    }
 }

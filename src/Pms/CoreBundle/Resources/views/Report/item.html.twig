@@ -5,7 +5,7 @@
     <div class="col-md-6">
         <div class="portlet box grey">
             <div class="portlet-title">
-                <div class="caption"><i class="fa fa-reorder"></i>Projects Chart</div>
+                <div class="caption"><i class="fa fa-reorder"></i>Items Chart</div>
             </div>
             <div class="portlet-body">
                 <div id="interactive" class="chart"></div>
@@ -18,7 +18,7 @@
         <table class="table table-striped" style="border: 1px solid ghostwhite;">
             <thead>
             <tr>
-                <th>Project</th>
+                <th>Item</th>
                 <th>Total</th>
             </tr>
             </thead>
@@ -47,6 +47,10 @@
     {{ parent() }}
 
     var data = {{ reportData|json_encode|raw }}
+
+    var series;
+    series = series > 10 ? 10 : series;
+
     $.plot($("#interactive"), data, {
 
     series: {

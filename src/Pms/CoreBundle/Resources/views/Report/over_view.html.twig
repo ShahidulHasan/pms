@@ -2,40 +2,30 @@
 
 {% block body %}
 
-    {#<div class="col-md-6">#}
-        {#<div class="portlet box grey">#}
-            {#<div class="portlet-title">#}
-                {#<div class="caption"><i class="fa fa-reorder"></i>Projects Chart</div>#}
-            {#</div>#}
-            {#<div class="portlet-body">#}
-                {#<div id="interactive" class="chart"></div>#}
-                {#<div style="text-align: center;font-weight: bold">Total spent for item : </div>#}
-            {#</div>#}
-        {#</div>#}
-    {#</div>#}
-
     <div class="col-md-6">
         <table class="table table-striped" style="border: 1px solid ghostwhite;">
             <thead>
             <tr>
                 <th>Project</th>
                 <th>Total</th>
+                <th>Quantity</th>
             </tr>
             </thead>
             <tbody>
 
-            {#{% for itemUse in itemUses %}#}
+            {% for itemUse in itemUses %}
 
-                {#<tr>#}
-                    {#<td style="width: 150px;">#}
-                        {#<a href="/report/item/details/{{ itemUse.id }}" style="width: 85px;">#}
-                            {#{{ itemUse.itemName }}#}
-                        {#</a>#}
-                    {#</td>#}
-                    {#<td style="width: 90px;">{{ itemUse.total }}</td>#}
-                {#</tr>#}
+                <tr>
+                    <td style="width: 150px;">
+                        <a href="/report/item/details/{{ itemUse.id }}" style="width: 85px;">
+                            {{ itemUse.itemName }}
+                        </a>
+                    </td>
+                    <td style="width: 90px;">{{ itemUse.total }}</td>
+                    <td style="width: 90px;">{{ itemUse.quantity }}</td>
+                </tr>
 
-            {#{% endfor %}#}
+            {% endfor %}
 
             </tbody>
         </table>
