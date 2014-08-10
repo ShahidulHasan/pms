@@ -39,6 +39,13 @@ class Item
     /**
      * @var string
      *
+     * @ORM\Column(name="item_unit", type="string", length=255)
+     */
+    private $itemUnit;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="created_by", type="string", length=255)
      */
     private $createdBy;
@@ -88,6 +95,29 @@ class Item
     public function getItemName()
     {
         return $this->itemName;
+    }
+
+    /**
+     * Set itemUnit
+     *
+     * @param string $itemUnit
+     * @return Item
+     */
+    public function setItemUnit($itemUnit)
+    {
+        $this->itemUnit = $itemUnit;
+
+        return $this;
+    }
+
+    /**
+     * Get itemUnit
+     *
+     * @return string
+     */
+    public function getItemUnit()
+    {
+        return $this->itemUnit;
     }
 
     /**

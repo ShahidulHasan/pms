@@ -43,10 +43,17 @@
                                         {{ form_widget(form.itemName, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;' } }) }}
                                     </div>
                                 </div>
-                                {#{{ form_widget(form.save, { 'attr': {'class': 'btn green button-width col-md-1', 'style': 'margin-top:2px;margin-left:10px;height:32px;' } }#}
-                                {#) }}#}
-                                <input type="button" name="ajaxSaveItem" value="Save" id="ajaxSaveItem" class="btn green button-width col-md-1" style="margin-top:2px;margin-left:10px;height:32px;">
                                 <span class="userMessege" style="margin-left: 185px;"></span>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.itemUnit, 'Unit Name:', {'label_attr': {'class': 'control-label col-md-2', 'style': 'margin-right:-60px;font-weight:bold;' } }
+                                ) }}
+                                <div class="col-md-8">
+                                    <div class="input-icon">
+                                        {{ form_widget(form.itemUnit, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;' } }) }}
+                                    </div>
+                                </div>
+                                <input type="button" name="ajaxSaveItem" value="Save" id="ajaxSaveItem" class="btn green button-width col-md-1" style="margin-top:2px;margin-left:10px;height:32px;">
                             </div>
                             {{ form_end(form) }}
                         </div>
@@ -61,6 +68,7 @@
                                         <tr>
                                             <th>Sl</th>
                                             <th>Item Name</th>
+                                            <th>Unit</th>
                                             <th>Status</th>
                                             <th>Edit</th>
                                         </tr>
@@ -81,7 +89,8 @@
 
                                             <tr>
                                                 <td style="width: 60px;">{{ i }} .</td>
-                                                <td style="width: 622px; color: {{ color|join("") }};">{{ items.itemName }}</td>
+                                                <td style="width: 422px; color: {{ color|join("") }};">{{ items.itemName }}</td>
+                                                <td style="width: 200px; color: {{ color|join("") }};">{{ items.itemUnit }}</td>
                                                 {% if items.status == 1 %}
                                                     <td style="width: 80px;">
                                                         <a href="/item/delete/{{ items.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i

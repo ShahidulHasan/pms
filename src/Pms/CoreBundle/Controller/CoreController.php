@@ -57,6 +57,10 @@ class CoreController extends Controller
             ->join('pc.item', 'p');
         $itemTotal = $query2->getQuery()->getResult();
 
+        $dql = "SELECT a FROM PmsCoreBundle:Category a ORDER BY a.id DESC";
+
+        list($category, $page) = $this->paginate($dql);
+
         return $this->render('PmsCoreBundle:Report:over_view.html.twig', array(
             'itemUses' => $itemUses,
             'itemTotal' => $itemTotal,
@@ -540,6 +544,7 @@ class CoreController extends Controller
 
         $itemName = $itemArray[0];
         $updateId = $itemArray[1];
+        $itemUnit = $itemArray[2];
 
         if($itemName) {
             $item = $this->getDoctrine()->getRepository('PmsCoreBundle:Item')->find($updateId);
@@ -548,6 +553,7 @@ class CoreController extends Controller
             );
             if($item) {
                 $item->setItemName($itemName);
+                $item->setItemUnit($itemUnit);
                 $this->getDoctrine()->getManager()->persist($item);
                 $this->getDoctrine()->getManager()->flush();
 
@@ -563,6 +569,7 @@ class CoreController extends Controller
             } else {
                 $entity = new Item();
                 $entity->setItemName($itemName);
+                $entity->setItemUnit($itemUnit);
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
                 $entity->setCreatedBy($user);
                 $entity->setCreatedDate(new \DateTime());
@@ -975,6 +982,8 @@ class CoreController extends Controller
         $grn = $projectCostArray[8];
         $category = $projectCostArray[9];
         $subcategory = $projectCostArray[10];
+        $pr = $projectCostArray[11];
+        $po = $projectCostArray[12];
 
         if(!empty($dateOfCost) && !empty($project) && !empty($item) && !empty($quantity) && !empty($unitPrice) && !empty($lineTotal)) {
 
@@ -995,6 +1004,8 @@ class CoreController extends Controller
                 $projectcost->setGrn($grn);
                 $projectcost->setCategory($category);
                 $projectcost->setSubCategory($subcategory);
+                $projectcost->setPr($pr);
+                $projectcost->setPo($po);
 
                 $this->getDoctrine()->getManager()->persist($projectcost);
                 $this->getDoctrine()->getManager()->flush();
@@ -1021,6 +1032,8 @@ class CoreController extends Controller
                 $entity->setGrn($grn);
                 $entity->setCategory($category);
                 $entity->setSubCategory($subcategory);
+                $entity->setPr($pr);
+                $entity->setPo($po);
 
                 $this->getDoctrine()->getRepository("PmsCoreBundle:ProjectCost")->create($entity);
 

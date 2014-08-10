@@ -39,17 +39,7 @@
                                 <div class="col-md-11" style="margin-left: 40px;">
 
                                     <table id="table_project_cost">
-                                        <thead>
-                                            <tr>
-                                                <th>Date</th>
-                                                <th>Project</th>
-                                                <th>Item</th>
-                                                <th>Category</th>
-                                                <th>Sub-category</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+
                                             <tr>
                                                 <td>
                                                     <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
@@ -58,42 +48,59 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    {{ form_widget(form.project, { 'attr': {'class': 'form-control', 'style': 'width:166px;' } }) }}
-                                                </td>
-                                                <td>
-                                                    {{ form_widget(form.item, { 'attr': {'class': 'form-control', 'style': 'width:166px;' } }) }}
-                                                </td>
-                                                <td>
                                                     {{ form_widget(form.category, { 'attr': {'class': 'form-control'} }) }}
-                                                </td>
-                                                <td>
-                                                    {{ form_widget(form.subCategory, { 'attr': {'class': 'form-control'} }) }}
-                                                </td>
-                                                <td>
-
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    {{ form_widget(form.quantity, { 'attr': {'class': 'form-control quantity'} }) }}
-                                                </td>
-                                                <td>
-                                                    {{ form_widget(form.unitPrice, { 'attr': {'class': 'form-control unitPrice'} }) }}
-                                                </td>
-                                                <td>
-                                                    {{ form_widget(form.lineTotal, { 'attr': {'class': 'form-control lineTotal'} }) }}
-                                                </td>
-                                                <td>
-                                                    {{ form_widget(form.invoice, { 'attr': {'class': 'form-control'} }) }}
                                                 </td>
                                                 <td>
                                                     {{ form_widget(form.grn, { 'attr': {'class': 'form-control'} }) }}
                                                 </td>
                                                 <td>
-                                                    <input type="button" name="ajaxSaveProjectCost" value="Save" id="ajaxSaveProjectCost" class="btn green button-width" style="height:32px;">
+
                                                 </td>
+
                                             </tr>
-                                        </tbody>
+                                        <tr>
+                                            <td>
+                                                {{ form_widget(form.pr, { 'attr': {'class': 'form-control', 'style': 'width:165px;'} }) }}
+                                            </td>
+                                            <td>
+                                                {{ form_widget(form.subCategory, { 'attr': {'class': 'form-control'} }) }}
+                                            </td>
+                                            <td>
+                                                {{ form_widget(form.quantity, { 'attr': {'class': 'form-control quantity'} }) }}
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                {{ form_widget(form.project, { 'attr': {'class': 'form-control', 'style': 'width:166px;' } }) }}
+                                            </td>
+                                            <td>
+                                                {{ form_widget(form.po, { 'attr': {'class': 'form-control'} }) }}
+                                            </td>
+                                            <td>
+                                                {{ form_widget(form.unitPrice, { 'attr': {'class': 'form-control unitPrice'} }) }}
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                {{ form_widget(form.item, { 'attr': {'class': 'form-control', 'style': 'width:166px;' } }) }}
+                                            </td>
+                                            <td>
+                                                {{ form_widget(form.invoice, { 'attr': {'class': 'form-control'} }) }}
+                                            </td>
+                                            <td>
+                                                {{ form_widget(form.lineTotal, { 'attr': {'class': 'form-control lineTotal'} }) }}
+                                            </td>
+                                            <td>
+                                                <input type="button" name="ajaxSaveProjectCost" value="Save" id="ajaxSaveProjectCost" class="btn green button-width" style="height:32px;">
+                                            </td>
+                                        </tr>
+
                                     </table>
 
                                 </div>
@@ -144,7 +151,7 @@
                                                                 <input type="text" name="invoice" placeholder="invoice" class="form-control" style="width: 140px;"/>
                                                             </td>
                                                             <td>
-                                                                <input type="text" name="grn" placeholder="grn" class="form-control" style="width: 140px;"/>
+                                                                <input type="text" name="grn" placeholder="GRN#" class="form-control" style="width: 140px;"/>
                                                             </td>
                                                             <td>
 
@@ -211,7 +218,7 @@
                                                     {% endif %}
                                                     {% if projectcosts.status == 1 %}
                                                         <td style=" color: red;">
-                                                            <a href="#" class="btn default btn-xs green-stripe" style="width: 85px;"><i class="fa fa-check"></i> Approved</a>
+                                                            <a href="#" class="btn default btn-xs green-stripe" style="width: 85px;"><i class="fa fa-check"></i> Checked</a>
                                                         </td>
                                                         <td style="width: 85px;">
 

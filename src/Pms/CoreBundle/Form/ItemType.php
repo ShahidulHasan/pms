@@ -25,7 +25,15 @@ class ItemType extends AbstractType
                     'autocomplete' => 'off'
                 )
             ))
-//            ->add('save', 'submit')
+            ->add('itemUnit', 'text', array(
+                'constraints' => array(
+                    new NotBlank()
+                ),
+                'attr' => array(
+                    'placeholder' => 'Unit of measurement',
+                    'autocomplete' => 'off'
+                )
+            ))
         ;
     }
 

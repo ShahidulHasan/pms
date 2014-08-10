@@ -20,6 +20,9 @@ class ProjectCostType extends AbstractType
                 'constraints' => array(
                     new NotBlank()
                 ),
+                'attr' => array(
+                    'placeholder' => 'Date'
+                ),
                 'data_class' => null,
                 'read_only' => true
             ))
@@ -76,7 +79,7 @@ class ProjectCostType extends AbstractType
                     new NotBlank()
                 ),
                 'attr' => array(
-                    'placeholder' => ''
+                    'placeholder' => 'Total'
                 ),
                 'read_only' => true
             ))
@@ -88,7 +91,19 @@ class ProjectCostType extends AbstractType
             ))
             ->add('grn', 'text', array(
                 'attr' => array(
-                    'placeholder' => 'Grn',
+                    'placeholder' => 'GRN#',
+                    'autocomplete' => 'off'
+                )
+            ))
+            ->add('pr', 'text', array(
+                'attr' => array(
+                    'placeholder' => 'PR#',
+                    'autocomplete' => 'off'
+                )
+            ))
+            ->add('po', 'text', array(
+                'attr' => array(
+                    'placeholder' => 'PO#',
                     'autocomplete' => 'off'
                 )
             ))

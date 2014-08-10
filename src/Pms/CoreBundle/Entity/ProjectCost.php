@@ -129,6 +129,20 @@ class ProjectCost
     private $grn;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="pr", type="string", length=255, nullable=true)
+     */
+    private $pr;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="po", type="string", length=255, nullable=true)
+     */
+    private $po;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -480,5 +494,51 @@ class ProjectCost
     public function getGrn()
     {
         return $this->grn;
+    }
+
+    /**
+     * Set pr
+     *
+     * @param string $pr
+     * @return ProjectCost
+     */
+    public function setPr($pr)
+    {
+        $this->pr = $pr;
+
+        return $this;
+    }
+
+    /**
+     * Get pr
+     *
+     * @return string
+     */
+    public function getPr()
+    {
+        return $this->pr;
+    }
+
+    /**
+     * Set po
+     *
+     * @param string $po
+     * @return ProjectCost
+     */
+    public function setPo($po)
+    {
+        $this->po = $po;
+
+        return $this;
+    }
+
+    /**
+     * Get po
+     *
+     * @return string
+     */
+    public function getPo()
+    {
+        return $this->po;
     }
 }

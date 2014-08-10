@@ -146,7 +146,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                 </a>
             </li>
             {% endif %}
-            {% if is_granted("ROLE_ADMIN") %}
+            {% if is_granted("ROLE_DATA") %}
             <li class="{{ Item|join(" ") }}">
                 <a href="/item">
                     <i class="fa fa-gift"></i>
@@ -173,7 +173,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                     </a>
                 </li>
             {% endif %}
-            {% if is_granted("ROLE_ADMIN") %}
+            {% if is_granted("ROLE_SUPER_ADMIN") %}
             <li class="{{ Project|join(" ") }}">
                 <a href="/project">
                     <i class="fa fa-gift"></i>
@@ -191,7 +191,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                 </a>
             </li>
             {% endif %}
-            {% if is_granted("ROLE_DATA") %}
+            {% if is_granted("ROLE_ADMIN") %}
             <li class="{{ Report|join(" ") }}">
                 <a href="javascript:;">
                     <i class="fa fa-bookmark-o"></i>
@@ -214,7 +214,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                 </ul>
             </li>
             {% endif %}
-            {% if is_granted("ROLE_DATA") %}
+            {% if is_granted("ROLE_ADMIN") %}
                 <li class="{{ OverView|join(" ") }}">
                     <a href="/over/view">
                         <i class="fa fa-gift"></i>
@@ -543,8 +543,9 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             var sPageURL = window.location.pathname;
             var sURLVariables = sPageURL.split('/');
             var itemName = $("#item_itemName").val();
+            var itemUnit = $("#item_itemUnit").val();
 
-            var itemArray = new Array(itemName, sURLVariables[3]);
+            var itemArray = new Array(itemName, sURLVariables[3], itemUnit);
             $.ajax({
                 type: "post",
                 url: Routing.generate('item_ajax_add'),
@@ -658,8 +659,10 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             var grn = $("#projectcost_grn").val();
             var category = $("#projectcost_category").val();
             var subcategory = $("#projectcost_subCategory").val();
+            var pr = $("#projectcost_pr").val();
+            var po = $("#projectcost_po").val();
 
-            var projectCostArray = new Array(dateOfCost, project, item, quantity, unitPrice, lineTotal, sURLVariables[3], invoice, grn, category, subcategory);
+            var projectCostArray = new Array(dateOfCost, project, item, quantity, unitPrice, lineTotal, sURLVariables[3], invoice, grn, category, subcategory, pr, po);
 
             $.ajax({
                 type: "post",
