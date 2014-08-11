@@ -2,6 +2,36 @@
 
 {% block body %}
 
+    {#<form action="/report/project/details/{{ projectItems[0].id }}" method="get" {{ form_enctype(formSearch) }} name="search">#}
+
+        {#<table id="table_project_cost">#}
+            {#<tbody>#}
+            {#<tr>#}
+                {#<td>#}
+                    {#<div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">#}
+                        {#<span class="input-group-btn"></span>#}
+                        {#<input type="text" name="start_date" class="form-control" style="width: 140px;margin-left: 14px;" readonly/>#}
+                    {#</div>#}
+                {#</td>#}
+                {#<td style="font-size: 16px; font-weight: bold;">#}
+                    {#To#}
+                {#</td>#}
+                {#<td>#}
+                    {#<div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">#}
+                        {#<span class="input-group-btn"></span>#}
+                        {#<input type="text" name="end_date" class="form-control" style="width: 140px;" readonly/>#}
+                    {#</div>#}
+                {#</td>#}
+                {#<td>#}
+                    {#{{ form_widget(formSearch.search, { 'attr': {'class': 'btn grey button-width', 'style': 'height:32px;' } } ) }}#}
+                {#</td>#}
+            {#</tr>#}
+            {#</tbody>#}
+        {#</table>#}
+    {#</form>#}
+
+    {#<br/>#}
+
     <div class="col-md-6">
         <div class="portlet box grey">
             <div class="portlet-title">

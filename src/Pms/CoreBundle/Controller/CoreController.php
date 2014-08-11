@@ -37,12 +37,69 @@ class CoreController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        list($itemUses, $itemTotal, $reportData) = $this->getDoctrine()->getRepository('UserBundle:User')->itemReport($em);
+//        list($itemUses, $itemTotal, $reportData) = $this->getDoctrine()->getRepository('UserBundle:User')->itemReport($em);
+
+        if(!empty($_GET['start_date']) && !empty($_GET['end_date'])){
+
+            $start = $_GET['start_date'];
+            $end = $_GET['end_date'];
+
+            $query = $em->getRepository('PmsCoreBundle:ProjectCost')
+                ->createQueryBuilder('pc')
+                ->select('p.projectName')
+                ->addSelect('i.itemName')
+                ->addSelect('p.id')
+                ->addSelect('SUM(pc.lineTotal) as total')
+                ->where('pc.status = 1')
+                ->andWhere('pc.dateOfCost >= ?1')
+                ->andWhere('pc.dateOfCost <= ?2')
+                ->setParameter('1', $start)
+                ->setParameter('2', $end)
+                ->join('pc.project', 'p')
+                ->join('pc.item', 'i')
+                ->groupBy('i.id')
+                ->orderBy('i.id', 'DESC');
+            $itemUses = $query->getQuery()->getResult();
+        }else{
+
+            $query = $em->getRepository('PmsCoreBundle:ProjectCost')
+                ->createQueryBuilder('pc')
+                ->select('p.projectName')
+                ->addSelect('i.itemName')
+                ->addSelect('p.id')
+                ->addSelect('SUM(pc.lineTotal) as total')
+                ->where('pc.status = 1')
+                ->join('pc.project', 'p')
+                ->join('pc.item', 'i')
+                ->groupBy('i.id')
+                ->orderBy('i.id', 'DESC');
+            $itemUses = $query->getQuery()->getResult();
+        }
+
+        $query2 = $em->getRepository('PmsCoreBundle:ProjectCost')
+            ->createQueryBuilder('pc')
+            ->Select('SUM(pc.lineTotal) as total')
+            ->where('pc.status = 1')
+            ->join('pc.item', 'p');
+        $itemTotal = $query2->getQuery()->getResult();
+
+        $reportData = array();
+
+        foreach($itemUses as $key => $itemUse){
+            $data = array();
+            $data['data'] = ($itemUse['total']*100)/$itemTotal[0]['total'];
+            $data['label'] = $itemUse['itemName'];
+            $reportData[] = $data;
+            $projectItems[$key]['percentage'] = ($itemUse['total']*100)/$itemTotal[0]['total'];
+        }
+
+        $formSearch = $this->createForm(new SearchType());
 
         return $this->render('PmsCoreBundle:Report:item.html.twig', array(
             'itemUses' => $itemUses,
             'itemTotal' => $itemTotal,
             'reportData' => $reportData,
+            'formSearch' => $formSearch->createView(),
         ));
     }
 
@@ -72,16 +129,68 @@ class CoreController extends Controller
         ));
     }
 
-    public function projectReportAction()
+    public function projectReportAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        list($projectCosts, $cost, $reportData) = $this->getDoctrine()->getRepository('UserBundle:User')->projectReport($em);
+//        list($projectCosts, $cost, $reportData) = $this->getDoctrine()->getRepository('UserBundle:User')->projectReport($em);
+
+        if(!empty($_GET['start_date']) && !empty($_GET['end_date'])){
+
+            $start = $_GET['start_date'];
+            $end = $_GET['end_date'];
+
+        $query = $em->getRepository('PmsCoreBundle:ProjectCost')
+            ->createQueryBuilder('pc')
+            ->select('p.projectName')
+            ->addSelect('p.id')
+            ->addSelect('SUM(pc.lineTotal) as total')
+            ->where('pc.status = 1')
+            ->andWhere('pc.dateOfCost >= ?1')
+            ->andWhere('pc.dateOfCost <= ?2')
+            ->setParameter('1', $start)
+            ->setParameter('2', $end)
+            ->join('pc.project', 'p')
+            ->groupBy('p.id')
+            ->orderBy('p.id', 'DESC');
+        $projectCosts = $query->getQuery()->getResult();
+        }else{
+            $query = $em->getRepository('PmsCoreBundle:ProjectCost')
+                ->createQueryBuilder('pc')
+                ->select('p.projectName')
+                ->addSelect('p.id')
+                ->addSelect('SUM(pc.lineTotal) as total')
+                ->where('pc.status = 1')
+                ->join('pc.project', 'p')
+                ->groupBy('p.id')
+                ->orderBy('p.id', 'DESC');
+            $projectCosts = $query->getQuery()->getResult();
+        }
+
+        $query2 = $em->getRepository('PmsCoreBundle:ProjectCost')
+            ->createQueryBuilder('p')
+            ->Select('SUM(p.lineTotal) as total')
+            ->where('p.status = 1')
+            ->getQuery();
+        $cost = $query2->getResult();
+
+        $reportData = array();
+
+        foreach($projectCosts as $key => $projectCost){
+            $data = array();
+            $data['data'] = ($projectCost['total']*100)/$cost[0]['total'];
+            $data['label'] = $projectCost['projectName'];
+            $reportData[] = $data;
+            $projectCosts[$key]['percentage'] = ($projectCost['total']*100)/$cost[0]['total'];
+        }
+
+        $formSearch = $this->createForm(new SearchType());
 
         return $this->render('PmsCoreBundle:Report:project.html.twig', array(
             'projectcosts' => $projectCosts,
             'cost' => $cost,
             'reportData' => $reportData,
+            'formSearch' => $formSearch->createView(),
         ));
     }
 
