@@ -208,7 +208,7 @@
                                                     <td style="width: 90px; color: {{ color|join(" ") }}">{{ projectcosts.lineTotal | default() }}</td>
                                                     {% if projectcosts.status == 0 %}
                                                         <td>
-                                                            <a href="/project-cost/approved/{{ projectcosts.id }}" style="width: 85px;" class="btn default btn-xs red-stripe"><i
+                                                            <a href="#" style="width: 85px;" data-myvalue="{{ projectcosts.id }}" class="check-by-ajax btn default btn-xs red-stripe"><i
                                                                         class="fa fa-plus"></i> Check</a>
                                                         </td>
                                                         <td>

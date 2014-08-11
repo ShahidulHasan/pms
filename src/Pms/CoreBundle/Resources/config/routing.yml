@@ -46,11 +46,11 @@ cost_list:
     pattern: /cost/list
     defaults: { _controller: PmsCoreBundle:Core:projectCostList }
 
-cost_approved:
-    pattern: /project-cost/approved/{id}
-    defaults: { _controller: PmsCoreBundle:Core:projectCostApproved }
-    requirements:
-          id: \d+
+cost_ajax_checked:
+    pattern: /project-cost/checked
+    defaults: { _controller: PmsCoreBundle:Core:projectCostChecked }
+    options:
+            expose: true
 
 cost_update:
     pattern: /project-cost/update/{id}

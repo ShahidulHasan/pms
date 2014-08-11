@@ -807,6 +807,29 @@ class CoreController extends Controller
         return $this->redirect($this->generateUrl('cost_add'));
     }
 
+    public function projectCostCheckedAction(Request $request)
+    {
+        $projectCostId = $request->request->get('projectCostId');
+        $projectCostId = explode(',',$projectCostId);
+
+        $projectCostId = $projectCostId[0];
+
+        $projectCost = $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCost')->find($projectCostId);
+
+        $projectCost->setStatus(1);
+        $user = $this->get('security.context')->getToken()->getUser()->getId();
+        $projectCost->setApprovedBy($user);
+        $projectCost->setApprovedDate(new \DateTime());
+
+        $this->getDoctrine()->getManager()->persist($projectCost);
+        $this->getDoctrine()->getManager()->flush();
+
+        $return = array("responseCode" => 202);
+        $return = json_encode($return);
+
+        return new Response($return, 200, array('Content-Type' => 'application/json'));
+    }
+
     public function projectCostUpdateAction(Request $request, ProjectCost $entity)
     {
 //        $request = $this->getRequest();
