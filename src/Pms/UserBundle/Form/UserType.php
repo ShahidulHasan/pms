@@ -20,7 +20,7 @@ class UserType extends BaseType
                 'mapped' => true,
                 'choices' => array(
                     'ROLE_DATA' => 'Data User',
-                    'ROLE_ADMIN' => 'Admin User'
+                    'ROLE_ADMIN' => 'Manager'
                 ),
                 'required' => false,
                 'empty_value' => 'Select Role',

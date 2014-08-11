@@ -103,7 +103,7 @@
                                                 {% set role = user.roles[0] %}
                                                 {% set roles = [" "] %}
                                                 {% if role == 'ROLE_SUPER_ADMIN' %}{% set roles = roles|merge(["SUPER ADMIN"]) %}
-                                                {% elseif role == 'ROLE_ADMIN' %}{% set roles = roles|merge(["ADMIN"]) %}
+                                                {% elseif role == 'ROLE_ADMIN' %}{% set roles = roles|merge(["MANAGER"]) %}
                                                 {% elseif role == 'ROLE_DATA'  %}{% set roles = roles|merge(["USER"]) %}
                                                 {% endif %}
 
