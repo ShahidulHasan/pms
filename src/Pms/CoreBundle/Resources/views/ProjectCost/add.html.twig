@@ -203,7 +203,7 @@
                                                     <td style="width: 105px; color: {{ color|join(" ") }}">{{ projectcosts.dateOfCost|date('Y-m-d') }}</td>
                                                     <td style="width: 150px; color: {{ color|join(" ") }}">{{ projectcosts.project.projectName | length > 12 ? projectcosts.project.projectName | slice(0, 12) ~ ' ...' : projectcosts.project.projectName }}</td>
                                                     <td style="width: 150px; color: {{ color|join(" ") }}">{{ projectcosts.item.itemName | length > 11 ? projectcosts.item.itemName | slice(0, 11) ~ ' ...' : projectcosts.item.itemName }}</td>
-                                                    <td style="width: 100px; color: {{ color|join(" ") }}">{{ projectcosts.quantity | default() }}</td>
+                                                    <td style="width: 100px; color: {{ color|join(" ") }}">{{ projectcosts.quantity }} per {{ projectcosts.item.itemUnit }}</td>
                                                     <td style="width: 110px; color: {{ color|join(" ") }}">{{ projectcosts.unitPrice | default() }}</td>
                                                     <td style="width: 90px; color: {{ color|join(" ") }}">{{ projectcosts.lineTotal | default() }}</td>
                                                     {% if projectcosts.status == 0 %}

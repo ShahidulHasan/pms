@@ -31,7 +31,7 @@
             <td style="width: 105px; color: {{ color|join(" ") }}">{{ projectcosts.dateOfCost|date('Y-m-d') }}</td>
             <td style="width: 150px; color: {{ color|join(" ") }}">{{ projectcosts.project.projectName | length > 12 ? projectcosts.project.projectName | slice(0, 12) ~ ' ...' : projectcosts.project.projectName }}</td>
             <td style="width: 150px; color: {{ color|join(" ") }}">{{ projectcosts.item.itemName | length > 11 ? projectcosts.item.itemName | slice(0, 11) ~ ' ...' : projectcosts.item.itemName }}</td>
-            <td style="width: 100px; color: {{ color|join(" ") }}">{{ projectcosts.quantity | default() }}</td>
+            <td style="width: 100px; color: {{ color|join(" ") }}">{{ projectcosts.quantity }} per {{ projectcosts.item.itemUnit }}</td>
             <td style="width: 110px; color: {{ color|join(" ") }}">{{ projectcosts.unitPrice | default() }}</td>
             <td style="width: 90px; color: {{ color|join(" ") }}">{{ projectcosts.lineTotal | default() }}</td>
             {% if projectcosts.status == 0 %}
@@ -48,9 +48,12 @@
                 <td style=" color: red;">
                     <a href="#" class="btn default btn-xs green-stripe" style="width: 85px;"><i class="fa fa-check"></i> Checked</a>
                 </td>
-                <td style="width: 85px;">
-
-                </td>
+                {% if is_granted("ROLE_SUPER_ADMIN") %}
+                    <td style="width: 85px;">
+                        <a href="/project-cost/delete/{{ projectcosts.id }}" style="width: 80px;" class="btn default btn-xs blue-stripe"><i
+                                    class="fa fa-edit"></i> Delete</a>
+                    </td>
+                {% endif %}
             {% endif %}
         </tr>
 
@@ -60,26 +63,3 @@
 <div class="navigation" style="text-align: right">
     {{ knp_pagination_render(projectcost) }}
 </div>
-
-<script type="text/javascript">
-
-    $(".check-by-ajax").click(function () {
-        var projectCostId = $(this).data('myvalue');
-
-        $.ajax({
-            type: "post",
-            url: Routing.generate('cost_ajax_checked'),
-            data: "projectCostId=" + projectCostId,
-            dataType: 'json',
-            success: function (msg) {
-                if(msg.responseCode == 202) {
-                    var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Project Cost Successfully Checked</span></div>');
-                    $('.projectCostMessege').css('color', 'green').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
-                }
-
-                $("#cost-list-div").load("/cost/list")
-            }
-        });
-    });
-
-</script>
