@@ -48,7 +48,9 @@ class ProjectCostType extends AbstractType
                 'class' => 'PmsCoreBundle:Item',
                 'property' => 'itemName',
                 'required' => false,
-                'empty_value' => 'Select Item',
+                'attr' => array(
+                    'placeholder' => ' Select Item'
+                ),
                 'empty_data' => null,
                 'query_builder' => function (\Pms\UserBundle\Entity\UserRepository $repository)
                     {
