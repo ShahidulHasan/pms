@@ -705,6 +705,18 @@ class CoreController extends Controller
         ));
     }
 
+    public function projectCostDeleteAction(ProjectCost $entity)
+    {
+        $this->getDoctrine()->getRepository('UserBundle:User')->delete($entity);
+
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            'Cost Successfully Deleted'
+        );
+
+        return $this->redirect($this->generateUrl('cost_add'));
+    }
+
     public function projectCostAddAction(Request $request)
     {
         $entity = new ProjectCost();

@@ -220,9 +220,12 @@
                                                         <td style=" color: red;">
                                                             <a href="#" class="btn default btn-xs green-stripe" style="width: 85px;"><i class="fa fa-check"></i> Checked</a>
                                                         </td>
+                                                        {% if is_granted("ROLE_SUPER_ADMIN") %}
                                                         <td style="width: 85px;">
-
+                                                            <a href="/project-cost/delete/{{ projectcosts.id }}" style="width: 80px;" class="btn default btn-xs blue-stripe"><i
+                                                                        class="fa fa-edit"></i> Delete</a>
                                                         </td>
+                                                        {% endif %}
                                                     {% endif %}
                                                 </tr>
 
