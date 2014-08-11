@@ -58,7 +58,17 @@ class UserRepository extends EntityRepository
             ->join('pc.item', 'p');
         $itemTotal = $query2->getQuery()->getResult();
 
-        return array($itemUses, $itemTotal);
+        $reportData = array();
+
+        foreach($itemUses as $key => $itemUse){
+            $data = array();
+            $data['data'] = ($itemUse['total']*100)/$itemTotal[0]['total'];
+            $data['label'] = $itemUse['itemName'];
+            $reportData[] = $data;
+            $projectItems[$key]['percentage'] = ($itemUse['total']*100)/$itemTotal[0]['total'];
+        }
+
+        return array($itemUses, $itemTotal, $reportData);
     }
 
     public function itemDetails($id, $em){
@@ -87,7 +97,17 @@ class UserRepository extends EntityRepository
             ->join('pc.item', 'p');
         $itemTotal = $query2->getQuery()->getResult();
 
-        return array($itemUses, $itemTotal);
+        $reportData = array();
+
+        foreach($itemUses as $key => $itemUse){
+            $data = array();
+            $data['data'] = ($itemUse['total']*100)/$itemTotal[0]['total'];
+            $data['label'] = $itemUse['projectName'];
+            $reportData[] = $data;
+            $projectItems[$key]['percentage'] = ($itemUse['total']*100)/$itemTotal[0]['total'];
+        }
+
+        return array($itemUses, $itemTotal, $reportData);
     }
 
     public function projectDetails($id, $em){
@@ -117,7 +137,17 @@ class UserRepository extends EntityRepository
             ->join('pc.item', 'i');
         $projectItems2 = $query2->getQuery()->getResult();
 
-        return array($projectItems, $projectItems2);
+        $reportData = array();
+
+        foreach($projectItems as $key => $projectItem){
+            $data = array();
+            $data['data'] = ($projectItem['total']*100)/$projectItems2[0]['total'];
+            $data['label'] = $projectItem['itemName'];
+            $reportData[] = $data;
+            $projectItems[$key]['percentage'] = ($projectItem['total']*100)/$projectItems2[0]['total'];
+        }
+
+        return array($projectItems, $projectItems2, $reportData);
     }
 
     public function projectReport($em){
@@ -140,6 +170,48 @@ class UserRepository extends EntityRepository
             ->getQuery();
         $cost = $query2->getResult();
 
-        return array($projectCosts, $cost);
+        $reportData = array();
+
+        foreach($projectCosts as $key => $projectCost){
+            $data = array();
+            $data['data'] = ($projectCost['total']*100)/$cost[0]['total'];
+            $data['label'] = $projectCost['projectName'];
+            $reportData[] = $data;
+            $projectCosts[$key]['percentage'] = ($projectCost['total']*100)/$cost[0]['total'];
+        }
+
+        return array($projectCosts, $cost, $reportData);
+    }
+
+    public function overView($em){
+
+        $connection = $em->getConnection();
+        $query = $em->getRepository('PmsCoreBundle:ProjectCost')
+            ->createQueryBuilder('pc')
+            ->select('p.projectName')
+            ->addSelect('i.itemName')
+            ->addSelect('i.id')
+            ->addSelect('SUM(pc.lineTotal) as total')
+            ->addSelect('SUM(pc.quantity) as quantity')
+            ->where('pc.status = 1')
+            ->join('pc.project', 'p')
+            ->join('pc.item', 'i')
+            ->groupBy('i.id')
+            ->orderBy('i.id', 'DESC');
+        $itemUses = $query->getQuery()->getResult();
+
+        foreach ($itemUses as $key => $item) {
+
+            $statement = $connection->prepare("SELECT project.project_name, MAX(project_cost.unit_price) as projectHighest, MIN(project_cost.unit_price) as projectLowest, project_cost.item
+            FROM project_cost
+            JOIN project ON project.id = project_cost.project
+            WHERE project_cost.item = :itemId AND project_cost.status = 1
+            GROUP BY project_cost.project");
+            $statement->bindValue('itemId', $item['id']);
+            $statement->execute();
+            $itemUses[$key]['projectSummary'] = $statement->fetchAll();
+        }
+
+        return $itemUses;
     }
 }

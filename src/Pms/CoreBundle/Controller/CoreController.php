@@ -22,48 +22,14 @@ class CoreController extends Controller
     public function overViewAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $connection = $em->getConnection();
 
-        $query = $em->getRepository('PmsCoreBundle:ProjectCost')
-            ->createQueryBuilder('pc')
-            ->select('p.projectName')
-            ->addSelect('i.itemName')
-            ->addSelect('i.id')
-            ->addSelect('SUM(pc.lineTotal) as total')
-            ->addSelect('SUM(pc.quantity) as quantity')
-            ->where('pc.status = 1')
-            ->join('pc.project', 'p')
-            ->join('pc.item', 'i')
-            ->groupBy('i.id')
-            ->orderBy('i.id', 'DESC');
-        $itemUses = $query->getQuery()->getResult();
+        $itemUses = $this->getDoctrine()->getRepository('UserBundle:User')->overView($em);
 
-        foreach ($itemUses as $key => $item) {
-
-            $statement = $connection->prepare("SELECT project.project_name, MAX(project_cost.unit_price) as projectHighest, MIN(project_cost.unit_price) as projectLowest, project_cost.item
-            FROM project_cost
-            JOIN project ON project.id = project_cost.project
-            WHERE project_cost.item = :itemId
-            GROUP BY project_cost.project");
-            $statement->bindValue('itemId', $item['id']);
-            $statement->execute();
-            $itemUses[$key]['projectSummary'] = $statement->fetchAll();
-        }
-
-        $query2 = $em->getRepository('PmsCoreBundle:ProjectCost')
-            ->createQueryBuilder('pc')
-            ->Select('SUM(pc.lineTotal) as total')
-            ->where('pc.status = 1')
-            ->join('pc.item', 'p');
-        $itemTotal = $query2->getQuery()->getResult();
-
-        $dql = "SELECT a FROM PmsCoreBundle:Category a ORDER BY a.id DESC";
-
-        list($category, $page) = $this->paginate($dql);
+        list($itemUses, $page) = $this->paginateOverView($itemUses);
 
         return $this->render('PmsCoreBundle:Report:over_view.html.twig', array(
             'itemUses' => $itemUses,
-            'itemTotal' => $itemTotal,
+            'page' => $page,
         ));
     }
 
@@ -71,17 +37,7 @@ class CoreController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        list($itemUses, $itemTotal) = $this->getDoctrine()->getRepository('UserBundle:User')->itemReport($em);
-
-        $reportData = array();
-
-        foreach($itemUses as $key => $itemUse){
-            $data = array();
-            $data['data'] = ($itemUse['total']*100)/$itemTotal[0]['total'];
-            $data['label'] = $itemUse['itemName'];
-            $reportData[] = $data;
-            $projectItems[$key]['percentage'] = ($itemUse['total']*100)/$itemTotal[0]['total'];
-        }
+        list($itemUses, $itemTotal, $reportData) = $this->getDoctrine()->getRepository('UserBundle:User')->itemReport($em);
 
         return $this->render('PmsCoreBundle:Report:item.html.twig', array(
             'itemUses' => $itemUses,
@@ -94,17 +50,7 @@ class CoreController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        list($itemUses, $itemTotal) = $this->getDoctrine()->getRepository('UserBundle:User')->itemDetails($id, $em);
-
-        $reportData = array();
-
-        foreach($itemUses as $key => $itemUse){
-            $data = array();
-            $data['data'] = ($itemUse['total']*100)/$itemTotal[0]['total'];
-            $data['label'] = $itemUse['projectName'];
-            $reportData[] = $data;
-            $projectItems[$key]['percentage'] = ($itemUse['total']*100)/$itemTotal[0]['total'];
-        }
+        list($itemUses, $itemTotal, $reportData) = $this->getDoctrine()->getRepository('UserBundle:User')->itemDetails($id, $em);
 
         return $this->render('PmsCoreBundle:Report:item_details.html.twig', array(
             'itemUses' => $itemUses,
@@ -117,17 +63,7 @@ class CoreController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        list($projectItems, $projectItems2) = $this->getDoctrine()->getRepository('UserBundle:User')->projectDetails($id, $em);
-
-        $reportData = array();
-
-        foreach($projectItems as $key => $projectItem){
-            $data = array();
-            $data['data'] = ($projectItem['total']*100)/$projectItems2[0]['total'];
-            $data['label'] = $projectItem['itemName'];
-            $reportData[] = $data;
-            $projectItems[$key]['percentage'] = ($projectItem['total']*100)/$projectItems2[0]['total'];
-        }
+        list($projectItems, $projectItems2, $reportData) = $this->getDoctrine()->getRepository('UserBundle:User')->projectDetails($id, $em);
 
         return $this->render('PmsCoreBundle:Report:project_details.html.twig', array(
             'projectItems' => $projectItems,
@@ -140,17 +76,7 @@ class CoreController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        list($projectCosts, $cost) = $this->getDoctrine()->getRepository('UserBundle:User')->projectReport($em);
-
-        $reportData = array();
-
-        foreach($projectCosts as $key => $projectCost){
-            $data = array();
-            $data['data'] = ($projectCost['total']*100)/$cost[0]['total'];
-            $data['label'] = $projectCost['projectName'];
-            $reportData[] = $data;
-            $projectCosts[$key]['percentage'] = ($projectCost['total']*100)/$cost[0]['total'];
-        }
+        list($projectCosts, $cost, $reportData) = $this->getDoctrine()->getRepository('UserBundle:User')->projectReport($em);
 
         return $this->render('PmsCoreBundle:Report:project.html.twig', array(
             'projectcosts' => $projectCosts,
@@ -875,7 +801,7 @@ class CoreController extends Controller
 
         $this->get('session')->getFlashBag()->add(
             'notice',
-            'Project Cost Successfully Approved'
+            'Project Cost Successfully Checked'
         );
 
         return $this->redirect($this->generateUrl('cost_add'));
@@ -1048,6 +974,18 @@ class CoreController extends Controller
 
             return new Response($return, 200, array('Content-Type' => 'application/json'));
         }
+    }
+
+    public function paginateOverView($itemUses)
+    {
+        $paginator = $this->get('knp_paginator');
+        $value = $paginator->paginate(
+            $itemUses,
+            $page = $this->get('request')->query->get('page', 1) /*page number*/,
+            5/*limit per page*/
+        );
+
+        return array($value, $page);
     }
 
     public function paginate($dql)
