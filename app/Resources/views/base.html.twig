@@ -662,6 +662,12 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             var pr = $("#projectcost_pr").val();
             var po = $("#projectcost_po").val();
 
+            if(invoice && po){
+
+                alert('Please insert invoice or PO number');
+                return po;
+            }
+
             var projectCostArray = new Array(dateOfCost, project, item, quantity, unitPrice, lineTotal, sURLVariables[3], invoice, grn, category, subcategory, pr, po);
 
             $.ajax({
