@@ -60,26 +60,32 @@
     <table class="table table-striped" style="border: 1px solid ghostwhite;">
         <thead>
         <tr>
-            <th>Project</th>
+            <th>Projects</th>
             <th>Total</th>
         </tr>
         </thead>
         <tbody>
-
+        {% set i = 0 %}
         {% for projectcost in projectcosts %}
-
+            {% set i = i + 1 %}
             <tr>
                 <td style="width: 150px;">
                     <a href="/report/project/details/{{ projectcost.id }}" style="width: 85px;">
-                        {{ projectcost.projectName }}
+                        {{ i }}. {{ projectcost.projectName }}
                     </a>
                 </td>
-                <td style="width: 90px;">{{ projectcost.total }}</td>
+                <td style="width: 90px;">{{ projectcost.total }} Tk</td>
             </tr>
 
         {% endfor %}
 
         </tbody>
+        <tfoot>
+            <tr>
+                <th>Total Amount :</th>
+                <th>{{ cost[0].total }} Tk</th>
+            </tr>
+        </tfoot>
     </table>
 </div>
 

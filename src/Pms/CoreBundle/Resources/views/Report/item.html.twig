@@ -60,26 +60,32 @@
         <table class="table table-striped" style="border: 1px solid ghostwhite;">
             <thead>
             <tr>
-                <th>Item</th>
+                <th>Used Items</th>
                 <th>Total</th>
             </tr>
             </thead>
             <tbody>
-
+            {% set i = 0 %}
             {% for itemUse in itemUses %}
-
+                {% set i = i + 1 %}
                 <tr>
                     <td style="width: 150px;">
                         <a href="/report/item/details/{{ itemUse.id }}" style="width: 85px;">
-                            {{ itemUse.itemName }}
+                            {{ i }}. {{ itemUse.itemName }}
                         </a>
                     </td>
-                    <td style="width: 90px;">{{ itemUse.total }}</td>
+                    <td style="width: 90px;">{{ itemUse.total }} Tk</td>
                 </tr>
 
             {% endfor %}
 
             </tbody>
+            <tfoot>
+                <tr>
+                    <th>Total Amount :</th>
+                    <th>{{ itemTotal[0].total }} Tk</th>
+                </tr>
+            </tfoot>
         </table>
     </div>
 
@@ -88,7 +94,7 @@
 {% block documentready %}
     {{ parent() }}
 
-    var data = {{ reportData|json_encode|raw }}
+    var data = {{ reportData|json_encode|raw }};
 
     var series;
     series = series > 10 ? 10 : series;

@@ -30,26 +30,32 @@
         <table class="table table-striped" style="border: 1px solid ghostwhite;">
             <thead>
             <tr>
-                <th>Item</th>
+                <th>Used Item</th>
                 <th>Total</th>
             </tr>
             </thead>
             <tbody>
-
+            {% set i = 0 %}
             {% for projectItem in projectItems %}
-
+                {% set i = i + 1 %}
                 <tr>
                     <td style="width: 150px;">
                         <a href="/report/item/details/{{ projectItem.id }}" style="width: 85px;">
-                            {{ projectItem.itemName }}
+                            {{ i }}. {{ projectItem.itemName }}
                         </a?
                     </td>
-                    <td style="width: 90px;">{{ projectItem.total }}</td>
+                    <td style="width: 90px;">{{ projectItem.total }} Tk</td>
                 </tr>
 
             {% endfor %}
 
             </tbody>
+            <tfoot>
+                <tr>
+                    <th>Total Amount :</th>
+                    <th>{{ projectTotal[0].total }} Tk</th>
+                </tr>
+            </tfoot>
         </table>
     </div>
 
