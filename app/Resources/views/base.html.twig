@@ -348,7 +348,6 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                     }
                 }
             });
-
         });
 
         $("#item_itemName").keyup(function () {
@@ -431,7 +430,6 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                     alert('Script Error');
                 }
             });
-
         });
 
         $("#ajaxSaveCategory").click(function () {
@@ -724,29 +722,6 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                     $("#cost-list-div").load("/cost/list")
                 }
             });
-        });
-
-        $("#user_save").click(function () {
-            var username = $("#user_username").val();
-            var email = $("#user_email").val();
-            var Password_first = $("#user_plainPassword_first").val();
-            var Password_second = $("#user_plainPassword_second").val();
-
-            if(!username){
-                return username;
-            }
-            if(!email){
-                return email;
-            }
-            if(!Password_first){
-                return Password_first;
-            }
-            if(!Password_second){
-                return Password_second;
-            }
-            if(Password_first === Password_second){
-                return Password_first;
-            }
         });
 
         {% endblock %}

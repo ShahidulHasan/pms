@@ -50,22 +50,64 @@
                                         <tbody>
                                         <tr>
                                             <td>
-                                                {{ form_widget(form.username, { 'attr': {'class': 'form-control', 'style': 'width:160px;', 'id': 'username' } }) }}
+                                                <div class="form-group">
+                                                    <div class="col-md-12">
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            {{ form_widget(form.username, { 'attr': {'class': 'form-control', 'style': 'width:160px;', 'id': 'username' } }) }}
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td>
-                                                {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'style': 'width:220px;', 'id': 'email' } }) }}
+                                                <div class="form-group">
+                                                    <div class="col-md-12">
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'style': 'width:220px;', 'id': 'email' } }) }}
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td>
-                                                {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control', 'style': 'width:140px;' } }) }}
+                                                <div class="form-group">
+                                                    <div class="col-md-12">
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control', 'style': 'width:140px;' } }) }}
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td>
-                                                {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control', 'style': 'width:140px;' } }) }}
+                                                <div class="form-group">
+                                                    <div class="col-md-12">
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control', 'style': 'width:140px;' } }) }}
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td>
-                                                {{ form_widget(form.role, { 'attr': {'class': 'form-control', 'style': 'width:160px;' } }) }}
+                                                <div class="form-group">
+                                                    <div class="col-md-12">
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            {{ form_widget(form.role, { 'attr': {'class': 'form-control', 'style': 'width:160px;' } }) }}
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td>
-                                                {{ form_widget(form.save, { 'attr': {'class': 'btn green button-width', 'style': 'height:32px;' } } ) }}
+                                                <div class="form-group">
+                                                    <div class="col-md-12">
+                                                        <div class="input-icon right">
+                                                            {{ form_widget(form.save, { 'attr': {'class': 'btn green button-width', 'style': 'height:32px;' } } ) }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </td>
                                         </tr>
                                         </tbody>
@@ -148,5 +190,109 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+
+        var FormValidation = function () {
+
+            var handleValidation = function () {
+
+                var user_form = $('#user-form');
+                var error1 = $('.alert-danger', user_form);
+                var success1 = $('.alert-success', user_form);
+
+                user_form.validate({
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+                    ignore: "",
+                    rules: {
+                        'user[username]': {
+                            minlength: 3,
+                            required: true
+                        },
+                        'user[email]': {
+                            email: true,
+                            required: true
+                        },
+                        'user[plainPassword][first]': {
+                            minlength: 3,
+                            required: true
+                        },
+                        'user[plainPassword][second]': {
+                            minlength: 3,
+                            required: true,
+                            equalTo: '#user_plainPassword_first'
+                        },
+                        'user[role]': {
+                            required: true
+                        }
+                    },
+
+                    messages: {
+                        'bcl_userbundle_user[passwords][Confirm_Password]': {
+                            required: 'Repeat your password',
+                            equalTo: 'Enter the same password as above'
+                        }
+                    },
+
+                    invalidHandler: function (event, validator) { //display error alert on form submit
+                        success1.hide();
+                        error1.show();
+                        App.scrollTo(error1, -200);
+                    },
+
+                    errorPlacement: function (error, element) { // render error placement for each input type
+                        var icon = $(element).parent('.input-icon').children('i');
+                        icon.removeClass('fa-check').addClass("fa-warning");
+                        icon.attr("data-original-title", error.text()).tooltip({'container': 'body'});
+                    },
+
+                    highlight: function (element) { // hightlight error inputs
+                        $(element)
+                                .closest('.form-group').addClass('has-error'); // set error class to the control group
+                    },
+
+                    unhighlight: function (element) { // revert the change done by hightlight
+
+                    },
+
+                    success: function (label, element) {
+                        var icon = $(element).parent('.input-icon').children('i');
+                        $(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                        icon.removeClass("fa-warning").addClass("fa-check");
+                    },
+
+                    submitHandler: function (form) {
+                        form.submit();
+                        //success1.show();
+                        error1.hide();
+                    }
+                });
+
+            }
+
+            var handleWysihtml5 = function () {
+                if (!jQuery().wysihtml5) {
+
+                    return;
+                }
+
+                if ($('.wysihtml5').size() > 0) {
+                    $('.wysihtml5').wysihtml5({
+                        "stylesheets": ["assets/plugins/bootstrap-wysihtml5/wysiwyg-color.css"]
+                    });
+                }
+            }
+
+            return {
+                init: function () {
+                    handleWysihtml5();
+                    handleValidation();
+                }
+            };
+        }();
+
+    </script>
 
 {% endblock %}
