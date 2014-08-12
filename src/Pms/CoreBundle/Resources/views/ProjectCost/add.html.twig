@@ -40,30 +40,30 @@
 
                                     <table id="table_project_cost">
 
-                                            <tr>
-                                                <td>
-                                                    <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                                                        <span class="input-group-btn"></span>
-                                                        {{ form_widget(form.dateOfCost, { 'attr': {'class': 'form-control', 'style': 'width:165px;'} }) }}
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    {{ form_widget(form.category, { 'attr': {'class': 'form-control'} }) }}
-                                                </td>
-                                                <td>
-                                                    {{ form_widget(form.grn, { 'attr': {'class': 'form-control'} }) }}
-                                                </td>
-                                                <td>
+                                        <tr>
+                                            <td>
+                                                <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                                                    <span class="input-group-btn"></span>
+                                                    {{ form_widget(form.dateOfCost, { 'attr': {'class': 'form-control', 'style': 'width:165px;margin-right: 50px;'} }) }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                {{ form_widget(form.category, { 'attr': {'class': 'form-control', 'style': 'width:180px;margin-right: 50px;'} }) }}
+                                            </td>
+                                            <td>
+                                                {{ form_widget(form.grn, { 'attr': {'class': 'form-control'} }) }}
+                                            </td>
+                                            <td>
 
-                                                </td>
+                                            </td>
 
-                                            </tr>
+                                        </tr>
                                         <tr>
                                             <td>
                                                 {{ form_widget(form.pr, { 'attr': {'class': 'form-control', 'style': 'width:165px;'} }) }}
                                             </td>
                                             <td>
-                                                {{ form_widget(form.subCategory, { 'attr': {'class': 'form-control'} }) }}
+                                                {{ form_widget(form.subCategory, { 'attr': {'class': 'form-control', 'style': 'width:180px;margin-right: 50px;'} }) }}
                                             </td>
                                             <td>
                                                 {{ form_widget(form.quantity, { 'attr': {'class': 'form-control quantity'} }) }}
@@ -77,7 +77,7 @@
                                                 {{ form_widget(form.project, { 'attr': {'class': 'form-control', 'style': 'width:166px;' } }) }}
                                             </td>
                                             <td>
-                                                {{ form_widget(form.po, { 'attr': {'class': 'form-control'} }) }}
+                                                {{ form_widget(form.po, { 'attr': {'class': 'form-control', 'style': 'width:180px;margin-right: 50px;'} }) }}
                                             </td>
                                             <td>
                                                 {{ form_widget(form.unitPrice, { 'attr': {'class': 'form-control unitPrice'} }) }}
@@ -91,7 +91,7 @@
                                                 {{ form_widget(form.item, { 'attr': {'class': 'form-control select2me', 'style': 'width:166px;' } }) }}
                                             </td>
                                             <td>
-                                                {{ form_widget(form.invoice, { 'attr': {'class': 'form-control'} }) }}
+                                                {{ form_widget(form.invoice, { 'attr': {'class': 'form-control', 'style': 'width:180px;margin-right: 50px;'} }) }}
                                             </td>
                                             <td>
                                                 {{ form_widget(form.lineTotal, { 'attr': {'class': 'form-control lineTotal'} }) }}
@@ -181,7 +181,7 @@
                                                 <th>Unite Price</th>
                                                 <th>Total</th>
                                                 <th>Status</th>
-                                                <th>Edit</th>
+                                                <th></th>
                                             </tr>
                                             </thead>
                                             <tbody>
