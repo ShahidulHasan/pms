@@ -19,17 +19,32 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CoreController extends Controller
 {
-    public function overViewAction()
+    public function overViewAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $itemUses = $this->getDoctrine()->getRepository('UserBundle:User')->overView($em);
+        if(!empty($_GET['start_date']) && !empty($_GET['end_date'])){
+
+            $start = $_GET['start_date'];
+            $end = $_GET['end_date'];
+        }else{
+
+            $start = 0;
+            $end = 0;
+        }
+
+        $itemUses = $this->getDoctrine()->getRepository('UserBundle:User')->overView($em, $start, $end);
 
         list($itemUses, $page) = $this->paginateOverView($itemUses);
 
+        $formSearch = $this->createForm(new SearchType());
+
         return $this->render('PmsCoreBundle:Report:over_view.html.twig', array(
+            'start' => $start,
+            'end' => $end,
             'itemUses' => $itemUses,
             'page' => $page,
+            'formSearch' => $formSearch->createView(),
         ));
     }
 

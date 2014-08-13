@@ -365,22 +365,45 @@ class UserRepository extends EntityRepository
         return array($projectCosts, $cost, $reportData, $sumOfTopten);
     }
 
-    public function overView($em){
+    public function overView($em, $start, $end){
 
         $connection = $em->getConnection();
-        $query = $em->getRepository('PmsCoreBundle:ProjectCost')
-            ->createQueryBuilder('pc')
-            ->select('p.projectName')
-            ->addSelect('i.itemName')
-            ->addSelect('i.id')
-            ->addSelect('SUM(pc.lineTotal) as total')
-            ->addSelect('SUM(pc.quantity) as quantity')
-            ->where('pc.status = 1')
-            ->join('pc.project', 'p')
-            ->join('pc.item', 'i')
-            ->groupBy('i.id')
-            ->orderBy('i.id', 'DESC');
-        $itemUses = $query->getQuery()->getResult();
+
+        if(($start != 0) && ($end != 0)){
+
+            $query = $em->getRepository('PmsCoreBundle:ProjectCost')
+                ->createQueryBuilder('pc')
+                ->select('p.projectName')
+                ->addSelect('i.itemName')
+                ->addSelect('i.id')
+                ->addSelect('SUM(pc.lineTotal) as total')
+                ->addSelect('SUM(pc.quantity) as quantity')
+                ->where('pc.status = 1')
+                ->andWhere('pc.dateOfCost >= ?1')
+                ->andWhere('pc.dateOfCost <= ?2')
+                ->setParameter('1', $start)
+                ->setParameter('2', $end)
+                ->join('pc.project', 'p')
+                ->join('pc.item', 'i')
+                ->groupBy('i.id')
+                ->orderBy('i.id', 'DESC');
+            $itemUses = $query->getQuery()->getResult();
+        }else{
+
+            $query = $em->getRepository('PmsCoreBundle:ProjectCost')
+                ->createQueryBuilder('pc')
+                ->select('p.projectName')
+                ->addSelect('i.itemName')
+                ->addSelect('i.id')
+                ->addSelect('SUM(pc.lineTotal) as total')
+                ->addSelect('SUM(pc.quantity) as quantity')
+                ->where('pc.status = 1')
+                ->join('pc.project', 'p')
+                ->join('pc.item', 'i')
+                ->groupBy('i.id')
+                ->orderBy('i.id', 'DESC');
+            $itemUses = $query->getQuery()->getResult();
+        }
 
         foreach ($itemUses as $key => $item) {
 
