@@ -47,13 +47,14 @@ class CoreController extends Controller
             $end = null;
         }
 
-        list($itemUses, $itemTotal, $reportData) = $this->getDoctrine()->getRepository('UserBundle:User')->itemReport($em, $start, $end);
+        list($itemUses, $itemTotal, $reportData, $sumOfTopten) = $this->getDoctrine()->getRepository('UserBundle:User')->itemReport($em, $start, $end);
 
         $formSearch = $this->createForm(new SearchType());
 
         return $this->render('PmsCoreBundle:Report:item.html.twig', array(
             'itemUses' => $itemUses,
             'itemTotal' => $itemTotal,
+            'sumOfTopten' => $sumOfTopten,
             'reportData' => $reportData,
             'formSearch' => $formSearch->createView(),
         ));
@@ -99,13 +100,14 @@ class CoreController extends Controller
             $end = null;
         }
 
-        list($projectCosts, $cost, $reportData) = $this->getDoctrine()->getRepository('UserBundle:User')->projectReport($em, $start, $end);
+        list($projectCosts, $cost, $reportData, $sumOfTopten) = $this->getDoctrine()->getRepository('UserBundle:User')->projectReport($em, $start, $end);
 
         $formSearch = $this->createForm(new SearchType());
 
         return $this->render('PmsCoreBundle:Report:project.html.twig', array(
             'projectcosts' => $projectCosts,
             'cost' => $cost,
+            'sumOfTopten' => $sumOfTopten,
             'reportData' => $reportData,
             'formSearch' => $formSearch->createView(),
         ));
