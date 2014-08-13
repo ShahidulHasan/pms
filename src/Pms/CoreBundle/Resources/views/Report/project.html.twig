@@ -29,7 +29,7 @@
     </tbody>
 </table>
 </form>
-
+    {#{{ start }} {{ end }}#}
 <br/>
 
 <div class="col-md-6">
@@ -70,7 +70,7 @@
 
             <tr>
                 <td style="width: 150px;">
-                    <a href="/report/project/details/{{ projectcost.id }}" style="width: 85px;">
+                    <a href="/report/project/details/{{ projectcost.id }}/{{ start }}/{{ end }}" style="width: 85px;">
                         {{ projectcost.projectName }}
                     </a>
                 </td>

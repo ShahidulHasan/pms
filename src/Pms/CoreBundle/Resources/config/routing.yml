@@ -151,7 +151,7 @@ report_project:
     defaults: { _controller: PmsCoreBundle:Core:projectReport }
 
 report_project_details:
-    pattern: /report/project/details/{id}
+    pattern: /report/project/details/{id}/{start}/{end}
     defaults: { _controller: PmsCoreBundle:Core:projectDetails }
     requirements:
           id:  \d+
@@ -163,7 +163,7 @@ report_item:
           id:  \d+
 
 report_item_details:
-    pattern: /report/item/details/{id}
+    pattern: /report/item/details/{id}/{start}/{end}
     defaults: { _controller: PmsCoreBundle:Core:itemDetails }
     requirements:
           id:  \d+

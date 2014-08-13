@@ -43,8 +43,8 @@ class CoreController extends Controller
             $end = $_GET['end_date'];
         }else{
 
-            $start = null;
-            $end = null;
+            $start = 0;
+            $end = 0;
         }
 
         list($itemUses, $itemTotal, $reportData, $sumOfTopten) = $this->getDoctrine()->getRepository('UserBundle:User')->itemReport($em, $start, $end);
@@ -52,6 +52,8 @@ class CoreController extends Controller
         $formSearch = $this->createForm(new SearchType());
 
         return $this->render('PmsCoreBundle:Report:item.html.twig', array(
+            'start' => $start,
+            'end' => $end,
             'itemUses' => $itemUses,
             'itemTotal' => $itemTotal,
             'sumOfTopten' => $sumOfTopten,
@@ -60,26 +62,30 @@ class CoreController extends Controller
         ));
     }
 
-    public function itemDetailsAction($id)
+    public function itemDetailsAction($id, $start, $end)
     {
         $em = $this->getDoctrine()->getManager();
 
-        list($itemUses, $itemTotal, $reportData) = $this->getDoctrine()->getRepository('UserBundle:User')->itemDetails($id, $em);
+        list($itemUses, $itemTotal, $reportData) = $this->getDoctrine()->getRepository('UserBundle:User')->itemDetails($id, $em, $start, $end);
 
         return $this->render('PmsCoreBundle:Report:item_details.html.twig', array(
+            'start' => $start,
+            'end' => $end,
             'itemUses' => $itemUses,
             'itemTotal' => $itemTotal,
             'reportData' => $reportData,
         ));
     }
 
-    public function projectDetailsAction($id)
+    public function projectDetailsAction($id, $start, $end)
     {
         $em = $this->getDoctrine()->getManager();
 
-        list($projectItems, $projectItems2, $reportData) = $this->getDoctrine()->getRepository('UserBundle:User')->projectDetails($id, $em);
+        list($projectItems, $projectItems2, $reportData) = $this->getDoctrine()->getRepository('UserBundle:User')->projectDetails($id, $em, $start, $end);
 
         return $this->render('PmsCoreBundle:Report:project_details.html.twig', array(
+            'start' => $start,
+            'end' => $end,
             'projectItems' => $projectItems,
             'projectTotal' => $projectItems2,
             'reportData' => $reportData,
@@ -96,8 +102,8 @@ class CoreController extends Controller
             $end = $_GET['end_date'];
         }else{
 
-            $start = null;
-            $end = null;
+            $start = 0;
+            $end = 0;
         }
 
         list($projectCosts, $cost, $reportData, $sumOfTopten) = $this->getDoctrine()->getRepository('UserBundle:User')->projectReport($em, $start, $end);
@@ -105,6 +111,8 @@ class CoreController extends Controller
         $formSearch = $this->createForm(new SearchType());
 
         return $this->render('PmsCoreBundle:Report:project.html.twig', array(
+            'start' => $start,
+            'end' => $end,
             'projectcosts' => $projectCosts,
             'cost' => $cost,
             'sumOfTopten' => $sumOfTopten,
