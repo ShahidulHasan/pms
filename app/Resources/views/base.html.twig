@@ -273,6 +273,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 'assets/scripts/index.js'
 'assets/scripts/tasks.js'
 'assets/plugins/jquery-validation/dist/jquery.validate.min.js'
+'assets/plugins/data-tables/jquery.dataTables.js'
 'assets/plugins/select2/select2.min.js'
 
 'assets/plugins/jquery-validation/dist/additional-methods.min.js'
@@ -319,7 +320,6 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
         App.init();
         FormValidation.init();
         FormComponents.init();
-        TableManaged.init();
 
         $(".unitPrice").keyup(function () {
             var quantity = $("#table_project_cost").find('.quantity').val();
