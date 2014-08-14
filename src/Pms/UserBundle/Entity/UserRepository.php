@@ -46,6 +46,7 @@ class UserRepository extends EntityRepository
                 ->addSelect('i.itemName')
                 ->addSelect('p.id')
                 ->addSelect('SUM(pc.lineTotal) as total')
+                ->addSelect('SUM(pc.status) as totalUsed')
                 ->where('pc.status = 1')
                 ->andWhere('pc.dateOfCost >= ?1')
                 ->andWhere('pc.dateOfCost <= ?2')
@@ -80,8 +81,9 @@ class UserRepository extends EntityRepository
                 ->createQueryBuilder('pc')
                 ->select('p.projectName')
                 ->addSelect('i.itemName')
-                ->addSelect('p.id')
+                ->addSelect('i.id')
                 ->addSelect('SUM(pc.lineTotal) as total')
+                ->addSelect('SUM(pc.status) as totalUsed')
                 ->where('pc.status = 1')
                 ->join('pc.project', 'p')
                 ->join('pc.item', 'i')
@@ -171,6 +173,7 @@ class UserRepository extends EntityRepository
                 ->addSelect('i.itemName')
                 ->addSelect('p.id')
                 ->addSelect('SUM(pc.lineTotal) as total')
+                ->addSelect('SUM(pc.status) as totalUsed')
                 ->where('pc.status = 1')
                 ->andWhere('pc.item = ?1')
                 ->setParameter('1', $id)
@@ -203,6 +206,82 @@ class UserRepository extends EntityRepository
         return array($itemUses, $itemTotal, $reportData);
     }
 
+    public function byItemDetails($id, $em, $start, $end){
+
+        if(($start != 0) && ($end != 0)){
+
+            $query = $em->getRepository('PmsCoreBundle:ProjectCost')
+                ->createQueryBuilder('pc')
+                ->select('p.projectName')
+                ->addSelect('i.itemName')
+                ->addSelect('pc.lineTotal')
+                ->addSelect('pc.dateOfCost')
+                ->addSelect('pc.quantity')
+                ->addSelect('pc.unitPrice')
+                ->addSelect('i.itemUnit')
+                ->where('pc.status = 1')
+                ->andWhere('pc.project = ?1')
+                ->andWhere('pc.dateOfCost >= ?2')
+                ->andWhere('pc.dateOfCost <= ?3')
+                ->setParameter('1', $id)
+                ->setParameter('2', $start)
+                ->setParameter('3', $end)
+                ->join('pc.project', 'p')
+                ->join('pc.item', 'i');
+            $itemUses = $query->getQuery()->getResult();
+
+            $query2 = $em->getRepository('PmsCoreBundle:ProjectCost')
+                ->createQueryBuilder('pc')
+                ->Select('SUM(pc.lineTotal) as total')
+                ->where('pc.status = 1')
+                ->andWhere('pc.item = ?1')
+                ->andWhere('pc.dateOfCost >= ?2')
+                ->andWhere('pc.dateOfCost <= ?3')
+                ->setParameter('1', $id)
+                ->setParameter('2', $start)
+                ->setParameter('3', $end)
+                ->join('pc.item', 'p');
+            $itemTotal = $query2->getQuery()->getResult();
+        }else{
+            $query = $em->getRepository('PmsCoreBundle:ProjectCost')
+                ->createQueryBuilder('pc')
+                ->select('p.projectName')
+                ->addSelect('i.itemName')
+                ->addSelect('pc.lineTotal')
+                ->addSelect('pc.dateOfCost')
+                ->addSelect('pc.quantity')
+                ->addSelect('pc.unitPrice')
+                ->addSelect('i.itemUnit')
+                ->where('pc.status = 1')
+                ->andWhere('pc.project = ?1')
+                ->setParameter('1', $id)
+                ->join('pc.project', 'p')
+                ->join('pc.item', 'i');
+            $itemUses = $query->getQuery()->getResult();
+
+            $query2 = $em->getRepository('PmsCoreBundle:ProjectCost')
+                ->createQueryBuilder('pc')
+                ->Select('SUM(pc.lineTotal) as total')
+                ->where('pc.status = 1')
+                ->andWhere('pc.project = ?1')
+                ->setParameter('1', $id)
+                ->join('pc.item', 'p');
+            $itemTotal = $query2->getQuery()->getResult();
+        }
+
+        $reportData = array();
+
+        foreach($itemUses as $key => $itemUse){
+            $data = array();
+            $data['data'] = ($itemUse['lineTotal']*100)/$itemTotal[0]['total'];
+            $data['label'] = $itemUse['itemName'];
+            $reportData[] = $data;
+            $projectItems[$key]['percentage'] = ($itemUse['lineTotal']*100)/$itemTotal[0]['total'];
+        }
+
+        return array($itemUses, $itemTotal, $reportData);
+    }
+
     public function projectDetails($id, $em, $start, $end){
 
         if(($start != 0) && ($end != 0)){
@@ -213,6 +292,9 @@ class UserRepository extends EntityRepository
                 ->addSelect('i.itemName')
                 ->addSelect('i.id')
                 ->addSelect('SUM(pc.lineTotal) as total')
+                ->addSelect('SUM(pc.quantity) as quantities')
+                ->addSelect('SUM(pc.status) as totalUsed')
+                ->addSelect('i.itemUnit')
                 ->where('pc.status = 1')
                 ->andWhere('pc.project = ?1')
                 ->andWhere('pc.dateOfCost >= ?2')
@@ -246,6 +328,9 @@ class UserRepository extends EntityRepository
                 ->addSelect('i.itemName')
                 ->addSelect('i.id')
                 ->addSelect('SUM(pc.lineTotal) as total')
+                ->addSelect('SUM(pc.quantity) as quantities')
+                ->addSelect('SUM(pc.status) as totalUsed')
+                ->addSelect('i.itemUnit')
                 ->where('pc.status = 1')
                 ->andWhere('pc.project = ?1')
                 ->setParameter('1', $id)
@@ -395,6 +480,7 @@ class UserRepository extends EntityRepository
                 ->select('p.projectName')
                 ->addSelect('i.itemName')
                 ->addSelect('i.id')
+                ->addSelect('i.itemUnit')
                 ->addSelect('SUM(pc.lineTotal) as total')
                 ->addSelect('SUM(pc.quantity) as quantity')
                 ->where('pc.status = 1')

@@ -36,6 +36,7 @@
         <table class="table table-striped" style="border: 1px solid #808080;">
             <thead>
             <tr>
+                <th>Sl</th>
                 <th>Project</th>
                 <th>Total</th>
                 <th>Quantity</th>
@@ -50,37 +51,42 @@
 
             {% for itemUse in itemUses %}
                 {% set i = i + 1 %}
+
                 <tr>
-                    <td style="width: 150px;">
+                    <td>
+                        {{ i }}.
+                    </td>
+                    <td class="col-md-2">
                         <a href="/report/item/details/{{ itemUse.id }}/{{ start }}/{{ end }}" style="width: 85px;">
-                            {{ i }}. {{ itemUse.itemName }}
+                            {{ itemUse.itemName }}
                         </a>
                     </td>
-                    <td style="width: 90px;">{{ itemUse.total }}</td>
-                    <td style="width: 90px;">{{ itemUse.quantity }}</td>
-                    <td style="width: 90px;">
-
+                    <td class="col-md-2">
+                        {{ itemUse.total }} Tk
+                    </td>
+                    <td class="col-md-2">
+                        {{ itemUse.quantity }} {{ itemUse.itemUnit }}
+                    </td>
+                    <td class="col-md-6">
                         <table class="table table-striped" style="border: 1px solid #808080;">
 
                             <tr>
                                 <th>Project Name</th>
-                                <th>Hightest</th>
-                                <th>Lowest</th>
+                                <th>Hightest Price</th>
+                                <th>Lowest Price</th>
                             </tr>
 
                             {% for ps in itemUse.projectSummary %}
-                            <tr>
-                                <td>{{ ps.project_name }}</td>
-                                <td>{{ ps.projectHighest }}</td>
-                                <td>{{ ps.projectLowest }}</td>
-                            </tr>
+                                <tr>
+                                    <td>{{ ps.project_name }}</td>
+                                    <td>{{ ps.projectHighest }} Tk</td>
+                                    <td>{{ ps.projectLowest }} Tk</td>
+                                </tr>
                             {% endfor %}
 
                         </table>
-
                     </td>
                 </tr>
-
             {% endfor %}
 
             </tbody>

@@ -92,6 +92,36 @@ class CoreController extends Controller
         ));
     }
 
+    public function byItemDetailsAction($id, $start, $end)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        list($itemUses, $itemTotal, $reportData) = $this->getDoctrine()->getRepository('UserBundle:User')->byItemDetails($id, $em, $start, $end);
+
+        return $this->render('PmsCoreBundle:Report:by_item_details.html.twig', array(
+            'start' => $start,
+            'end' => $end,
+            'itemUses' => $itemUses,
+            'itemTotal' => $itemTotal,
+            'reportData' => $reportData,
+        ));
+    }
+
+    public function byProjectDetailsAction($id, $start, $end)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        list($projectItems, $projectItems2, $reportData) = $this->getDoctrine()->getRepository('UserBundle:User')->projectDetails($id, $em, $start, $end);
+
+        return $this->render('PmsCoreBundle:Report:by_project_details.html.twig', array(
+            'start' => $start,
+            'end' => $end,
+            'projectItems' => $projectItems,
+            'projectTotal' => $projectItems2,
+            'reportData' => $reportData,
+        ));
+    }
+
     public function projectDetailsAction($id, $start, $end)
     {
         $em = $this->getDoctrine()->getManager();
