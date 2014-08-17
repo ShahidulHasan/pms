@@ -406,11 +406,29 @@ class CoreController extends Controller
 
         $form = $this->createForm(new ItemType(), $entity);
 
-        $dql = "SELECT a FROM PmsCoreBundle:Item a ORDER BY a.id DESC";
+        $dql = "SELECT a FROM PmsCoreBundle:Item a WHERE a.status = 1 ORDER BY a.id DESC";
 
         list($item, $page) = $this->paginate($dql);
 
         return $this->render('PmsCoreBundle:Item:add.html.twig', array(
+            'item' => $item,
+            'entity' => $entity,
+            'form' => $form->createView(),
+            'page' => $page,
+        ));
+    }
+
+    public function itemDeletedAction(Request $request)
+    {
+        $entity = new Item();
+
+        $form = $this->createForm(new ItemType(), $entity);
+
+        $dql = "SELECT a FROM PmsCoreBundle:Item a WHERE a.status = 0 ORDER BY a.id DESC";
+
+        list($item, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:Item:deleted.html.twig', array(
             'item' => $item,
             'entity' => $entity,
             'form' => $form->createView(),
@@ -429,6 +447,19 @@ class CoreController extends Controller
         );
 
         return $this->redirect($this->generateUrl('item_add'));
+    }
+
+    public function itemActiveAction(Item $item)
+    {
+        $item->setStatus(1);
+        $this->getDoctrine()->getRepository('PmsCoreBundle:Item')->update($item);
+
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            'Item Successfully Restored'
+        );
+
+        return $this->redirect($this->generateUrl('item_delete'));
     }
 
     public function itemUpdateAction(Request $request, Item $entity)
@@ -461,6 +492,25 @@ class CoreController extends Controller
             return new Response($return, 200, array('Content-Type' => 'application/json'));
         } else {
             $return = array("responseCode" => '404', "item_name" => "Item name available.");
+            $return = json_encode($return);
+            return new Response($return, 200, array('Content-Type' => 'application/json'));
+        }
+    }
+
+    public function categoryCheckAction(Request $request)
+    {
+        $categoryName = $request->request->get('categoryName');
+
+        $category = $this->getDoctrine()->getRepository('PmsCoreBundle:Category')->findOneBy(
+            array('categoryName' => $categoryName )
+        );
+
+        if ($category) {
+            $return = array("responseCode" => 200, "category_name" => "Category already exist.");
+            $return = json_encode($return);
+            return new Response($return, 200, array('Content-Type' => 'application/json'));
+        } else {
+            $return = array("responseCode" => '404', "category_name" => "Category name available.");
             $return = json_encode($return);
             return new Response($return, 200, array('Content-Type' => 'application/json'));
         }

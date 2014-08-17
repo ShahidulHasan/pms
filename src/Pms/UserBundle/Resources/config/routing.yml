@@ -30,6 +30,12 @@ username_check:
     options:
             expose: true
 
+email_check:
+    pattern: /email/check
+    defaults: { _controller: UserBundle:User:emailCheck }
+    options:
+            expose: true
+
 fos_user_security:
      resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 

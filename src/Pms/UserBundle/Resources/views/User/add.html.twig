@@ -54,7 +54,7 @@
                                                     <div class="col-md-12">
                                                         <div class="input-icon right">
                                                             <i class="fa"></i>
-                                                            {{ form_widget(form.username, { 'attr': {'class': 'form-control', 'style': 'width:160px;', 'id': 'username' } }) }}
+                                                            {{ form_widget(form.username, { 'attr': {'class': 'form-control', 'style': '', 'autocomplete': 'off' } }) }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -64,7 +64,7 @@
                                                     <div class="col-md-12">
                                                         <div class="input-icon right">
                                                             <i class="fa"></i>
-                                                            {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'style': 'width:220px;', 'id': 'email' } }) }}
+                                                            {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'style': 'width:220px;', 'autocomplete': 'off' } }) }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -109,6 +109,18 @@
                                                 </div>
 
                                             </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="userMessege"></span>
+                                            </td>
+                                            <td>
+                                                <span class="emailMessege"></span>
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                         </tr>
                                         </tbody>
                                     </table>

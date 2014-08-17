@@ -350,6 +350,25 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             });
         });
 
+        $("#category_categoryName").keyup(function () {
+            var categoryName = $(this).val();
+
+            $.ajax({
+                type: "post",
+                url: Routing.generate('category_check'),
+                data: "categoryName=" + categoryName,
+                dataType: 'json',
+                success: function (msg) {
+                    if (msg.responseCode == 200) {
+                        $('.userMessege').css('color', 'red').html(msg.category_name).fadeIn(1000);
+                    }
+                    else {
+                        $('.userMessege').css('color', 'green').html(msg.category_name).fadeIn(1000);
+                    }
+                }
+            });
+        });
+
         $("#item_itemName").keyup(function () {
             var itemName = $(this).val();
 
@@ -388,7 +407,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             });
         });
 
-        $("#username").change(function () {
+        $("#user_username").keyup(function () {
             var userName = $(this).val();
 
             $.ajax({
@@ -410,7 +429,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             });
         });
 
-        $("#email").change(function () {
+        $("#user_email").keyup(function () {
             var email = $(this).val();
 
             $.ajax({

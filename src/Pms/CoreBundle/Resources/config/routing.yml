@@ -2,6 +2,10 @@ item_add:
     pattern: /item
     defaults: { _controller: PmsCoreBundle:Core:itemAdd }
 
+item_deleted:
+    pattern: /item/deleted
+    defaults: { _controller: PmsCoreBundle:Core:itemDeleted }
+
 item_list:
     pattern: /item/list
     defaults: { _controller: PmsCoreBundle:Core:itemList }
@@ -9,6 +13,12 @@ item_list:
 item_delete:
     pattern: /item/delete/{id}
     defaults: { _controller: PmsCoreBundle:Core:itemDelete }
+    requirements:
+          id: \d+
+
+item_active:
+    pattern: /item/active/{id}
+    defaults: { _controller: PmsCoreBundle:Core:itemActive }
     requirements:
           id: \d+
 
@@ -67,6 +77,12 @@ cost_update:
 item_check:
     pattern: /item/check
     defaults: { _controller: PmsCoreBundle:Core:itemCheck }
+    options:
+            expose: true
+
+category_check:
+    pattern: /category/check
+    defaults: { _controller: PmsCoreBundle:Core:categoryCheck }
     options:
             expose: true
 
