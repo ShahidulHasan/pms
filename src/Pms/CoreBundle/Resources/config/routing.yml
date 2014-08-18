@@ -182,6 +182,16 @@ sub_category_delete:
     requirements:
           id: \d+
 
+sub_category_deleted:
+    pattern: /sub-category/deleted
+    defaults: { _controller: PmsCoreBundle:Core:subCategoryDeleted }
+
+sub_category_active:
+    pattern: /sub-category/active/{id}
+    defaults: { _controller: PmsCoreBundle:Core:subCategoryActive }
+    requirements:
+          id: \d+
+
 get_subcategory:
     pattern: /get-subcategory
     defaults: { _controller: PmsCoreBundle:Core:getSubcategoryByCategory }

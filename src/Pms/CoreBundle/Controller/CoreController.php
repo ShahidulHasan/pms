@@ -170,7 +170,7 @@ class CoreController extends Controller
 
     public function categoryListAction()
     {
-        $dql = "SELECT a FROM PmsCoreBundle:Category a ORDER BY a.id DESC";
+        $dql = "SELECT a FROM PmsCoreBundle:Category a WHERE a.parent = 0 AND a.status = 1 ORDER BY a.id DESC";
 
         list($category, $page) = $this->paginate($dql);
 
@@ -333,7 +333,7 @@ class CoreController extends Controller
     {
         $form = $this->createForm(new SubCategoryType());
 
-        $dql = "SELECT a FROM PmsCoreBundle:Category a WHERE a.parent > 0 ORDER BY a.id DESC";
+        $dql = "SELECT a FROM PmsCoreBundle:Category a WHERE a.parent > 0 AND a.status = 1 ORDER BY a.id DESC";
 
         list($category, $page) = $this->paginate($dql);
 
@@ -342,6 +342,34 @@ class CoreController extends Controller
             'categories' => $category,
             'page' => $page,
         ));
+    }
+
+    public function subCategoryDeletedAction(Request $request)
+    {
+        $form = $this->createForm(new SubCategoryType());
+
+        $dql = "SELECT a FROM PmsCoreBundle:Category a WHERE a.parent > 0 AND a.status = 0 ORDER BY a.id DESC";
+
+        list($category, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:Category:subDeleted.html.twig', array(
+            'form' => $form->createView(),
+            'categories' => $category,
+            'page' => $page,
+        ));
+    }
+
+    public function subCategoryActiveAction(Category $category)
+    {
+        $category->setStatus(1);
+        $this->getDoctrine()->getRepository('PmsCoreBundle:Category')->update($category);
+
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            'Category Successfully Restored'
+        );
+
+        return $this->redirect($this->generateUrl('sub_category_deleted'));
     }
 
     public function subCategoryAjaxAddAction(Request $request)
@@ -398,7 +426,7 @@ class CoreController extends Controller
 
     public function subCategoryListAction()
     {
-        $dql = "SELECT a FROM PmsCoreBundle:Category a WHERE a.parent > 0 ORDER BY a.id DESC";
+        $dql = "SELECT a FROM PmsCoreBundle:Category a WHERE a.parent > 0 AND a.status = 1 ORDER BY a.id DESC";
 
         list($category, $page) = $this->paginate($dql);
 
@@ -423,7 +451,7 @@ class CoreController extends Controller
 
     public function itemListAction()
     {
-        $dql = "SELECT a FROM PmsCoreBundle:Item a ORDER BY a.id DESC";
+        $dql = "SELECT a FROM PmsCoreBundle:Item a WHERE a.status = 1 ORDER BY a.id DESC";
 
         list($item, $page) = $this->paginate($dql);
 
@@ -623,7 +651,7 @@ class CoreController extends Controller
 
     public function projectListAction()
     {
-        $dql = "SELECT a FROM PmsCoreBundle:Project a ORDER BY a.id DESC";
+        $dql = "SELECT a FROM PmsCoreBundle:Project a WHERE a.status = 1  ORDER BY a.id DESC";
 
         list($project, $page) = $this->paginate($dql);
 
