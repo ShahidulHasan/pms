@@ -28,6 +28,18 @@ item_update:
     requirements:
           id:  \d+
 
+item_check:
+    pattern: /item/check
+    defaults: { _controller: PmsCoreBundle:Core:itemCheck }
+    options:
+            expose: true
+
+item_ajax_add:
+    pattern: /item/add
+    defaults: { _controller: PmsCoreBundle:Core:itemAjaxAdd }
+    options:
+            expose: true
+
 project_add:
     pattern: /project
     defaults: { _controller: PmsCoreBundle:Core:projectAdd }
@@ -58,6 +70,18 @@ project_update:
     requirements:
           id:  \d+
 
+project_check:
+    pattern: /project/check
+    defaults: { _controller: PmsCoreBundle:Core:projectCheck }
+    options:
+            expose: true
+
+project_ajax_add:
+    pattern: /project/add
+    defaults: { _controller: PmsCoreBundle:Core:projectAjaxAdd }
+    options:
+            expose: true
+
 cost_add:
     pattern: /project-cost
     defaults: { _controller: PmsCoreBundle:Core:projectCostAdd }
@@ -84,9 +108,9 @@ cost_update:
     requirements:
           id:  \d+
 
-item_check:
-    pattern: /item/check
-    defaults: { _controller: PmsCoreBundle:Core:itemCheck }
+project_cost_ajax_add:
+    pattern: /project-cost/add
+    defaults: { _controller: PmsCoreBundle:Core:projectCostAjaxAdd }
     options:
             expose: true
 
@@ -105,36 +129,6 @@ category_active:
     defaults: { _controller: PmsCoreBundle:Core:categoryActive }
     requirements:
           id: \d+
-
-sub_category_check:
-    pattern: /sub-category/check
-    defaults: { _controller: PmsCoreBundle:Core:subCategoryCheck }
-    options:
-            expose: true
-
-project_check:
-    pattern: /project/check
-    defaults: { _controller: PmsCoreBundle:Core:projectCheck }
-    options:
-            expose: true
-
-item_ajax_add:
-    pattern: /item/add
-    defaults: { _controller: PmsCoreBundle:Core:itemAjaxAdd }
-    options:
-            expose: true
-
-project_ajax_add:
-    pattern: /project/add
-    defaults: { _controller: PmsCoreBundle:Core:projectAjaxAdd }
-    options:
-            expose: true
-
-project_cost_ajax_add:
-    pattern: /project-cost/add
-    defaults: { _controller: PmsCoreBundle:Core:projectCostAjaxAdd }
-    options:
-            expose: true
 
 category_add:
     pattern: /category
@@ -162,6 +156,12 @@ category_update:
     requirements:
           id:  \d+
 
+sub_category_check:
+    pattern: /sub-category/check
+    defaults: { _controller: PmsCoreBundle:Core:subCategoryCheck }
+    options:
+            expose: true
+
 sub_category_add:
     pattern: /sub-category
     defaults: { _controller: PmsCoreBundle:Core:subCategoryAdd }
@@ -169,12 +169,6 @@ sub_category_add:
 sub_category_ajax_add:
     pattern: /sub-category/add
     defaults: { _controller: PmsCoreBundle:Core:subCategoryAjaxAdd }
-    options:
-        expose: true
-
-get_subcategory:
-    pattern: /get-subcategory
-    defaults: { _controller: PmsCoreBundle:Core:getSubcategoryByCategory }
     options:
         expose: true
 
@@ -187,6 +181,12 @@ sub_category_delete:
     defaults: { _controller: PmsCoreBundle:Core:subCategoryDelete }
     requirements:
           id: \d+
+
+get_subcategory:
+    pattern: /get-subcategory
+    defaults: { _controller: PmsCoreBundle:Core:getSubcategoryByCategory }
+    options:
+        expose: true
 
 report_project:
     pattern: /report/project
