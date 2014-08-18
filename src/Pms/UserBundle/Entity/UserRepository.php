@@ -124,11 +124,13 @@ class UserRepository extends EntityRepository
         }
 
         $sumOfTopten = 0;
+        $totalItemForPie = 0;
         foreach($topTen as $toptens ){
+            $totalItemForPie = $totalItemForPie + 1;
             $sumOfTopten = $sumOfTopten + $toptens['total'];
         }
 
-        return array($itemUses, $itemTotal, $reportData, $sumOfTopten);
+        return array($itemUses, $itemTotal, $reportData, $sumOfTopten, $totalItemForPie);
     }
 
     public function itemDetails($id, $em, $start, $end){
@@ -443,11 +445,13 @@ class UserRepository extends EntityRepository
         }
 
         $sumOfTopten = 0;
+        $totalProjectForPic = 0;
         foreach($topTen as $toptens ){
+            $totalProjectForPic = $totalProjectForPic + 1;
             $sumOfTopten = $sumOfTopten + $toptens['total'];
         }
 
-        return array($projectCosts, $cost, $reportData, $sumOfTopten);
+        return array($projectCosts, $cost, $reportData, $sumOfTopten, $totalProjectForPic);
     }
 
     public function overView($em, $start, $end){

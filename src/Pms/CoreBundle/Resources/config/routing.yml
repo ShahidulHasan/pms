@@ -32,6 +32,16 @@ project_add:
     pattern: /project
     defaults: { _controller: PmsCoreBundle:Core:projectAdd }
 
+project_deleted:
+    pattern: /project/deleted
+    defaults: { _controller: PmsCoreBundle:Core:projectDeleted }
+
+project_active:
+    pattern: /project/active/{id}
+    defaults: { _controller: PmsCoreBundle:Core:projectActive }
+    requirements:
+          id: \d+
+
 project_list:
     pattern: /project/list
     defaults: { _controller: PmsCoreBundle:Core:projectList }
@@ -83,6 +93,22 @@ item_check:
 category_check:
     pattern: /category/check
     defaults: { _controller: PmsCoreBundle:Core:categoryCheck }
+    options:
+            expose: true
+
+category_deleted:
+    pattern: /category/deleted
+    defaults: { _controller: PmsCoreBundle:Core:categoryDeleted }
+
+category_active:
+    pattern: /category/active/{id}
+    defaults: { _controller: PmsCoreBundle:Core:categoryActive }
+    requirements:
+          id: \d+
+
+sub_category_check:
+    pattern: /sub-category/check
+    defaults: { _controller: PmsCoreBundle:Core:subCategoryCheck }
     options:
             expose: true
 

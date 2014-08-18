@@ -6,7 +6,7 @@
                 <thead>
                 <tr>
                     <th>Sl</th>
-                    <th>Item Name</th>
+                    <th>Project Name</th>
                     <th>Status</th>
                     <th>Edit</th>
                 </tr>
@@ -28,25 +28,14 @@
                     <tr>
                         <td style="width: 60px;">{{ i }} .</td>
                         <td style="width: 622px; color: {{ color|join("") }};">{{ projects.projectName }}</td>
-                        {% if projects.status == 1 %}
-                            <td>
-                                <a href="/project/delete/{{ projects.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
-                                            class="fa fa-trash-o"></i> Delete</a>
-                            </td>
-                            <td>
-                                <a href="/project/update/{{ projects.id }}" style="width: 85px;" class="btn default btn-xs blue-stripe"><i
-                                            class="fa fa-edit"></i> Update</a>
-                            </td>
-                        {% endif %}
-                        {% if projects.status == 0 %}
-                            <td style="color: red;">
-                                <a href="#" style="width: 85px;" class="btn default btn-xs red-stripe"><i
-                                            class="fa fa-times"></i> Deleted</a>
-                            </td>
-                            <td style="width: 85px;">
-
-                            </td>
-                        {% endif %}
+                        <td>
+                            <a href="/project/delete/{{ projects.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
+                                        class="fa fa-trash-o"></i> Delete</a>
+                        </td>
+                        <td>
+                            <a href="/project/update/{{ projects.id }}" style="width: 85px;" class="btn default btn-xs blue-stripe"><i
+                                        class="fa fa-edit"></i> Update</a>
+                        </td>
                     </tr>
 
                 {% endfor %}

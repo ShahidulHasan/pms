@@ -62,7 +62,7 @@ class CoreController extends Controller
             $end = 0;
         }
 
-        list($itemUses, $itemTotal, $reportData, $sumOfTopten) = $this->getDoctrine()->getRepository('UserBundle:User')->itemReport($em, $start, $end);
+        list($itemUses, $itemTotal, $reportData, $sumOfTopten, $totalItemForPie) = $this->getDoctrine()->getRepository('UserBundle:User')->itemReport($em, $start, $end);
 
         $formSearch = $this->createForm(new SearchType());
 
@@ -74,6 +74,7 @@ class CoreController extends Controller
             'sumOfTopten' => $sumOfTopten,
             'reportData' => $reportData,
             'formSearch' => $formSearch->createView(),
+            'totalItemForPie' => $totalItemForPie,
         ));
     }
 
@@ -151,7 +152,7 @@ class CoreController extends Controller
             $end = 0;
         }
 
-        list($projectCosts, $cost, $reportData, $sumOfTopten) = $this->getDoctrine()->getRepository('UserBundle:User')->projectReport($em, $start, $end);
+        list($projectCosts, $cost, $reportData, $sumOfTopten, $totalProjectForPic) = $this->getDoctrine()->getRepository('UserBundle:User')->projectReport($em, $start, $end);
 
         $formSearch = $this->createForm(new SearchType());
 
@@ -163,6 +164,7 @@ class CoreController extends Controller
             'sumOfTopten' => $sumOfTopten,
             'reportData' => $reportData,
             'formSearch' => $formSearch->createView(),
+            'totalProjectForPic' => $totalProjectForPic,
         ));
     }
 
@@ -235,11 +237,29 @@ class CoreController extends Controller
 
         $form = $this->createForm(new CategoryType(), $entity);
 
-        $dql = "SELECT a FROM PmsCoreBundle:Category a WHERE a.parent = 0 ORDER BY a.id DESC";
+        $dql = "SELECT a FROM PmsCoreBundle:Category a WHERE a.parent = 0 AND a.status = 1 ORDER BY a.id DESC";
 
         list($category, $page) = $this->paginate($dql);
 
         return $this->render('PmsCoreBundle:Category:add.html.twig', array(
+            'categories' => $category,
+            'entity' => $entity,
+            'form' => $form->createView(),
+            'page' => $page,
+        ));
+    }
+
+    public function categoryDeletedAction(Request $request)
+    {
+        $entity = new Category();
+
+        $form = $this->createForm(new CategoryType(), $entity);
+
+        $dql = "SELECT a FROM PmsCoreBundle:Category a WHERE a.parent = 0 AND a.status = 0 ORDER BY a.id DESC";
+
+        list($category, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:Category:deleted.html.twig', array(
             'categories' => $category,
             'entity' => $entity,
             'form' => $form->createView(),
@@ -278,6 +298,19 @@ class CoreController extends Controller
         );
 
         return $this->redirect($this->generateUrl('category_add'));
+    }
+
+    public function categoryActiveAction(Category $category)
+    {
+        $category->setStatus(1);
+        $this->getDoctrine()->getRepository('PmsCoreBundle:Category')->update($category);
+
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            'Category Successfully Restored'
+        );
+
+        return $this->redirect($this->generateUrl('category_deleted'));
     }
 
     public function categoryUpdateAction(Request $request, Category $entity)
@@ -459,14 +492,14 @@ class CoreController extends Controller
             'Item Successfully Restored'
         );
 
-        return $this->redirect($this->generateUrl('item_delete'));
+        return $this->redirect($this->generateUrl('item_deleted'));
     }
 
     public function itemUpdateAction(Request $request, Item $entity)
     {
         $form = $this->createForm(new ItemType(), $entity);
 
-        $dql = "SELECT a FROM PmsCoreBundle:Item a ORDER BY a.id DESC";
+        $dql = "SELECT a FROM PmsCoreBundle:Item a WHERE a.status = 1 ORDER BY a.id DESC";
 
         list($item, $page) = $this->paginate($dql);
 
@@ -511,6 +544,25 @@ class CoreController extends Controller
             return new Response($return, 200, array('Content-Type' => 'application/json'));
         } else {
             $return = array("responseCode" => '404', "category_name" => "Category name available.");
+            $return = json_encode($return);
+            return new Response($return, 200, array('Content-Type' => 'application/json'));
+        }
+    }
+
+    public function subCategoryCheckAction(Request $request)
+    {
+        $subCategoryName = $request->request->get('subCategoryName');
+
+        $category = $this->getDoctrine()->getRepository('PmsCoreBundle:Category')->findOneBy(
+            array('categoryName' => $subCategoryName )
+        );
+
+        if ($category) {
+            $return = array("responseCode" => 200, "sub_category_name" => "This sub category already exist.");
+            $return = json_encode($return);
+            return new Response($return, 200, array('Content-Type' => 'application/json'));
+        } else {
+            $return = array("responseCode" => '404', "sub_category_name" => "Sub category available.");
             $return = json_encode($return);
             return new Response($return, 200, array('Content-Type' => 'application/json'));
         }
@@ -587,11 +639,29 @@ class CoreController extends Controller
 
         $form = $this->createForm(new ProjectType(), $entity);
 
-        $dql = "SELECT a FROM PmsCoreBundle:Project a ORDER BY a.id DESC";
+        $dql = "SELECT a FROM PmsCoreBundle:Project a WHERE a.status = 1 ORDER BY a.id DESC";
 
         list($project, $page) = $this->paginate($dql);
 
         return $this->render('PmsCoreBundle:Project:add.html.twig', array(
+            'project' => $project,
+            'entity' => $entity,
+            'form' => $form->createView(),
+            'page' => $page,
+        ));
+    }
+
+    public function projectDeletedAction(Request $request)
+    {
+        $entity = new Project();
+
+        $form = $this->createForm(new ProjectType(), $entity);
+
+        $dql = "SELECT a FROM PmsCoreBundle:Project a WHERE a.status = 0 ORDER BY a.id DESC";
+
+        list($project, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:Project:deleted.html.twig', array(
             'project' => $project,
             'entity' => $entity,
             'form' => $form->createView(),
@@ -612,11 +682,24 @@ class CoreController extends Controller
         return $this->redirect($this->generateUrl('project_add'));
     }
 
+    public function projectActiveAction(Project $entity)
+    {
+        $entity->setStatus(1);
+        $this->getDoctrine()->getRepository('PmsCoreBundle:Project')->update($entity);
+
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            'Project Successfully Restored'
+        );
+
+        return $this->redirect($this->generateUrl('project_deleted'));
+    }
+
     public function projectUpdateAction(Request $request, Project $entity)
     {
         $form = $this->createForm(new ProjectType(), $entity);
 
-        $dql = "SELECT a FROM PmsCoreBundle:Project a ORDER BY a.id DESC";
+        $dql = "SELECT a FROM PmsCoreBundle:Project a WHERE a.status = 1 ORDER BY a.id DESC";
 
         list($project, $page) = $this->paginate($dql);
 
