@@ -673,6 +673,18 @@ class CoreController extends Controller
         ));
     }
 
+    public function projectDeletedListAction()
+    {
+        $dql = "SELECT a FROM PmsCoreBundle:Project a WHERE a.status = 0  ORDER BY a.id DESC";
+
+        list($project, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:Project:deletedList.html.twig', array(
+            'project' => $project,
+            'page' => $page,
+        ));
+    }
+
     public function projectAddAction(Request $request)
     {
         $entity = new Project();

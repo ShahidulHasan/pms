@@ -52,6 +52,10 @@ project_deleted:
     pattern: /project/deleted
     defaults: { _controller: PmsCoreBundle:Core:projectDeleted }
 
+project_deleted_list:
+    pattern: /project/deleted/list
+    defaults: { _controller: PmsCoreBundle:Core:projectDeletedList }
+
 project_active:
     pattern: /project/active/{id}
     defaults: { _controller: PmsCoreBundle:Core:projectActive }
