@@ -132,6 +132,10 @@ category_deleted:
     pattern: /category/deleted
     defaults: { _controller: PmsCoreBundle:Core:categoryDeleted }
 
+category_deleted_list:
+    pattern: /category/deleted/list
+    defaults: { _controller: PmsCoreBundle:Core:categoryDeletedList }
+
 category_active:
     pattern: /category/active/{id}
     defaults: { _controller: PmsCoreBundle:Core:categoryActive }
@@ -183,6 +187,10 @@ sub_category_ajax_add:
 sub_category_list:
     pattern: /sub-category/list
     defaults: { _controller: PmsCoreBundle:Core:subCategoryList }
+
+sub_category_deleted_list:
+    pattern: /sub-category/deleted/list
+    defaults: { _controller: PmsCoreBundle:Core:subCategoryDeletedList }
 
 sub_category_delete:
     pattern: /sub-category/delete/{id}

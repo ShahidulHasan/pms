@@ -180,6 +180,18 @@ class CoreController extends Controller
         ));
     }
 
+    public function categoryDeletedListAction()
+    {
+        $dql = "SELECT a FROM PmsCoreBundle:Category a WHERE a.parent = 0 AND a.status = 0 ORDER BY a.id DESC";
+
+        list($category, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:Category:deletedList.html.twig', array(
+            'categories' => $category,
+            'page' => $page,
+        ));
+    }
+
     public function categoryAjaxAddAction(Request $request)
     {
         $categoryArray = $request->request->get('categoryArray');
@@ -337,7 +349,7 @@ class CoreController extends Controller
 
         list($category, $page) = $this->paginate($dql);
 
-        return $this->render('PmsCoreBundle:Category:subAdd.html.twig', array(
+        return $this->render('PmsCoreBundle:SubCategory:subAdd.html.twig', array(
             'form' => $form->createView(),
             'categories' => $category,
             'page' => $page,
@@ -352,7 +364,7 @@ class CoreController extends Controller
 
         list($category, $page) = $this->paginate($dql);
 
-        return $this->render('PmsCoreBundle:Category:subDeleted.html.twig', array(
+        return $this->render('PmsCoreBundle:SubCategory:subDeleted.html.twig', array(
             'form' => $form->createView(),
             'categories' => $category,
             'page' => $page,
@@ -430,7 +442,19 @@ class CoreController extends Controller
 
         list($category, $page) = $this->paginate($dql);
 
-        return $this->render('PmsCoreBundle:Category:subList.html.twig', array(
+        return $this->render('PmsCoreBundle:SubCategory:subList.html.twig', array(
+            'categories' => $category,
+            'page' => $page,
+        ));
+    }
+
+    public function subCategoryDeletedListAction()
+    {
+        $dql = "SELECT a FROM PmsCoreBundle:Category a WHERE a.parent > 0 AND a.status = 0 ORDER BY a.id DESC";
+
+        list($category, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:SubCategory:subDeletedList.html.twig', array(
             'categories' => $category,
             'page' => $page,
         ));

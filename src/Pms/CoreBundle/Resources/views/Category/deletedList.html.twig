@@ -1,0 +1,51 @@
+<div class="form-group">
+    <div class="col-md-12">
+        <div class="col-md-11" style="margin-top: 30px;margin-left: 4%;">
+
+            <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
+                <thead>
+                <tr>
+                    <th>Sl</th>
+                    <th>Category Name</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% if page == 1 %}{% set i = 0 %}
+                {% else %}{% set i = (page * 10) -10 %}
+                {% endif %}
+
+                {% for category in categories %}
+                    {% set i = i + 1 %}
+                    {% set color = [" "] %}
+
+                    {% if category.status == 0 %}{% set color = color|merge(["red"]) %}
+                    {% elseif category.status == 1 %}{% set color = color|merge(["green"]) %}
+                    {% endif %}
+
+                    {% if category.parent == 0 %}
+                        <tr>
+                            <td style="width: 60px;">{{ i }} .</td>
+                            <td style="width: 622px; color: {{ color|join("") }};">{{ category.categoryName }}</td>
+                            <td style="color: red;">
+                                <a href="#" class="btn default btn-xs red-stripe" style="width: 85px;"><i
+                                            class="fa fa-times"></i> Deleted</a>
+                            </td>
+                            <td style="width: 85px;">
+                                <a href="/category/active/{{ category.id }}" class="btn default btn-xs green-stripe" style="width: 85px;"><i
+                                            class="fa fa-repeat"></i> Restore</a>
+                            </td>
+                        </tr>
+
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="navigation" style="text-align: right">
+                {{ knp_pagination_render(categories) }}
+            </div>
+        </div>
+    </div>
+</div>
