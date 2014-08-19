@@ -58,6 +58,23 @@ class ProjectCostType extends AbstractType
                             ->where('s.status = 1');
                     }
             ))
+            ->add('customer', 'entity', array(
+                'constraints' => array(
+                    new NotBlank()
+                ),
+                'class' => 'PmsCoreBundle:Customer',
+                'property' => 'customerName',
+                'required' => false,
+                'attr' => array(
+                    'placeholder' => ' Select Customer'
+                ),
+                'empty_data' => null,
+                'query_builder' => function (\Pms\UserBundle\Entity\UserRepository $repository)
+                {
+                    return $repository->createQueryBuilder('s')
+                        ->where('s.status = 1');
+                }
+            ))
             ->add('quantity', 'text', array(
                 'constraints' => array(
                     new NotBlank()

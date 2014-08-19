@@ -116,11 +116,12 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                 </div>
             </li>
 
-            {% set Route, Dashboard, User, Item, Project, Cost, Report, Category, SubCategory, OverView = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "] %}
+            {% set Route, Dashboard, User, Item, Project, Cost, Report, Category, SubCategory, OverView, Customer = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "] %}
             {% set Url = Route|split('_') %}
             {% if Url[0] == 'homepage' %}{% set Dashboard = Dashboard|merge(["active"]) %}
             {% elseif Url[0] == 'fos' %}{% set Dashboard = Dashboard|merge(["active"]) %}
             {% elseif Url[0] == 'user' %}{% set User = User|merge(["active"]) %}
+            {% elseif Url[0] == 'customer' %}{% set Customer = Customer|merge(["active"]) %}
             {% elseif Url[0] == 'item' %}{% set Item = Item|merge(["active"]) %}
             {% elseif Url[0] == 'category' %}{% set Category = Category|merge(["active"]) %}
             {% elseif Url[0] == 'sub' %}{% set SubCategory = SubCategory|merge(["active"]) %}
@@ -145,6 +146,15 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                     <span class="selected"></span>
                 </a>
             </li>
+            {% endif %}
+            {% if is_granted("ROLE_ADMIN") %}
+                <li class="{{ Customer|join(" ") }}">
+                    <a href="/customer">
+                        <i class="fa fa-user"></i>
+                        <span class="title"> Customer </span>
+                        <span class="selected"></span>
+                    </a>
+                </li>
             {% endif %}
             {% if is_granted("ROLE_DATA") %}
             <li class="{{ Item|join(" ") }}">
@@ -407,6 +417,25 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             });
         });
 
+        $("#customer_customerName").keyup(function () {
+            var customerName = $(this).val();
+
+            $.ajax({
+                type: "post",
+                url: Routing.generate('customer_check'),
+                data: "customerName=" + customerName,
+                dataType: 'json',
+                success: function (msg) {
+                    if (msg.responseCode == 200) {
+                        $('.userMessege').css('color', 'red').html(msg.customer_name).fadeIn(1000);
+                    }
+                    else {
+                        $('.userMessege').css('color', 'green').html(msg.customer_name).fadeIn(1000);
+                    }
+                }
+            });
+        });
+
         $("#project_projectName").keyup(function () {
             var projectName = $(this).val();
 
@@ -571,6 +600,58 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 
                     $('.userMessege').fadeOut();
                     $("#sub-category-list-div").load("/sub-category/list")
+                }
+            });
+        });
+
+        $("#ajaxSaveCustomer").click(function () {
+            var sPageURL = window.location.pathname;
+            var sURLVariables = sPageURL.split('/');
+            var customerName = $("#customer_customerName").val();
+
+            var customerArray = new Array(customerName, sURLVariables[3]);
+            $.ajax({
+                type: "post",
+                url: Routing.generate('customer_ajax_add'),
+                data: "customerArray=" + customerArray,
+                dataType: 'json',
+                success: function (msg) {
+                    if(msg.responseCode == 200) {
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Customer already exist</span></div>');
+                        $('.customerMessege').css('color', 'red').html(msg.customer_ajax_add).fadeIn(1000).append($addLink);
+                        $(':input','#customer-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
+                    } else if(msg.responseCode == 204) {
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Insert Customer</span></div>');
+                        $('.customerMessege').css('color', 'red').html(msg.customer_ajax_add).fadeIn(1000).append($addLink);
+                        $(':input','#customer-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
+                    } else if(msg.responseCode == 202) {
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Customer Update Successfully</span></div>');
+                        $('.customerMessege').css('color', 'green').html(msg.customer_ajax_add).fadeIn(1000).append($addLink);
+                        $(':input','#customer-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
+                    } else {
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Customer Add Successfully</span></div>');
+                        $('.customerMessege').css('color', 'green').html(msg.customer_ajax_add).fadeIn(1000).append($addLink);
+                        $(':input','#customer-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
+                    }
+
+                    $('.userMessege').fadeOut();
+                    $("#customer-list-div").load("/customer/list")
                 }
             });
         });
@@ -760,6 +841,16 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                     $("#cost-list-div").load("/cost/list")
                 }
             });
+        });
+
+        $(".customer-active-list").click(function () {
+
+            $("#customer-list-div").load("/customer/list");
+        });
+
+        $(".customer-deleted-list").click(function () {
+
+            $("#customer-list-div").load("/customer/deleted/list");
         });
 
         $(".item-active-list").click(function () {

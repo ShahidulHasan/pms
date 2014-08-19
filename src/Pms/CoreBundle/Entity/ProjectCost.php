@@ -45,6 +45,14 @@ class ProjectCost
     private $item;
 
     /**
+     * @var Customer
+     *
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Customer", inversedBy="projectCost")
+     * @ORM\JoinColumn(name="customer")
+     */
+    private $customer;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="quantity", type="integer")
@@ -219,6 +227,29 @@ class ProjectCost
     public function getItem()
     {
         return $this->item;
+    }
+
+    /**
+     * Set customer
+     *
+     * @param integer $customer
+     * @return ProjectCost
+     */
+    public function setCustomer($customer)
+    {
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+    /**
+     * Get customer
+     *
+     * @return integer
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
     }
 
     /**

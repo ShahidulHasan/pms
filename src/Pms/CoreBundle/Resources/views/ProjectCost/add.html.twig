@@ -51,12 +51,14 @@
                                                 {{ form_widget(form.category, { 'attr': {'class': 'form-control', 'style': 'width:180px;margin-right: 50px;'} }) }}
                                             </td>
                                             <td>
-                                                {{ form_widget(form.grn, { 'attr': {'class': 'form-control'} }) }}
+                                                {{ form_widget(form.invoice, { 'attr': {'class': 'form-control', 'style': 'width:180px;margin-right: 50px;'} }) }}
                                             </td>
                                             <td>
 
                                             </td>
+                                            <td>
 
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -66,7 +68,10 @@
                                                 {{ form_widget(form.subCategory, { 'attr': {'class': 'form-control', 'style': 'width:180px;margin-right: 50px;'} }) }}
                                             </td>
                                             <td>
-                                                {{ form_widget(form.quantity, { 'attr': {'class': 'form-control quantity'} }) }}
+                                                {{ form_widget(form.grn, { 'attr': {'class': 'form-control', 'style': 'width:180px;'} }) }}
+                                            </td>
+                                            <td>
+
                                             </td>
                                             <td>
 
@@ -77,10 +82,13 @@
                                                 {{ form_widget(form.project, { 'attr': {'class': 'form-control', 'style': 'width:166px;' } }) }}
                                             </td>
                                             <td>
-                                                {{ form_widget(form.po, { 'attr': {'class': 'form-control', 'style': 'width:180px;margin-right: 50px;'} }) }}
+                                                {{ form_widget(form.customer, { 'attr': {'class': 'form-control select2me', 'style': 'width:180px;' } }) }}
                                             </td>
                                             <td>
-                                                {{ form_widget(form.unitPrice, { 'attr': {'class': 'form-control unitPrice'} }) }}
+                                                {{ form_widget(form.quantity, { 'attr': {'class': 'form-control quantity', 'style': 'width:180px;'} }) }}
+                                            </td>
+                                            <td>
+
                                             </td>
                                             <td>
 
@@ -91,13 +99,30 @@
                                                 {{ form_widget(form.item, { 'attr': {'class': 'form-control select2me', 'style': 'width:166px;' } }) }}
                                             </td>
                                             <td>
-                                                {{ form_widget(form.invoice, { 'attr': {'class': 'form-control', 'style': 'width:180px;margin-right: 50px;'} }) }}
+                                                {{ form_widget(form.po, { 'attr': {'class': 'form-control', 'style': 'width:180px;margin-right: 50px;'} }) }}
                                             </td>
                                             <td>
-                                                {{ form_widget(form.lineTotal, { 'attr': {'class': 'form-control lineTotal'} }) }}
+                                                {{ form_widget(form.unitPrice, { 'attr': {'class': 'form-control unitPrice', 'style': 'width:180px;'} }) }}
                                             </td>
                                             <td>
-                                                <input type="button" name="ajaxSaveProjectCost" value="Save" id="ajaxSaveProjectCost" class="btn green button-width" style="height:32px;">
+
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                            <td>
+                                                {{ form_widget(form.lineTotal, { 'attr': {'class': 'form-control lineTotal', 'style': 'width:180px;'} }) }}
+                                            </td>
+                                            <td>
+                                                <input type="button" name="ajaxSaveProjectCost" value="Save" id="ajaxSaveProjectCost" class="btn green button-width" style="height:32px;margin-left: -45px;">
                                             </td>
                                         </tr>
 

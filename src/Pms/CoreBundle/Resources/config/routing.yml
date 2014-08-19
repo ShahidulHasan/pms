@@ -1,3 +1,23 @@
+customer_add:
+    pattern: /customer
+    defaults: { _controller: PmsCoreBundle:Core:customerAdd }
+
+customer_list:
+    pattern: /customer/list
+    defaults: { _controller: PmsCoreBundle:Core:customerList }
+
+customer_ajax_add:
+    pattern: /customer/add
+    defaults: { _controller: PmsCoreBundle:Core:customerAjaxAdd }
+    options:
+            expose: true
+
+customer_check:
+    pattern: /customer/check
+    defaults: { _controller: PmsCoreBundle:Core:customerCheck }
+    options:
+            expose: true
+
 item_add:
     pattern: /item
     defaults: { _controller: PmsCoreBundle:Core:itemAdd }

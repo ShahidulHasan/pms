@@ -6,12 +6,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Item
+ * Customer
  *
- * @ORM\Table(name="item")
+ * @ORM\Table(name="customer")
  * @ORM\Entity(repositoryClass="Pms\UserBundle\Entity\UserRepository")
  */
-class Item
+class Customer
 {
     /**
      * @var integer
@@ -25,23 +25,16 @@ class Item
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\ProjectCost", mappedBy="item")
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\ProjectCost", mappedBy="customer")
      */
     private $projectCost;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="item_name", type="string", length=255)
+     * @ORM\Column(name="customer_name", type="string", length=255)
      */
-    private $itemName;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="item_unit", type="string", length=255)
-     */
-    private $itemUnit;
+    private $customerName;
 
     /**
      * @var string
@@ -75,56 +68,33 @@ class Item
     }
 
     /**
-     * Set itemName
+     * Set customerName
      *
-     * @param string $itemName
-     * @return Item
+     * @param string $customerName
+     * @return Customer
      */
-    public function setItemName($itemName)
+    public function setCustomerName($customerName)
     {
-        $this->itemName = $itemName;
+        $this->customerName = $customerName;
 
         return $this;
     }
 
     /**
-     * Get itemName
-     *
-     * @return string 
-     */
-    public function getItemName()
-    {
-        return $this->itemName;
-    }
-
-    /**
-     * Set itemUnit
-     *
-     * @param string $itemUnit
-     * @return Item
-     */
-    public function setItemUnit($itemUnit)
-    {
-        $this->itemUnit = $itemUnit;
-
-        return $this;
-    }
-
-    /**
-     * Get itemUnit
+     * Get customerName
      *
      * @return string
      */
-    public function getItemUnit()
+    public function getCustomerName()
     {
-        return $this->itemUnit;
+        return $this->customerName;
     }
 
     /**
      * Set createdBy
      *
      * @param string $createdBy
-     * @return Item
+     * @return Customer
      */
     public function setCreatedBy($createdBy)
     {
@@ -136,7 +106,7 @@ class Item
     /**
      * Get createdBy
      *
-     * @return string 
+     * @return string
      */
     public function getCreatedBy()
     {
@@ -147,7 +117,7 @@ class Item
      * Set createdDate
      *
      * @param \DateTime $createdDate
-     * @return Item
+     * @return Customer
      */
     public function setCreatedDate($createdDate)
     {
@@ -159,7 +129,7 @@ class Item
     /**
      * Get createdDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedDate()
     {
@@ -170,7 +140,7 @@ class Item
      * Set status
      *
      * @param integer $status
-     * @return Item
+     * @return Customer
      */
     public function setStatus($status)
     {
@@ -182,7 +152,7 @@ class Item
     /**
      * Get status
      *
-     * @return integer 
+     * @return integer
      */
     public function getStatus()
     {

@@ -4,10 +4,12 @@ namespace Pms\CoreBundle\Controller;
 
 use Doctrine\ORM\Repository;
 use Pms\CoreBundle\Entity\Category;
+use Pms\CoreBundle\Entity\Customer;
 use Pms\CoreBundle\Entity\Item;
 use Pms\CoreBundle\Entity\Project;
 use Pms\CoreBundle\Entity\ProjectCost;
 use Pms\CoreBundle\Form\CategoryType;
+use Pms\CoreBundle\Form\CustomerType;
 use Pms\CoreBundle\Form\ItemType;
 use Pms\CoreBundle\Form\ProjectCostType;
 use Pms\CoreBundle\Form\ProjectType;
@@ -471,6 +473,120 @@ class CoreController extends Controller
         );
 
         return $this->redirect($this->generateUrl('sub_category_add'));
+    }
+
+    public function customerAddAction(Request $request)
+    {
+        $customer = new Customer();
+
+        $form = $this->createForm(new CustomerType(), $customer);
+
+        $dql = "SELECT a FROM PmsCoreBundle:Customer a WHERE a.status = 1 ORDER BY a.id DESC";
+
+        list($customers, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:Customer:add.html.twig', array(
+            'customers' => $customers,
+            'form' => $form->createView(),
+            'page' => $page,
+        ));
+    }
+
+    public function customerListAction()
+    {
+        $dql = "SELECT a FROM PmsCoreBundle:Customer a WHERE a.status = 1 ORDER BY a.id DESC";
+
+        list($customers, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:Customer:list.html.twig', array(
+            'customers' => $customers,
+            'page' => $page,
+        ));
+    }
+
+    public function customerAjaxAddAction(Request $request)
+    {
+        $customerArray = $request->request->get('customerArray');
+        $customerArray = explode(',',$customerArray);
+
+        $customerName = $customerArray[0];
+        $updateId = $customerArray[1];
+
+        if($customerName) {
+            $customer = $this->getDoctrine()->getRepository('PmsCoreBundle:Customer')->find($updateId);
+            $customerNameCheck = $this->getDoctrine()->getRepository('PmsCoreBundle:Customer')->findOneBy(
+                array('customerName' => $customerName )
+            );
+            if($customer) {
+                $customer->setCustomerName($customerName);
+                $this->getDoctrine()->getManager()->persist($customer);
+                $this->getDoctrine()->getManager()->flush();
+
+                $return = array("responseCode" => 202);
+                $return = json_encode($return);
+
+                return new Response($return, 200, array('Content-Type' => 'application/json'));
+            } elseif($customerNameCheck) {
+                $return = array("responseCode" => 200);
+                $return = json_encode($return);
+
+                return new Response($return, 200, array('Content-Type' => 'application/json'));
+            } else {
+                $customer = new Customer();
+                $customer->setCustomerName($customerName);
+                $user = $this->get('security.context')->getToken()->getUser()->getId();
+                $customer->setCreatedBy($user);
+                $customer->setCreatedDate(new \DateTime());
+                $customer->setStatus(1);
+
+                $this->getDoctrine()->getRepository("PmsCoreBundle:Customer")->create($customer);
+
+                $return = array("responseCode" => 404);
+                $return = json_encode($return);
+
+                return new Response($return, 200, array('Content-Type' => 'application/json'));
+            }
+        } else{
+            $return = array("responseCode" => 204);
+            $return = json_encode($return);
+
+            return new Response($return, 200, array('Content-Type' => 'application/json'));
+        }
+    }
+
+    public function customerCheckAction(Request $request)
+    {
+        $customerName = $request->request->get('customerName');
+
+        $customer = $this->getDoctrine()->getRepository('PmsCoreBundle:Customer')->findOneBy(
+            array('customerName' => $customerName )
+        );
+
+        if ($customer) {
+            $return = array("responseCode" => 200, "customer_name" => "Customer already exist.");
+            $return = json_encode($return);
+            return new Response($return, 200, array('Content-Type' => 'application/json'));
+        } else {
+            $return = array("responseCode" => '404', "customer_name" => "Customer name available.");
+            $return = json_encode($return);
+            return new Response($return, 200, array('Content-Type' => 'application/json'));
+        }
+    }
+
+    public function customerUpdateAction(Request $request, Item $entity)
+    {
+//        $form = $this->createForm(new ItemType(), $entity);
+//
+//        $dql = "SELECT a FROM PmsCoreBundle:Item a WHERE a.status = 1 ORDER BY a.id DESC";
+//
+//        list($item, $page) = $this->paginate($dql);
+//
+//        return $this->render('PmsCoreBundle:Item:add.html.twig', array(
+//            'item' => $item,
+//            'entity' => $entity,
+//            'form' => $form->createView(),
+//            'page' => $page,
+//        ));
     }
 
     public function itemListAction()
