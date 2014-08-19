@@ -1,53 +1,141 @@
-<div class="form-group">
-    <div class="col-md-12">
-        <div class="col-md-11" style="margin-top: 30px;margin-left: 4%;">
+{% extends 'base.html.twig' %}
 
-            <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
-                <thead>
-                <tr>
-                    <th>Sl</th>
-                    <th>Item Name</th>
-                    <th>Unit</th>
-                    <th>Status</th>
-                    <th>Edit</th>
-                </tr>
-                </thead>
-                <tbody>
+{% block body %}
 
-                {% if page == 1 %}{% set i = 0 %}
-                {% else %}{% set i = (page * 10) - 10 %}
-                {% endif %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button>
+            <strong></strong> {{ flashMessage }}.
+        </div>
+    {% endfor %}
 
-                {% for items in item %}
+    <span class="itemMessege"></span>
 
-                    {% set i = i + 1 %}
-                    {% set color = [" "] %}
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="page-title"></h3>
+            <ul class="page-breadcrumb breadcrumb">
+                <li>
+                    <i class="fa fa-gift"></i>
+                    <a href="#" class="item-active-list">Active Item List</a>
+                    <i class="fa">|</i>
+                </li>
+                <li>
+                    <i class="fa fa-gift"></i>
+                    <a href="#" class="item-deleted-list">Deleted Item List</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
-                    {% if items.status == 0 %}{% set color = color|merge(["red"]) %}
-                    {% elseif items.status == 1 %}{% set color = color|merge(["green"]) %}
-                    {% endif %}
+    <div class="row">
+        <div class="col-md-12">
 
-                    <tr>
-                        <td style="width: 60px;">{{ i }} .</td>
-                        <td style="width: 422px; color: {{ color|join("") }};">{{ items.itemName }}</td>
-                        <td style="width: 200px; color: {{ color|join("") }};">{{ items.itemUnit }}</td>
+            <div class="portlet box light-grey">
 
-                        <td style="color: red;">
-                            <a href="#" class="btn default btn-xs red-stripe" style="width: 85px;"><i
-                                        class="fa fa-times"></i> Deleted</a>
-                        </td>
-                        <td style="width: 85px;">
-                            <a href="/item/active/{{ items.id }}" class="btn default btn-xs green-stripe" style="width: 85px;"><i
-                                        class="fa fa-repeat"></i> Restore</a>
-                        </td>
-                    </tr>
+                <div class="portlet-title">
+                    <div class="caption"><i class="fa fa-reorder"></i>Deleted Item</div>
+                </div>
 
-                {% endfor %}
-                </tbody>
-            </table>
-            <div class="navigation" style="text-align: right">
-                {{ knp_pagination_render(item) }}
+                <div class="portlet-body form">
+
+                    <div class="form-body left">
+
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            Please check below.
+                        </div>
+                        <div class="alert alert-success display-hide">
+                            <button class="close" data-close="alert"></button>
+                            Successfully insert.
+                        </div>
+
+                        <div class="form-actions fluid">
+                            {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'item-form', 'novalidate': 'novalidate'} }) }}
+                            <div class="form-group">
+                                {{ form_label(form.itemName, 'Item Name :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'margin-right:-60px;font-weight:bold;' } }
+                                ) }}
+                                <div class="col-md-8">
+                                    <div class="input-icon">
+                                        {{ form_widget(form.itemName, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;' } }) }}
+                                    </div>
+                                </div>
+                                <span class="userMessege" style="margin-left: 185px;"></span>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.itemUnit, 'Unit Name:', {'label_attr': {'class': 'control-label col-md-2', 'style': 'margin-right:-60px;font-weight:bold;' } }
+                                ) }}
+                                <div class="col-md-8">
+                                    <div class="input-icon">
+                                        {{ form_widget(form.itemUnit, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;' } }) }}
+                                    </div>
+                                </div>
+                                <input type="button" name="ajaxSaveItem" value="Save" id="ajaxSaveItem" class="btn green button-width col-md-1" style="margin-top:2px;margin-left:10px;height:32px;">
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+
+                        <div class="form-actions fluid" id="item-list-div">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="col-md-11" style="margin-top: 30px;margin-left: 4%;">
+
+                                        <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
+                                            <thead>
+                                            <tr>
+                                                <th>Sl</th>
+                                                <th>Item Name</th>
+                                                <th>Unit</th>
+                                                <th>Status</th>
+                                                <th>Edit</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            {% if page == 1 %}{% set i = 0 %}
+                                            {% else %}{% set i = (page * 10) - 10 %}
+                                            {% endif %}
+
+                                            {% for items in item %}
+
+                                                {% set i = i + 1 %}
+                                                {% set color = [" "] %}
+
+                                                {% if items.status == 0 %}{% set color = color|merge(["red"]) %}
+                                                {% elseif items.status == 1 %}{% set color = color|merge(["green"]) %}
+                                                {% endif %}
+
+                                                <tr>
+                                                    <td style="width: 60px;">{{ i }} .</td>
+                                                    <td style="width: 422px; color: {{ color|join("") }};">{{ items.itemName }}</td>
+                                                    <td style="width: 200px; color: {{ color|join("") }};">{{ items.itemUnit }}</td>
+
+                                                    <td style="color: red;">
+                                                        <a href="#" class="btn default btn-xs red-stripe" style="width: 85px;"><i
+                                                                    class="fa fa-times"></i> Deleted</a>
+                                                    </td>
+                                                    <td style="width: 85px;">
+                                                        <a href="/item/active/{{ items.id }}" class="btn default btn-xs green-stripe" style="width: 85px;"><i
+                                                                    class="fa fa-repeat"></i> Restore</a>
+                                                    </td>
+                                                </tr>
+
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        <div class="navigation" style="text-align: right">
+                                            {{ knp_pagination_render(item) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+{% endblock %}
