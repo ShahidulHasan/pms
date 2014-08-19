@@ -762,6 +762,16 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             });
         });
 
+        $(".item-active-list").click(function () {
+
+            $("#item-list-div").load("/item/list");
+        });
+
+        $(".item-deleted-list").click(function () {
+
+            $("#item-list-div").load("/item/deleted");
+        });
+
         {% endblock %}
     });
 </script>
