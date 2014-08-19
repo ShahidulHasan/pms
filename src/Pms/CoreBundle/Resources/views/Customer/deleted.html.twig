@@ -96,15 +96,14 @@
 
                                                 <tr>
                                                     <td style="width: 60px;">{{ i }} .</td>
-                                                    <td style="width: 422px; color: {{ color|join("") }};">{{ customer.customerName }}</td>
-                                                    <td style="width: 200px; color: {{ color|join("") }};">{{ customer.customerUnit }}</td>
-                                                    <td style="width: 80px;">
-                                                        <a href="/customer/delete/{{ items.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
-                                                                    class="fa fa-trash-o"></i> Delete</a>
+                                                    <td style="width: 622px; color: {{ color|join("") }};">{{ customer.customerName }}</td>
+                                                    <td style="color: red;">
+                                                        <a href="#" class="btn default btn-xs red-stripe" style="width: 85px;"><i
+                                                                    class="fa fa-times"></i> Deleted</a>
                                                     </td>
-                                                    <td>
-                                                        <a href="/customer/update/{{ items.id }}" style="width: 85px;" class="btn default btn-xs blue-stripe"><i
-                                                                    class="fa fa-edit"></i> Update</a>
+                                                    <td style="width: 85px;">
+                                                        <a href="/customer/active/{{ customer.id }}" class="btn default btn-xs green-stripe" style="width: 85px;"><i
+                                                                    class="fa fa-repeat"></i> Restore</a>
                                                     </td>
                                                 </tr>
 

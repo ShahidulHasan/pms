@@ -492,6 +492,23 @@ class CoreController extends Controller
         ));
     }
 
+    public function customerDeletedAction(Request $request)
+    {
+        $customer = new Customer();
+
+        $form = $this->createForm(new CustomerType(), $customer);
+
+        $dql = "SELECT a FROM PmsCoreBundle:Customer a WHERE a.status = 0 ORDER BY a.id DESC";
+
+        list($customers, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:Customer:deleted.html.twig', array(
+            'customers' => $customers,
+            'form' => $form->createView(),
+            'page' => $page,
+        ));
+    }
+
     public function customerListAction()
     {
         $dql = "SELECT a FROM PmsCoreBundle:Customer a WHERE a.status = 1 ORDER BY a.id DESC";
@@ -502,6 +519,44 @@ class CoreController extends Controller
             'customers' => $customers,
             'page' => $page,
         ));
+    }
+
+    public function customerDeletedListAction()
+    {
+        $dql = "SELECT a FROM PmsCoreBundle:Customer a WHERE a.status = 0 ORDER BY a.id DESC";
+
+        list($customers, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:Customer:deletedList.html.twig', array(
+            'customers' => $customers,
+            'page' => $page,
+        ));
+    }
+
+    public function customerDeleteAction(Customer $customer)
+    {
+        $customer->setStatus(0);
+        $this->getDoctrine()->getRepository('PmsCoreBundle:Customer')->update($customer);
+
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            'Customer Successfully Deleted'
+        );
+
+        return $this->redirect($this->generateUrl('customer_add'));
+    }
+
+    public function customerActiveAction(Customer $customer)
+    {
+        $customer->setStatus(1);
+        $this->getDoctrine()->getRepository('PmsCoreBundle:Customer')->update($customer);
+
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            'Customer Successfully Restored'
+        );
+
+        return $this->redirect($this->generateUrl('customer_deleted'));
     }
 
     public function customerAjaxAddAction(Request $request)
@@ -573,20 +628,19 @@ class CoreController extends Controller
         }
     }
 
-    public function customerUpdateAction(Request $request, Item $entity)
+    public function customerUpdateAction(Request $request, Customer $customer)
     {
-//        $form = $this->createForm(new ItemType(), $entity);
-//
-//        $dql = "SELECT a FROM PmsCoreBundle:Item a WHERE a.status = 1 ORDER BY a.id DESC";
-//
-//        list($item, $page) = $this->paginate($dql);
-//
-//        return $this->render('PmsCoreBundle:Item:add.html.twig', array(
-//            'item' => $item,
-//            'entity' => $entity,
-//            'form' => $form->createView(),
-//            'page' => $page,
-//        ));
+        $form = $this->createForm(new CustomerType(), $customer);
+
+        $dql = "SELECT a FROM PmsCoreBundle:Customer a WHERE a.status = 1 ORDER BY a.id DESC";
+
+        list($customers, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:Customer:add.html.twig', array(
+            'customers' => $customers,
+            'form' => $form->createView(),
+            'page' => $page,
+        ));
     }
 
     public function itemListAction()
@@ -1196,6 +1250,7 @@ class CoreController extends Controller
         $subcategory = $projectCostArray[10];
         $pr = $projectCostArray[11];
         $po = $projectCostArray[12];
+        $customer = $projectCostArray[13];
 
         if(!empty($dateOfCost) && !empty($project) && !empty($item) && !empty($quantity) && !empty($unitPrice) && !empty($lineTotal)) {
 
@@ -1209,6 +1264,7 @@ class CoreController extends Controller
 
                 $projectcost->setProject($this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneById($project));
                 $projectcost->setItem($this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneById($item));
+                $projectcost->setCustomer($this->getDoctrine()->getRepository('PmsCoreBundle:Customer')->findOneById($customer));
                 $projectcost->setQuantity($quantity);
                 $projectcost->setUnitPrice($unitPrice);
                 $projectcost->setLineTotal($lineTotal);
@@ -1237,6 +1293,7 @@ class CoreController extends Controller
 
                 $projectcost->setProject($this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneById($project));
                 $projectcost->setItem($this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneById($item));
+                $projectcost->setCustomer($this->getDoctrine()->getRepository('PmsCoreBundle:Customer')->findOneById($customer));
                 $projectcost->setQuantity($quantity);
                 $projectcost->setUnitPrice($unitPrice);
                 $projectcost->setLineTotal($lineTotal);

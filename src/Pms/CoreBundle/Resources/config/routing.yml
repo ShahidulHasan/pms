@@ -18,6 +18,32 @@ customer_check:
     options:
             expose: true
 
+customer_deleted:
+    pattern: /customer/deleted
+    defaults: { _controller: PmsCoreBundle:Core:customerDeleted }
+
+customer_deleted_list:
+    pattern: /customer/deleted/list
+    defaults: { _controller: PmsCoreBundle:Core:customerDeletedList }
+
+customer_delete:
+    pattern: /customer/delete/{id}
+    defaults: { _controller: PmsCoreBundle:Core:customerDelete }
+    requirements:
+          id: \d+
+
+customer_active:
+    pattern: /customer/active/{id}
+    defaults: { _controller: PmsCoreBundle:Core:customerActive }
+    requirements:
+          id: \d+
+
+customer_update:
+    pattern: /customer/update/{id}
+    defaults: { _controller: PmsCoreBundle:Core:customerUpdate }
+    requirements:
+          id:  \d+
+
 item_add:
     pattern: /item
     defaults: { _controller: PmsCoreBundle:Core:itemAdd }

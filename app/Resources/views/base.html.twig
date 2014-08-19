@@ -778,6 +778,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             var subcategory = $("#projectcost_subCategory").val();
             var pr = $("#projectcost_pr").val();
             var po = $("#projectcost_po").val();
+            var customer = $("#projectcost_customer").val();
 
             if(invoice && po){
 
@@ -785,7 +786,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                 return po;
             }
 
-            var projectCostArray = new Array(dateOfCost, project, item, quantity, unitPrice, lineTotal, sURLVariables[3], invoice, grn, category, subcategory, pr, po);
+            var projectCostArray = new Array(dateOfCost, project, item, quantity, unitPrice, lineTotal, sURLVariables[3], invoice, grn, category, subcategory, pr, po, customer);
 
             $.ajax({
                 type: "post",

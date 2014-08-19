@@ -56,7 +56,9 @@
                         {{ projectItem.itemName }}
                     </td>
                     <td class="col-md-2">
-                        {{ projectItem.totalUsed }} {{ times | join(" ") }}
+                        <a href="/report/byItem/details/{{ projectItem.id }}/{{ start }}/{{ end }}">
+                            {{ projectItem.totalUsed }} {{ times | join(" ") }}
+                        </a>
                     </td>
                     <td class="col-md-4">
                         {{ projectItem.quantities }} {{ projectItem.itemUnit }}
