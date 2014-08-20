@@ -389,8 +389,7 @@ class UserRepository extends EntityRepository
 
             $query    = $em->getRepository('PmsCoreBundle:ProjectCost')
                 ->createQueryBuilder('pc')
-                ->select('p.projectName')
-                ->addSelect('i.itemName')
+                ->Select('i.itemName')
                 ->addSelect('pc.lineTotal')
                 ->addSelect('pc.dateOfCost')
                 ->addSelect('pc.quantity')
@@ -421,7 +420,7 @@ class UserRepository extends EntityRepository
                 ->setParameter('2', $start)
                 ->setParameter('3', $end)
                 ->setParameter('4', $project)
-                ->join('pc.item', 'p');
+                ->join('pc.project', 'p');
             $itemTotal = $query2->getQuery()->getResult();
         } else {
             $query    = $em->getRepository('PmsCoreBundle:ProjectCost')
