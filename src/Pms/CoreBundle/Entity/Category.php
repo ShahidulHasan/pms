@@ -23,6 +23,13 @@ class Category
     private $id;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\ProjectCost", mappedBy="category")
+     */
+    private $projectCost;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="category_name", type="string", length=255)
@@ -180,5 +187,13 @@ class Category
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getProjectCost()
+    {
+        return $this->projectCost;
     }
 }

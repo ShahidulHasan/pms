@@ -53,6 +53,14 @@ class ProjectCost
     private $customer;
 
     /**
+     * @var Category
+     *
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Category", inversedBy="projectCost")
+     * @ORM\JoinColumn(name="category")
+     */
+    private $category;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="quantity", type="integer")
@@ -115,12 +123,12 @@ class ProjectCost
      */
     private $subCategory;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="category", type="string", length=255, nullable=true)
-     */
-    private $category;
+//    /**
+//     * @var string
+//     *
+//     * @ORM\Column(name="category", type="string", length=255, nullable=true)
+//     */
+//    private $category;
 
     /**
      * @var string
@@ -204,6 +212,29 @@ class ProjectCost
     public function getProject()
     {
         return $this->project;
+    }
+
+    /**
+     * Set category
+     *
+     * @param string $category
+     * @return ProjectCost
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return string
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 
     /**
@@ -298,28 +329,6 @@ class ProjectCost
         return $this->subCategory;
     }
 
-    /**
-     * Set category
-     *
-     * @param string $category
-     * @return ProjectCost
-     */
-    public function setCategory($category)
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Get category
-     *
-     * @return string
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
     /**
      * Set unitPrice
      *

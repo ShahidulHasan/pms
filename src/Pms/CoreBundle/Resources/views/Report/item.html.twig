@@ -10,7 +10,7 @@
                 <td>
                     <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
                         <span class="input-group-btn"></span>
-                        <input type="text" name="start_date" class="form-control" style="width: 140px;margin-left: 14px;" readonly/>
+                        <input type="text" placeholder="Start Date" name="start_date" class="form-control" style="width: 140px;margin-left: 14px;" readonly/>
                     </div>
                 </td>
                 <td style="font-size: 16px; font-weight: bold;">
@@ -19,7 +19,7 @@
                 <td>
                     <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
                         <span class="input-group-btn"></span>
-                        <input type="text" name="end_date" class="form-control" style="width: 140px;" readonly/>
+                        <input type="text" placeholder="End Date" name="end_date" class="form-control" style="width: 140px;" readonly/>
                     </div>
                 </td>
                 <td>
@@ -116,7 +116,14 @@
                         Grand Total :
                     </td>
                     <td class="col-md-2 bold">
-                        {{ itemTotal[0].total }} Tk
+
+                        {% set total = [" "] %}
+                        {% if (start != 0) and (end != 0) %}{% set total = sum %}
+                        {% else %}{% set total = itemTotal[0].total %}
+                        {% endif %}
+
+                        {{ total | join(" ") }} Tk
+
                     </td>
                 </tr>
             </tfoot>

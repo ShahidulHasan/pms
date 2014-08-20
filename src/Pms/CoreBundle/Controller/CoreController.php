@@ -64,7 +64,7 @@ class CoreController extends Controller
             $end = 0;
         }
 
-        list($itemUses, $itemTotal, $reportData, $sumOfTopten, $totalItemForPie) = $this->getDoctrine()->getRepository('UserBundle:User')->itemReport($em, $start, $end);
+        list($itemUses, $itemTotal, $reportData, $sumOfTopten, $totalItemForPie, $sum) = $this->getDoctrine()->getRepository('UserBundle:User')->itemReport($em, $start, $end);
 
         $formSearch = $this->createForm(new SearchType());
 
@@ -77,6 +77,7 @@ class CoreController extends Controller
             'reportData' => $reportData,
             'formSearch' => $formSearch->createView(),
             'totalItemForPie' => $totalItemForPie,
+            'sum' => $sum,
         ));
     }
 
@@ -155,7 +156,7 @@ class CoreController extends Controller
             $end = 0;
         }
 
-        list($projectCosts, $cost, $reportData, $sumOfTopten, $totalProjectForPic) = $this->getDoctrine()->getRepository('UserBundle:User')->projectReport($em, $start, $end);
+        list($projectCosts, $cost, $reportData, $sumOfTopten, $totalProjectForPic, $reportData1, $totalProjectForPicCategory, $sum) = $this->getDoctrine()->getRepository('UserBundle:User')->projectReport($em, $start, $end);
 
         $formSearch = $this->createForm(new SearchType());
 
@@ -168,6 +169,9 @@ class CoreController extends Controller
             'reportData' => $reportData,
             'formSearch' => $formSearch->createView(),
             'totalProjectForPic' => $totalProjectForPic,
+            'reportData1' => $reportData1,
+            'totalProjectForPicCategory' => $totalProjectForPicCategory,
+            'sum' => $sum,
         ));
     }
 
@@ -1266,12 +1270,12 @@ class CoreController extends Controller
                 $projectcost->setProject($this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneById($project));
                 $projectcost->setItem($this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneById($item));
                 $projectcost->setCustomer($this->getDoctrine()->getRepository('PmsCoreBundle:Customer')->findOneById($customer));
+                $projectcost->setCategory($this->getDoctrine()->getRepository('PmsCoreBundle:Category')->findOneById($category));
                 $projectcost->setQuantity($quantity);
                 $projectcost->setUnitPrice($unitPrice);
                 $projectcost->setLineTotal($lineTotal);
                 $projectcost->setInvoice($invoice);
                 $projectcost->setGrn($grn);
-                $projectcost->setCategory($category);
                 $projectcost->setSubCategory($subcategory);
                 $projectcost->setPr($pr);
                 $projectcost->setPo($po);
@@ -1295,12 +1299,12 @@ class CoreController extends Controller
                 $projectcost->setProject($this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneById($project));
                 $projectcost->setItem($this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneById($item));
                 $projectcost->setCustomer($this->getDoctrine()->getRepository('PmsCoreBundle:Customer')->findOneById($customer));
+                $projectcost->setCategory($this->getDoctrine()->getRepository('PmsCoreBundle:Category')->findOneById($category));
                 $projectcost->setQuantity($quantity);
                 $projectcost->setUnitPrice($unitPrice);
                 $projectcost->setLineTotal($lineTotal);
                 $projectcost->setInvoice($invoice);
                 $projectcost->setGrn($grn);
-                $projectcost->setCategory($category);
                 $projectcost->setSubCategory($subcategory);
                 $projectcost->setPr($pr);
                 $projectcost->setPo($po);
