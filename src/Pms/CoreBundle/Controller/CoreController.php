@@ -352,14 +352,49 @@ class CoreController extends Controller
     {
         $form = $this->createForm(new SubCategoryType());
 
-        $dql = "SELECT a FROM PmsCoreBundle:Category a WHERE a.parent > 0 AND a.status = 1 ORDER BY a.id DESC";
+//        $dql = "SELECT a FROM PmsCoreBundle:Category a WHERE a.parent > 0 AND a.status = 1 ORDER BY a.id DESC";
 
-        list($category, $page) = $this->paginate($dql);
+        $em = $this->getDoctrine()->getManager();
+
+        $query        = $em->getRepository('PmsCoreBundle:Category')
+            ->createQueryBuilder('cat')
+            ->select('cat.categoryName')
+            ->addSelect('cat.id')
+            ->addSelect('cat.parent')
+            ->addSelect('cat.status')
+            ->where('cat.status = 1')
+            ->andWhere('cat.parent > 0');
+        $projectCosts = $query->getQuery()->getResult();
+
+        $reportData = array();
+
+        foreach ($projectCosts as $projectCost) {
+            $data                          = array();
+            $data['name']                  = $projectCost['categoryName'];
+            $data['status']                  = $projectCost['status'];
+            $data['id']                  = $projectCost['id'];
+            $parent                 = $projectCost['parent'];
+
+
+            $query1 = $em->getRepository('PmsCoreBundle:Category')
+                ->createQueryBuilder('cat')
+                ->select('cat.categoryName')
+                ->where('cat.id = ?1')
+                ->setParameter('1', $parent);
+            $projectCosts1 = $query1->getQuery()->getResult();
+
+            $data['parent']                = $projectCosts1;
+            $reportData[]                  = $data;
+        }
+
+//        var_dump($reportData);die;
+
+//        list($category, $page) = $this->paginate($dql);
 
         return $this->render('PmsCoreBundle:SubCategory:subAdd.html.twig', array(
             'form' => $form->createView(),
-            'categories' => $category,
-            'page' => $page,
+            'reportData' => $reportData,
+//            'page' => $page,
         ));
     }
 

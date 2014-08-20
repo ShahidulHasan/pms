@@ -82,28 +82,30 @@
                                             <tr>
                                                 <th>Sl</th>
                                                 <th>Sub Category Name</th>
+                                                <th>Category Name</th>
                                                 <th>Status</th>
                                             </tr>
                                             </thead>
                                             <tbody>
 
-                                            {% if page == 1 %}{% set i = 0 %}
-                                            {% else %}{% set i = (page * 10) -10 %}
-                                            {% endif %}
-
-                                            {% for category in categories %}
+                                            {#{% if page == 1 %}{% set i = 0 %}#}
+                                            {#{% else %}{% set i = (page * 10) -10 %}#}
+                                            {#{% endif %}#}
+                                            {% set i = 0 %}
+                                            {% for category in reportData %}
                                                 {% set i = i + 1 %}
                                                 {% set color = [" "] %}
 
-                                                {% if category.status == 0 %}{% set color = color|merge(["red"]) %}
-                                                {% elseif category.status == 1 %}{% set color = color|merge(["green"]) %}
+                                                {% if category['status'] == 0 %}{% set color = color|merge(["red"]) %}
+                                                {% elseif category['status'] == 1 %}{% set color = color|merge(["green"]) %}
                                                 {% endif %}
 
                                                 <tr>
                                                     <td style="width: 60px;">{{ i }} .</td>
-                                                    <td style="width: 622px; color: {{ color|join("") }};">{{ category.categoryName }}</td>
+                                                    <td style="width: 422px; color: {{ color|join("") }};">{{ category['name'] }}</td>
+                                                    <td style="width: 200px;">{{ category['parent'][0]['categoryName'] }}</td>
                                                     <td style="width: 80px;">
-                                                        <a href="/sub-category/delete/{{ category.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
+                                                        <a href="/sub-category/delete/{{ category['id'] }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
                                                                     class="fa fa-trash-o"></i> Delete</a>
                                                     </td>
                                                     {#<td>#}
@@ -117,7 +119,7 @@
                                             </tbody>
                                         </table>
                                         <div class="navigation" style="text-align: right">
-                                            {{ knp_pagination_render(categories) }}
+                                            {#{{ knp_pagination_render(categories) }}#}
                                         </div>
                                     </div>
                                 </div>
