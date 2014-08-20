@@ -416,9 +416,11 @@ class UserRepository extends EntityRepository
                 ->andWhere('pc.item = ?1')
                 ->andWhere('pc.dateOfCost >= ?2')
                 ->andWhere('pc.dateOfCost <= ?3')
+                ->andWhere('p.projectName = ?4')
                 ->setParameter('1', $id)
                 ->setParameter('2', $start)
                 ->setParameter('3', $end)
+                ->setParameter('4', $project)
                 ->join('pc.item', 'p');
             $itemTotal = $query2->getQuery()->getResult();
         } else {
