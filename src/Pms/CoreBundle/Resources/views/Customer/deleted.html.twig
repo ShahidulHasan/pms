@@ -17,12 +17,12 @@
             <ul class="page-breadcrumb breadcrumb">
                 <li>
                     <i class="fa fa-gift"></i>
-                    <a href="#" class="customer-active-list">Active Customer List</a>
+                    <a href="#" class="customer-active-list">Active Buyer List</a>
                     <i class="fa">|</i>
                 </li>
                 <li>
                     <i class="fa fa-gift"></i>
-                    <a href="#" class="customer-deleted-list">Deleted Customer List</a>
+                    <a href="#" class="customer-deleted-list">Deleted Buyer List</a>
                 </li>
             </ul>
         </div>
@@ -34,7 +34,7 @@
             <div class="portlet box light-grey">
 
                 <div class="portlet-title">
-                    <div class="caption"><i class="fa fa-reorder"></i> Customer</div>
+                    <div class="caption"><i class="fa fa-reorder"></i> Buyer</div>
                 </div>
 
                 <div class="portlet-body form">
@@ -53,11 +53,11 @@
                         <div class="form-actions fluid">
                             {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'category-form', 'novalidate': 'novalidate'} }) }}
                             <div class="form-group">
-                                {{ form_label(form.customerName, 'Customer Name :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'margin-right:-50px;font-weight:bold;' } }
+                                {{ form_label(form.customerName, 'Buyer Name :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'margin-right:-50px;font-weight:bold;' } }
                                 ) }}
                                 <div class="col-md-8">
                                     <div class="input-icon">
-                                        {{ form_widget(form.customerName, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;', 'placeholder': 'Add category name' } }) }}
+                                        {{ form_widget(form.customerName, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;' } }) }}
                                     </div>
                                 </div>
                                 <input type="button" name="ajaxSaveCategory" value="Save" id="ajaxSaveCategory" class="btn green button-width col-md-1" style="margin-top:2px;margin-left:10px;height:32px;">
@@ -75,7 +75,7 @@
                                             <thead>
                                             <tr>
                                                 <th>Sl</th>
-                                                <th>Customer Name</th>
+                                                <th>Buyer Name</th>
                                                 <th>Status</th>
                                                 <th></th>
                                             </tr>

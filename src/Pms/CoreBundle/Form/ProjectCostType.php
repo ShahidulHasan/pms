@@ -66,7 +66,7 @@ class ProjectCostType extends AbstractType
                 'property' => 'customerName',
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => ' Select Customer'
+                    'placeholder' => ' Select Buyer'
                 ),
                 'empty_data' => null,
                 'query_builder' => function (\Pms\UserBundle\Entity\UserRepository $repository)

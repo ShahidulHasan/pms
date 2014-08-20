@@ -151,7 +151,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                 <li class="{{ Customer|join(" ") }}">
                     <a href="/customer">
                         <i class="fa fa-user"></i>
-                        <span class="title"> Customer </span>
+                        <span class="title"> Buyer </span>
                         <span class="selected"></span>
                     </a>
                 </li>
@@ -617,7 +617,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                 dataType: 'json',
                 success: function (msg) {
                     if(msg.responseCode == 200) {
-                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Customer already exist</span></div>');
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Buyer already exist</span></div>');
                         $('.customerMessege').css('color', 'red').html(msg.customer_ajax_add).fadeIn(1000).append($addLink);
                         $(':input','#customer-form')
                                 .not(':button, :submit, :reset, :hidden')
@@ -625,7 +625,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                                 .removeAttr('checked')
                                 .removeAttr('selected');
                     } else if(msg.responseCode == 204) {
-                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Insert Customer</span></div>');
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Insert Buyer</span></div>');
                         $('.customerMessege').css('color', 'red').html(msg.customer_ajax_add).fadeIn(1000).append($addLink);
                         $(':input','#customer-form')
                                 .not(':button, :submit, :reset, :hidden')
@@ -633,7 +633,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                                 .removeAttr('checked')
                                 .removeAttr('selected');
                     } else if(msg.responseCode == 202) {
-                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Customer Update Successfully</span></div>');
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Buyer Update Successfully</span></div>');
                         $('.customerMessege').css('color', 'green').html(msg.customer_ajax_add).fadeIn(1000).append($addLink);
                         $(':input','#customer-form')
                                 .not(':button, :submit, :reset, :hidden')
@@ -641,7 +641,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                                 .removeAttr('checked')
                                 .removeAttr('selected');
                     } else {
-                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Customer Add Successfully</span></div>');
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Buyer Add Successfully</span></div>');
                         $('.customerMessege').css('color', 'green').html(msg.customer_ajax_add).fadeIn(1000).append($addLink);
                         $(':input','#customer-form')
                                 .not(':button, :submit, :reset, :hidden')

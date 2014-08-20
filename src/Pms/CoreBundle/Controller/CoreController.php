@@ -541,7 +541,7 @@ class CoreController extends Controller
 
         $this->get('session')->getFlashBag()->add(
             'notice',
-            'Customer Successfully Deleted'
+            'Buyer Successfully Deleted'
         );
 
         return $this->redirect($this->generateUrl('customer_add'));
@@ -554,7 +554,7 @@ class CoreController extends Controller
 
         $this->get('session')->getFlashBag()->add(
             'notice',
-            'Customer Successfully Restored'
+            'Buyer Successfully Restored'
         );
 
         return $this->redirect($this->generateUrl('customer_deleted'));
@@ -619,11 +619,11 @@ class CoreController extends Controller
         );
 
         if ($customer) {
-            $return = array("responseCode" => 200, "customer_name" => "Customer already exist.");
+            $return = array("responseCode" => 200, "customer_name" => "Buyer already exist.");
             $return = json_encode($return);
             return new Response($return, 200, array('Content-Type' => 'application/json'));
         } else {
-            $return = array("responseCode" => '404', "customer_name" => "Customer name available.");
+            $return = array("responseCode" => '404', "customer_name" => "Buyer name available.");
             $return = json_encode($return);
             return new Response($return, 200, array('Content-Type' => 'application/json'));
         }

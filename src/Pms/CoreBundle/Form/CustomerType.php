@@ -21,7 +21,7 @@ class CustomerType extends AbstractType
                     new NotBlank()
                 ),
                 'attr' => array(
-                    'placeholder' => 'Add customer name',
+                    'placeholder' => 'Add buyer name',
                     'autocomplete' => 'off'
                 )
             ))
