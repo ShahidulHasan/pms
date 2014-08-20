@@ -382,7 +382,7 @@ class UserRepository extends EntityRepository
         return array($itemUses, $itemTotal, $reportData);
     }
 
-    public function byItemDetails($id, $em, $start, $end)
+    public function byItemDetails($id, $em, $start, $end, $project)
     {
 
         if (($start != 0) && ($end != 0)) {
@@ -397,12 +397,14 @@ class UserRepository extends EntityRepository
                 ->addSelect('pc.unitPrice')
                 ->addSelect('i.itemUnit')
                 ->where('pc.status = 1')
-                ->andWhere('pc.project = ?1')
+                ->andWhere('pc.item = ?1')
                 ->andWhere('pc.dateOfCost >= ?2')
                 ->andWhere('pc.dateOfCost <= ?3')
+                ->andWhere('pc.project = ?4')
                 ->setParameter('1', $id)
                 ->setParameter('2', $start)
                 ->setParameter('3', $end)
+                ->setParameter('4', $project)
                 ->join('pc.project', 'p')
                 ->join('pc.item', 'i');
             $itemUses = $query->getQuery()->getResult();
@@ -422,16 +424,17 @@ class UserRepository extends EntityRepository
         } else {
             $query    = $em->getRepository('PmsCoreBundle:ProjectCost')
                 ->createQueryBuilder('pc')
-                ->select('p.projectName')
-                ->addSelect('i.itemName')
+                ->Select('i.itemName')
                 ->addSelect('pc.lineTotal')
                 ->addSelect('pc.dateOfCost')
                 ->addSelect('pc.quantity')
                 ->addSelect('pc.unitPrice')
                 ->addSelect('i.itemUnit')
                 ->where('pc.status = 1')
-                ->andWhere('pc.project = ?1')
+                ->andWhere('pc.item = ?1')
+                ->andWhere('p.projectName = ?2')
                 ->setParameter('1', $id)
+                ->setParameter('2', $project)
                 ->join('pc.project', 'p')
                 ->join('pc.item', 'i');
             $itemUses = $query->getQuery()->getResult();

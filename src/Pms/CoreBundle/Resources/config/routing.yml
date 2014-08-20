@@ -271,7 +271,7 @@ report_by_project_details:
           id:  \d+
 
 report_by_item_details:
-    pattern: /report/byItem/details/{id}/{start}/{end}
+    pattern: /report/byItem/details/{id}/{start}/{end}/{project}
     defaults: { _controller: PmsCoreBundle:Core:byItemDetails }
     requirements:
           id:  \d+

@@ -95,11 +95,11 @@ class CoreController extends Controller
         ));
     }
 
-    public function byItemDetailsAction($id, $start, $end)
+    public function byItemDetailsAction($id, $start, $end, $project)
     {
         $em = $this->getDoctrine()->getManager();
 
-        list($itemUses, $itemTotal, $reportData) = $this->getDoctrine()->getRepository('UserBundle:User')->byItemDetails($id, $em, $start, $end);
+        list($itemUses, $itemTotal, $reportData) = $this->getDoctrine()->getRepository('UserBundle:User')->byItemDetails($id, $em, $start, $end, $project);
 
         return $this->render('PmsCoreBundle:Report:by_item_details.html.twig', array(
             'start' => $start,
@@ -107,6 +107,7 @@ class CoreController extends Controller
             'itemUses' => $itemUses,
             'itemTotal' => $itemTotal,
             'reportData' => $reportData,
+            'project' => $project,
         ));
     }
 
