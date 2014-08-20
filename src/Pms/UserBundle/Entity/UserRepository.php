@@ -400,7 +400,7 @@ class UserRepository extends EntityRepository
                 ->andWhere('pc.item = ?1')
                 ->andWhere('pc.dateOfCost >= ?2')
                 ->andWhere('pc.dateOfCost <= ?3')
-                ->andWhere('pc.project = ?4')
+                ->andWhere('p.projectName = ?4')
                 ->setParameter('1', $id)
                 ->setParameter('2', $start)
                 ->setParameter('3', $end)
@@ -443,9 +443,11 @@ class UserRepository extends EntityRepository
                 ->createQueryBuilder('pc')
                 ->Select('SUM(pc.lineTotal) as total')
                 ->where('pc.status = 1')
-                ->andWhere('pc.project = ?1')
+                ->andWhere('pc.item = ?1')
+                ->andWhere('p.projectName = ?2')
                 ->setParameter('1', $id)
-                ->join('pc.item', 'p');
+                ->setParameter('2', $project)
+                ->join('pc.project', 'p');
             $itemTotal = $query2->getQuery()->getResult();
         }
 
