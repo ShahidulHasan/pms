@@ -56,7 +56,7 @@ class ProjectCost
      * @var Category
      *
      * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Category", inversedBy="projectCost")
-     * @ORM\JoinColumn(name="category")
+     * @ORM\JoinColumn(name="category", nullable=true)
      */
     private $category;
 
