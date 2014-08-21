@@ -38,7 +38,7 @@
                             <div class="portlet-body">
                                 <div class="col-md-11" style="margin-left: 40px;">
 
-                                    <table id="table_project_cost">
+                                    <table id="table_project_cost" class="col-md-8">
 
                                         <tr>
                                             <td>
@@ -119,13 +119,30 @@
 
                                             </td>
                                             <td>
-                                                {{ form_widget(form.lineTotal, { 'attr': {'class': 'form-control lineTotal', 'style': 'width:180px;'} }) }}
+
                                             </td>
                                             <td>
-                                                <input type="button" name="ajaxSaveProjectCost" value="Save" id="ajaxSaveProjectCost" class="btn green button-width" style="height:32px;margin-left: -45px;">
+
                                             </td>
                                         </tr>
 
+                                    </table>
+                                    <table class="col-md-2">
+                                        <tr>
+                                            <td>
+                                                {{ form_widget(form.lineTotal, { 'attr': {'class': 'form-control lineTotal', 'style': 'width:180px;'} }) }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                {{ form_widget(form.comment, { 'attr': {'class': 'form-control lineTotal', 'style': 'width:180px;height:72px;'} }) }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: right;">
+                                                <input type="button" name="ajaxSaveProjectCost" value="Save" id="ajaxSaveProjectCost" class="btn green button-width" style="height:32px;">
+                                            </td>
+                                        </tr>
                                     </table>
 
                                 </div>

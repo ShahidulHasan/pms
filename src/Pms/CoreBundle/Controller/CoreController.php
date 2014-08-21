@@ -1371,6 +1371,7 @@ class CoreController extends Controller
         $pr = $projectCostArray[11];
         $po = $projectCostArray[12];
         $customer = $projectCostArray[13];
+        $comment = $projectCostArray[14];
 
         if(!empty($dateOfCost) && !empty($project) && !empty($item) && !empty($quantity) && !empty($unitPrice) && !empty($lineTotal)) {
 
@@ -1394,6 +1395,7 @@ class CoreController extends Controller
                 $projectcost->setSubCategory($subcategory);
                 $projectcost->setPr($pr);
                 $projectcost->setPo($po);
+                $projectcost->setComment($comment);
 
                 $this->getDoctrine()->getManager()->persist($projectcost);
                 $this->getDoctrine()->getManager()->flush();
@@ -1423,6 +1425,7 @@ class CoreController extends Controller
                 $projectcost->setSubCategory($subcategory);
                 $projectcost->setPr($pr);
                 $projectcost->setPo($po);
+                $projectcost->setComment($comment);
 
                 $this->getDoctrine()->getRepository("PmsCoreBundle:ProjectCost")->create($projectcost);
 

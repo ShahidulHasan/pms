@@ -126,6 +126,11 @@ class ProjectCostType extends AbstractType
                     'autocomplete' => 'off'
                 )
             ))
+            ->add('comment', 'textarea', array(
+                'attr' => array(
+                    'placeholder' => 'Comment'
+                )
+            ))
             ->add('category', 'entity', array(
                 'class' => 'PmsCoreBundle:Category',
                 'property' => 'categoryName',

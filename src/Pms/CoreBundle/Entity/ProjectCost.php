@@ -123,13 +123,6 @@ class ProjectCost
      */
     private $subCategory;
 
-//    /**
-//     * @var string
-//     *
-//     * @ORM\Column(name="category", type="string", length=255, nullable=true)
-//     */
-//    private $category;
-
     /**
      * @var string
      *
@@ -157,6 +150,13 @@ class ProjectCost
      * @ORM\Column(name="po", type="string", length=255, nullable=true)
      */
     private $po;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comment", type="string", length=255, nullable=true)
+     */
+    private $comment;
 
     /**
      * Get id
@@ -580,5 +580,28 @@ class ProjectCost
     public function getPo()
     {
         return $this->po;
+    }
+
+    /**
+     * Set comment
+     *
+     * @param string $comment
+     * @return ProjectCost
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Get comment
+     *
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
     }
 }
