@@ -56,28 +56,30 @@ class CoreController extends Controller
 
         if(!empty($_GET['start_date']) && !empty($_GET['end_date'])){
 
-            $start = $_GET['start_date'];
-            $end = $_GET['end_date'];
+            $startDate = $_GET['start_date'];
+            $endDate = $_GET['end_date'];
         }else{
 
-            $start = 0;
-            $end = 0;
+            $startDate = 0;
+            $endDate = 0;
         }
 
-        list($itemUses, $itemTotal, $reportData, $sumOfTopten, $totalItemForPie, $sum) = $this->getDoctrine()->getRepository('UserBundle:User')->itemReport($em, $start, $end);
+        list($itemUses, $itemTotal, $itemsPieChartData, $sumOfTopTen, $totalItemForPie, $totalSum, $categoriesPieChartData, $totalCategoryForPic) = $this->getDoctrine()->getRepository('UserBundle:User')->itemReport($em, $startDate, $endDate);
 
         $formSearch = $this->createForm(new SearchType());
 
         return $this->render('PmsCoreBundle:Report:item.html.twig', array(
-            'start' => $start,
-            'end' => $end,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
             'itemUses' => $itemUses,
             'itemTotal' => $itemTotal,
-            'sumOfTopten' => $sumOfTopten,
-            'reportData' => $reportData,
+            'sumOfTopTen' => $sumOfTopTen,
+            'itemsPieChartData' => $itemsPieChartData,
+            'categoriesPieChartData' => $categoriesPieChartData,
             'formSearch' => $formSearch->createView(),
             'totalItemForPie' => $totalItemForPie,
-            'sum' => $sum,
+            'totalSum' => $totalSum,
+            'totalCategoryForPic' => $totalCategoryForPic,
         ));
     }
 
@@ -112,18 +114,19 @@ class CoreController extends Controller
         ));
     }
 
-    public function byProjectDetailsAction($id, $start, $end)
+    public function byProjectDetailsAction($id, $startDate, $endDate)
     {
         $em = $this->getDoctrine()->getManager();
 
-        list($projectItems, $projectItems2, $reportData) = $this->getDoctrine()->getRepository('UserBundle:User')->projectDetails($id, $em, $start, $end);
+        list($projectItems, $itemsTotal, $itemsPieChartData, $categoriesPieChartData) = $this->getDoctrine()->getRepository('UserBundle:User')->projectDetails($id, $em, $startDate, $endDate);
 
         return $this->render('PmsCoreBundle:Report:by_project_details.html.twig', array(
-            'start' => $start,
-            'end' => $end,
+            'categoriesPieChartData' => $categoriesPieChartData,
+            'itemsPieChartData' => $itemsPieChartData,
             'projectItems' => $projectItems,
-            'projectTotal' => $projectItems2,
-            'reportData' => $reportData,
+            'itemsTotal' => $itemsTotal,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
         ));
     }
 
@@ -148,30 +151,30 @@ class CoreController extends Controller
 
         if(!empty($_GET['start_date']) && !empty($_GET['end_date'])){
 
-            $start = $_GET['start_date'];
-            $end = $_GET['end_date'];
+            $startDate = $_GET['start_date'];
+            $endDate = $_GET['end_date'];
         }else{
 
-            $start = 0;
-            $end = 0;
+            $startDate = 0;
+            $endDate = 0;
         }
 
-        list($projectCosts, $cost, $reportData, $sumOfTopten, $totalProjectForPic, $reportData1, $totalProjectForPicCategory, $sum) = $this->getDoctrine()->getRepository('UserBundle:User')->projectReport($em, $start, $end);
+        list($projectCosts, $totalCost, $projectPieChartData, $sumOfTopTen, $totalProjectForPic, $categoryPieChartData, $totalCategoryForPic, $totalSum) = $this->getDoctrine()->getRepository('UserBundle:User')->projectReport($em, $startDate, $endDate);
 
         $formSearch = $this->createForm(new SearchType());
 
         return $this->render('PmsCoreBundle:Report:project.html.twig', array(
-            'start' => $start,
-            'end' => $end,
-            'projectcosts' => $projectCosts,
-            'cost' => $cost,
-            'sumOfTopten' => $sumOfTopten,
-            'reportData' => $reportData,
-            'formSearch' => $formSearch->createView(),
+            'categoryPieChartData' => $categoryPieChartData,
+            'projectPieChartData' => $projectPieChartData,
+            'totalCategoryForPic' => $totalCategoryForPic,
             'totalProjectForPic' => $totalProjectForPic,
-            'reportData1' => $reportData1,
-            'totalProjectForPicCategory' => $totalProjectForPicCategory,
-            'sum' => $sum,
+            'formSearch' => $formSearch->createView(),
+            'projectCosts' => $projectCosts,
+            'sumOfTopTen' => $sumOfTopTen,
+            'totalCost' => $totalCost,
+            'totalSum' => $totalSum,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
         ));
     }
 

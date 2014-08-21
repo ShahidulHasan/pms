@@ -138,13 +138,13 @@ class UserRepository extends EntityRepository
             ->getQuery();
         $cost   = $query2->getResult();
 
-        $reportData = array();
 
         $sum        = 0;
         foreach ($projectCosts as $projectCost) {
             $sum        = $sum + $projectCost['total'];
         }
 
+        $reportData = array();
         foreach ($topTen as $key => $projectCost) {
             $data                             = array();
             $data['data']                     = ($projectCost['total'] * 100) / $cost[0]['total'];
@@ -154,7 +154,6 @@ class UserRepository extends EntityRepository
         }
 
         $reportData1 = array();
-
         foreach ($topTen1 as $projectCost) {
             $data1                             = array();
             $data1['data']                     = ($projectCost['total'] * 100) / $cost[0]['total'];
@@ -217,6 +216,26 @@ class UserRepository extends EntityRepository
                 ->join('pc.project', 'p')
                 ->join('pc.item', 'i');
             $projectItems2 = $query2->getQuery()->getResult();
+
+            $forPieChart1 = $em->getRepository('PmsCoreBundle:ProjectCost')
+                ->createQueryBuilder('pc')
+                ->select('p.projectName')
+                ->select('ca.categoryName')
+                ->addSelect('ca.id')
+                ->addSelect('SUM(pc.lineTotal) as total')
+                ->where('pc.status = 1')
+                ->andWhere('pc.project = ?1')
+                ->andWhere('pc.dateOfCost >= ?2')
+                ->andWhere('pc.dateOfCost <= ?3')
+                ->setParameter('1', $id)
+                ->setParameter('2', $start)
+                ->setParameter('3', $end)
+                ->join('pc.project', 'p')
+                ->join('pc.category', 'ca')
+                ->groupBy('ca.id')
+                ->orderBy('pc.lineTotal', 'DESC')
+                ->setMaxResults('10');
+            $topTen1      = $forPieChart1->getQuery()->getResult();
         } else {
             $query        = $em->getRepository('PmsCoreBundle:ProjectCost')
                 ->createQueryBuilder('pc')
@@ -245,10 +264,34 @@ class UserRepository extends EntityRepository
                 ->join('pc.project', 'p')
                 ->join('pc.item', 'i');
             $projectItems2 = $query2->getQuery()->getResult();
+
+            $forPieChart1 = $em->getRepository('PmsCoreBundle:ProjectCost')
+                ->createQueryBuilder('pc')
+                ->select('p.projectName')
+                ->select('ca.categoryName')
+                ->addSelect('ca.id')
+                ->addSelect('SUM(pc.lineTotal) as total')
+                ->where('pc.status = 1')
+                ->andWhere('pc.project = ?1')
+                ->setParameter('1', $id)
+                ->join('pc.project', 'p')
+                ->join('pc.category', 'ca')
+                ->groupBy('ca.id')
+                ->orderBy('pc.lineTotal', 'DESC')
+                ->setMaxResults('10');
+            $topTen1      = $forPieChart1->getQuery()->getResult();
+
+        }
+
+        $reportData1 = array();
+        foreach ($topTen1 as $projectCost) {
+            $data1                             = array();
+            $data1['data']                     = ($projectCost['total'] * 100) / $projectItems2[0]['total'];
+            $data1['label']                    = $projectCost['categoryName'];
+            $reportData1[]                     = $data1;
         }
 
         $reportData = array();
-
         foreach ($projectItems as $key => $projectItem) {
             $data                             = array();
             $data['data']                     = ($projectItem['total'] * 100) / $projectItems2[0]['total'];
@@ -257,7 +300,7 @@ class UserRepository extends EntityRepository
             $projectItems[$key]['percentage'] = ($projectItem['total'] * 100) / $projectItems2[0]['total'];
         }
 
-        return array($projectItems, $projectItems2, $reportData);
+        return array($projectItems, $projectItems2, $reportData, $reportData1);
     }
 
     public function itemReport($em, $start, $end)
@@ -300,6 +343,24 @@ class UserRepository extends EntityRepository
                 ->orderBy('pc.lineTotal', 'DESC')
                 ->setMaxResults('10');
             $topTen      = $forPieChart->getQuery()->getResult();
+
+            $forPieChart1 = $em->getRepository('PmsCoreBundle:ProjectCost')
+                ->createQueryBuilder('pc')
+                ->select('p.projectName')
+                ->select('ca.categoryName')
+                ->addSelect('ca.id')
+                ->addSelect('SUM(pc.lineTotal) as total')
+                ->where('pc.status = 1')
+                ->andWhere('pc.dateOfCost >= ?1')
+                ->andWhere('pc.dateOfCost <= ?2')
+                ->setParameter('1', $start)
+                ->setParameter('2', $end)
+                ->join('pc.project', 'p')
+                ->join('pc.category', 'ca')
+                ->groupBy('ca.id')
+                ->orderBy('pc.lineTotal', 'DESC')
+                ->setMaxResults('10');
+            $topTen1      = $forPieChart1->getQuery()->getResult();
         } else {
 
             $query    = $em->getRepository('PmsCoreBundle:ProjectCost')
@@ -329,6 +390,20 @@ class UserRepository extends EntityRepository
                 ->orderBy('pc.lineTotal', 'DESC')
                 ->setMaxResults('10');
             $topTen      = $forPieChart->getQuery()->getResult();
+
+            $forPieChart1 = $em->getRepository('PmsCoreBundle:ProjectCost')
+                ->createQueryBuilder('pc')
+                ->select('p.projectName')
+                ->select('ca.categoryName')
+                ->addSelect('ca.id')
+                ->addSelect('SUM(pc.lineTotal) as total')
+                ->where('pc.status = 1')
+                ->join('pc.project', 'p')
+                ->join('pc.category', 'ca')
+                ->groupBy('ca.id')
+                ->orderBy('pc.lineTotal', 'DESC')
+                ->setMaxResults('10');
+            $topTen1      = $forPieChart1->getQuery()->getResult();
         }
 
         $query2    = $em->getRepository('PmsCoreBundle:ProjectCost')
@@ -338,13 +413,25 @@ class UserRepository extends EntityRepository
             ->join('pc.item', 'p');
         $itemTotal = $query2->getQuery()->getResult();
 
-        $reportData = array();
+        $reportData1 = array();
+        foreach ($topTen1 as $projectCost) {
+            $data1                             = array();
+            $data1['data']                     = ($projectCost['total'] * 100) / $itemTotal[0]['total'];
+            $data1['label']                    = $projectCost['categoryName'];
+            $reportData1[]                     = $data1;
+        }
+
+        $totalCategoryForPic = 0;
+        foreach ($topTen1 as $toptens1) {
+            $totalCategoryForPic = $totalCategoryForPic + 1;
+        }
 
         $sum        = 0;
         foreach ($itemUses as $projectCost) {
             $sum        = $sum + $projectCost['total'];
         }
 
+        $reportData = array();
         foreach ($topTen as $key => $itemUse) {
             $data                             = array();
             $data['data']                     = ($itemUse['total'] * 100) / $itemTotal[0]['total'];
@@ -360,7 +447,7 @@ class UserRepository extends EntityRepository
             $sumOfTopten     = $sumOfTopten + $toptens['total'];
         }
 
-        return array($itemUses, $itemTotal, $reportData, $sumOfTopten, $totalItemForPie, $sum);
+        return array($itemUses, $itemTotal, $reportData, $sumOfTopten, $totalItemForPie, $sum, $reportData1, $totalCategoryForPic);
     }
 
     public function itemDetails($id, $em, $start, $end)

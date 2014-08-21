@@ -8,8 +8,8 @@
                 <div class="caption"><i class="fa fa-reorder"></i>{{ projectItems[0].projectName }} Items Chart</div>
             </div>
             <div class="portlet-body">
-                <div id="interactive" class="chart"></div>
-                <div style="text-align: center;font-weight: bold">Total cost in this project : {{ projectTotal[0].total }} Tk</div>
+                <div id="itemsPieChart" class="chart"></div>
+                <div style="text-align: center;font-weight: bold">Total cost in this project : {{ itemsTotal[0].total }} Tk</div>
             </div>
         </div>
     </div>
@@ -17,11 +17,11 @@
     <div class="col-md-6">
         <div class="portlet box grey">
             <div class="portlet-title">
-                <div class="caption"><i class="fa fa-reorder"></i></div>
+                <div class="caption"><i class="fa fa-reorder"></i>{{ projectItems[0].projectName }} Categories Chart</div>
             </div>
             <div class="portlet-body">
-                {#<div id="interactive" class="chart"></div>#}
-                <div style="text-align: center;font-weight: bold"></div>
+                <div id="categoriesPieChar" class="chart"></div>
+                <div style="text-align: center;font-weight: bold">Total cost in those categories : {{ itemsTotal[0].total }} Tk</div>
             </div>
         </div>
     </div>
@@ -52,18 +52,18 @@
                     <td>
                         {{ i }}.
                     </td>
-                    <td class="col-md-4">
+                    <td class="col-md-3">
                         {{ projectItem.itemName }}
                     </td>
-                    <td class="col-md-2">
-                        <a href="/report/byItem/details/{{ projectItem.id }}/{{ start }}/{{ end }}/{{ projectItem.projectName }}">
+                    <td class="col-md-3">
+                        <a href="/report/byItem/details/{{ projectItem.id }}/{{ startDate }}/{{ endDate }}/{{ projectItem.projectName }}">
                             {{ projectItem.totalUsed }} {{ times | join(" ") }}
                         </a>
                     </td>
-                    <td class="col-md-4">
+                    <td class="col-md-3">
                         {{ projectItem.quantities }} {{ projectItem.itemUnit }}
                     </td>
-                    <td class="col-md-2">
+                    <td class="col-md-3">
                         {{ projectItem.total }} Tk
                     </td>
                 </tr>
@@ -86,7 +86,7 @@
                         Grand Total :
                     </td>
                     <td class="col-md-2 bold">
-                        {{ projectTotal[0].total }} Tk
+                        {{ itemsTotal[0].total }} Tk
                     </td>
                 </tr>
             </tfoot>
@@ -96,47 +96,57 @@
 {% endblock %}
 
 {% block documentready %}
-    {{ parent() }}
+{{ parent() }}
 
-    var data = {{ reportData|json_encode|raw }}
-    $.plot($("#interactive"), data, {
+var items = {{ itemsPieChartData|json_encode|raw }}
+var categories = {{ categoriesPieChartData|json_encode|raw }}
+
+$.plot($("#itemsPieChart"), items, {
 
     series: {
-    pie: {
-    show: true,
-    label: {
-    show: true,
-    radius: 3 / 4,
-    formatter: function (label, series) {
+        pie: {
+        show: true,
+        label: {
+            show: true,
+            radius: 3 / 4,
+            formatter: function (label, series) {
 
-    return '<div style="font-size:8pt;text-align:center;padding:2px;color:white;">' + label + '<br/>' + Math.round(series.percent) + '%</div>';
-    },
-    background: {
-    opacity: 0.8
-    }
-    }
-    }
+                return '<div style="font-size:8pt;text-align:center;padding:2px;color:white;">' + label + '<br/>' + Math.round(series.percent) + '%</div>';
+                },
+                    background: {
+                        opacity: 0.8
+                }
+            }
+        }
     },
     grid: {
-    hoverable: true,
-    clickable: true
+        hoverable: true,
+        clickable: true
     }
-    });
-    $("#interactive").bind("plothover", pieHover);
-    $("#interactive").bind("plotclick", pieClick);
+});
 
-    function pieHover(event, pos, obj) {
+$.plot($("#categoriesPieChar"), categories, {
 
-    if (!obj)
-    return;
-    percent = parseFloat(obj.series.percent).toFixed(2);
-    $("#hover").html('<span style="font-weight: bold; color: ' + obj.series.color + '">' + obj.series.label + ' (' + percent + '%)</span>');
+    series: {
+        pie: {
+        show: true,
+            label: {
+            show: true,
+            radius: 3 / 4,
+            formatter: function (label, series) {
+
+                return '<div style="font-size:8pt;text-align:center;padding:2px;color:white;">' + label + '<br/>' + Math.round(series.percent) + '%</div>';
+                },
+                    background: {
+                        opacity: 0.8
+                }
+            }
+        }
+    },
+    grid: {
+        hoverable: true,
+        clickable: true
     }
+});
 
-    function pieClick(event, pos, obj) {
-    if (!obj)
-    return;
-    percent = parseFloat(obj.series.percent).toFixed(2);
-    alert('' + obj.series.label + ': ' + percent + '%');
-    }
 {% endblock documentready %}

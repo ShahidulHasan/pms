@@ -29,7 +29,7 @@
             </tbody>
         </table>
     </form>
-    {#{{ start }} {{ end }}#}
+
     <br/>
 
     <div class="col-md-6">
@@ -38,8 +38,8 @@
                 <div class="caption"><i class="fa fa-reorder"></i>Items Chart</div>
             </div>
             <div class="portlet-body">
-                <div id="interactive" class="chart"></div>
-                <div style="text-align: center;font-weight: bold">Total spent in top {{ totalItemForPie }} items : {{ sumOfTopten }} Tk</div>
+                <div id="itemsPieChart" class="chart"></div>
+                <div style="text-align: center;font-weight: bold">Total spent in top {{ totalItemForPie }} items : {{ sumOfTopTen }} Tk</div>
             </div>
         </div>
     </div>
@@ -47,11 +47,11 @@
     <div class="col-md-6">
         <div class="portlet box grey">
             <div class="portlet-title">
-                <div class="caption"><i class="fa fa-reorder"></i></div>
+                <div class="caption"><i class="fa fa-reorder"></i>Categories Chart</div>
             </div>
             <div class="portlet-body">
-                {#<div id="interactive" class="chart"></div>#}
-                <div style="text-align: center;font-weight: bold"></div>
+                <div id="categoriesPieChart" class="chart"></div>
+                <div style="text-align: center;font-weight: bold">Total spent in top {{ totalCategoryForPic }} categories : {{ sumOfTopTen }} Tk</div>
             </div>
         </div>
     </div>
@@ -83,7 +83,7 @@
                         {{ i }}.
                     </td>
                     <td class="col-md-4">
-                        <a href="/report/item/details/{{ itemUse.id }}/{{ start }}/{{ end }}" style="width: 85px;">
+                        <a href="/report/item/details/{{ itemUse.id }}/{{ startDate }}/{{ endDate }}" style="width: 85px;">
                             {{ itemUse.itemName }}
                         </a>
                     </td>
@@ -118,7 +118,7 @@
                     <td class="col-md-2 bold">
 
                         {% set total = [" "] %}
-                        {% if (start != 0) and (end != 0) %}{% set total = sum %}
+                        {% if (startDate != 0) and (endDate != 0) %}{% set total = totalSum %}
                         {% else %}{% set total = itemTotal[0].total %}
                         {% endif %}
 
@@ -133,51 +133,57 @@
 {% endblock %}
 
 {% block documentready %}
-    {{ parent() }}
+{{ parent() }}
 
-    var data = {{ reportData|json_encode|raw }};
+var items = {{ itemsPieChartData|json_encode|raw }};
+var categories = {{ categoriesPieChartData|json_encode|raw }};
 
-    var series;
-    series = series > 10 ? 10 : series;
-
-    $.plot($("#interactive"), data, {
+$.plot($("#itemsPieChart"), items, {
 
     series: {
-    pie: {
-    show: true,
-    label: {
-    show: true,
-    radius: 3 / 4,
-    formatter: function (label, series) {
+        pie: {
+            show: true,
+            label: {
+                show: true,
+                radius: 3 / 4,
+                formatter: function (label, series) {
 
-    return '<div style="font-size:8pt;text-align:center;padding:2px;color:white;">' + label + '<br/>' + Math.round(series.percent) + '%</div>';
-    },
-    background: {
-    opacity: 0.8
-    }
-    }
-    }
+                    return '<div style="font-size:8pt;text-align:center;padding:2px;color:white;">' + label + '<br/>' + Math.round(series.percent) + '%</div>';
+                },
+                background: {
+                    opacity: 0.8
+                }
+            }
+        }
     },
     grid: {
-    hoverable: true,
-    clickable: true
+        hoverable: true,
+        clickable: true
     }
-    });
-    $("#interactive").bind("plothover", pieHover);
-    $("#interactive").bind("plotclick", pieClick);
+});
 
-    function pieHover(event, pos, obj) {
+$.plot($("#categoriesPieChart"), categories, {
 
-    if (!obj)
-    return;
-    percent = parseFloat(obj.series.percent).toFixed(2);
-    $("#hover").html('<span style="font-weight: bold; color: ' + obj.series.color + '">' + obj.series.label + ' (' + percent + '%)</span>');
+    series: {
+        pie: {
+            show: true,
+            label: {
+                show: true,
+                radius: 3 / 4,
+                formatter: function (label, series) {
+
+                    return '<div style="font-size:8pt;text-align:center;padding:2px;color:white;">' + label + '<br/>' + Math.round(series.percent) + '%</div>';
+                },
+                background: {
+                    opacity: 0.8
+                }
+            }
+        }
+    },
+    grid: {
+        hoverable: true,
+        clickable: true
     }
+});
 
-    function pieClick(event, pos, obj) {
-    if (!obj)
-    return;
-    percent = parseFloat(obj.series.percent).toFixed(2);
-    alert('' + obj.series.label + ': ' + percent + '%');
-    }
 {% endblock documentready %}
