@@ -352,49 +352,42 @@ class CoreController extends Controller
     {
         $form = $this->createForm(new SubCategoryType());
 
-//        $dql = "SELECT a FROM PmsCoreBundle:Category a WHERE a.parent > 0 AND a.status = 1 ORDER BY a.id DESC";
-
         $em = $this->getDoctrine()->getManager();
 
-        $query        = $em->getRepository('PmsCoreBundle:Category')
+        $query = $em->getRepository('PmsCoreBundle:Category')
             ->createQueryBuilder('cat')
             ->select('cat.categoryName')
             ->addSelect('cat.id')
             ->addSelect('cat.parent')
             ->addSelect('cat.status')
             ->where('cat.status = 1')
-            ->andWhere('cat.parent > 0');
-        $projectCosts = $query->getQuery()->getResult();
+            ->andWhere('cat.parent > 0')
+            ->orderBy('cat.categoryName', 'ASC');
+        $subCategories = $query->getQuery()->getResult();
 
-        $reportData = array();
+        $subCategoryList = array();
 
-        foreach ($projectCosts as $projectCost) {
+        foreach ($subCategories as $subCategory) {
             $data                          = array();
-            $data['name']                  = $projectCost['categoryName'];
-            $data['status']                  = $projectCost['status'];
-            $data['id']                  = $projectCost['id'];
-            $parent                 = $projectCost['parent'];
+            $data['name']                  = $subCategory['categoryName'];
+            $data['status']                  = $subCategory['status'];
+            $data['id']                  = $subCategory['id'];
+            $parent                 = $subCategory['parent'];
 
+                $parentQuery = $em->getRepository('PmsCoreBundle:Category')
+                    ->createQueryBuilder('cat')
+                    ->select('cat.categoryName')
+                    ->where('cat.id = ?1')
+                    ->setParameter('1', $parent);
+            $parentNAme = $parentQuery->getQuery()->getResult();
 
-            $query1 = $em->getRepository('PmsCoreBundle:Category')
-                ->createQueryBuilder('cat')
-                ->select('cat.categoryName')
-                ->where('cat.id = ?1')
-                ->setParameter('1', $parent);
-            $projectCosts1 = $query1->getQuery()->getResult();
-
-            $data['parent']                = $projectCosts1;
-            $reportData[]                  = $data;
+            $data['parent']                = $parentNAme;
+            $subCategoryList[]                  = $data;
         }
-
-//        var_dump($reportData);die;
-
-//        list($category, $page) = $this->paginate($dql);
 
         return $this->render('PmsCoreBundle:SubCategory:subAdd.html.twig', array(
             'form' => $form->createView(),
-            'reportData' => $reportData,
-//            'page' => $page,
+            'subCategoryList' => $subCategoryList,
         ));
     }
 
@@ -402,14 +395,42 @@ class CoreController extends Controller
     {
         $form = $this->createForm(new SubCategoryType());
 
-        $dql = "SELECT a FROM PmsCoreBundle:Category a WHERE a.parent > 0 AND a.status = 0 ORDER BY a.id DESC";
+        $em = $this->getDoctrine()->getManager();
 
-        list($category, $page) = $this->paginate($dql);
+        $query = $em->getRepository('PmsCoreBundle:Category')
+            ->createQueryBuilder('cat')
+            ->select('cat.categoryName')
+            ->addSelect('cat.id')
+            ->addSelect('cat.parent')
+            ->addSelect('cat.status')
+            ->where('cat.status = 0')
+            ->andWhere('cat.parent > 0')
+            ->orderBy('cat.categoryName', 'ASC');
+        $subCategories = $query->getQuery()->getResult();
+
+        $subCategoryList = array();
+
+        foreach ($subCategories as $subCategory) {
+            $data                          = array();
+            $data['name']                  = $subCategory['categoryName'];
+            $data['status']                  = $subCategory['status'];
+            $data['id']                  = $subCategory['id'];
+            $parent                 = $subCategory['parent'];
+
+            $parentQuery = $em->getRepository('PmsCoreBundle:Category')
+                ->createQueryBuilder('cat')
+                ->select('cat.categoryName')
+                ->where('cat.id = ?1')
+                ->setParameter('1', $parent);
+            $parentNAme = $parentQuery->getQuery()->getResult();
+
+            $data['parent']                = $parentNAme;
+            $subCategoryList[]                  = $data;
+        }
 
         return $this->render('PmsCoreBundle:SubCategory:subDeleted.html.twig', array(
             'form' => $form->createView(),
-            'categories' => $category,
-            'page' => $page,
+            'subCategoryList' => $subCategoryList,
         ));
     }
 
@@ -420,7 +441,7 @@ class CoreController extends Controller
 
         $this->get('session')->getFlashBag()->add(
             'notice',
-            'Category Successfully Restored'
+            'Sub Category Successfully Restored'
         );
 
         return $this->redirect($this->generateUrl('sub_category_deleted'));
@@ -480,25 +501,41 @@ class CoreController extends Controller
 
     public function subCategoryListAction()
     {
-        $dql = "SELECT a FROM PmsCoreBundle:Category a WHERE a.parent > 0 AND a.status = 1 ORDER BY a.id DESC";
+        $em = $this->getDoctrine()->getManager();
 
-        list($category, $page) = $this->paginate($dql);
+        $query = $em->getRepository('PmsCoreBundle:Category')
+            ->createQueryBuilder('cat')
+            ->select('cat.categoryName')
+            ->addSelect('cat.id')
+            ->addSelect('cat.parent')
+            ->addSelect('cat.status')
+            ->where('cat.status = 1')
+            ->andWhere('cat.parent > 0')
+            ->orderBy('cat.categoryName', 'ASC');
+        $subCategories = $query->getQuery()->getResult();
+
+        $subCategoryList = array();
+
+        foreach ($subCategories as $subCategory) {
+            $data                          = array();
+            $data['name']                  = $subCategory['categoryName'];
+            $data['status']                  = $subCategory['status'];
+            $data['id']                  = $subCategory['id'];
+            $parent                 = $subCategory['parent'];
+
+            $parentQuery = $em->getRepository('PmsCoreBundle:Category')
+                ->createQueryBuilder('cat')
+                ->select('cat.categoryName')
+                ->where('cat.id = ?1')
+                ->setParameter('1', $parent);
+            $parentNAme = $parentQuery->getQuery()->getResult();
+
+            $data['parent']                = $parentNAme;
+            $subCategoryList[]                  = $data;
+        }
 
         return $this->render('PmsCoreBundle:SubCategory:subList.html.twig', array(
-            'categories' => $category,
-            'page' => $page,
-        ));
-    }
-
-    public function subCategoryDeletedListAction()
-    {
-        $dql = "SELECT a FROM PmsCoreBundle:Category a WHERE a.parent > 0 AND a.status = 0 ORDER BY a.id DESC";
-
-        list($category, $page) = $this->paginate($dql);
-
-        return $this->render('PmsCoreBundle:SubCategory:subDeletedList.html.twig', array(
-            'categories' => $category,
-            'page' => $page,
+            'subCategoryList' => $subCategoryList,
         ));
     }
 
@@ -513,6 +550,46 @@ class CoreController extends Controller
         );
 
         return $this->redirect($this->generateUrl('sub_category_add'));
+    }
+
+    public function subCategoryDeletedListAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $em->getRepository('PmsCoreBundle:Category')
+            ->createQueryBuilder('cat')
+            ->select('cat.categoryName')
+            ->addSelect('cat.id')
+            ->addSelect('cat.parent')
+            ->addSelect('cat.status')
+            ->where('cat.status = 0')
+            ->andWhere('cat.parent > 0')
+            ->orderBy('cat.categoryName', 'ASC');
+        $subCategories = $query->getQuery()->getResult();
+
+        $subCategoryList = array();
+
+        foreach ($subCategories as $subCategory) {
+            $data                          = array();
+            $data['name']                  = $subCategory['categoryName'];
+            $data['status']                  = $subCategory['status'];
+            $data['id']                  = $subCategory['id'];
+            $parent                 = $subCategory['parent'];
+
+            $parentQuery = $em->getRepository('PmsCoreBundle:Category')
+                ->createQueryBuilder('cat')
+                ->select('cat.categoryName')
+                ->where('cat.id = ?1')
+                ->setParameter('1', $parent);
+            $parentNAme = $parentQuery->getQuery()->getResult();
+
+            $data['parent']                = $parentNAme;
+            $subCategoryList[]                  = $data;
+        }
+
+        return $this->render('PmsCoreBundle:SubCategory:subDeletedList.html.twig', array(
+            'subCategoryList' => $subCategoryList,
+        ));
     }
 
     public function customerAddAction(Request $request)
