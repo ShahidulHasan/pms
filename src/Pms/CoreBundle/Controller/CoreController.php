@@ -1156,6 +1156,12 @@ class CoreController extends Controller
         ));
     }
 
+    public function projectCostDetailsAction($id)
+    {
+
+
+    }
+
     public function projectCostDeleteAction(ProjectCost $entity)
     {
         $this->getDoctrine()->getRepository('UserBundle:User')->delete($entity);

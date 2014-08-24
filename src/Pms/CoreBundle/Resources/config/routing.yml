@@ -144,6 +144,10 @@ cost_list:
     pattern: /cost/list
     defaults: { _controller: PmsCoreBundle:Core:projectCostList }
 
+project_cost_details:
+    pattern: project-cost/details/{id}
+    defaults: { _controller: PmsCoreBundle:Core:projectCostDetails }
+
 cost_ajax_checked:
     pattern: /project-cost/checked
     defaults: { _controller: PmsCoreBundle:Core:projectCostChecked }
