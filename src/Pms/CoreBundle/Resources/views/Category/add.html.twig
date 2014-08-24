@@ -96,8 +96,8 @@
 
                                                 {% if category.parent == 0 %}
                                                 <tr>
-                                                    <td style="width: 60px;">{{ i }} .</td>
-                                                    <td style="width: 622px; color: {{ color|join("") }};">{{ category.categoryName }}</td>
+                                                    <td>{{ i }} .</td>
+                                                    <td class="col-md-8" style="color: {{ color|join("") }};">{{ category.categoryName }}</td>
                                                     <td style="width: 80px;">
                                                         <a href="/category/delete/{{ category.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
                                                                     class="fa fa-trash-o"></i> Delete</a>

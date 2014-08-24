@@ -98,10 +98,10 @@
                                                 {% endif %}
 
                                                 <tr>
-                                                    <td style="width: 60px;">{{ i }} .</td>
-                                                    <td style="width: 322px; color: {{ color|join("") }};">{{ subCategory['name'] }}</td>
-                                                    <td style="width: 300px;">{{ subCategory['parent'][0]['categoryName'] }}</td>
-                                                    <td style="width: 170px;">
+                                                    <td>{{ i }} .</td>
+                                                    <td class="col-md-4" style="color: {{ color|join("") }};">{{ subCategory['name'] }}</td>
+                                                    <td class="col-md-4">{{ subCategory['parent'][0]['categoryName'] }}</td>
+                                                    <td>
                                                         <a href="/sub-category/delete/{{ subCategory['id'] }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
                                                                     class="fa fa-trash-o"></i> Delete</a>
                                                     </td>

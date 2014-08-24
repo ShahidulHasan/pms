@@ -26,9 +26,9 @@
                     {% endif %}
 
                     <tr>
-                        <td style="width: 60px;">{{ i }} .</td>
-                        <td style="width: 622px; color: {{ color|join("") }};">{{ customer.customerName }}</td>
-                        <td style="width: 80px;">
+                        <td>{{ i }} .</td>
+                        <td class="col-md-8" style="color: {{ color|join("") }};">{{ customer.customerName }}</td>
+                        <td>
                             <a href="/customer/delete/{{ customer.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
                                         class="fa fa-trash-o"></i> Delete</a>
                         </td>

@@ -87,7 +87,7 @@
                                             <th>Item Name</th>
                                             <th>Unit</th>
                                             <th>Status</th>
-                                            <th>Edit</th>
+                                            <th></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -105,10 +105,10 @@
                                             {% endif %}
 
                                             <tr>
-                                                <td style="width: 60px;">{{ i }} .</td>
-                                                <td style="width: 422px; color: {{ color|join("") }};">{{ items.itemName }}</td>
-                                                <td style="width: 200px; color: {{ color|join("") }};">{{ items.itemUnit }}</td>
-                                                <td style="width: 80px;">
+                                                <td>{{ i }} .</td>
+                                                <td class="col-md-6" style="color: {{ color|join("") }};">{{ items.itemName }}</td>
+                                                <td class="col-md-2" style="color: {{ color|join("") }};">{{ items.itemUnit }}</td>
+                                                <td>
                                                     <a href="/item/delete/{{ items.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
                                                                 class="fa fa-trash-o"></i> Delete</a>
                                                 </td>

@@ -8,7 +8,7 @@
                     <th>Sl</th>
                     <th>Project Name</th>
                     <th>Status</th>
-                    <th>Edit</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -26,8 +26,8 @@
                     {% endif %}
 
                     <tr>
-                        <td style="width: 60px;">{{ i }} .</td>
-                        <td style="width: 622px; color: {{ color|join("") }};">{{ projects.projectName }}</td>
+                        <td>{{ i }} .</td>
+                        <td class="col-md-8" style="color: {{ color|join("") }};">{{ projects.projectName }}</td>
                         <td>
                             <a href="/project/delete/{{ projects.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
                                         class="fa fa-trash-o"></i> Delete</a>

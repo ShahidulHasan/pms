@@ -26,13 +26,13 @@
                     {% endif %}
 
                     <tr>
-                        <td style="width: 60px;">{{ i }} .</td>
-                        <td style="width: 622px; color: {{ color|join("") }};">{{ customer.customerName }}</td>
+                        <td>{{ i }} .</td>
+                        <td class="col-md-8" style="color: {{ color|join("") }};">{{ customer.customerName }}</td>
                         <td style="color: red;">
                             <a href="#" class="btn default btn-xs red-stripe" style="width: 85px;"><i
                                         class="fa fa-times"></i> Deleted</a>
                         </td>
-                        <td style="width: 85px;">
+                        <td>
                             <a href="/customer/active/{{ customer.id }}" class="btn default btn-xs green-stripe" style="width: 85px;"><i
                                         class="fa fa-repeat"></i> Restore</a>
                         </td>

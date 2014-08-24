@@ -98,14 +98,14 @@
                                                 {% endif %}
 
                                                 <tr>
-                                                    <td style="width: 60px;">{{ i }} .</td>
-                                                    <td style="width: 322px; color: {{ color|join("") }};">{{ subCategory['name'] }}</td>
-                                                    <td style="width: 300px;">{{ subCategory['parent'][0]['categoryName'] }}</td>
+                                                    <td>{{ i }} .</td>
+                                                    <td class="col-md-4" style="color: {{ color|join("") }};">{{ subCategory['name'] }}</td>
+                                                    <td class="col-md-4">{{ subCategory['parent'][0]['categoryName'] }}</td>
                                                     <td style="color: red;">
                                                         <a href="#" class="btn default btn-xs red-stripe" style="width: 85px;"><i
                                                                     class="fa fa-times"></i> Deleted</a>
                                                     </td>
-                                                    <td style="width: 85px;">
+                                                    <td>
                                                         <a href="/sub-category/active/{{ subCategory.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
                                                                     class="fa fa-repeat"></i> Restore</a>
                                                     </td>

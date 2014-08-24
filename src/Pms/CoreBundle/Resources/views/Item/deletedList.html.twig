@@ -9,7 +9,7 @@
                     <th>Item Name</th>
                     <th>Unit</th>
                     <th>Status</th>
-                    <th>Edit</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -28,15 +28,15 @@
                     {% endif %}
 
                     <tr>
-                        <td style="width: 60px;">{{ i }} .</td>
-                        <td style="width: 422px; color: {{ color|join("") }};">{{ items.itemName }}</td>
-                        <td style="width: 200px; color: {{ color|join("") }};">{{ items.itemUnit }}</td>
+                        <td>{{ i }} .</td>
+                        <td class="col-md-6" style="color: {{ color|join("") }};">{{ items.itemName }}</td>
+                        <td class="col-md-2" style="color: {{ color|join("") }};">{{ items.itemUnit }}</td>
 
                         <td style="color: red;">
                             <a href="#" class="btn default btn-xs red-stripe" style="width: 85px;"><i
                                         class="fa fa-times"></i> Deleted</a>
                         </td>
-                        <td style="width: 85px;">
+                        <td>
                             <a href="/item/active/{{ items.id }}" class="btn default btn-xs green-stripe" style="width: 85px;"><i
                                         class="fa fa-repeat"></i> Restore</a>
                         </td>

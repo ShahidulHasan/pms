@@ -27,16 +27,17 @@
         {% endif %}
 
         <tr>
-            <td style="width: 60px;">{{ i }} .</td>
-            <td style="width: 105px; color: {{ color|join(" ") }}">{{ projectcosts.dateOfCost|date('Y-m-d') }}</td>
-            <td style="width: 150px; color: {{ color|join(" ") }}">{{ projectcosts.project.projectName | length > 12 ? projectcosts.project.projectName | slice(0, 12) ~ ' ...' : projectcosts.project.projectName }}</td>
-            <td style="width: 150px; color: {{ color|join(" ") }}">{{ projectcosts.item.itemName | length > 11 ? projectcosts.item.itemName | slice(0, 11) ~ ' ...' : projectcosts.item.itemName }}</td>
-            <td style="width: 100px; color: {{ color|join(" ") }}">{{ projectcosts.quantity }} per {{ projectcosts.item.itemUnit }}</td>
-            <td style="width: 110px; color: {{ color|join(" ") }}">{{ projectcosts.unitPrice | default() }}</td>
-            <td style="width: 90px; color: {{ color|join(" ") }}">{{ projectcosts.lineTotal | default() }}</td>
+            <td>{{ i }} .</td>
+            <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectcosts.dateOfCost|date('Y-m-d') }}</td>
+            <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectcosts.project.projectName | length > 12 ? projectcosts.project.projectName | slice(0, 12) ~ ' ...' : projectcosts.project.projectName }}</td>
+            <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectcosts.item.itemName | length > 11 ? projectcosts.item.itemName | slice(0, 11) ~ ' ...' : projectcosts.item.itemName }}</td>
+            <td class="col-md-1" style="color: {{ color|join(" ") }}">{{ projectcosts.quantity }} {{ projectcosts.item.itemUnit }}</td>
+            <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectcosts.unitPrice }} Tk / {{ projectcosts.item.itemUnit }}</td>
+            <td class="col-md-1" style="color: {{ color|join(" ") }}">{{ projectcosts.lineTotal | default() }}</td>
+            <td class="col-md-1"> Details</td>
             {% if projectcosts.status == 0 %}
                 <td>
-                    <a href="#" style="width: 85px;" data-myvalue="{{ projectcosts.id }}" class="check-by-ajax btn default btn-xs red-stripe"><i
+                    <a href="#" data-myvalue="{{ projectcosts.id }}" class="check-by-ajax btn default btn-xs red-stripe"><i
                                 class="fa fa-plus"></i> Check</a>
                 </td>
                 <td>
@@ -46,12 +47,16 @@
             {% endif %}
             {% if projectcosts.status == 1 %}
                 <td style=" color: red;">
-                    <a href="#" class="btn default btn-xs green-stripe" style="width: 85px;"><i class="fa fa-check"></i> Checked</a>
+                    <a href="#" class="btn default btn-xs green-stripe"><i class="fa fa-check"></i> Checked</a>
                 </td>
                 {% if is_granted("ROLE_SUPER_ADMIN") %}
-                    <td style="width: 85px;">
-                        <a href="/project-cost/delete/{{ projectcosts.id }}" style="width: 80px;" class="btn default btn-xs blue-stripe"><i
+                    <td>
+                        <a href="/project-cost/delete/{{ projectcosts.id }}" class="btn default btn-xs blue-stripe"><i
                                     class="fa fa-edit"></i> Delete</a>
+                    </td>
+                    <td>
+                        <a href="/project-cost/update/{{ projectcosts.id }}" class="btn default btn-xs blue-stripe"><i
+                                    class="fa fa-edit"></i> Update</a>
                     </td>
                 {% endif %}
             {% endif %}
