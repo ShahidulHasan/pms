@@ -43,6 +43,8 @@
             {% for itemUse in itemUses %}
                 {% set i = i + 1 %}
 
+                {% set startDate = 0 %}
+                {% set endDate = 0 %}
                 {% set time = itemUse.totalUsed %}
                 {% set times = [" "] %}
                 {% if time == 1 %}{% set times = times|merge(["time"]) %}
@@ -53,10 +55,12 @@
                     <td>
                         {{ i }}.
                     </td>
-                    <td class="col-md-2">
-                        {{ itemUse.projectName }}
-                    </td>
                     <td class="col-md-3">
+                        <a href="/report/byProject/details/{{ itemUse.id }}/{{ startDate }}/{{ endDate }}">
+                            {{ itemUse.projectName }}
+                        </a>
+                    </td>
+                    <td class="col-md-2">
 
                     </td>
                     <td class="col-md-2">

@@ -8,6 +8,7 @@
         <th>Quantity</th>
         <th>Unite Price</th>
         <th>Total</th>
+        <th></th>
         <th>Status</th>
         <th></th>
     </tr>
@@ -15,7 +16,7 @@
     <tbody>
 
     {% if page == 1 %}{% set i = 0 %}
-    {% else %}{% set i = (page * 10) -10 %}
+    {% else %}{% set i = (page * 50) -50 %}
     {% endif %}
 
     {% for projectcosts in projectcost %}
@@ -27,14 +28,14 @@
         {% endif %}
 
         <tr>
-            <td>{{ i }} .</td>
+            <td class="col-md-1">{{ i }} .</td>
             <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectcosts.dateOfCost|date('Y-m-d') }}</td>
             <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectcosts.project.projectName | length > 12 ? projectcosts.project.projectName | slice(0, 12) ~ ' ...' : projectcosts.project.projectName }}</td>
             <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectcosts.item.itemName | length > 11 ? projectcosts.item.itemName | slice(0, 11) ~ ' ...' : projectcosts.item.itemName }}</td>
             <td class="col-md-1" style="color: {{ color|join(" ") }}">{{ projectcosts.quantity }} {{ projectcosts.item.itemUnit }}</td>
             <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectcosts.unitPrice }} Tk / {{ projectcosts.item.itemUnit }}</td>
             <td class="col-md-1" style="color: {{ color|join(" ") }}">{{ projectcosts.lineTotal | default() }}</td>
-            <td class="col-md-1"> Details</td>
+            <td class="col-md-1"><a href="#" data-target="#ajax" data-toggle="modal"><!--View--></a></td>
             {% if projectcosts.status == 0 %}
                 <td>
                     <a href="#" data-myvalue="{{ projectcosts.id }}" class="check-by-ajax btn default btn-xs red-stripe"><i

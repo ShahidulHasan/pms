@@ -1148,7 +1148,7 @@ class CoreController extends Controller
     {
         $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a ORDER BY a.id DESC";
 
-        list($projectcost, $page) = $this->paginate($dql);
+        list($projectcost, $page) = $this->paginateProjectCost($dql);
 
         return $this->render('PmsCoreBundle:ProjectCost:list.html.twig', array(
             'projectcost' => $projectcost,
@@ -1219,7 +1219,7 @@ class CoreController extends Controller
             }
         }
 
-        list($projectcost, $page) = $this->paginate($dql);
+        list($projectcost, $page) = $this->paginateProjectCost($dql);
 
         return $this->render('PmsCoreBundle:ProjectCost:add.html.twig', array(
             'projectcost' => $projectcost,
@@ -1340,7 +1340,7 @@ class CoreController extends Controller
             }
         }
 
-        list($projectcost, $page) = $this->paginate($dql);
+        list($projectcost, $page) = $this->paginateProjectCost($dql);
 
 
         return $this->render('PmsCoreBundle:ProjectCost:add.html.twig', array(
@@ -1464,6 +1464,22 @@ class CoreController extends Controller
             $query,
             $page = $this->get('request')->query->get('page', 1) /*page number*/,
             10/*limit per page*/
+        );
+
+        return array($value, $page);
+    }
+
+
+    public function paginateProjectCost($dql)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $query = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $value = $paginator->paginate(
+            $query,
+            $page = $this->get('request')->query->get('page', 1) /*page number*/,
+            50/*limit per page*/
         );
 
         return array($value, $page);

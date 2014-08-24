@@ -53,7 +53,9 @@
                         {{ i }}.
                     </td>
                     <td class="col-md-3">
-                        {{ projectItem.itemName }}
+                        <a href="/report/project">
+                            {{ projectItem.itemName }}
+                        </a>
                     </td>
                     <td class="col-md-3">
                         <a href="/report/byItem/details/{{ projectItem.id }}/{{ startDate }}/{{ endDate }}/{{ projectItem.projectName }}">
