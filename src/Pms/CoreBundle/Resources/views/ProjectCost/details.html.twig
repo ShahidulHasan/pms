@@ -14,22 +14,32 @@
             <table>
 
                 <tr>
-                    <td>
-                        Date: {{ projectcost[0]['dateOfCost']|date('Y-m-d') }}
+                    <td class="col-md-7">
+                      Project Name: {{ projectcost[0]['projectName'] }}
                     </td>
-                    <td>
-                        category:{{ projectcost[0]['categoryName'] }}
+                    <td class="col-md-4">
+
                     </td>
+                </tr>
+                <tr>
+                    <td class="col-md-7">
+                        Create Date: {{ projectcost[0]['dateOfCost']|date('Y-m-d') }}
+                    </td>
+                    <td class="col-md-4">
+                        Created By: {{ projectcost[0]['username'] }}
+                    </td>
+                </tr>
+                <tr>
                     <td>
                         invoice:{{ projectcost[0]['invoice'] }}
+                    </td>
+                    <td>
+                        Item Quantity: {{ projectcost[0]['quantity'] }}
                     </td>
                 </tr>
                 <tr>
                     <td>
                         pr:{{ projectcost[0]['pr'] }}
-                    </td>
-                    <td>
-
                     </td>
                     <td>
                         grn :{{ projectcost[0]['grn'] }}
@@ -40,10 +50,15 @@
                         Approved Date: {{ projectcost[0]['createdDate']|date('Y-m-d') }}
                     </td>
                     <td>
-                        Creator Name: {{ projectcost[0]['username'] }}
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Item Unit Price:{{ projectcost[0]['unitPrice'] }} Tk
                     </td>
                     <td>
-                        Item Quantity: {{ projectcost[0]['quantity'] }}
+                        category:{{ projectcost[0]['categoryName'] }}
                     </td>
                 </tr>
                 <tr>
@@ -53,14 +68,8 @@
                     <td>
                         po:{{ projectcost[0]['po'] }}
                     </td>
-                    <td>
-                        Item Unit Price:{{ projectcost[0]['unitPrice'] }} Tk
-                    </td>
                 </tr>
                 <tr>
-                    <td>
-                        Project Name: {{ projectcost[0]['projectName'] }}
-                    </td>
                     <td>
                         Item Total:{{ projectcost[0]['lineTotal'] }}
                     </td>
