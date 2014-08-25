@@ -3,6 +3,7 @@
 namespace Pms\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Pms\UserBundle\Entity\User;
 
 /**
  * ProjectCost
@@ -82,9 +83,10 @@ class ProjectCost
     private $lineTotal;
 
     /**
-     * @var string
+     * @var User
      *
-     * @ORM\Column(name="created_by", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User", inversedBy="projectCostCreated")
+     * @ORM\JoinColumn(name="created_by", nullable=true)
      */
     private $createdBy;
 
@@ -96,9 +98,10 @@ class ProjectCost
     private $createdDate;
 
     /**
-     * @var string
+     * @var User
      *
-     * @ORM\Column(name="approved_by", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User", inversedBy="projectCostApproved")
+     * @ORM\JoinColumn(name="approved_by", nullable=true)
      */
     private $approvedBy;
 
@@ -217,7 +220,7 @@ class ProjectCost
     /**
      * Set category
      *
-     * @param string $category
+     * @param integer $category
      * @return ProjectCost
      */
     public function setCategory($category)
@@ -230,7 +233,7 @@ class ProjectCost
     /**
      * Get category
      *
-     * @return string
+     * @return integer
      */
     public function getCategory()
     {
@@ -378,7 +381,7 @@ class ProjectCost
     /**
      * Set createdBy
      *
-     * @param string $createdBy
+     * @param integer $createdBy
      * @return ProjectCost
      */
     public function setCreatedBy($createdBy)
@@ -391,7 +394,7 @@ class ProjectCost
     /**
      * Get createdBy
      *
-     * @return string 
+     * @return integer
      */
     public function getCreatedBy()
     {
@@ -424,7 +427,7 @@ class ProjectCost
     /**
      * Set approvedBy
      *
-     * @param string $approvedBy
+     * @param integer $approvedBy
      * @return ProjectCost
      */
     public function setApprovedBy($approvedBy)
@@ -437,7 +440,7 @@ class ProjectCost
     /**
      * Get approvedBy
      *
-     * @return string 
+     * @return integer
      */
     public function getApprovedBy()
     {

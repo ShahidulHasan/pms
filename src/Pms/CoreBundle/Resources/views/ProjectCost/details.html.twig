@@ -1,5 +1,84 @@
 {% block body %}
 
-ghggggggg vhgfh ghgh nbfhgfr fhfrghf nfhfh
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title" style="text-align: center;"> Details</h4>
+            </div>
+
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+
+            <table>
+
+                <tr>
+                    <td>
+                        Date: {{ projectcost[0]['dateOfCost']|date('Y-m-d') }}
+                    </td>
+                    <td>
+                        category:{{ projectcost[0]['categoryName'] }}
+                    </td>
+                    <td>
+                        invoice:{{ projectcost[0]['invoice'] }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        pr:{{ projectcost[0]['pr'] }}
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+                        grn :{{ projectcost[0]['grn'] }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Approved Date: {{ projectcost[0]['createdDate']|date('Y-m-d') }}
+                    </td>
+                    <td>
+                        Creator Name: {{ projectcost[0]['username'] }}
+                    </td>
+                    <td>
+                        Item Quantity: {{ projectcost[0]['quantity'] }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Item Name: {{ projectcost[0]['itemName'] }}
+                    </td>
+                    <td>
+                        po:{{ projectcost[0]['po'] }}
+                    </td>
+                    <td>
+                        Item Unit Price:{{ projectcost[0]['unitPrice'] }} Tk
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Project Name: {{ projectcost[0]['projectName'] }}
+                    </td>
+                    <td>
+                        Item Total:{{ projectcost[0]['lineTotal'] }}
+                    </td>
+                    <td>
+                        comment:{{ projectcost[0]['comment'] }}
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
 
 {% endblock %}

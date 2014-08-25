@@ -166,9 +166,9 @@
                                                 {% endif %}
 
                                                 <tr>
-                                                    <td style="width: 60px;">{{ i }} .</td>
-                                                    <td style="width: 622px; color: {{ color|join(" ") }}">{{ user.username }}</td>
-                                                    <td style="width: 622px; color: {{ color|join(" ") }}">{{ roles | join(" ") }}</td>
+                                                    <td>{{ i }} .</td>
+                                                    <td class="col-md-4" style="color: {{ color|join(" ") }}">{{ user.username }}</td>
+                                                    <td class="col-md-4" style="color: {{ color|join(" ") }}">{{ roles | join(" ") }}</td>
                                                     <td>
                                                     {% if user.enabled == 1 %}
                                                         <a href="/user/deactive/{{ user.id }}" style="width: 100px;" class="btn default btn-xs green-stripe"><i

@@ -382,9 +382,9 @@ class CoreController extends Controller
                     ->select('cat.categoryName')
                     ->where('cat.id = ?1')
                     ->setParameter('1', $parent);
-            $parentNAme = $parentQuery->getQuery()->getResult();
+                $parentName = $parentQuery->getQuery()->getResult();
 
-            $data['parent']                = $parentNAme;
+            $data['parent']                = $parentName;
             $subCategoryList[]                  = $data;
         }
 
@@ -1158,8 +1158,36 @@ class CoreController extends Controller
 
     public function projectCostDetailsAction($id)
     {
+        $em = $this->getDoctrine()->getManager();
 
+        $query = $em->getRepository('PmsCoreBundle:ProjectCost')
+            ->createQueryBuilder('pc')
+            ->select('p.projectName')
+            ->addSelect('i.itemName')
+            ->addSelect('pc.lineTotal')
+            ->addSelect('uc.username')
+            ->addSelect('c.categoryName')
+            ->addSelect('pc.createdDate')
+            ->addSelect('pc.dateOfCost')
+            ->addSelect('pc.quantity')
+            ->addSelect('pc.unitPrice')
+            ->addSelect('pc.invoice')
+            ->addSelect('pc.grn')
+            ->addSelect('pc.pr')
+            ->addSelect('pc.po')
+            ->addSelect('pc.comment')
+            ->where('pc.status = 1')
+            ->andWhere('pc.id = ?1')
+            ->setParameter('1', $id)
+            ->join('pc.project', 'p')
+            ->join('pc.createdBy', 'uc')
+            ->join('pc.item', 'i')
+            ->join('pc.category', 'c');
+        $projectcost = $query->getQuery()->getResult();
 
+        return $this->render('PmsCoreBundle:ProjectCost:details.html.twig', array(
+            'projectcost' => $projectcost,
+        ));
     }
 
     public function projectCostDeleteAction(ProjectCost $entity)
