@@ -48,8 +48,7 @@ class User extends BaseUser
 
     public function setRole($role)
     {
-        $this->getRoles();
-        $this->addRole($role);
+        $this->setRoles(array($role));
 
         return $this;
     }
