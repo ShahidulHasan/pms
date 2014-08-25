@@ -1,7 +1,3 @@
-pr_bundle:
-    resource: "@PmsPrBundle/Resources/config/routing.yml"
-    prefix:   /
-
 core_bundle:
     resource: "@PmsCoreBundle/Resources/config/routing.yml"
     prefix:   /
