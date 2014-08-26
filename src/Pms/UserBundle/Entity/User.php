@@ -2,13 +2,12 @@
 
 namespace Pms\UserBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Pms\UserBundle\Entity\UserRepository")
  * @ORM\Table(name="fos_user")
+ * @ORM\Entity(repositoryClass="Pms\UserBundle\Entity\UserRepository")
  */
 class User extends BaseUser
 {

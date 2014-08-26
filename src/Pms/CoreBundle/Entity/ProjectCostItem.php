@@ -3,13 +3,12 @@
 namespace Pms\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Pms\UserBundle\Entity\User;
 
 /**
  * ProjectCostItem
  *
  * @ORM\Table(name="project_cost_items")
- * @ORM\Entity(repositoryClass="Pms\UserBundle\Entity\UserRepository")
+ * @ORM\Entity(repositoryClass="Pms\CoreBundle\Entity\ProjectCostItemRepository")
  */
 class ProjectCostItem
 {

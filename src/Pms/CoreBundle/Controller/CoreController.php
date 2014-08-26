@@ -1181,7 +1181,7 @@ class CoreController extends Controller
             ->join('pc.item', 'i')
             ->join('pc.category', 'c');
         $projectCostItem = $query->getQuery()->getResult();
-var_dump($projectCostItem);
+
         return $this->render('PmsCoreBundle:ProjectCostItem:details.html.twig', array(
             'projectCostItem' => $projectCostItem,
         ));
