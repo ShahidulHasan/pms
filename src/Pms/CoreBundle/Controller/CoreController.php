@@ -8,6 +8,7 @@ use Pms\CoreBundle\Entity\Buyer;
 use Pms\CoreBundle\Entity\Item;
 use Pms\CoreBundle\Entity\Project;
 use Pms\CoreBundle\Entity\ProjectCostItem;
+use Pms\CoreBundle\Entity\PurchaseRequisition;
 use Pms\CoreBundle\Form\CategoryType;
 use Pms\CoreBundle\Form\BuyerType;
 use Pms\CoreBundle\Form\ItemType;
@@ -21,6 +22,40 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CoreController extends Controller
 {
+    public function purchaseOrderedAddAction(Request $request)
+    {
+//        $purchaseRequisition = new PurchaseRequisition();
+//
+//        $form = $this->createForm(new BuyerType(), $purchaseRequisition);
+//
+//        $dql = "SELECT a FROM PmsCoreBundle:PurchaseRequisition a ORDER BY a.id DESC";
+//
+//        list($purchaseRequisition, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:PurchaseOrdered:add.html.twig', array(
+//            'purchaseRequisition' => $purchaseRequisition,
+//            'form' => $form->createView(),
+//            'page' => $page,
+        ));
+    }
+
+    public function purchaseRequisitionAddAction(Request $request)
+    {
+//        $purchaseRequisition = new PurchaseRequisition();
+//
+//        $form = $this->createForm(new BuyerType(), $purchaseRequisition);
+//
+//        $dql = "SELECT a FROM PmsCoreBundle:PurchaseRequisition a ORDER BY a.id DESC";
+//
+//        list($purchaseRequisition, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:PurchaseRequisition:add.html.twig', array(
+//            'purchaseRequisition' => $purchaseRequisition,
+//            'form' => $form->createView(),
+//            'page' => $page,
+        ));
+    }
+
     public function overViewAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();

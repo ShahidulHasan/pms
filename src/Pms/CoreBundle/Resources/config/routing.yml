@@ -1,3 +1,11 @@
+purchase_ordered_add:
+    pattern: /purchase/ordered
+    defaults: { _controller: PmsCoreBundle:Core:purchaseOrderedAdd }
+
+purchase_requisition_add:
+    pattern: /purchase/requisition
+    defaults: { _controller: PmsCoreBundle:Core:purchaseRequisitionAdd }
+
 buyer_add:
     pattern: /buyer
     defaults: { _controller: PmsCoreBundle:Core:buyerAdd }

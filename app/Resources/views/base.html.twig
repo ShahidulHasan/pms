@@ -4,7 +4,7 @@ Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter
 Version: 1.5.3
 Author: KeenThemes
 Website: http://www.keenthemes.com/
-Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
+PurchaseRequisition: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
 -->
 <!--[if IE 8]>
 <html lang="en" class="ie8 no-js"> <![endif]-->
@@ -123,7 +123,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                 </div>
             </li>
 
-            {% set Route, Dashboard, User, Item, Project, Cost, Report, Category, SubCategory, OverView, Buyer = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "] %}
+            {% set Route, Dashboard, User, Item, Project, Cost, Report, Category, SubCategory, OverView, Buyer, PR, PO = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "] %}
             {% set Url = Route|split('_') %}
             {% if Url[0] == 'homepage' %}{% set Dashboard = Dashboard|merge(["active"]) %}
             {% elseif Url[0] == 'fos' %}{% set Dashboard = Dashboard|merge(["active"]) %}
@@ -136,6 +136,8 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             {% elseif Url[0] == 'project' and Url[1] == 'cost' %}{% set Cost = Cost|merge(["active"]) %}
             {% elseif Url[0] == 'report' %}{% set Report = Report|merge(["active"]) %}
             {% elseif Url[0] == 'over' %}{% set OverView = OverView|merge(["active"]) %}
+            {% elseif Url[1] == 'requisition' %}{% set PR = PR|merge(["active"]) %}
+            {% elseif Url[1] == 'ordered' %}{% set PO = PO|merge(["active"]) %}
             {% endif %}
 
             <li class="{{ Dashboard|join(" ") }}">
@@ -236,6 +238,24 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                     <a href="/over/view">
                         <i class="fa fa-gift"></i>
                         <span class="title"> Item overview </span>
+                        <span class="selected"></span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if is_granted("ROLE_ADMIN") %}
+                <li class="{{ PR|join(" ") }}">
+                    <a href="/purchase/requisition">
+                        <i class="fa fa-gift"></i>
+                        <span class="title"> Purchase Requisition</span>
+                        <span class="selected"></span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if is_granted("ROLE_ADMIN") %}
+                <li class="{{ PO|join(" ") }}">
+                    <a href="/purchase/ordered">
+                        <i class="fa fa-gift"></i>
+                        <span class="title"> Purchase Ordered</span>
                         <span class="selected"></span>
                     </a>
                 </li>
