@@ -1189,7 +1189,7 @@ class CoreController extends Controller
 
     public function projectCostItemDeleteAction(ProjectCostItem $projectCostItem)
     {
-        $this->getDoctrine()->getRepository('UserBundle:User')->delete($projectCostItem);
+        $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCostItem')->delete($projectCostItem);
 
         $this->get('session')->getFlashBag()->add(
             'notice',
@@ -1207,7 +1207,7 @@ class CoreController extends Controller
 
         $formSearch = $this->createForm(new SearchType());
 
-        $dql = "SELECT a FROM PmsCoreBundle:ProjectCostItem a WHERE 1 = 1 ";
+        $dql = "SELECT a FROM PmsCoreBundle:ProjectCostItem a";
 
         if(!empty($_GET['search']['categoryWise'])){
 
@@ -1245,7 +1245,7 @@ class CoreController extends Controller
                     $dql = $this->searchByItem($_GET['search']['item'], $dql);
                 }else{
 
-                    $dql = "SELECT a FROM PmsCoreBundle:ProjectCostItem a WHERE 1 = 1 ORDER BY a.id DESC";
+                    $dql = "SELECT a FROM PmsCoreBundle:ProjectCostItem a ORDER BY a.id DESC";
                 }
             }
         }
@@ -1328,7 +1328,7 @@ class CoreController extends Controller
             }
         }
 
-        $dql = "SELECT a FROM PmsCoreBundle:ProjectCostItem a WHERE 1 = 1";
+        $dql = "SELECT a FROM PmsCoreBundle:ProjectCostItem a";
 
         if(!empty($_GET['search']['categoryWise'])){
 
@@ -1366,7 +1366,7 @@ class CoreController extends Controller
                     $dql = $this->searchByItem($_GET['search']['item'], $dql);
                 }else{
 
-                    $dql = "SELECT a FROM PmsCoreBundle:ProjectCostItem a WHERE 1 = 1 ORDER BY a.id DESC";
+                    $dql = "SELECT a FROM PmsCoreBundle:ProjectCostItem a ORDER BY a.id DESC";
                 }
             }
         }

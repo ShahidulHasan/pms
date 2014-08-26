@@ -35,7 +35,7 @@ class SearchType extends AbstractType
                 'required' => false,
                 'empty_value' => 'Select Category',
                 'empty_data' => null,
-                'query_builder' => function (\Pms\UserBundle\Entity\UserRepository $repository)
+                'query_builder' => function (\Pms\CoreBundle\Entity\CategoryRepository $repository)
                 {
                     return $repository->createQueryBuilder('s')
                         ->where('s.parent = 0')

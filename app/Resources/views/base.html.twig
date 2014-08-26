@@ -58,6 +58,13 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 
 <body class="page-header-fixed">
 
+<div class="modal fade" id="ajax" tabindex="-1" role="basic" aria-hidden="true">
+    {% image 'assets/img/ajax-modal-loading.gif'
+    filter='' output='/img/ajax-modal-loading.gif' %}
+    <img src="{{ asset_url }}" alt="" class="loading"/>
+    {% endimage %}
+</div>
+
 <div class="header navbar navbar-inverse navbar-fixed-top">
     <div class="header-inner">
 
@@ -797,7 +804,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                 success: function (msg) {
                     if(msg.responseCode == 204) {
                         var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Fill The Blank Field</span></div>');
-                        $('.projectCostMessege').css('color', 'red').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
+                        $('.projectCostItemMessege').css('color', 'red').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
                         $(':input','#cost-form')
                                 .not(':button, :submit, :reset, :hidden')
                                 .val('')
@@ -805,7 +812,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                                 .removeAttr('selected');
                     } else if(msg.responseCode == 202) {
                         var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Project Cost Update Successfully</span></div>');
-                        $('.projectCostMessege').css('color', 'green').html(msg.item_ajax_add).fadeIn(1000).append($addLink);
+                        $('.projectCostItemMessege').css('color', 'green').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
                         $(':input','#cost-form')
                                 .not(':button, :submit, :reset, :hidden')
                                 .val('')
@@ -813,7 +820,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                                 .removeAttr('selected');
                     } else {
                         var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Project Cost Add Successfully</span></div>');
-                        $('.projectCostMessege').css('color', 'green').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
+                        $('.projectCostItemMessege').css('color', 'green').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
                         $(':input','#cost-form')
                                 .not(':button, :submit, :reset, :hidden')
                                 .val('')
@@ -827,12 +834,12 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
         });
 
         $(".check-by-ajax").click(function () {
-            var projectCostId = $(this).data('myvalue');
+            var projectCostItemId = $(this).data('myvalue');
 
             $.ajax({
                 type: "post",
                 url: Routing.generate('project_cost_ajax_checked'),
-                data: "projectCostId=" + projectCostId,
+                data: "projectCostItemId=" + projectCostItemId,
                 dataType: 'json',
                 success: function (msg) {
                     if(msg.responseCode == 202) {

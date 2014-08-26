@@ -246,7 +246,7 @@
                                                     <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectCostItems.project.projectName | length > 12 ? projectCostItems.project.projectName | slice(0, 12) ~ ' ...' : projectCostItems.project.projectName }}</td>
                                                     <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectCostItems.item.itemName | length > 11 ? projectCostItems.item.itemName | slice(0, 11) ~ ' ...' : projectCostItems.item.itemName }}</td>
                                                     <td class="col-md-1" style="color: {{ color|join(" ") }}">{{ projectCostItems.quantity }} {{ projectCostItems.item.itemUnit }}</td>
-                                                    <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectCostItems.unitPrice }} Tk / {{ projectCostItems.item.itemUnit }}</td>
+                                                    <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectCostItems.unitPrice }} Tk/{{ projectCostItems.item.itemUnit }}</td>
                                                     <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectCostItems.lineTotal }} Tk</td>
                                                     <td><a href="/project-cost/details/{{ projectCostItems.id }}" data-target="#ajax" data-toggle="modal">View</a></td>
                                                     {% if projectCostItems.status == 0 %}
@@ -279,9 +279,6 @@
                                             {% endfor %}
                                             </tbody>
                                         </table>
-                                        <div class="modal fade" id="ajax" tabindex="-1" role="basic" aria-hidden="true">
-                                            <img src="assets/img/ajax-modal-loading.gif" alt="" class="loading">
-                                        </div>
                                         <div class="navigation" style="text-align: right">
                                             {{ knp_pagination_render(projectCostItem) }}
                                         </div>
