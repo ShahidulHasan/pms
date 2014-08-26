@@ -66,6 +66,34 @@ class PurchaseRequisitionItem
     private $status;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="approved_by_category_head_one", type="string", length=255, nullable=true)
+     */
+    private $approvedByCategoryHeadOne;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="approved_date_category_head_one", type="datetime", nullable=true)
+     */
+    private $approvedDateCategoryHeadOne;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="approved_by_category_head_two", type="string", length=255, nullable=true)
+     */
+    private $approvedByCategoryHeadTwo;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="approved_date_category_head_two", type="datetime", nullable=true)
+     */
+    private $approvedDateCategoryHeadTwo;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -211,5 +239,97 @@ class PurchaseRequisitionItem
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set approvedByCategoryHeadOne
+     *
+     * @param integer $approvedByCategoryHeadOne
+     * @return PurchaseRequisition
+     */
+    public function setApprovedByCategoryHeadOne($approvedByCategoryHeadOne)
+    {
+        $this->approvedByCategoryHeadOne = $approvedByCategoryHeadOne;
+
+        return $this;
+    }
+
+    /**
+     * Get approvedByCategoryHeadOne
+     *
+     * @return integer
+     */
+    public function getApprovedByCategoryHeadOne()
+    {
+        return $this->approvedByCategoryHeadOne;
+    }
+
+    /**
+     * Set approvedDateCategoryHeadOne
+     *
+     * @param \DateTime $approvedDateCategoryHeadOne
+     * @return PurchaseRequisition
+     */
+    public function setApprovedDateCategoryHeadOne($approvedDateCategoryHeadOne)
+    {
+        $this->approvedDateCategoryHeadOne = $approvedDateCategoryHeadOne;
+
+        return $this;
+    }
+
+    /**
+     * Get approvedDateCategoryHeadOne
+     *
+     * @return \DateTime
+     */
+    public function getApprovedDateCategoryHeadOne()
+    {
+        return $this->approvedDateCategoryHeadOne;
+    }
+
+    /**
+     * Set approvedByCategoryHeadTwo
+     *
+     * @param integer $approvedByCategoryHeadTwo
+     * @return PurchaseRequisition
+     */
+    public function setApprovedByCategoryHeadTwo($approvedByCategoryHeadTwo)
+    {
+        $this->approvedByCategoryHeadTwo = $approvedByCategoryHeadTwo;
+
+        return $this;
+    }
+
+    /**
+     * Get approvedByCategoryHeadTwo
+     *
+     * @return integer
+     */
+    public function getApprovedByCategoryHeadTwo()
+    {
+        return $this->approvedByCategoryHeadTwo;
+    }
+
+    /**
+     * Set approvedDateCategoryHeadTwo
+     *
+     * @param \DateTime $approvedDateCategoryHeadTwo
+     * @return PurchaseRequisition
+     */
+    public function setApprovedDateCategoryHeadTwo($approvedDateCategoryHeadTwo)
+    {
+        $this->approvedDateCategoryHeadTwo = $approvedDateCategoryHeadTwo;
+
+        return $this;
+    }
+
+    /**
+     * Get approvedDateCategoryHeadTwo
+     *
+     * @return \DateTime
+     */
+    public function getApprovedDateCategoryHeadTwo()
+    {
+        return $this->approvedDateCategoryHeadTwo;
     }
 }

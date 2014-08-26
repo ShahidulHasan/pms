@@ -75,7 +75,7 @@ class PurchaseRequisition
     /**
      * @var integer
      *
-     * @ORM\Column(name="approved_by_project_manager", type="string", length=255, nullable=true)
+     * @ORM\Column(name="approved_by_project_head", type="string", length=255, nullable=true)
      */
     private $approvedByProjectHead;
 
@@ -85,20 +85,6 @@ class PurchaseRequisition
      * @ORM\Column(name="approved_date_project_head", type="datetime", nullable=true)
      */
     private $approvedDateProjectHead;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="approved_by_category_manager", type="string", length=255, nullable=true)
-     */
-    private $approvedByCategoryManager;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="approved_date_category_manager", type="datetime", nullable=true)
-     */
-    private $approvedDateCategoryManager;
 
     /**
      * Get id
@@ -257,94 +243,48 @@ class PurchaseRequisition
     }
 
     /**
-     * Set approvedByProjectManager
+     * Set approvedByProjectHead
      *
-     * @param integer $approvedByProjectManager
+     * @param integer $approvedByProjectHead
      * @return PurchaseRequisition
      */
-    public function setApprovedByProjectManager($approvedByProjectManager)
+    public function setApprovedByProjectHead($approvedByProjectHead)
     {
-        $this->approvedByProjectManager = $approvedByProjectManager;
+        $this->approvedByProjectHead = $approvedByProjectHead;
 
         return $this;
     }
 
     /**
-     * Get approvedByProjectManager
+     * Get approvedByProjectHead
      *
      * @return integer
      */
-    public function getApprovedByProjectManager()
+    public function getApprovedByProjectHead()
     {
-        return $this->approvedByProjectManager;
+        return $this->approvedByProjectHead;
     }
 
     /**
-     * Set approvedDateProjectManager
+     * Set approvedDateProjectHead
      *
-     * @param \DateTime $approvedDateProjectManager
+     * @param \DateTime $approvedDateProjectHead
      * @return PurchaseRequisition
      */
-    public function setApprovedDateProjectManager($approvedDateProjectManager)
+    public function setApprovedDateProjectManager($approvedDateProjectHead)
     {
-        $this->approvedByProjectHead = $approvedDateProjectManager;
+        $this->$approvedDateProjectHead = $approvedDateProjectHead;
 
         return $this;
     }
 
     /**
-     * Get approvedDateProjectManager
+     * Get $approvedDateProjectHead
      *
      * @return \DateTime
      */
-    public function getApprovedDateProjectManager()
+    public function getApprovedDateProjectHead()
     {
-        return $this->approvedDateProjectManager;
-    }
-
-    /**
-     * Set approvedByCategoryManager
-     *
-     * @param integer $approvedByCategoryManager
-     * @return PurchaseRequisition
-     */
-    public function setApprovedByCategoryManager($approvedByCategoryManager)
-    {
-        $this->approvedByCategoryManager = $approvedByCategoryManager;
-
-        return $this;
-    }
-
-    /**
-     * Get approvedByCategoryManager
-     *
-     * @return integer
-     */
-    public function getApprovedByCategoryManager()
-    {
-        return $this->approvedByCategoryManager;
-    }
-
-    /**
-     * Set approvedDateCategoryManager
-     *
-     * @param \DateTime $approvedDateCategoryManager
-     * @return PurchaseRequisition
-     */
-    public function setApprovedDateCategoryManager($approvedDateCategoryManager)
-    {
-        $this->approvedDateCategoryManager = $approvedDateCategoryManager;
-
-        return $this;
-    }
-
-    /**
-     * Get approvedDateCategoryManager
-     *
-     * @return \DateTime
-     */
-    public function getApprovedDateCategoryManager()
-    {
-        return $this->approvedDateCategoryManager;
+        return $this->$approvedDateProjectHead;
     }
 }
