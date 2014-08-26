@@ -41,7 +41,7 @@ class UserRepository extends EntityRepository
 
         if (($start != 0) && ($end != 0)) {
 
-            $query        = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $query        = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->select('p.projectName')
                 ->addSelect('p.id')
@@ -56,7 +56,7 @@ class UserRepository extends EntityRepository
                 ->orderBy('p.id', 'DESC');
             $projectCosts = $query->getQuery()->getResult();
 
-            $forPieChart = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $forPieChart = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->select('p.projectName')
                 ->addSelect('p.id')
@@ -73,7 +73,7 @@ class UserRepository extends EntityRepository
                 ->setMaxResults('10');
             $topTen      = $forPieChart->getQuery()->getResult();
 
-            $forPieChart1 = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $forPieChart1 = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->select('p.projectName')
                 ->select('ca.categoryName')
@@ -92,7 +92,7 @@ class UserRepository extends EntityRepository
             $topTen1      = $forPieChart1->getQuery()->getResult();
 
         } else {
-            $query        = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $query        = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->select('p.projectName')
                 ->addSelect('p.id')
@@ -103,7 +103,7 @@ class UserRepository extends EntityRepository
                 ->orderBy('p.id', 'DESC');
             $projectCosts = $query->getQuery()->getResult();
 
-            $forPieChart = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $forPieChart = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->select('p.projectName')
                 ->addSelect('p.id')
@@ -116,7 +116,7 @@ class UserRepository extends EntityRepository
                 ->setMaxResults('10');
             $topTen      = $forPieChart->getQuery()->getResult();
 
-            $forPieChart1 = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $forPieChart1 = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->select('p.projectName')
                 ->select('ca.categoryName')
@@ -131,7 +131,7 @@ class UserRepository extends EntityRepository
             $topTen1      = $forPieChart1->getQuery()->getResult();
         }
 
-        $query2 = $em->getRepository('PmsCoreBundle:ProjectCost')
+        $query2 = $em->getRepository('PmsCoreBundle:ProjectCostItem')
             ->createQueryBuilder('p')
             ->Select('SUM(p.lineTotal) as total')
             ->where('p.status = 1')
@@ -181,7 +181,7 @@ class UserRepository extends EntityRepository
 
         if (($start != 0) && ($end != 0)) {
 
-            $query        = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $query        = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->select('p.projectName')
                 ->addSelect('i.itemName')
@@ -203,7 +203,7 @@ class UserRepository extends EntityRepository
                 ->orderBy('i.id', 'DESC');
             $projectItems = $query->getQuery()->getResult();
 
-            $query2        = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $query2        = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->Select('SUM(pc.lineTotal) as total')
                 ->where('pc.status = 1')
@@ -217,7 +217,7 @@ class UserRepository extends EntityRepository
                 ->join('pc.item', 'i');
             $projectItems2 = $query2->getQuery()->getResult();
 
-            $forPieChart1 = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $forPieChart1 = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->select('p.projectName')
                 ->select('ca.categoryName')
@@ -237,7 +237,7 @@ class UserRepository extends EntityRepository
                 ->setMaxResults('10');
             $topTen1      = $forPieChart1->getQuery()->getResult();
         } else {
-            $query        = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $query        = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->select('p.projectName')
                 ->addSelect('i.itemName')
@@ -255,7 +255,7 @@ class UserRepository extends EntityRepository
                 ->orderBy('i.id', 'DESC');
             $projectItems = $query->getQuery()->getResult();
 
-            $query2        = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $query2        = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->Select('SUM(pc.lineTotal) as total')
                 ->where('pc.status = 1')
@@ -265,7 +265,7 @@ class UserRepository extends EntityRepository
                 ->join('pc.item', 'i');
             $projectItems2 = $query2->getQuery()->getResult();
 
-            $forPieChart1 = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $forPieChart1 = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->select('p.projectName')
                 ->select('ca.categoryName')
@@ -308,7 +308,7 @@ class UserRepository extends EntityRepository
 
         if (($start != 0) && ($end != 0)) {
 
-            $query    = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $query    = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->select('p.projectName')
                 ->addSelect('i.itemName')
@@ -326,7 +326,7 @@ class UserRepository extends EntityRepository
                 ->orderBy('i.id', 'DESC');
             $itemUses = $query->getQuery()->getResult();
 
-            $forPieChart = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $forPieChart = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->select('p.projectName')
                 ->addSelect('i.itemName')
@@ -344,7 +344,7 @@ class UserRepository extends EntityRepository
                 ->setMaxResults('10');
             $topTen      = $forPieChart->getQuery()->getResult();
 
-            $forPieChart1 = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $forPieChart1 = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->select('p.projectName')
                 ->select('ca.categoryName')
@@ -363,7 +363,7 @@ class UserRepository extends EntityRepository
             $topTen1      = $forPieChart1->getQuery()->getResult();
         } else {
 
-            $query    = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $query    = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->select('p.projectName')
                 ->addSelect('i.itemName')
@@ -377,7 +377,7 @@ class UserRepository extends EntityRepository
                 ->orderBy('i.id', 'DESC');
             $itemUses = $query->getQuery()->getResult();
 
-            $forPieChart = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $forPieChart = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->select('p.projectName')
                 ->addSelect('i.itemName')
@@ -391,7 +391,7 @@ class UserRepository extends EntityRepository
                 ->setMaxResults('10');
             $topTen      = $forPieChart->getQuery()->getResult();
 
-            $forPieChart1 = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $forPieChart1 = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->select('p.projectName')
                 ->select('ca.categoryName')
@@ -406,7 +406,7 @@ class UserRepository extends EntityRepository
             $topTen1      = $forPieChart1->getQuery()->getResult();
         }
 
-        $query2    = $em->getRepository('PmsCoreBundle:ProjectCost')
+        $query2    = $em->getRepository('PmsCoreBundle:ProjectCostItem')
             ->createQueryBuilder('pc')
             ->Select('SUM(pc.lineTotal) as total')
             ->where('pc.status = 1')
@@ -455,7 +455,7 @@ class UserRepository extends EntityRepository
 
         if (($start != 0) && ($end != 0)) {
 
-            $query    = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $query    = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->select('p.projectName')
                 ->addSelect('i.itemName')
@@ -474,7 +474,7 @@ class UserRepository extends EntityRepository
                 ->orderBy('p.id', 'DESC');
             $itemUses = $query->getQuery()->getResult();
 
-            $query2    = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $query2    = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->Select('SUM(pc.lineTotal) as total')
                 ->where('pc.status = 1')
@@ -487,7 +487,7 @@ class UserRepository extends EntityRepository
                 ->join('pc.item', 'p');
             $itemTotal = $query2->getQuery()->getResult();
         } else {
-            $query    = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $query    = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->select('p.projectName')
                 ->addSelect('i.itemName')
@@ -503,7 +503,7 @@ class UserRepository extends EntityRepository
                 ->orderBy('p.id', 'DESC');
             $itemUses = $query->getQuery()->getResult();
 
-            $query2    = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $query2    = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->Select('SUM(pc.lineTotal) as total')
                 ->where('pc.status = 1')
@@ -531,7 +531,7 @@ class UserRepository extends EntityRepository
 
         if (($start != 0) && ($end != 0)) {
 
-            $query    = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $query    = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->Select('i.itemName')
                 ->addSelect('pc.lineTotal')
@@ -552,7 +552,7 @@ class UserRepository extends EntityRepository
                 ->join('pc.item', 'i');
             $itemUses = $query->getQuery()->getResult();
 
-            $query2    = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $query2    = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->Select('SUM(pc.lineTotal) as total')
                 ->where('pc.status = 1')
@@ -567,7 +567,7 @@ class UserRepository extends EntityRepository
                 ->join('pc.project', 'p');
             $itemTotal = $query2->getQuery()->getResult();
         } else {
-            $query    = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $query    = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->Select('i.itemName')
                 ->addSelect('pc.lineTotal')
@@ -584,7 +584,7 @@ class UserRepository extends EntityRepository
                 ->join('pc.item', 'i');
             $itemUses = $query->getQuery()->getResult();
 
-            $query2    = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $query2    = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->Select('SUM(pc.lineTotal) as total')
                 ->where('pc.status = 1')
@@ -616,7 +616,7 @@ class UserRepository extends EntityRepository
 
         if (($start != 0) && ($end != 0)) {
 
-            $query    = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $query    = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->select('p.projectName')
                 ->addSelect('i.itemName')
@@ -635,7 +635,7 @@ class UserRepository extends EntityRepository
             $itemUses = $query->getQuery()->getResult();
         } else {
 
-            $query    = $em->getRepository('PmsCoreBundle:ProjectCost')
+            $query    = $em->getRepository('PmsCoreBundle:ProjectCostItem')
                 ->createQueryBuilder('pc')
                 ->select('p.projectName')
                 ->addSelect('i.itemName')

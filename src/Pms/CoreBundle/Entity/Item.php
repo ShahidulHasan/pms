@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Item
  *
- * @ORM\Table(name="item")
+ * @ORM\Table(name="items")
  * @ORM\Entity(repositoryClass="Pms\UserBundle\Entity\UserRepository")
  */
 class Item
@@ -25,14 +25,14 @@ class Item
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\ProjectCost", mappedBy="item")
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\ProjectCostItem", mappedBy="item")
      */
-    private $projectCost;
+    private $projectCostItem;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="item_name", type="string", length=255)
+     * @ORM\Column(name="items_name", type="string", length=255)
      */
     private $itemName;
 
@@ -192,8 +192,8 @@ class Item
     /**
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
-    public function getProjectCost()
+    public function getProjectCostItem()
     {
-        return $this->projectCost;
+        return $this->projectCostItem;
     }
 }

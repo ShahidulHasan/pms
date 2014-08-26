@@ -4,14 +4,14 @@ namespace Pms\CoreBundle\Controller;
 
 use Doctrine\ORM\Repository;
 use Pms\CoreBundle\Entity\Category;
-use Pms\CoreBundle\Entity\Customer;
+use Pms\CoreBundle\Entity\Buyer;
 use Pms\CoreBundle\Entity\Item;
 use Pms\CoreBundle\Entity\Project;
-use Pms\CoreBundle\Entity\ProjectCost;
+use Pms\CoreBundle\Entity\ProjectCostItem;
 use Pms\CoreBundle\Form\CategoryType;
-use Pms\CoreBundle\Form\CustomerType;
+use Pms\CoreBundle\Form\BuyerType;
 use Pms\CoreBundle\Form\ItemType;
-use Pms\CoreBundle\Form\ProjectCostType;
+use Pms\CoreBundle\Form\ProjectCostItemType;
 use Pms\CoreBundle\Form\ProjectType;
 use Pms\CoreBundle\Form\SearchType;
 use Pms\CoreBundle\Form\SubCategoryType;
@@ -159,7 +159,7 @@ class CoreController extends Controller
             $endDate = 0;
         }
 
-        list($projectCosts, $totalCost, $projectPieChartData, $sumOfTopTen, $totalProjectForPic, $categoryPieChartData, $totalCategoryForPic, $totalSum) = $this->getDoctrine()->getRepository('UserBundle:User')->projectReport($em, $startDate, $endDate);
+        list($projectCostItems, $totalCost, $projectPieChartData, $sumOfTopTen, $totalProjectForPic, $categoryPieChartData, $totalCategoryForPic, $totalSum) = $this->getDoctrine()->getRepository('UserBundle:User')->projectReport($em, $startDate, $endDate);
 
         $formSearch = $this->createForm(new SearchType());
 
@@ -169,7 +169,7 @@ class CoreController extends Controller
             'totalCategoryForPic' => $totalCategoryForPic,
             'totalProjectForPic' => $totalProjectForPic,
             'formSearch' => $formSearch->createView(),
-            'projectCosts' => $projectCosts,
+            'projectCostItems' => $projectCostItems,
             'sumOfTopTen' => $sumOfTopTen,
             'totalCost' => $totalCost,
             'totalSum' => $totalSum,
@@ -595,126 +595,126 @@ class CoreController extends Controller
         ));
     }
 
-    public function customerAddAction(Request $request)
+    public function buyerAddAction(Request $request)
     {
-        $customer = new Customer();
+        $buyer = new Buyer();
 
-        $form = $this->createForm(new CustomerType(), $customer);
+        $form = $this->createForm(new BuyerType(), $buyer);
 
-        $dql = "SELECT a FROM PmsCoreBundle:Customer a WHERE a.status = 1 ORDER BY a.id DESC";
+        $dql = "SELECT a FROM PmsCoreBundle:Buyer a WHERE a.status = 1 ORDER BY a.id DESC";
 
-        list($customers, $page) = $this->paginate($dql);
+        list($buyers, $page) = $this->paginate($dql);
 
-        return $this->render('PmsCoreBundle:Customer:add.html.twig', array(
-            'customers' => $customers,
+        return $this->render('PmsCoreBundle:Buyer:add.html.twig', array(
+            'buyers' => $buyers,
             'form' => $form->createView(),
             'page' => $page,
         ));
     }
 
-    public function customerDeletedAction(Request $request)
+    public function buyerDeletedAction(Request $request)
     {
-        $customer = new Customer();
+        $buyer = new Buyer();
 
-        $form = $this->createForm(new CustomerType(), $customer);
+        $form = $this->createForm(new BuyerType(), $buyer);
 
-        $dql = "SELECT a FROM PmsCoreBundle:Customer a WHERE a.status = 0 ORDER BY a.id DESC";
+        $dql = "SELECT a FROM PmsCoreBundle:Buyer a WHERE a.status = 0 ORDER BY a.id DESC";
 
-        list($customers, $page) = $this->paginate($dql);
+        list($buyers, $page) = $this->paginate($dql);
 
-        return $this->render('PmsCoreBundle:Customer:deleted.html.twig', array(
-            'customers' => $customers,
+        return $this->render('PmsCoreBundle:Buyer:deleted.html.twig', array(
+            'buyers' => $buyers,
             'form' => $form->createView(),
             'page' => $page,
         ));
     }
 
-    public function customerListAction()
+    public function buyerListAction()
     {
-        $dql = "SELECT a FROM PmsCoreBundle:Customer a WHERE a.status = 1 ORDER BY a.id DESC";
+        $dql = "SELECT a FROM PmsCoreBundle:Buyer a WHERE a.status = 1 ORDER BY a.id DESC";
 
-        list($customers, $page) = $this->paginate($dql);
+        list($buyers, $page) = $this->paginate($dql);
 
-        return $this->render('PmsCoreBundle:Customer:list.html.twig', array(
-            'customers' => $customers,
+        return $this->render('PmsCoreBundle:Buyer:list.html.twig', array(
+            'buyers' => $buyers,
             'page' => $page,
         ));
     }
 
-    public function customerDeletedListAction()
+    public function buyerDeletedListAction()
     {
-        $dql = "SELECT a FROM PmsCoreBundle:Customer a WHERE a.status = 0 ORDER BY a.id DESC";
+        $dql = "SELECT a FROM PmsCoreBundle:Buyer a WHERE a.status = 0 ORDER BY a.id DESC";
 
-        list($customers, $page) = $this->paginate($dql);
+        list($buyers, $page) = $this->paginate($dql);
 
-        return $this->render('PmsCoreBundle:Customer:deletedList.html.twig', array(
-            'customers' => $customers,
+        return $this->render('PmsCoreBundle:Buyer:deletedList.html.twig', array(
+            'buyers' => $buyers,
             'page' => $page,
         ));
     }
 
-    public function customerDeleteAction(Customer $customer)
+    public function buyerDeleteAction(Buyer $buyer)
     {
-        $customer->setStatus(0);
-        $this->getDoctrine()->getRepository('PmsCoreBundle:Customer')->update($customer);
+        $buyer->setStatus(0);
+        $this->getDoctrine()->getRepository('PmsCoreBundle:Buyer')->update($buyer);
 
         $this->get('session')->getFlashBag()->add(
             'notice',
             'Buyer Successfully Deleted'
         );
 
-        return $this->redirect($this->generateUrl('customer_add'));
+        return $this->redirect($this->generateUrl('buyer_add'));
     }
 
-    public function customerActiveAction(Customer $customer)
+    public function buyerActiveAction(Buyer $buyer)
     {
-        $customer->setStatus(1);
-        $this->getDoctrine()->getRepository('PmsCoreBundle:Customer')->update($customer);
+        $buyer->setStatus(1);
+        $this->getDoctrine()->getRepository('PmsCoreBundle:Buyer')->update($buyer);
 
         $this->get('session')->getFlashBag()->add(
             'notice',
             'Buyer Successfully Restored'
         );
 
-        return $this->redirect($this->generateUrl('customer_deleted'));
+        return $this->redirect($this->generateUrl('buyer_deleted'));
     }
 
-    public function customerAjaxAddAction(Request $request)
+    public function buyerAjaxAddAction(Request $request)
     {
-        $customerArray = $request->request->get('customerArray');
-        $customerArray = explode(',',$customerArray);
+        $buyerArray = $request->request->get('buyerArray');
+        $buyerArray = explode(',',$buyerArray);
 
-        $customerName = $customerArray[0];
-        $updateId = $customerArray[1];
+        $buyerName = $buyerArray[0];
+        $updateId = $buyerArray[1];
 
-        if($customerName) {
-            $customer = $this->getDoctrine()->getRepository('PmsCoreBundle:Customer')->find($updateId);
-            $customerNameCheck = $this->getDoctrine()->getRepository('PmsCoreBundle:Customer')->findOneBy(
-                array('customerName' => $customerName )
+        if($buyerName) {
+            $buyer = $this->getDoctrine()->getRepository('PmsCoreBundle:Buyer')->find($updateId);
+            $buyerNameCheck = $this->getDoctrine()->getRepository('PmsCoreBundle:Buyer')->findOneBy(
+                array('buyerName' => $buyerName )
             );
-            if($customer) {
-                $customer->setCustomerName($customerName);
-                $this->getDoctrine()->getManager()->persist($customer);
+            if($buyer) {
+                $buyer->setBuyerName($buyerName);
+                $this->getDoctrine()->getManager()->persist($buyer);
                 $this->getDoctrine()->getManager()->flush();
 
                 $return = array("responseCode" => 202);
                 $return = json_encode($return);
 
                 return new Response($return, 200, array('Content-Type' => 'application/json'));
-            } elseif($customerNameCheck) {
+            } elseif($buyerNameCheck) {
                 $return = array("responseCode" => 200);
                 $return = json_encode($return);
 
                 return new Response($return, 200, array('Content-Type' => 'application/json'));
             } else {
-                $customer = new Customer();
-                $customer->setCustomerName($customerName);
+                $buyer = new Buyer();
+                $buyer->setBuyerName($buyerName);
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
-                $customer->setCreatedBy($user);
-                $customer->setCreatedDate(new \DateTime());
-                $customer->setStatus(1);
+                $buyer->setCreatedBy($user);
+                $buyer->setCreatedDate(new \DateTime());
+                $buyer->setStatus(1);
 
-                $this->getDoctrine()->getRepository("PmsCoreBundle:Customer")->create($customer);
+                $this->getDoctrine()->getRepository("PmsCoreBundle:Buyer")->create($buyer);
 
                 $return = array("responseCode" => 404);
                 $return = json_encode($return);
@@ -729,35 +729,35 @@ class CoreController extends Controller
         }
     }
 
-    public function customerCheckAction(Request $request)
+    public function buyerCheckAction(Request $request)
     {
-        $customerName = $request->request->get('customerName');
+        $buyerName = $request->request->get('buyerName');
 
-        $customer = $this->getDoctrine()->getRepository('PmsCoreBundle:Customer')->findOneBy(
-            array('customerName' => $customerName )
+        $buyer = $this->getDoctrine()->getRepository('PmsCoreBundle:Buyer')->findOneBy(
+            array('buyerName' => $buyerName )
         );
 
-        if ($customer) {
-            $return = array("responseCode" => 200, "customer_name" => "Buyer already exist.");
+        if ($buyer) {
+            $return = array("responseCode" => 200, "buyer_name" => "Buyer already exist.");
             $return = json_encode($return);
             return new Response($return, 200, array('Content-Type' => 'application/json'));
         } else {
-            $return = array("responseCode" => '404', "customer_name" => "Buyer name available.");
+            $return = array("responseCode" => '404', "buyer_name" => "Buyer name available.");
             $return = json_encode($return);
             return new Response($return, 200, array('Content-Type' => 'application/json'));
         }
     }
 
-    public function customerUpdateAction(Request $request, Customer $customer)
+    public function buyerUpdateAction(Request $request, Buyer $buyer)
     {
-        $form = $this->createForm(new CustomerType(), $customer);
+        $form = $this->createForm(new BuyerType(), $buyer);
 
-        $dql = "SELECT a FROM PmsCoreBundle:Customer a WHERE a.status = 1 ORDER BY a.id DESC";
+        $dql = "SELECT a FROM PmsCoreBundle:Buyer a WHERE a.status = 1 ORDER BY a.id DESC";
 
-        list($customers, $page) = $this->paginate($dql);
+        list($buyers, $page) = $this->paginate($dql);
 
-        return $this->render('PmsCoreBundle:Customer:add.html.twig', array(
-            'customers' => $customers,
+        return $this->render('PmsCoreBundle:Buyer:add.html.twig', array(
+            'buyers' => $buyers,
             'form' => $form->createView(),
             'page' => $page,
         ));
@@ -1144,28 +1144,27 @@ class CoreController extends Controller
         }
     }
 
-    public function projectCostListAction()
+    public function projectCostItemListAction()
     {
-        $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a ORDER BY a.id DESC";
+        $dql = "SELECT a FROM PmsCoreBundle:ProjectCostItem a ORDER BY a.id DESC";
 
-        list($projectcost, $page) = $this->paginateProjectCost($dql);
+        list($projectCostItem, $page) = $this->paginateProjectCostItem($dql);
 
-        return $this->render('PmsCoreBundle:ProjectCost:list.html.twig', array(
-            'projectcost' => $projectcost,
+        return $this->render('PmsCoreBundle:ProjectCostItem:list.html.twig', array(
+            'projectCostItem' => $projectCostItem,
             'page' => $page,
         ));
     }
 
-    public function projectCostDetailsAction($id)
+    public function projectCostItemDetailsAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $query = $em->getRepository('PmsCoreBundle:ProjectCost')
+        $query = $em->getRepository('PmsCoreBundle:ProjectCostItem')
             ->createQueryBuilder('pc')
             ->select('p.projectName')
             ->addSelect('i.itemName')
             ->addSelect('pc.lineTotal')
-            ->addSelect('uc.username')
             ->addSelect('c.categoryName')
             ->addSelect('pc.createdDate')
             ->addSelect('pc.dateOfCost')
@@ -1176,41 +1175,39 @@ class CoreController extends Controller
             ->addSelect('pc.pr')
             ->addSelect('pc.po')
             ->addSelect('pc.comment')
-            ->where('pc.status = 1')
-            ->andWhere('pc.id = ?1')
+            ->where('pc.id = ?1')
             ->setParameter('1', $id)
             ->join('pc.project', 'p')
-            ->join('pc.createdBy', 'uc')
             ->join('pc.item', 'i')
             ->join('pc.category', 'c');
-        $projectcost = $query->getQuery()->getResult();
-
-        return $this->render('PmsCoreBundle:ProjectCost:details.html.twig', array(
-            'projectcost' => $projectcost,
+        $projectCostItem = $query->getQuery()->getResult();
+var_dump($projectCostItem);
+        return $this->render('PmsCoreBundle:ProjectCostItem:details.html.twig', array(
+            'projectCostItem' => $projectCostItem,
         ));
     }
 
-    public function projectCostDeleteAction(ProjectCost $entity)
+    public function projectCostItemDeleteAction(ProjectCostItem $projectCostItem)
     {
-        $this->getDoctrine()->getRepository('UserBundle:User')->delete($entity);
+        $this->getDoctrine()->getRepository('UserBundle:User')->delete($projectCostItem);
 
         $this->get('session')->getFlashBag()->add(
             'notice',
             'Cost Successfully Deleted'
         );
 
-        return $this->redirect($this->generateUrl('cost_add'));
+        return $this->redirect($this->generateUrl('project_cost_add'));
     }
 
-    public function projectCostAddAction(Request $request)
+    public function projectCostItemAddAction(Request $request)
     {
-        $entity = new ProjectCost();
+        $entity = new ProjectCostItem();
 
-        $form = $this->createForm(new ProjectCostType(), $entity);
+        $form = $this->createForm(new ProjectCostItemType(), $entity);
 
         $formSearch = $this->createForm(new SearchType());
 
-        $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1 = 1 ";
+        $dql = "SELECT a FROM PmsCoreBundle:ProjectCostItem a WHERE 1 = 1 ";
 
         if(!empty($_GET['search']['categoryWise'])){
 
@@ -1248,15 +1245,15 @@ class CoreController extends Controller
                     $dql = $this->searchByItem($_GET['search']['item'], $dql);
                 }else{
 
-                    $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1 = 1 ORDER BY a.id DESC";
+                    $dql = "SELECT a FROM PmsCoreBundle:ProjectCostItem a WHERE 1 = 1 ORDER BY a.id DESC";
                 }
             }
         }
 
-        list($projectcost, $page) = $this->paginateProjectCost($dql);
+        list($projectCostItem, $page) = $this->paginateProjectCostItem($dql);
 
-        return $this->render('PmsCoreBundle:ProjectCost:add.html.twig', array(
-            'projectcost' => $projectcost,
+        return $this->render('PmsCoreBundle:ProjectCostItem:add.html.twig', array(
+            'projectCostItem' => $projectCostItem,
             'entity' => $entity,
             'form' => $form->createView(),
             'formSearch' => $formSearch->createView(),
@@ -1264,39 +1261,39 @@ class CoreController extends Controller
         ));
     }
 
-    public function projectCostApprovedAction(ProjectCost $projectCost)
+    public function projectCostItemApprovedAction(ProjectCostItem $projectCostItem)
     {
-        $projectCost->setStatus(1);
+        $projectCostItem->setStatus(1);
 
         $user = $this->get('security.context')->getToken()->getUser()->getId();
-        $projectCost->setApprovedBy($user);
-        $projectCost->setApprovedDate(new \DateTime());
+        $projectCostItem->setApprovedBy($user);
+        $projectCostItem->setApprovedDate(new \DateTime());
 
-        $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCost')->update($projectCost);
+        $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCostItem')->update($projectCostItem);
 
         $this->get('session')->getFlashBag()->add(
             'notice',
             'Project Cost Successfully Checked'
         );
 
-        return $this->redirect($this->generateUrl('cost_add'));
+        return $this->redirect($this->generateUrl('project_cost_add'));
     }
 
-    public function projectCostCheckedAction(Request $request)
+    public function projectCostItemCheckedAction(Request $request)
     {
-        $projectCostId = $request->request->get('projectCostId');
-        $projectCostId = explode(',',$projectCostId);
+        $projectCostItemId = $request->request->get('projectCostItemId');
+        $projectCostItemId = explode(',',$projectCostItemId);
 
-        $projectCostId = $projectCostId[0];
+        $projectCostItemId = $projectCostItemId[0];
 
-        $projectCost = $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCost')->find($projectCostId);
+        $projectCostItem = $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCostItem')->find($projectCostItemId);
 
-        $projectCost->setStatus(1);
+        $projectCostItem->setStatus(1);
         $user = $this->get('security.context')->getToken()->getUser()->getId();
-        $projectCost->setApprovedBy($user);
-        $projectCost->setApprovedDate(new \DateTime());
+        $projectCostItem->setApprovedBy($user);
+        $projectCostItem->setApprovedDate(new \DateTime());
 
-        $this->getDoctrine()->getManager()->persist($projectCost);
+        $this->getDoctrine()->getManager()->persist($projectCostItem);
         $this->getDoctrine()->getManager()->flush();
 
         $return = array("responseCode" => 202);
@@ -1305,13 +1302,13 @@ class CoreController extends Controller
         return new Response($return, 200, array('Content-Type' => 'application/json'));
     }
 
-    public function projectCostUpdateAction(Request $request, ProjectCost $entity)
+    public function projectCostItemUpdateAction(Request $request, ProjectCostItem $entity)
     {
         $date = $entity->getDateOfCost();
         $date1 =  $date->format('Y-m-d');
         $entity->setDateOfCost($date1);
 
-        $form = $this->createForm(new ProjectCostType(), $entity);
+        $form = $this->createForm(new ProjectCostItemType(), $entity);
 
         $formSearch = $this->createForm(new SearchType());
 
@@ -1321,17 +1318,17 @@ class CoreController extends Controller
 
             if ($form->isValid()) {
                 $entity->setDateOfCost(new \DateTime($form->getData()->getDateOfCost()));
-                $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCost')->update($entity);
+                $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCostItem')->update($entity);
                 $this->get('session')->getFlashBag()->add(
                     'notice',
                     'Project Cost Successfully Updated'
                 );
 
-                return $this->redirect($this->generateUrl('cost_add'));
+                return $this->redirect($this->generateUrl('project_cost_add'));
             }
         }
 
-        $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1 = 1";
+        $dql = "SELECT a FROM PmsCoreBundle:ProjectCostItem a WHERE 1 = 1";
 
         if(!empty($_GET['search']['categoryWise'])){
 
@@ -1369,16 +1366,16 @@ class CoreController extends Controller
                     $dql = $this->searchByItem($_GET['search']['item'], $dql);
                 }else{
 
-                    $dql = "SELECT a FROM PmsCoreBundle:ProjectCost a WHERE 1 = 1 ORDER BY a.id DESC";
+                    $dql = "SELECT a FROM PmsCoreBundle:ProjectCostItem a WHERE 1 = 1 ORDER BY a.id DESC";
                 }
             }
         }
 
-        list($projectcost, $page) = $this->paginateProjectCost($dql);
+        list($projectCostItem, $page) = $this->paginateProjectCostItem($dql);
 
 
-        return $this->render('PmsCoreBundle:ProjectCost:add.html.twig', array(
-            'projectcost' => $projectcost,
+        return $this->render('PmsCoreBundle:ProjectCostItem:add.html.twig', array(
+            'projectCostItem' => $projectCostItem,
             'entity' => $entity,
             'form' => $form->createView(),
             'formSearch' => $formSearch->createView(),
@@ -1386,52 +1383,52 @@ class CoreController extends Controller
         ));
     }
 
-    public function projectCostAjaxAddAction(Request $request)
+    public function projectCostItemAjaxAddAction(Request $request)
     {
-        $projectCostArray = $request->request->get('projectCostArray');
-        $projectCostArray = explode(',',$projectCostArray);
+        $projectCostItemArray = $request->request->get('projectCostItemArray');
+        $projectCostItemArray = explode(',',$projectCostItemArray);
 
-        $dateOfCost = $projectCostArray[0];
-        $project = $projectCostArray[1];
-        $item = $projectCostArray[2];
-        $quantity = $projectCostArray[3];
-        $unitPrice = $projectCostArray[4];
-        $lineTotal = $projectCostArray[5];
-        $updateId = $projectCostArray[6];
-        $invoice = $projectCostArray[7];
-        $grn = $projectCostArray[8];
-        $category = $projectCostArray[9];
-        $subcategory = $projectCostArray[10];
-        $pr = $projectCostArray[11];
-        $po = $projectCostArray[12];
-        $customer = $projectCostArray[13];
-        $comment = $projectCostArray[14];
+        $dateOfCost = $projectCostItemArray[0];
+        $project = $projectCostItemArray[1];
+        $item = $projectCostItemArray[2];
+        $quantity = $projectCostItemArray[3];
+        $unitPrice = $projectCostItemArray[4];
+        $lineTotal = $projectCostItemArray[5];
+        $updateId = $projectCostItemArray[6];
+        $invoice = $projectCostItemArray[7];
+        $grn = $projectCostItemArray[8];
+        $category = $projectCostItemArray[9];
+        $subcategory = $projectCostItemArray[10];
+        $pr = $projectCostItemArray[11];
+        $po = $projectCostItemArray[12];
+        $buyer = $projectCostItemArray[13];
+        $comment = $projectCostItemArray[14];
 
         if(!empty($dateOfCost) && !empty($project) && !empty($item) && !empty($quantity) && !empty($unitPrice) && !empty($lineTotal)) {
 
             if($updateId) {
-                $projectcost = $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCost')->find($updateId);
+                $projectCostItem = $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCostItem')->find($updateId);
 
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
-                $projectcost->setDateOfCost(new \DateTime($dateOfCost));
-                $projectcost->setApprovedBy($user);
-                $projectcost->setApprovedDate(new \DateTime());
+                $projectCostItem->setDateOfCost(new \DateTime($dateOfCost));
+                $projectCostItem->setApprovedBy($user);
+                $projectCostItem->setApprovedDate(new \DateTime());
 
-                $projectcost->setProject($this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneById($project));
-                $projectcost->setItem($this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneById($item));
-                $projectcost->setCustomer($this->getDoctrine()->getRepository('PmsCoreBundle:Customer')->findOneById($customer));
-                $projectcost->setCategory($this->getDoctrine()->getRepository('PmsCoreBundle:Category')->findOneById($category));
-                $projectcost->setQuantity($quantity);
-                $projectcost->setUnitPrice($unitPrice);
-                $projectcost->setLineTotal($lineTotal);
-                $projectcost->setInvoice($invoice);
-                $projectcost->setGrn($grn);
-                $projectcost->setSubCategory($subcategory);
-                $projectcost->setPr($pr);
-                $projectcost->setPo($po);
-                $projectcost->setComment($comment);
+                $projectCostItem->setProject($this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneById($project));
+                $projectCostItem->setItem($this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneById($item));
+                $projectCostItem->setBuyer($this->getDoctrine()->getRepository('PmsCoreBundle:Buyer')->findOneById($buyer));
+                $projectCostItem->setCategory($this->getDoctrine()->getRepository('PmsCoreBundle:Category')->findOneById($category));
+                $projectCostItem->setQuantity($quantity);
+                $projectCostItem->setUnitPrice($unitPrice);
+                $projectCostItem->setLineTotal($lineTotal);
+                $projectCostItem->setInvoice($invoice);
+                $projectCostItem->setGrn($grn);
+                $projectCostItem->setSubCategory($subcategory);
+                $projectCostItem->setPr($pr);
+                $projectCostItem->setPo($po);
+                $projectCostItem->setComment($comment);
 
-                $this->getDoctrine()->getManager()->persist($projectcost);
+                $this->getDoctrine()->getManager()->persist($projectCostItem);
                 $this->getDoctrine()->getManager()->flush();
 
                 $return = array("responseCode" => 202);
@@ -1439,29 +1436,29 @@ class CoreController extends Controller
 
                 return new Response($return, 200, array('Content-Type' => 'application/json'));
             } else {
-                $projectcost = new ProjectCost();
+                $projectCostItem = new ProjectCostItem();
 
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
-                $projectcost->setDateOfCost(new \DateTime($dateOfCost));
-                $projectcost->setCreatedBy($user);
-                $projectcost->setCreatedDate(new \DateTime());
-                $projectcost->setStatus(0);
+                $projectCostItem->setDateOfCost(new \DateTime($dateOfCost));
+                $projectCostItem->setCreatedBy($user);
+                $projectCostItem->setCreatedDate(new \DateTime());
+                $projectCostItem->setStatus(0);
 
-                $projectcost->setProject($this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneById($project));
-                $projectcost->setItem($this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneById($item));
-                $projectcost->setCustomer($this->getDoctrine()->getRepository('PmsCoreBundle:Customer')->findOneById($customer));
-                $projectcost->setCategory($this->getDoctrine()->getRepository('PmsCoreBundle:Category')->findOneById($category));
-                $projectcost->setQuantity($quantity);
-                $projectcost->setUnitPrice($unitPrice);
-                $projectcost->setLineTotal($lineTotal);
-                $projectcost->setInvoice($invoice);
-                $projectcost->setGrn($grn);
-                $projectcost->setSubCategory($subcategory);
-                $projectcost->setPr($pr);
-                $projectcost->setPo($po);
-                $projectcost->setComment($comment);
+                $projectCostItem->setProject($this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneById($project));
+                $projectCostItem->setItem($this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneById($item));
+                $projectCostItem->setBuyer($this->getDoctrine()->getRepository('PmsCoreBundle:Buyer')->findOneById($buyer));
+                $projectCostItem->setCategory($this->getDoctrine()->getRepository('PmsCoreBundle:Category')->findOneById($category));
+                $projectCostItem->setQuantity($quantity);
+                $projectCostItem->setUnitPrice($unitPrice);
+                $projectCostItem->setLineTotal($lineTotal);
+                $projectCostItem->setInvoice($invoice);
+                $projectCostItem->setGrn($grn);
+                $projectCostItem->setSubCategory($subcategory);
+                $projectCostItem->setPr($pr);
+                $projectCostItem->setPo($po);
+                $projectCostItem->setComment($comment);
 
-                $this->getDoctrine()->getRepository("PmsCoreBundle:ProjectCost")->create($projectcost);
+                $this->getDoctrine()->getRepository("PmsCoreBundle:ProjectCostItem")->create($projectCostItem);
 
                 $return = array("responseCode" => '404');
                 $return = json_encode($return);
@@ -1504,7 +1501,7 @@ class CoreController extends Controller
     }
 
 
-    public function paginateProjectCost($dql)
+    public function paginateProjectCostItem($dql)
     {
         $em = $this->get('doctrine.orm.entity_manager');
         $query = $em->createQuery($dql);

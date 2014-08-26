@@ -9,7 +9,7 @@
         </div>
     {% endfor %}
 
-    <span class="customerMessege"></span>
+    <span class="buyerMessege"></span>
 
     <div class="row">
         <div class="col-md-12">
@@ -17,12 +17,12 @@
             <ul class="page-breadcrumb breadcrumb">
                 <li>
                     <i class="fa fa-gift"></i>
-                    <a href="#" class="customer-active-list">Active Buyer List</a>
+                    <a href="#" class="buyer-active-list">Active Buyer List</a>
                     <i class="fa">|</i>
                 </li>
                 <li>
                     <i class="fa fa-gift"></i>
-                    <a href="#" class="customer-deleted-list">Deleted Buyer List</a>
+                    <a href="#" class="buyer-deleted-list">Deleted Buyer List</a>
                 </li>
             </ul>
         </div>
@@ -53,11 +53,11 @@
                         <div class="form-actions fluid">
                             {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'category-form', 'novalidate': 'novalidate'} }) }}
                             <div class="form-group">
-                                {{ form_label(form.customerName, 'Buyer Name :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'margin-right:-50px;font-weight:bold;' } }
+                                {{ form_label(form.buyerName, 'Buyer Name :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'margin-right:-50px;font-weight:bold;' } }
                                 ) }}
                                 <div class="col-md-8">
                                     <div class="input-icon">
-                                        {{ form_widget(form.customerName, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;' } }) }}
+                                        {{ form_widget(form.buyerName, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;' } }) }}
                                     </div>
                                 </div>
                                 <input type="button" name="ajaxSaveCategory" value="Save" id="ajaxSaveCategory" class="btn green button-width col-md-1" style="margin-top:2px;margin-left:10px;height:32px;">
@@ -66,7 +66,7 @@
                             {{ form_end(form) }}
                         </div>
 
-                        <div class="form-actions fluid" id="customer-list-div">
+                        <div class="form-actions fluid" id="buyer-list-div">
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <div class="col-md-11" style="margin-top: 30px;margin-left: 4%;">
@@ -86,23 +86,23 @@
                                             {% else %}{% set i = (page * 10) - 10 %}
                                             {% endif %}
 
-                                            {% for customer in customers %}
+                                            {% for buyer in buyers %}
                                                 {% set i = i + 1 %}
                                                 {% set color = [" "] %}
 
-                                                {% if customer.status == 0 %}{% set color = color|merge(["red"]) %}
-                                                {% elseif customer.status == 1 %}{% set color = color|merge(["green"]) %}
+                                                {% if buyer.status == 0 %}{% set color = color|merge(["red"]) %}
+                                                {% elseif buyer.status == 1 %}{% set color = color|merge(["green"]) %}
                                                 {% endif %}
 
                                                 <tr>
                                                     <td>{{ i }} .</td>
-                                                    <td class="col-md-8" style="color: {{ color|join("") }};">{{ customer.customerName }}</td>
+                                                    <td class="col-md-8" style="color: {{ color|join("") }};">{{ buyer.buyerName }}</td>
                                                     <td style="color: red;">
                                                         <a href="#" class="btn default btn-xs red-stripe" style="width: 85px;"><i
                                                                     class="fa fa-times"></i> Deleted</a>
                                                     </td>
                                                     <td>
-                                                        <a href="/customer/active/{{ customer.id }}" class="btn default btn-xs green-stripe" style="width: 85px;"><i
+                                                        <a href="/buyer/active/{{ buyer.id }}" class="btn default btn-xs green-stripe" style="width: 85px;"><i
                                                                     class="fa fa-repeat"></i> Restore</a>
                                                     </td>
                                                 </tr>
@@ -111,7 +111,7 @@
                                             </tbody>
                                         </table>
                                         <div class="navigation" style="text-align: right">
-                                            {{ knp_pagination_render(customers) }}
+                                            {{ knp_pagination_render(buyers) }}
                                         </div>
                                     </div>
                                 </div>

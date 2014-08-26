@@ -1,46 +1,46 @@
-customer_add:
-    pattern: /customer
-    defaults: { _controller: PmsCoreBundle:Core:customerAdd }
+buyer_add:
+    pattern: /buyer
+    defaults: { _controller: PmsCoreBundle:Core:buyerAdd }
 
-customer_list:
-    pattern: /customer/list
-    defaults: { _controller: PmsCoreBundle:Core:customerList }
+buyer_list:
+    pattern: /buyer/list
+    defaults: { _controller: PmsCoreBundle:Core:buyerList }
 
-customer_ajax_add:
-    pattern: /customer/add
-    defaults: { _controller: PmsCoreBundle:Core:customerAjaxAdd }
+buyer_ajax_add:
+    pattern: /buyer/add
+    defaults: { _controller: PmsCoreBundle:Core:buyerAjaxAdd }
     options:
             expose: true
 
-customer_check:
-    pattern: /customer/check
-    defaults: { _controller: PmsCoreBundle:Core:customerCheck }
+buyer_check:
+    pattern: /buyer/check
+    defaults: { _controller: PmsCoreBundle:Core:buyerCheck }
     options:
             expose: true
 
-customer_deleted:
-    pattern: /customer/deleted
-    defaults: { _controller: PmsCoreBundle:Core:customerDeleted }
+buyer_deleted:
+    pattern: /buyer/deleted
+    defaults: { _controller: PmsCoreBundle:Core:buyerDeleted }
 
-customer_deleted_list:
-    pattern: /customer/deleted/list
-    defaults: { _controller: PmsCoreBundle:Core:customerDeletedList }
+buyer_deleted_list:
+    pattern: /buyer/deleted/list
+    defaults: { _controller: PmsCoreBundle:Core:buyerDeletedList }
 
-customer_delete:
-    pattern: /customer/delete/{id}
-    defaults: { _controller: PmsCoreBundle:Core:customerDelete }
+buyer_delete:
+    pattern: /buyer/delete/{id}
+    defaults: { _controller: PmsCoreBundle:Core:buyerDelete }
     requirements:
           id: \d+
 
-customer_active:
-    pattern: /customer/active/{id}
-    defaults: { _controller: PmsCoreBundle:Core:customerActive }
+buyer_active:
+    pattern: /buyer/active/{id}
+    defaults: { _controller: PmsCoreBundle:Core:buyerActive }
     requirements:
           id: \d+
 
-customer_update:
-    pattern: /customer/update/{id}
-    defaults: { _controller: PmsCoreBundle:Core:customerUpdate }
+buyer_update:
+    pattern: /buyer/update/{id}
+    defaults: { _controller: PmsCoreBundle:Core:buyerUpdate }
     requirements:
           id:  \d+
 
@@ -136,39 +136,39 @@ project_ajax_add:
     options:
             expose: true
 
-cost_add:
+project_cost_add:
     pattern: /project-cost
-    defaults: { _controller: PmsCoreBundle:Core:projectCostAdd }
+    defaults: { _controller: PmsCoreBundle:Core:projectCostItemAdd }
 
-cost_list:
+project_cost_list:
     pattern: /cost/list
-    defaults: { _controller: PmsCoreBundle:Core:projectCostList }
+    defaults: { _controller: PmsCoreBundle:Core:projectCostItemList }
 
 project_cost_details:
     pattern: project-cost/details/{id}
-    defaults: { _controller: PmsCoreBundle:Core:projectCostDetails }
+    defaults: { _controller: PmsCoreBundle:Core:projectCostItemDetails }
 
-cost_ajax_checked:
+project_cost_ajax_checked:
     pattern: /project-cost/checked
-    defaults: { _controller: PmsCoreBundle:Core:projectCostChecked }
+    defaults: { _controller: PmsCoreBundle:Core:projectCostItemChecked }
     options:
             expose: true
 
-cost_delete:
+project_cost_delete:
     pattern: /project-cost/delete/{id}
-    defaults: { _controller: PmsCoreBundle:Core:projectCostDelete }
+    defaults: { _controller: PmsCoreBundle:Core:projectCostItemDelete }
     requirements:
           id:  \d+
 
-cost_update:
+project_cost_update:
     pattern: /project-cost/update/{id}
-    defaults: { _controller: PmsCoreBundle:Core:projectCostUpdate }
+    defaults: { _controller: PmsCoreBundle:Core:projectCostItemUpdate }
     requirements:
           id:  \d+
 
 project_cost_ajax_add:
     pattern: /project-cost/add
-    defaults: { _controller: PmsCoreBundle:Core:projectCostAjaxAdd }
+    defaults: { _controller: PmsCoreBundle:Core:projectCostItemAjaxAdd }
     options:
             expose: true
 

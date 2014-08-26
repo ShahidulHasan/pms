@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class ProjectCostType extends AbstractType
+class ProjectCostItemType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -58,12 +58,12 @@ class ProjectCostType extends AbstractType
                             ->where('s.status = 1');
                     }
             ))
-            ->add('customer', 'entity', array(
+            ->add('buyer', 'entity', array(
                 'constraints' => array(
                     new NotBlank()
                 ),
-                'class' => 'PmsCoreBundle:Customer',
-                'property' => 'customerName',
+                'class' => 'PmsCoreBundle:Buyer',
+                'property' => 'buyerName',
                 'required' => false,
                 'attr' => array(
                     'placeholder' => ' Select Buyer'
@@ -166,7 +166,7 @@ class ProjectCostType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Pms\CoreBundle\Entity\ProjectCost'
+            'data_class' => 'Pms\CoreBundle\Entity\ProjectCostItem'
         ));
     }
 
@@ -175,6 +175,6 @@ class ProjectCostType extends AbstractType
      */
     public function getName()
     {
-        return 'projectcost';
+        return 'projectcostitem';
     }
 }

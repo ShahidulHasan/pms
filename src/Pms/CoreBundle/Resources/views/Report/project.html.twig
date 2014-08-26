@@ -67,19 +67,19 @@
             </thead>
             <tbody>
             {% set i = 0 %}
-            {% for projectCost in projectCosts %}
+            {% for projectCostItem in projectCostItems %}
                 {% set i = i + 1 %}
                 <tr>
                     <td>
                         {{ i }}.
                     </td>
                     <td  class="col-md-10">
-                        <a href="/report/byProject/details/{{ projectCost.id }}/{{ startDate }}/{{ endDate }}">
-                            {{ projectCost.projectName }}
+                        <a href="/report/byProject/details/{{ projectCostItem.id }}/{{ startDate }}/{{ endDate }}">
+                            {{ projectCostItem.projectName }}
                         </a>
                     </td>
                     <td  class="col-md-2">
-                        {{ projectCost.total }} Tk
+                        {{ projectCostItem.total }} Tk
                     </td>
                 </tr>
 

@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class CustomerType extends AbstractType
+class BuyerType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -16,7 +16,7 @@ class CustomerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('customerName', 'text', array(
+            ->add('buyerName', 'text', array(
                 'constraints' => array(
                     new NotBlank()
                 ),
@@ -34,7 +34,7 @@ class CustomerType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Pms\CoreBundle\Entity\Customer'
+            'data_class' => 'Pms\CoreBundle\Entity\buyer'
         ));
     }
 
@@ -43,6 +43,6 @@ class CustomerType extends AbstractType
      */
     public function getName()
     {
-        return 'customer';
+        return 'buyer';
     }
 }

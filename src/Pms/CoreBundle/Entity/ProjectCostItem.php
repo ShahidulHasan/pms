@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Pms\UserBundle\Entity\User;
 
 /**
- * ProjectCost
+ * ProjectCostItem
  *
- * @ORM\Table(name="project_cost")
+ * @ORM\Table(name="project_cost_items")
  * @ORM\Entity(repositoryClass="Pms\UserBundle\Entity\UserRepository")
  */
-class ProjectCost
+class ProjectCostItem
 {
     /**
      * @var integer
@@ -32,61 +32,60 @@ class ProjectCost
     /**
      * @var Project
      *
-     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Project", inversedBy="projectCost")
-     * @ORM\JoinColumn(name="project")
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Project", inversedBy="projectCostItem")
+     * @ORM\JoinColumn(name="projects")
      */
     private $project;
 
     /**
      * @var Item
      *
-     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Item", inversedBy="projectCost")
-     * @ORM\JoinColumn(name="item")
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Item", inversedBy="projectCostItem")
+     * @ORM\JoinColumn(name="items")
      */
     private $item;
 
     /**
-     * @var Customer
+     * @var Buyer
      *
-     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Customer", inversedBy="projectCost")
-     * @ORM\JoinColumn(name="customer")
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Buyer", inversedBy="projectCostItem")
+     * @ORM\JoinColumn(name="buyers", nullable=true)
      */
-    private $customer;
+    private $buyer;
 
     /**
      * @var Category
      *
-     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Category", inversedBy="projectCost")
-     * @ORM\JoinColumn(name="category", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Category", inversedBy="projectCostItem")
+     * @ORM\JoinColumn(name="categories", nullable=true)
      */
     private $category;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="quantity", type="integer")
+     * @ORM\Column(name="quantities", type="integer")
      */
     private $quantity;
 
     /**
-     * @var integer
+     * @var decimal
      *
-     * @ORM\Column(name="unit_price", type="integer")
+     * @ORM\Column(name="unit_prices", type="decimal")
      */
     private $unitPrice;
 
     /**
-     * @var integer
+     * @var decimal
      *
-     * @ORM\Column(name="line_total", type="integer")
+     * @ORM\Column(name="line_totals", type="decimal")
      */
     private $lineTotal;
 
     /**
-     * @var User
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User", inversedBy="projectCostCreated")
-     * @ORM\JoinColumn(name="created_by", nullable=true)
+     * @ORM\Column(name="created_by", type="integer")
      */
     private $createdBy;
 
@@ -98,10 +97,9 @@ class ProjectCost
     private $createdDate;
 
     /**
-     * @var User
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User", inversedBy="projectCostApproved")
-     * @ORM\JoinColumn(name="approved_by", nullable=true)
+     * @ORM\Column(name="approved_by", type="string", length=255, nullable=true)
      */
     private $approvedBy;
 
@@ -122,7 +120,7 @@ class ProjectCost
     /**
      * @var string
      *
-     * @ORM\Column(name="sub_category", type="string", length=255, nullable=true)
+     * @ORM\Column(name="sub_categories", type="string", length=255, nullable=true)
      */
     private $subCategory;
 
@@ -175,7 +173,7 @@ class ProjectCost
      * Set dateOfCost
      *
      * @param /DateTime $dateOfCost
-     * @return ProjectCost
+     * @return ProjectCostItem
      */
     public function setDateOfCost($dateOfCost)
     {
@@ -198,7 +196,7 @@ class ProjectCost
      * Set project
      *
      * @param integer $project
-     * @return ProjectCost
+     * @return ProjectCostItem
      */
     public function setProject($project)
     {
@@ -221,7 +219,7 @@ class ProjectCost
      * Set category
      *
      * @param integer $category
-     * @return ProjectCost
+     * @return ProjectCostItem
      */
     public function setCategory($category)
     {
@@ -244,7 +242,7 @@ class ProjectCost
      * Set item
      *
      * @param integer $item
-     * @return ProjectCost
+     * @return ProjectCostItem
      */
     public function setItem($item)
     {
@@ -264,33 +262,33 @@ class ProjectCost
     }
 
     /**
-     * Set customer
+     * Set buyer
      *
-     * @param integer $customer
-     * @return ProjectCost
+     * @param integer $buyer
+     * @return ProjectCostItem
      */
-    public function setCustomer($customer)
+    public function setBuyer($buyer)
     {
-        $this->customer = $customer;
+        $this->buyer = $buyer;
 
         return $this;
     }
 
     /**
-     * Get customer
+     * Get buyer
      *
      * @return integer
      */
-    public function getCustomer()
+    public function getBuyer()
     {
-        return $this->customer;
+        return $this->buyer;
     }
 
     /**
      * Set quantity
      *
      * @param integer $quantity
-     * @return ProjectCost
+     * @return ProjectCostItem
      */
     public function setQuantity($quantity)
     {
@@ -313,7 +311,7 @@ class ProjectCost
      * Set subCategory
      *
      * @param string $subCategory
-     * @return ProjectCost
+     * @return ProjectCostItem
      */
     public function setSubCategory($subCategory)
     {
@@ -335,8 +333,8 @@ class ProjectCost
     /**
      * Set unitPrice
      *
-     * @param integer $unitPrice
-     * @return ProjectCost
+     * @param decimal $unitPrice
+     * @return ProjectCostItem
      */
     public function setUnitPrice($unitPrice)
     {
@@ -348,7 +346,7 @@ class ProjectCost
     /**
      * Get unitPrice
      *
-     * @return integer 
+     * @return decimal
      */
     public function getUnitPrice()
     {
@@ -358,8 +356,8 @@ class ProjectCost
     /**
      * Set lineTotal
      *
-     * @param integer $lineTotal
-     * @return ProjectCost
+     * @param decimal $lineTotal
+     * @return ProjectCostItem
      */
     public function setLineTotal($lineTotal)
     {
@@ -371,7 +369,7 @@ class ProjectCost
     /**
      * Get lineTotal
      *
-     * @return integer 
+     * @return decimal
      */
     public function getLineTotal()
     {
@@ -382,7 +380,7 @@ class ProjectCost
      * Set createdBy
      *
      * @param integer $createdBy
-     * @return ProjectCost
+     * @return ProjectCostItem
      */
     public function setCreatedBy($createdBy)
     {
@@ -405,7 +403,7 @@ class ProjectCost
      * Set createdDate
      *
      * @param \DateTime $createdDate
-     * @return ProjectCost
+     * @return ProjectCostItem
      */
     public function setCreatedDate($createdDate)
     {
@@ -428,7 +426,7 @@ class ProjectCost
      * Set approvedBy
      *
      * @param integer $approvedBy
-     * @return ProjectCost
+     * @return ProjectCostItem
      */
     public function setApprovedBy($approvedBy)
     {
@@ -451,7 +449,7 @@ class ProjectCost
      * Set approvedDate
      *
      * @param \DateTime $approvedDate
-     * @return ProjectCost
+     * @return ProjectCostItem
      */
     public function setApprovedDate($approvedDate)
     {
@@ -474,7 +472,7 @@ class ProjectCost
      * Set status
      *
      * @param integer $status
-     * @return ProjectCost
+     * @return ProjectCostItem
      */
     public function setStatus($status)
     {
@@ -497,7 +495,7 @@ class ProjectCost
      * Set invoice
      *
      * @param string $invoice
-     * @return ProjectCost
+     * @return ProjectCostItem
      */
     public function setInvoice($invoice)
     {
@@ -520,7 +518,7 @@ class ProjectCost
      * Set grn
      *
      * @param string $grn
-     * @return ProjectCost
+     * @return ProjectCostItem
      */
     public function setGrn($grn)
     {
@@ -543,7 +541,7 @@ class ProjectCost
      * Set pr
      *
      * @param string $pr
-     * @return ProjectCost
+     * @return ProjectCostItem
      */
     public function setPr($pr)
     {
@@ -566,7 +564,7 @@ class ProjectCost
      * Set po
      *
      * @param string $po
-     * @return ProjectCost
+     * @return ProjectCostItem
      */
     public function setPo($po)
     {
@@ -589,7 +587,7 @@ class ProjectCost
      * Set comment
      *
      * @param string $comment
-     * @return ProjectCost
+     * @return ProjectCostItem
      */
     public function setComment($comment)
     {

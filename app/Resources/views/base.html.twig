@@ -116,17 +116,17 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                 </div>
             </li>
 
-            {% set Route, Dashboard, User, Item, Project, Cost, Report, Category, SubCategory, OverView, Customer = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "] %}
+            {% set Route, Dashboard, User, Item, Project, Cost, Report, Category, SubCategory, OverView, Buyer = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "] %}
             {% set Url = Route|split('_') %}
             {% if Url[0] == 'homepage' %}{% set Dashboard = Dashboard|merge(["active"]) %}
             {% elseif Url[0] == 'fos' %}{% set Dashboard = Dashboard|merge(["active"]) %}
             {% elseif Url[0] == 'user' %}{% set User = User|merge(["active"]) %}
-            {% elseif Url[0] == 'customer' %}{% set Customer = Customer|merge(["active"]) %}
+            {% elseif Url[0] == 'buyer' %}{% set Buyer = Buyer|merge(["active"]) %}
             {% elseif Url[0] == 'item' %}{% set Item = Item|merge(["active"]) %}
             {% elseif Url[0] == 'category' %}{% set Category = Category|merge(["active"]) %}
             {% elseif Url[0] == 'sub' %}{% set SubCategory = SubCategory|merge(["active"]) %}
-            {% elseif Url[0] == 'project' %}{% set Project = Project|merge(["active"]) %}
-            {% elseif Url[0] == 'cost' %}{% set Cost = Cost|merge(["active"]) %}
+            {% elseif Url[0] == 'project' and Url[1] != 'cost' %}{% set Project = Project|merge(["active"]) %}
+            {% elseif Url[0] == 'project' and Url[1] == 'cost' %}{% set Cost = Cost|merge(["active"]) %}
             {% elseif Url[0] == 'report' %}{% set Report = Report|merge(["active"]) %}
             {% elseif Url[0] == 'over' %}{% set OverView = OverView|merge(["active"]) %}
             {% endif %}
@@ -148,8 +148,8 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             </li>
             {% endif %}
             {% if is_granted("ROLE_ADMIN") %}
-                <li class="{{ Customer|join(" ") }}">
-                    <a href="/customer">
+                <li class="{{ Buyer|join(" ") }}">
+                    <a href="/buyer">
                         <i class="fa fa-user"></i>
                         <span class="title"> Buyer </span>
                         <span class="selected"></span>
@@ -338,7 +338,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             $('input[type=text].lineTotal').val(lineTotal);
         });
 
-        $("#projectcost_category").change(function () {
+        $("#projectcostitem_category").change(function () {
             var category = $(this).val();
 
             $.ajax({
@@ -348,10 +348,10 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                 dataType: 'json',
                 success: function (response, status) {
                     if (response.responseCode == 200) {
-                        $('#projectcost_subCategory').html('');
+                        $('#projectcostitem_subCategory').html('');
                         for (var i=0; i < response.subCats.length; i++){
                             var cat = response.subCats[i];
-                            $('#projectcost_subCategory').append('<option value="'+cat.id+'">'+cat.categoryName+'</option>');
+                            $('#projectcostitem_subCategory').append('<option value="'+cat.id+'">'+cat.categoryName+'</option>');
                         }
                     } else {
                         $('.userMessege').css('color', 'green').html(msg.item_name).fadeIn(1000);
@@ -417,20 +417,20 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             });
         });
 
-        $("#customer_customerName").keyup(function () {
-            var customerName = $(this).val();
+        $("#buyer_buyerName").keyup(function () {
+            var buyerName = $(this).val();
 
             $.ajax({
                 type: "post",
-                url: Routing.generate('customer_check'),
-                data: "customerName=" + customerName,
+                url: Routing.generate('buyer_check'),
+                data: "buyerName=" + buyerName,
                 dataType: 'json',
                 success: function (msg) {
                     if (msg.responseCode == 200) {
-                        $('.userMessege').css('color', 'red').html(msg.customer_name).fadeIn(1000);
+                        $('.userMessege').css('color', 'red').html(msg.buyer_name).fadeIn(1000);
                     }
                     else {
-                        $('.userMessege').css('color', 'green').html(msg.customer_name).fadeIn(1000);
+                        $('.userMessege').css('color', 'green').html(msg.buyer_name).fadeIn(1000);
                     }
                 }
             });
@@ -604,46 +604,46 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             });
         });
 
-        $("#ajaxSaveCustomer").click(function () {
+        $("#ajaxSaveBuyer").click(function () {
             var sPageURL = window.location.pathname;
             var sURLVariables = sPageURL.split('/');
-            var customerName = $("#customer_customerName").val();
+            var buyerName = $("#buyer_buyerName").val();
 
-            var customerArray = new Array(customerName, sURLVariables[3]);
+            var buyerArray = new Array(buyerName, sURLVariables[3]);
             $.ajax({
                 type: "post",
-                url: Routing.generate('customer_ajax_add'),
-                data: "customerArray=" + customerArray,
+                url: Routing.generate('buyer_ajax_add'),
+                data: "buyerArray=" + buyerArray,
                 dataType: 'json',
                 success: function (msg) {
                     if(msg.responseCode == 200) {
                         var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Buyer already exist</span></div>');
-                        $('.customerMessege').css('color', 'red').html(msg.customer_ajax_add).fadeIn(1000).append($addLink);
-                        $(':input','#customer-form')
+                        $('.buyerMessege').css('color', 'red').html(msg.buyer_ajax_add).fadeIn(1000).append($addLink);
+                        $(':input','#buyer-form')
                                 .not(':button, :submit, :reset, :hidden')
                                 .val('')
                                 .removeAttr('checked')
                                 .removeAttr('selected');
                     } else if(msg.responseCode == 204) {
                         var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Insert Buyer</span></div>');
-                        $('.customerMessege').css('color', 'red').html(msg.customer_ajax_add).fadeIn(1000).append($addLink);
-                        $(':input','#customer-form')
+                        $('.buyerMessege').css('color', 'red').html(msg.buyer_ajax_add).fadeIn(1000).append($addLink);
+                        $(':input','#buyer-form')
                                 .not(':button, :submit, :reset, :hidden')
                                 .val('')
                                 .removeAttr('checked')
                                 .removeAttr('selected');
                     } else if(msg.responseCode == 202) {
                         var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Buyer Update Successfully</span></div>');
-                        $('.customerMessege').css('color', 'green').html(msg.customer_ajax_add).fadeIn(1000).append($addLink);
-                        $(':input','#customer-form')
+                        $('.buyerMessege').css('color', 'green').html(msg.buyer_ajax_add).fadeIn(1000).append($addLink);
+                        $(':input','#buyer-form')
                                 .not(':button, :submit, :reset, :hidden')
                                 .val('')
                                 .removeAttr('checked')
                                 .removeAttr('selected');
                     } else {
                         var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Buyer Add Successfully</span></div>');
-                        $('.customerMessege').css('color', 'green').html(msg.customer_ajax_add).fadeIn(1000).append($addLink);
-                        $(':input','#customer-form')
+                        $('.buyerMessege').css('color', 'green').html(msg.buyer_ajax_add).fadeIn(1000).append($addLink);
+                        $(':input','#buyer-form')
                                 .not(':button, :submit, :reset, :hidden')
                                 .val('')
                                 .removeAttr('checked')
@@ -651,7 +651,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                     }
 
                     $('.userMessege').fadeOut();
-                    $("#customer-list-div").load("/customer/list")
+                    $("#buyer-list-div").load("/buyer/list")
                 }
             });
         });
@@ -762,24 +762,24 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             });
         });
 
-        $("#ajaxSaveProjectCost").click(function () {
+        $("#ajaxSaveprojectCostItem").click(function () {
             var sPageURL = window.location.pathname;
             var sURLVariables = sPageURL.split('/');
 
-            var dateOfCost = $("#projectcost_dateOfCost").val();
-            var project = $("#projectcost_project").val();
-            var item = $("#projectcost_item").val();
-            var quantity = $("#projectcost_quantity").val();
-            var unitPrice = $("#projectcost_unitPrice").val();
-            var lineTotal = $("#projectcost_lineTotal").val();
-            var invoice = $("#projectcost_invoice").val();
-            var grn = $("#projectcost_grn").val();
-            var category = $("#projectcost_category").val();
-            var subcategory = $("#projectcost_subCategory").val();
-            var pr = $("#projectcost_pr").val();
-            var po = $("#projectcost_po").val();
-            var customer = $("#projectcost_customer").val();
-            var comment = $("#projectcost_comment").val();
+            var dateOfCost = $("#projectcostitem_dateOfCost").val();
+            var project = $("#projectcostitem_project").val();
+            var item = $("#projectcostitem_item").val();
+            var quantity = $("#projectcostitem_quantity").val();
+            var unitPrice = $("#projectcostitem_unitPrice").val();
+            var lineTotal = $("#projectcostitem_lineTotal").val();
+            var invoice = $("#projectcostitem_invoice").val();
+            var grn = $("#projectcostitem_grn").val();
+            var category = $("#projectcostitem_category").val();
+            var subcategory = $("#projectcostitem_subCategory").val();
+            var pr = $("#projectcostitem_pr").val();
+            var po = $("#projectcostitem_po").val();
+            var buyer = $("#projectcostitem_buyer").val();
+            var comment = $("#projectcostitem_comment").val();
 
             if(invoice && po){
 
@@ -787,12 +787,12 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                 return po;
             }
 
-            var projectCostArray = new Array(dateOfCost, project, item, quantity, unitPrice, lineTotal, sURLVariables[3], invoice, grn, category, subcategory, pr, po, customer, comment);
+            var projectCostItemArray = new Array(dateOfCost, project, item, quantity, unitPrice, lineTotal, sURLVariables[3], invoice, grn, category, subcategory, pr, po, buyer, comment);
 
             $.ajax({
                 type: "post",
                 url: Routing.generate('project_cost_ajax_add'),
-                data: "projectCostArray=" + projectCostArray,
+                data: "projectCostItemArray=" + projectCostItemArray,
                 dataType: 'json',
                 success: function (msg) {
                     if(msg.responseCode == 204) {
@@ -831,7 +831,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 
             $.ajax({
                 type: "post",
-                url: Routing.generate('cost_ajax_checked'),
+                url: Routing.generate('project_cost_ajax_checked'),
                 data: "projectCostId=" + projectCostId,
                 dataType: 'json',
                 success: function (msg) {
@@ -845,14 +845,14 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             });
         });
 
-        $(".customer-active-list").click(function () {
+        $(".buyer-active-list").click(function () {
 
-            $("#customer-list-div").load("/customer/list");
+            $("#buyer-list-div").load("/buyer/list");
         });
 
-        $(".customer-deleted-list").click(function () {
+        $(".buyer-deleted-list").click(function () {
 
-            $("#customer-list-div").load("/customer/deleted/list");
+            $("#buyer-list-div").load("/buyer/deleted/list");
         });
 
         $(".item-active-list").click(function () {

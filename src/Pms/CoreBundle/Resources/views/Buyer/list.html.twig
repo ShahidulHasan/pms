@@ -17,23 +17,23 @@
                 {% else %}{% set i = (page * 10) - 10 %}
                 {% endif %}
 
-                {% for customer in customers %}
+                {% for buyer in buyers %}
                     {% set i = i + 1 %}
                     {% set color = [" "] %}
 
-                    {% if customer.status == 0 %}{% set color = color|merge(["red"]) %}
-                    {% elseif customer.status == 1 %}{% set color = color|merge(["green"]) %}
+                    {% if buyer.status == 0 %}{% set color = color|merge(["red"]) %}
+                    {% elseif buyer.status == 1 %}{% set color = color|merge(["green"]) %}
                     {% endif %}
 
                     <tr>
                         <td>{{ i }} .</td>
-                        <td class="col-md-8" style="color: {{ color|join("") }};">{{ customer.customerName }}</td>
+                        <td class="col-md-8" style="color: {{ color|join("") }};">{{ buyer.buyerName }}</td>
                         <td>
-                            <a href="/customer/delete/{{ customer.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
+                            <a href="/buyer/delete/{{ buyer.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
                                         class="fa fa-trash-o"></i> Delete</a>
                         </td>
                         <td>
-                            <a href="/customer/update/{{ customer.id }}" style="width: 85px;" class="btn default btn-xs blue-stripe"><i
+                            <a href="/buyer/update/{{ buyer.id }}" style="width: 85px;" class="btn default btn-xs blue-stripe"><i
                                         class="fa fa-edit"></i> Update</a>
                         </td>
                     </tr>
@@ -42,7 +42,7 @@
                 </tbody>
             </table>
             <div class="navigation" style="text-align: right">
-                {{ knp_pagination_render(customers) }}
+                {{ knp_pagination_render(buyers) }}
             </div>
         </div>
     </div>

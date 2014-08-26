@@ -21,20 +21,6 @@ class User extends BaseUser
 
     protected $role;
 
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\ProjectCost", mappedBy="createdBy")
-     */
-    private $projectCostCreated;
-
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\ProjectCost", mappedBy="approvedBy")
-     */
-    private $projectCostApproved;
-
     public function __construct()
     {
         parent::__construct();
@@ -89,21 +75,5 @@ class User extends BaseUser
     public function getUsername()
     {
         return $this->username;
-    }
-
-    /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function getProjectCostCreated()
-    {
-        return $this->projectCostCreated;
-    }
-
-    /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function getProjectCostApproved()
-    {
-        return $this->projectCostApproved;
     }
 }

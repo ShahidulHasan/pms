@@ -27,7 +27,6 @@ class CategoryType extends AbstractType
                     'autocomplete' => 'off'
                 )
             ))
-//            ->add('save', 'submit')
         ;
     }
 

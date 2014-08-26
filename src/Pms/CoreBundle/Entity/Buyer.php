@@ -6,12 +6,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Customer
+ * Buyer
  *
- * @ORM\Table(name="customer")
+ * @ORM\Table(name="buyers")
  * @ORM\Entity(repositoryClass="Pms\UserBundle\Entity\UserRepository")
  */
-class Customer
+class Buyer
 {
     /**
      * @var integer
@@ -25,16 +25,16 @@ class Customer
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\ProjectCost", mappedBy="customer")
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\ProjectCostItem", mappedBy="buyer")
      */
-    private $projectCost;
+    private $projectCostItem;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="customer_name", type="string", length=255)
+     * @ORM\Column(name="buyers_name", type="string", length=255)
      */
-    private $customerName;
+    private $buyerName;
 
     /**
      * @var string
@@ -68,33 +68,33 @@ class Customer
     }
 
     /**
-     * Set customerName
+     * Set buyerName
      *
-     * @param string $customerName
-     * @return Customer
+     * @param string $buyerName
+     * @return Buyer
      */
-    public function setCustomerName($customerName)
+    public function setBuyerName($buyerName)
     {
-        $this->customerName = $customerName;
+        $this->buyerName = $buyerName;
 
         return $this;
     }
 
     /**
-     * Get customerName
+     * Get buyerName
      *
      * @return string
      */
-    public function getCustomerName()
+    public function getBuyerName()
     {
-        return $this->customerName;
+        return $this->buyerName;
     }
 
     /**
      * Set createdBy
      *
      * @param string $createdBy
-     * @return Customer
+     * @return Buyer
      */
     public function setCreatedBy($createdBy)
     {
@@ -117,7 +117,7 @@ class Customer
      * Set createdDate
      *
      * @param \DateTime $createdDate
-     * @return Customer
+     * @return Buyer
      */
     public function setCreatedDate($createdDate)
     {
@@ -140,7 +140,7 @@ class Customer
      * Set status
      *
      * @param integer $status
-     * @return Customer
+     * @return Buyer
      */
     public function setStatus($status)
     {
@@ -162,8 +162,8 @@ class Customer
     /**
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
-    public function getProjectCost()
+    public function getProjectCostItem()
     {
-        return $this->projectCost;
+        return $this->projectCostItem;
     }
 }

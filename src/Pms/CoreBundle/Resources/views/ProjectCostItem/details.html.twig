@@ -9,13 +9,13 @@
 
 <div class="modal-body">
     <div class="row">
-        <div class="col-md-12">
+        <div style="width: 1000px;">
 
             <table>
 
                 <tr>
                     <td class="col-md-7">
-                      Project Name: {{ projectcost[0]['projectName'] }}
+                      Project Name: {{ projectCostItem[0]['projectName'] }}
                     </td>
                     <td class="col-md-4">
 
@@ -23,31 +23,31 @@
                 </tr>
                 <tr>
                     <td class="col-md-7">
-                        Create Date: {{ projectcost[0]['dateOfCost']|date('Y-m-d') }}
+                        Create Date: {{ projectCostItem[0]['dateOfCost']|date('Y-m-d') }}
                     </td>
                     <td class="col-md-4">
-                        Created By: {{ projectcost[0]['username'] }}
+
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        invoice:{{ projectcost[0]['invoice'] }}
+                        invoice:{{ projectCostItem[0]['invoice'] }}
                     </td>
                     <td>
-                        Item Quantity: {{ projectcost[0]['quantity'] }}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        pr:{{ projectcost[0]['pr'] }}
-                    </td>
-                    <td>
-                        grn :{{ projectcost[0]['grn'] }}
+                        Item Quantity: {{ projectCostItem[0]['quantity'] }}
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        Approved Date: {{ projectcost[0]['createdDate']|date('Y-m-d') }}
+                        pr:{{ projectCostItem[0]['pr'] }}
+                    </td>
+                    <td>
+                        grn :{{ projectCostItem[0]['grn'] }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Approved Date: {{ projectCostItem[0]['createdDate']|date('Y-m-d') }}
                     </td>
                     <td>
 
@@ -55,26 +55,26 @@
                 </tr>
                 <tr>
                     <td>
-                        Item Unit Price:{{ projectcost[0]['unitPrice'] }} Tk
+                        Item Unit Price:{{ projectCostItem[0]['unitPrice'] }} Tk
                     </td>
                     <td>
-                        category:{{ projectcost[0]['categoryName'] }}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Item Name: {{ projectcost[0]['itemName'] }}
-                    </td>
-                    <td>
-                        po:{{ projectcost[0]['po'] }}
+                        category:{{ projectCostItem[0]['categoryName'] }}
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        Item Total:{{ projectcost[0]['lineTotal'] }}
+                        Item Name: {{ projectCostItem[0]['itemName'] }}
                     </td>
                     <td>
-                        comment:{{ projectcost[0]['comment'] }}
+                        po:{{ projectCostItem[0]['po'] }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Item Total:{{ projectCostItem[0]['lineTotal'] }}
+                    </td>
+                    <td>
+                        comment:{{ projectCostItem[0]['comment'] }}
                     </td>
                 </tr>
             </table>

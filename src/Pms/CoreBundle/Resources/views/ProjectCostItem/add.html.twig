@@ -9,7 +9,7 @@
         </div>
     {% endfor %}
 
-    <span class="projectCostMessege"></span>
+    <span class="projectCostItemMessege"></span>
 
     <div class="row">
         <div class="col-md-12">
@@ -82,7 +82,7 @@
                                                 {{ form_widget(form.project, { 'attr': {'class': 'form-control', 'style': 'width:166px;' } }) }}
                                             </td>
                                             <td>
-                                                {{ form_widget(form.customer, { 'attr': {'class': 'form-control select2me', 'style': 'width:180px;' } }) }}
+                                                {{ form_widget(form.buyer, { 'attr': {'class': 'form-control select2me', 'style': 'width:180px;' } }) }}
                                             </td>
                                             <td>
                                                 {{ form_widget(form.quantity, { 'attr': {'class': 'form-control quantity', 'style': 'width:180px;'} }) }}
@@ -140,7 +140,7 @@
                                         </tr>
                                         <tr>
                                             <td style="text-align: right;">
-                                                <input type="button" name="ajaxSaveProjectCost" value="Save" id="ajaxSaveProjectCost" class="btn green button-width" style="height:32px;">
+                                                <input type="button" name="ajaxSaveprojectCostItem" value="Save" id="ajaxSaveprojectCostItem" class="btn green button-width" style="height:32px;">
                                             </td>
                                         </tr>
                                     </table>
@@ -154,7 +154,7 @@
                             <div class="form-group">
                                 <div class="col-md-12">
 
-                                    <form action="{{ path('cost_add') }}" method="get" {{ form_enctype(formSearch) }} name="search">
+                                    <form action="{{ path('project_cost_add') }}" method="get" {{ form_enctype(formSearch) }} name="search">
 
                                         <div class="portlet-body">
 
@@ -232,44 +232,44 @@
                                             {% else %}{% set i = (page * 50) -50 %}
                                             {% endif %}
 
-                                            {% for projectcosts in projectcost %}
+                                            {% for projectCostItems in projectCostItem %}
                                                 {% set i = i + 1 %}
                                                 {% set color = [" "] %}
 
-                                                {% if projectcosts.status == 0 %}{% set color = color|merge(["red"]) %}
-                                                {% elseif projectcosts.status == 1 %}{% set color = color|merge(["green"]) %}
+                                                {% if projectCostItems.status == 0 %}{% set color = color|merge(["red"]) %}
+                                                {% elseif projectCostItems.status == 1 %}{% set color = color|merge(["green"]) %}
                                                 {% endif %}
 
                                                 <tr>
                                                     <td class="col-md-1">{{ i }} .</td>
-                                                    <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectcosts.dateOfCost|date('Y-m-d') }}</td>
-                                                    <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectcosts.project.projectName | length > 12 ? projectcosts.project.projectName | slice(0, 12) ~ ' ...' : projectcosts.project.projectName }}</td>
-                                                    <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectcosts.item.itemName | length > 11 ? projectcosts.item.itemName | slice(0, 11) ~ ' ...' : projectcosts.item.itemName }}</td>
-                                                    <td class="col-md-1" style="color: {{ color|join(" ") }}">{{ projectcosts.quantity }} {{ projectcosts.item.itemUnit }}</td>
-                                                    <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectcosts.unitPrice }} Tk / {{ projectcosts.item.itemUnit }}</td>
-                                                    <td class="col-md-1" style="color: {{ color|join(" ") }}">{{ projectcosts.lineTotal | default() }}</td>
-                                                    <td class="col-md-1"><a href="/project-cost/details/{{ projectcosts.id }}" data-target="#ajax" data-toggle="modal">View</a></td>
-                                                    {% if projectcosts.status == 0 %}
+                                                    <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectCostItems.dateOfCost|date('Y-m-d') }}</td>
+                                                    <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectCostItems.project.projectName | length > 12 ? projectCostItems.project.projectName | slice(0, 12) ~ ' ...' : projectCostItems.project.projectName }}</td>
+                                                    <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectCostItems.item.itemName | length > 11 ? projectCostItems.item.itemName | slice(0, 11) ~ ' ...' : projectCostItems.item.itemName }}</td>
+                                                    <td class="col-md-1" style="color: {{ color|join(" ") }}">{{ projectCostItems.quantity }} {{ projectCostItems.item.itemUnit }}</td>
+                                                    <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectCostItems.unitPrice }} Tk / {{ projectCostItems.item.itemUnit }}</td>
+                                                    <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectCostItems.lineTotal }} Tk</td>
+                                                    <td><a href="/project-cost/details/{{ projectCostItems.id }}" data-target="#ajax" data-toggle="modal">View</a></td>
+                                                    {% if projectCostItems.status == 0 %}
                                                         <td>
-                                                            <a href="#" data-myvalue="{{ projectcosts.id }}" class="check-by-ajax btn default btn-xs red-stripe"><i
+                                                            <a href="#" data-myvalue="{{ projectCostItems.id }}" class="check-by-ajax btn default btn-xs red-stripe"><i
                                                                         class="fa fa-plus"></i> Check</a>
                                                         </td>
                                                         <td>
-                                                            <a href="/project-cost/update/{{ projectcosts.id }}" style="width: 80px;" class="btn default btn-xs blue-stripe"><i
+                                                            <a href="/project-cost/update/{{ projectCostItems.id }}" style="width: 80px;" class="btn default btn-xs blue-stripe"><i
                                                                         class="fa fa-edit"></i> Update</a>
                                                         </td>
                                                     {% endif %}
-                                                    {% if projectcosts.status == 1 %}
+                                                    {% if projectCostItems.status == 1 %}
                                                         <td style=" color: red;">
                                                             <a href="#" class="btn default btn-xs green-stripe"><i class="fa fa-check"></i> Checked</a>
                                                         </td>
                                                         {% if is_granted("ROLE_SUPER_ADMIN") %}
                                                         <td>
-                                                            <a href="/project-cost/delete/{{ projectcosts.id }}" class="btn default btn-xs blue-stripe"><i
+                                                            <a href="/project-cost/delete/{{ projectCostItems.id }}" class="btn default btn-xs blue-stripe"><i
                                                                         class="fa fa-edit"></i> Delete</a>
                                                         </td>
                                                         <td>
-                                                            <a href="/project-cost/update/{{ projectcosts.id }}" class="btn default btn-xs blue-stripe"><i
+                                                            <a href="/project-cost/update/{{ projectCostItems.id }}" class="btn default btn-xs blue-stripe"><i
                                                                         class="fa fa-edit"></i> Update</a>
                                                         </td>
                                                         {% endif %}
@@ -283,7 +283,7 @@
                                             <img src="assets/img/ajax-modal-loading.gif" alt="" class="loading">
                                         </div>
                                         <div class="navigation" style="text-align: right">
-                                            {{ knp_pagination_render(projectcost) }}
+                                            {{ knp_pagination_render(projectCostItem) }}
                                         </div>
                                     </div>
 
