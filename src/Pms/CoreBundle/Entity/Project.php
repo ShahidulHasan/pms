@@ -30,6 +30,13 @@ class Project
     private $projectCostItem;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisition", mappedBy="project")
+     */
+    private $purchaseRequisition;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="projects_name", type="string", length=255)
@@ -170,5 +177,13 @@ class Project
     public function getProjectCostItem()
     {
         return $this->projectCostItem;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getPurchaseRequisition()
+    {
+        return $this->purchaseRequisition;
     }
 }
