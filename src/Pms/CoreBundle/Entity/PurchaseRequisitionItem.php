@@ -68,6 +68,13 @@ class PurchaseRequisitionItem
     /**
      * @var integer
      *
+     * @ORM\Column(name="status_po", type="integer")
+     */
+    private $statusPo;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="approved_by_category_head_one", type="string", length=255, nullable=true)
      */
     private $approvedByCategoryHeadOne;
@@ -239,6 +246,29 @@ class PurchaseRequisitionItem
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set statusPo
+     *
+     * @param integer $statusPo
+     * @return PurchaseRequisitionItem
+     */
+    public function setStatusPo($statusPo)
+    {
+        $this->statusPo = $statusPo;
+
+        return $this;
+    }
+
+    /**
+     * Get statusPo
+     *
+     * @return integer
+     */
+    public function getStatusPo()
+    {
+        return $this->statusPo;
     }
 
     /**

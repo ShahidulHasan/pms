@@ -44,6 +44,34 @@ class PurchaseRequisition
     private $dateOfRequisition;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="claimed_by", type="integer")
+     */
+    private $claimedBy;
+
+    /**
+     * @var /DateTime
+     *
+     * @ORM\Column(name="date_of_closings", type="date")
+     */
+    private $dateOfClosing;
+
+    /**
+     * @var /DateTime
+     *
+     * @ORM\Column(name="date_of_final_delivered", type="date")
+     */
+    private $dateOfFinalDelivered;
+
+    /**
+     * @var /DateTime
+     *
+     * @ORM\Column(name="date_of_claimed", type="date")
+     */
+    private $dateOfClaimed;
+
+    /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisitionItem", mappedBy="purchaseRequisitionId")
@@ -266,6 +294,98 @@ class PurchaseRequisition
     }
 
     /**
+     * Set claimedBy
+     *
+     * @param integer $claimedBy
+     * @return PurchaseRequisition
+     */
+    public function setClaimedBy($claimedBy)
+    {
+        $this->claimedBy = $claimedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get claimedBy
+     *
+     * @return integer
+     */
+    public function getClaimedBy()
+    {
+        return $this->claimedBy;
+    }
+
+    /**
+     * Set dateOfClosing
+     *
+     * @param /DateTime $dateOfClosing
+     * @return PurchaseRequisition
+     */
+    public function setDateOfClosing($dateOfClosing)
+    {
+        $this->dateOfClosing = $dateOfClosing;
+
+        return $this;
+    }
+
+    /**
+     * Get dateOfClosing
+     *
+     * @return /DateTime
+     */
+    public function getDateOfClosing()
+    {
+        return $this->dateOfClosing;
+    }
+
+    /**
+     * Set dateOfFinalDelivered
+     *
+     * @param /DateTime $dateOfFinalDelivered
+     * @return PurchaseRequisition
+     */
+    public function setDateOfFinalDelivered($dateOfFinalDelivered)
+    {
+        $this->dateOfFinalDelivered = $dateOfFinalDelivered;
+
+        return $this;
+    }
+
+    /**
+     * Get dateOfFinalDelivered
+     *
+     * @return /DateTime
+     */
+    public function getDateOfFinalDelivered()
+    {
+        return $this->dateOfFinalDelivered;
+    }
+
+    /**
+     * Set dateOfClaimed
+     *
+     * @param /DateTime $dateOfClaimed
+     * @return PurchaseRequisition
+     */
+    public function setDateOfClaimed($dateOfClaimed)
+    {
+        $this->dateOfClaimed = $dateOfClaimed;
+
+        return $this;
+    }
+
+    /**
+     * Get dateOfClaimed
+     *
+     * @return /DateTime
+     */
+    public function getDateOfClaimed()
+    {
+        return $this->dateOfClaimed;
+    }
+
+    /**
      * Set approvedDateProjectHead
      *
      * @param \DateTime $approvedDateProjectHead
@@ -273,18 +393,18 @@ class PurchaseRequisition
      */
     public function setApprovedDateProjectManager($approvedDateProjectHead)
     {
-        $this->$approvedDateProjectHead = $approvedDateProjectHead;
+        $this->approvedDateProjectHead = $approvedDateProjectHead;
 
         return $this;
     }
 
     /**
-     * Get $approvedDateProjectHead
+     * Get approvedDateProjectHead
      *
      * @return \DateTime
      */
     public function getApprovedDateProjectHead()
     {
-        return $this->$approvedDateProjectHead;
+        return $this->approvedDateProjectHead;
     }
 }

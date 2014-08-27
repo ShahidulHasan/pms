@@ -21,6 +21,13 @@ class PurchaseOrderItem
      */
     private $id;
 
+    /**
+     * @var Item
+     *
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Item", inversedBy="purchaseOrderItem")
+     * @ORM\JoinColumn(name="items")
+     */
+    private $item;
 
     /**
      * Get id
@@ -30,5 +37,28 @@ class PurchaseOrderItem
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set item
+     *
+     * @param integer $item
+     * @return PurchaseOrderItem
+     */
+    public function setItem($item)
+    {
+        $this->item = $item;
+
+        return $this;
+    }
+
+    /**
+     * Get item
+     *
+     * @return integer
+     */
+    public function getItem()
+    {
+        return $this->item;
     }
 }
