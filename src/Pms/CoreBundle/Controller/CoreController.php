@@ -14,6 +14,7 @@ use Pms\CoreBundle\Form\BuyerType;
 use Pms\CoreBundle\Form\ItemType;
 use Pms\CoreBundle\Form\ProjectCostItemType;
 use Pms\CoreBundle\Form\ProjectType;
+use Pms\CoreBundle\Form\PurchaseRequisitionType;
 use Pms\CoreBundle\Form\SearchType;
 use Pms\CoreBundle\Form\SubCategoryType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -56,6 +57,16 @@ class CoreController extends Controller
         ));
     }
 
+    public function purchaseRequisitionNewAction(Request $request)
+    {
+//        $purchaseRequisition = new PurchaseRequisition();
+        $form = $this->createForm(new PurchaseRequisitionType());
+
+        return $this->render('PmsCoreBundle:PurchaseRequisition:form.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
     public function overViewAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -70,7 +81,7 @@ class CoreController extends Controller
             $end = 0;
         }
 
-        $itemUses = $this->getDoctrine()->getRepository('UserBundle:User')->overView($em, $start, $end);
+        $itemUses = $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCostItem')->overView($em, $start, $end);
 
         list($itemUses, $page) = $this->paginateOverView($itemUses);
 
@@ -99,7 +110,7 @@ class CoreController extends Controller
             $endDate = 0;
         }
 
-        list($itemUses, $itemTotal, $itemsPieChartData, $sumOfTopTen, $totalItemForPie, $totalSum, $categoriesPieChartData, $totalCategoryForPic) = $this->getDoctrine()->getRepository('UserBundle:User')->itemReport($em, $startDate, $endDate);
+        list($itemUses, $itemTotal, $itemsPieChartData, $sumOfTopTen, $totalItemForPie, $totalSum, $categoriesPieChartData, $totalCategoryForPic) = $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCostItem')->itemReport($em, $startDate, $endDate);
 
         $formSearch = $this->createForm(new SearchType());
 
@@ -122,7 +133,7 @@ class CoreController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        list($itemUses, $itemTotal, $reportData) = $this->getDoctrine()->getRepository('UserBundle:User')->itemDetails($id, $em, $start, $end);
+        list($itemUses, $itemTotal, $reportData) = $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCostItem')->itemDetails($id, $em, $start, $end);
 
         return $this->render('PmsCoreBundle:Report:item_details.html.twig', array(
             'start' => $start,
@@ -137,7 +148,7 @@ class CoreController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        list($itemUses, $itemTotal, $reportData) = $this->getDoctrine()->getRepository('UserBundle:User')->byItemDetails($id, $em, $start, $end, $project);
+        list($itemUses, $itemTotal, $reportData) = $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCostItem')->byItemDetails($id, $em, $start, $end, $project);
 
         return $this->render('PmsCoreBundle:Report:by_item_details.html.twig', array(
             'start' => $start,
@@ -153,7 +164,7 @@ class CoreController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        list($projectItems, $itemsTotal, $itemsPieChartData, $categoriesPieChartData) = $this->getDoctrine()->getRepository('UserBundle:User')->projectDetails($id, $em, $startDate, $endDate);
+        list($projectItems, $itemsTotal, $itemsPieChartData, $categoriesPieChartData) = $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCostItem')->projectDetails($id, $em, $startDate, $endDate);
 
         return $this->render('PmsCoreBundle:Report:by_project_details.html.twig', array(
             'categoriesPieChartData' => $categoriesPieChartData,
@@ -169,7 +180,7 @@ class CoreController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        list($projectItems, $projectItems2, $reportData) = $this->getDoctrine()->getRepository('UserBundle:User')->projectDetails($id, $em, $start, $end);
+        list($projectItems, $projectItems2, $reportData) = $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCostItem')->projectDetails($id, $em, $start, $end);
 
         return $this->render('PmsCoreBundle:Report:project_details.html.twig', array(
             'start' => $start,
@@ -194,7 +205,7 @@ class CoreController extends Controller
             $endDate = 0;
         }
 
-        list($projectCostItems, $totalCost, $projectPieChartData, $sumOfTopTen, $totalProjectForPic, $categoryPieChartData, $totalCategoryForPic, $totalSum) = $this->getDoctrine()->getRepository('UserBundle:User')->projectReport($em, $startDate, $endDate);
+        list($projectCostItems, $totalCost, $projectPieChartData, $sumOfTopTen, $totalProjectForPic, $categoryPieChartData, $totalCategoryForPic, $totalSum) = $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCostItem')->projectReport($em, $startDate, $endDate);
 
         $formSearch = $this->createForm(new SearchType());
 

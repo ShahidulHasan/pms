@@ -6,6 +6,10 @@ purchase_requisition_add:
     pattern: /purchase/requisition
     defaults: { _controller: PmsCoreBundle:Core:purchaseRequisitionAdd }
 
+purchase_requisition_new:
+    pattern: /purchase/requisition/new
+    defaults: { _controller: PmsCoreBundle:Core:purchaseRequisitionNew }
+
 buyer_add:
     pattern: /buyer
     defaults: { _controller: PmsCoreBundle:Core:buyerAdd }
