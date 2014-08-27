@@ -30,6 +30,28 @@ class PurchaseOrderItem
     private $item;
 
     /**
+     * @var PurchaseRequisition
+     *
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisition", inversedBy="purchaseOrderItem")
+     * @ORM\JoinColumn(name="purchase_requisitions")
+     */
+    private $purchaseRequisition;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comments", type="string")
+     */
+    private $comment;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="status", type="integer")
+     */
+    private $status;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -37,6 +59,29 @@ class PurchaseOrderItem
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set purchaseRequisition
+     *
+     * @param integer $purchaseRequisition
+     * @return PurchaseRequisitionItem
+     */
+    public function setPurchaseRequisitionId($purchaseRequisition)
+    {
+        $this->purchaseRequisition = $purchaseRequisition;
+
+        return $this;
+    }
+
+    /**
+     * Get purchaseRequisition
+     *
+     * @return integer
+     */
+    public function getPurchaseRequisition()
+    {
+        return $this->purchaseRequisition;
     }
 
     /**
@@ -60,5 +105,51 @@ class PurchaseOrderItem
     public function getItem()
     {
         return $this->item;
+    }
+
+    /**
+     * Set comment
+     *
+     * @param string $comment
+     * @return PurchaseRequisitionItem
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Get comment
+     *
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     * @return PurchaseRequisition
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

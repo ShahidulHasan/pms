@@ -25,9 +25,9 @@ class PurchaseRequisitionItem
      * @var PurchaseRequisition
      *
      * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisition", inversedBy="purchaseRequisitionItem")
-     * @ORM\JoinColumn(name="purchase_requisitions_id")
+     * @ORM\JoinColumn(name="purchase_requisitions")
      */
-    private $purchaseRequisitionId;
+    private $purchaseRequisition;
 
     /**
      * @var Item
@@ -73,34 +73,6 @@ class PurchaseRequisitionItem
     private $statusPo;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="approved_by_category_head_one", type="string", length=255, nullable=true)
-     */
-    private $approvedByCategoryHeadOne;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="approved_date_category_head_one", type="datetime", nullable=true)
-     */
-    private $approvedDateCategoryHeadOne;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="approved_by_category_head_two", type="string", length=255, nullable=true)
-     */
-    private $approvedByCategoryHeadTwo;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="approved_date_category_head_two", type="datetime", nullable=true)
-     */
-    private $approvedDateCategoryHeadTwo;
-
-    /**
      * Get id
      *
      * @return integer 
@@ -134,26 +106,26 @@ class PurchaseRequisitionItem
     }
 
     /**
-     * Set purchaseRequisitionId
+     * Set purchaseRequisition
      *
-     * @param integer $purchaseRequisitionId
+     * @param integer $purchaseRequisition
      * @return PurchaseRequisitionItem
      */
-    public function setPurchaseRequisitionId($purchaseRequisitionId)
+    public function setPurchaseRequisitionId($purchaseRequisition)
     {
-        $this->purchaseRequisitionId = $purchaseRequisitionId;
+        $this->purchaseRequisition = $purchaseRequisition;
 
         return $this;
     }
 
     /**
-     * Get purchaseRequisitionId
+     * Get purchaseRequisition
      *
      * @return integer
      */
-    public function getPurchaseRequisitionId()
+    public function getPurchaseRequisition()
     {
-        return $this->purchaseRequisitionId;
+        return $this->purchaseRequisition;
     }
 
     /**
@@ -269,97 +241,5 @@ class PurchaseRequisitionItem
     public function getStatusPo()
     {
         return $this->statusPo;
-    }
-
-    /**
-     * Set approvedByCategoryHeadOne
-     *
-     * @param integer $approvedByCategoryHeadOne
-     * @return PurchaseRequisition
-     */
-    public function setApprovedByCategoryHeadOne($approvedByCategoryHeadOne)
-    {
-        $this->approvedByCategoryHeadOne = $approvedByCategoryHeadOne;
-
-        return $this;
-    }
-
-    /**
-     * Get approvedByCategoryHeadOne
-     *
-     * @return integer
-     */
-    public function getApprovedByCategoryHeadOne()
-    {
-        return $this->approvedByCategoryHeadOne;
-    }
-
-    /**
-     * Set approvedDateCategoryHeadOne
-     *
-     * @param \DateTime $approvedDateCategoryHeadOne
-     * @return PurchaseRequisition
-     */
-    public function setApprovedDateCategoryHeadOne($approvedDateCategoryHeadOne)
-    {
-        $this->approvedDateCategoryHeadOne = $approvedDateCategoryHeadOne;
-
-        return $this;
-    }
-
-    /**
-     * Get approvedDateCategoryHeadOne
-     *
-     * @return \DateTime
-     */
-    public function getApprovedDateCategoryHeadOne()
-    {
-        return $this->approvedDateCategoryHeadOne;
-    }
-
-    /**
-     * Set approvedByCategoryHeadTwo
-     *
-     * @param integer $approvedByCategoryHeadTwo
-     * @return PurchaseRequisition
-     */
-    public function setApprovedByCategoryHeadTwo($approvedByCategoryHeadTwo)
-    {
-        $this->approvedByCategoryHeadTwo = $approvedByCategoryHeadTwo;
-
-        return $this;
-    }
-
-    /**
-     * Get approvedByCategoryHeadTwo
-     *
-     * @return integer
-     */
-    public function getApprovedByCategoryHeadTwo()
-    {
-        return $this->approvedByCategoryHeadTwo;
-    }
-
-    /**
-     * Set approvedDateCategoryHeadTwo
-     *
-     * @param \DateTime $approvedDateCategoryHeadTwo
-     * @return PurchaseRequisition
-     */
-    public function setApprovedDateCategoryHeadTwo($approvedDateCategoryHeadTwo)
-    {
-        $this->approvedDateCategoryHeadTwo = $approvedDateCategoryHeadTwo;
-
-        return $this;
-    }
-
-    /**
-     * Get approvedDateCategoryHeadTwo
-     *
-     * @return \DateTime
-     */
-    public function getApprovedDateCategoryHeadTwo()
-    {
-        return $this->approvedDateCategoryHeadTwo;
     }
 }
