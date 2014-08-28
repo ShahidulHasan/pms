@@ -123,12 +123,13 @@ PurchaseRequisition: http://themeforest.net/item/metronic-responsive-admin-dashb
                 </div>
             </li>
 
-            {% set Route, Dashboard, User, Item, Project, Cost, Report, Category, SubCategory, OverView, Buyer, PR, PO = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "] %}
+            {% set Route, Dashboard, User, Item, Project, Cost, Report, Category, SubCategory, OverView, Buyer, PR, PO, Vendor = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "] %}
             {% set Url = Route|split('_') %}
             {% if Url[0] == 'homepage' %}{% set Dashboard = Dashboard|merge(["active"]) %}
             {% elseif Url[0] == 'fos' %}{% set Dashboard = Dashboard|merge(["active"]) %}
             {% elseif Url[0] == 'user' %}{% set User = User|merge(["active"]) %}
             {% elseif Url[0] == 'buyer' %}{% set Buyer = Buyer|merge(["active"]) %}
+            {% elseif Url[0] == 'vendor' %}{% set Vendor = Vendor|merge(["active"]) %}
             {% elseif Url[0] == 'item' %}{% set Item = Item|merge(["active"]) %}
             {% elseif Url[0] == 'category' %}{% set Category = Category|merge(["active"]) %}
             {% elseif Url[0] == 'sub' %}{% set SubCategory = SubCategory|merge(["active"]) %}
@@ -155,6 +156,15 @@ PurchaseRequisition: http://themeforest.net/item/metronic-responsive-admin-dashb
                     <span class="selected"></span>
                 </a>
             </li>
+            {% endif %}
+            {% if is_granted("ROLE_ADMIN") %}
+                <li class="{{ Vendor|join(" ") }}">
+                    <a href="/vendor">
+                        <i class="fa fa-user"></i>
+                        <span class="title"> Vendor </span>
+                        <span class="selected"></span>
+                    </a>
+                </li>
             {% endif %}
             {% if is_granted("ROLE_ADMIN") %}
                 <li class="{{ Buyer|join(" ") }}">
@@ -522,6 +532,77 @@ PurchaseRequisition: http://themeforest.net/item/metronic-responsive-admin-dashb
                 },
                 error: function () {
                     alert('Script Error');
+                }
+            });
+        });
+
+        $("#vendor_vendorName").keyup(function () {
+            var vendorName = $(this).val();
+
+            $.ajax({
+                type: "post",
+                url: Routing.generate('vendor_check'),
+                data: "vendorName=" + vendorName,
+                dataType: 'json',
+                success: function (msg) {
+                    if (msg.responseCode == 200) {
+                        $('.userMessege').css('color', 'red').html(msg.vendor_name).fadeIn(1000);
+                    }
+                    else {
+                        $('.userMessege').css('color', 'green').html(msg.vendor_name).fadeIn(1000);
+                    }
+                }
+            });
+        });
+
+        $("#ajaxSaveVendor").click(function () {
+            var sPageURL = window.location.pathname;
+            var sURLVariables = sPageURL.split('/');
+            var vendorName = $("#vendor_vendorName").val();
+
+            var vendorArray = new Array(vendorName, sURLVariables[3]);
+            $.ajax({
+                type: "post",
+                url: Routing.generate('vendor_ajax_add'),
+                data: "vendorArray=" + vendorArray,
+                dataType: 'json',
+                success: function (msg) {
+                    if(msg.responseCode == 200) {
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Vendor already exist</span></div>');
+                        $('.vendorMessege').css('color', 'red').html(msg.vendor_ajax_add).fadeIn(1000).append($addLink);
+                        $(':input','#vendor-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
+                    } else if(msg.responseCode == 204) {
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Insert Vendor</span></div>');
+                        $('.vendorMessege').css('color', 'red').html(msg.vendor_ajax_add).fadeIn(1000).append($addLink);
+                        $(':input','#vendor-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
+                    } else if(msg.responseCode == 202) {
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Vendor Update Successfully</span></div>');
+                        $('.vendorMessege').css('color', 'green').html(msg.vendor_ajax_add).fadeIn(1000).append($addLink);
+                        $(':input','#vendor-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
+                    } else {
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Vendor Add Successfully</span></div>');
+                        $('.vendorMessege').css('color', 'green').html(msg.vendor_ajax_add).fadeIn(1000).append($addLink);
+                        $(':input','#vendor-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
+                    }
+
+                    $('.userMessege').fadeOut();
+                    $("#vendor-list-div").load("/vendor/list")
                 }
             });
         });
@@ -920,6 +1001,16 @@ PurchaseRequisition: http://themeforest.net/item/metronic-responsive-admin-dashb
         $(".sub-category-deleted-list").click(function () {
 
             $("#sub-category-list-div").load("/sub-category/deleted/list");
+        });
+
+        $(".vendor-active-list").click(function () {
+
+            $("#vendor-list-div").load("/vendor/list");
+        });
+
+        $(".vendor-deleted-list").click(function () {
+
+            $("#vendor-list-div").load("/vendor/deleted/list");
         });
 
         {% endblock %}

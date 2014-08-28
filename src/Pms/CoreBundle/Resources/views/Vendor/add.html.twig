@@ -9,7 +9,7 @@
         </div>
     {% endfor %}
 
-    <span class="buyerMessege"></span>
+    <span class="vendorMessege"></span>
 
     <div class="row">
         <div class="col-md-12">
@@ -17,12 +17,12 @@
             <ul class="page-breadcrumb breadcrumb">
                 <li>
                     <i class="fa fa-user"></i>
-                    <a href="#" class="buyer-active-list">Active Buyer List</a>
+                    <a href="#" class="vendor-active-list">Active Vendor List</a>
                     <i class="fa">|</i>
                 </li>
                 <li>
                     <i class="fa fa-user"></i>
-                    <a href="#" class="buyer-deleted-list">Deleted Buyer List</a>
+                    <a href="#" class="vendor-deleted-list">Deleted Vendor List</a>
                 </li>
             </ul>
         </div>
@@ -34,7 +34,7 @@
             <div class="portlet box light-grey">
 
                 <div class="portlet-title">
-                    <div class="caption"><i class="fa fa-reorder"></i> Buyer</div>
+                    <div class="caption"><i class="fa fa-reorder"></i> Vendor</div>
                 </div>
 
                 <div class="portlet-body form">
@@ -51,22 +51,22 @@
                         </div>
 
                         <div class="form-actions fluid">
-                            {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'category-form', 'novalidate': 'novalidate'} }) }}
+                            {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'vendor-form', 'novalidate': 'novalidate'} }) }}
                             <div class="form-group">
-                                {{ form_label(form.buyerName, 'Buyer Name :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'margin-right:-50px;font-weight:bold;' } }
+                                {{ form_label(form.vendorName, 'Vendor Name :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'margin-right:-50px;font-weight:bold;' } }
                                 ) }}
                                 <div class="col-md-8">
                                     <div class="input-icon">
-                                        {{ form_widget(form.buyerName, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;' } }) }}
+                                        {{ form_widget(form.vendorName, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;' } }) }}
                                     </div>
                                 </div>
-                                <input type="button" name="ajaxSaveCategory" value="Save" id="ajaxSaveCategory" class="btn green button-width col-md-1" style="margin-top:2px;margin-left:10px;height:32px;">
+                                <input type="button" name="ajaxSaveVendor" value="Save" id="ajaxSaveVendor" class="btn green button-width col-md-1" style="margin-top:2px;margin-left:10px;height:32px;">
                                 <span class="userMessege" style="margin-left: 195px;"></span>
                             </div>
                             {{ form_end(form) }}
                         </div>
 
-                        <div class="form-actions fluid" id="buyer-list-div">
+                        <div class="form-actions fluid" id="Vendor-list-div">
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <div class="col-md-11" style="margin-top: 30px;margin-left: 4%;">
@@ -75,7 +75,7 @@
                                             <thead>
                                             <tr>
                                                 <th>Sl</th>
-                                                <th>Buyer Name</th>
+                                                <th>Vendor Name</th>
                                                 <th>Status</th>
                                                 <th></th>
                                             </tr>
@@ -86,24 +86,24 @@
                                             {% else %}{% set i = (page * 10) - 10 %}
                                             {% endif %}
 
-                                            {% for buyer in buyers %}
+                                            {% for vendor in vendors %}
                                                 {% set i = i + 1 %}
                                                 {% set color = [" "] %}
 
-                                                {% if buyer.status == 0 %}{% set color = color|merge(["red"]) %}
-                                                {% elseif buyer.status == 1 %}{% set color = color|merge(["green"]) %}
+                                                {% if vendor.status == 0 %}{% set color = color|merge(["red"]) %}
+                                                {% elseif vendor.status == 1 %}{% set color = color|merge(["green"]) %}
                                                 {% endif %}
 
                                                 <tr>
                                                     <td>{{ i }} .</td>
-                                                    <td class="col-md-8" style="color: {{ color|join("") }};">{{ buyer.buyerName }}</td>
-                                                    <td style="color: red;">
-                                                        <a href="#" class="btn default btn-xs red-stripe" style="width: 85px;"><i
-                                                                    class="fa fa-times"></i> Deleted</a>
+                                                    <td class="col-md-8" style="color: {{ color|join("") }};">{{ vendor.vendorName }}</td>
+                                                    <td>
+                                                        <a href="/vendor/delete/{{ vendor.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
+                                                                    class="fa fa-trash-o"></i> Delete</a>
                                                     </td>
                                                     <td>
-                                                        <a href="/buyer/active/{{ buyer.id }}" class="btn default btn-xs green-stripe" style="width: 85px;"><i
-                                                                    class="fa fa-repeat"></i> Restore</a>
+                                                        <a href="/vendor/update/{{ vendor.id }}" style="width: 85px;" class="btn default btn-xs blue-stripe"><i
+                                                                    class="fa fa-edit"></i> Update</a>
                                                     </td>
                                                 </tr>
 
@@ -111,7 +111,7 @@
                                             </tbody>
                                         </table>
                                         <div class="navigation" style="text-align: right">
-                                            {{ knp_pagination_render(buyers) }}
+                                            {{ knp_pagination_render(vendors) }}
                                         </div>
                                     </div>
                                 </div>

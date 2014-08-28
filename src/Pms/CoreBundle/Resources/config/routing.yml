@@ -1,3 +1,49 @@
+vendor_add:
+    pattern: /vendor
+    defaults: { _controller: PmsCoreBundle:Core:vendorAdd }
+
+vendor_list:
+    pattern: /vendor/list
+    defaults: { _controller: PmsCoreBundle:Core:vendorList }
+
+vendor_ajax_add:
+    pattern: /vendor/add
+    defaults: { _controller: PmsCoreBundle:Core:vendorAjaxAdd }
+    options:
+            expose: true
+
+vendor_check:
+    pattern: /vendor/check
+    defaults: { _controller: PmsCoreBundle:Core:vendorCheck }
+    options:
+            expose: true
+
+vendor_deleted:
+    pattern: /vendor/deleted
+    defaults: { _controller: PmsCoreBundle:Core:vendorDeleted }
+
+vendor_deleted_list:
+    pattern: /vendor/deleted/list
+    defaults: { _controller: PmsCoreBundle:Core:vendorDeletedList }
+
+vendor_delete:
+    pattern: /vendor/delete/{id}
+    defaults: { _controller: PmsCoreBundle:Core:vendorDelete }
+    requirements:
+          id: \d+
+
+vendor_active:
+    pattern: /vendor/active/{id}
+    defaults: { _controller: PmsCoreBundle:Core:vendorActive }
+    requirements:
+          id: \d+
+
+vendor_update:
+    pattern: /vendor/update/{id}
+    defaults: { _controller: PmsCoreBundle:Core:vendorUpdate }
+    requirements:
+          id:  \d+
+
 purchase_ordered_add:
     pattern: /purchase/ordered
     defaults: { _controller: PmsCoreBundle:Core:purchaseOrderedAdd }
