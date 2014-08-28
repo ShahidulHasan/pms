@@ -128,6 +128,49 @@
         FormValidation.init();
         FormComponents.init();
 
+        $("#ajaxSavePr").click(function () {
+
+            var purchaserequisition_project = $("#purchaserequisition_project").val();
+            var purchaserequisition_requisitionNo = $("#purchaserequisition_requisitionNo").val();
+            var purchaserequisition_dateOfRequisition = $("#purchaserequisition_dateOfRequisition").val();
+
+            var prArray = new Array(purchaserequisition_project, purchaserequisition_requisitionNo, purchaserequisition_dateOfRequisition);
+
+            $.ajax({
+                type: "post",
+                url: Routing.generate('pr_ajax_add'),
+                data: "prArray=" + prArray,
+                dataType: 'json',
+                success: function (msg) {
+                    if(msg.responseCode == 204) {
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Fill The Blank Field</span></div>');
+                        $('.projectCostItemMessege').css('color', 'red').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
+                        $(':input','#cost-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
+                    } else if(msg.responseCode == 202) {
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Project Cost Update Successfully</span></div>');
+                        $('.projectCostItemMessege').css('color', 'green').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
+                        $(':input','#cost-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
+                    } else {
+                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Project Cost Add Successfully</span></div>');
+                        $('.projectCostItemMessege').css('color', 'green').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
+                        $(':input','#cost-form')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('')
+                                .removeAttr('checked')
+                                .removeAttr('selected');
+                    }
+                }
+            });
+        });
+
         {% endblock %}
     });
 </script>

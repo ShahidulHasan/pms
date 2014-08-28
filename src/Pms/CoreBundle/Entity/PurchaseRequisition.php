@@ -25,49 +25,49 @@ class PurchaseRequisition
     /**
      * @var integer
      *
-     * @ORM\Column(name="requisitions_no", type="integer")
+     * @ORM\Column(name="requisitions_no", type="integer", nullable=true)
      */
     private $requisitionNo;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="status", type="integer")
+     * @ORM\Column(name="status", type="integer", nullable=true)
      */
     private $status;
 
     /**
      * @var /DateTime
      *
-     * @ORM\Column(name="date_of_requisitions", type="date")
+     * @ORM\Column(name="date_of_requisitions", type="date", nullable=true)
      */
     private $dateOfRequisition;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="claimed_by", type="integer")
+     * @ORM\Column(name="claimed_by", type="integer", nullable=true)
      */
     private $claimedBy;
 
     /**
      * @var /DateTime
      *
-     * @ORM\Column(name="date_of_closings", type="date")
+     * @ORM\Column(name="date_of_closings", type="date", nullable=true)
      */
     private $dateOfClosing;
 
     /**
      * @var /DateTime
      *
-     * @ORM\Column(name="date_of_final_delivered", type="date")
+     * @ORM\Column(name="date_of_final_delivered", type="date", nullable=true)
      */
     private $dateOfFinalDelivered;
 
     /**
      * @var /DateTime
      *
-     * @ORM\Column(name="date_of_claimed", type="date")
+     * @ORM\Column(name="date_of_claimed", type="date", nullable=true)
      */
     private $dateOfClaimed;
 
@@ -89,21 +89,21 @@ class PurchaseRequisition
      * @var Project
      *
      * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Project", inversedBy="purchaseRequisition")
-     * @ORM\JoinColumn(name="projects")
+     * @ORM\JoinColumn(name="projects", nullable=true)
      */
     private $project;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="created_by", type="integer")
+     * @ORM\Column(name="created_by", type="integer", nullable=true)
      */
     private $createdBy;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_date", type="datetime")
+     * @ORM\Column(name="created_date", type="datetime", nullable=true)
      */
     private $createdDate;
 

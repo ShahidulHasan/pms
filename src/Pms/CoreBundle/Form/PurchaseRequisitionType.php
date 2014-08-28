@@ -42,6 +42,7 @@ class PurchaseRequisitionType extends AbstractType
                         ->where('s.status = 1');
                 }
             ))
+            ->add('save', 'submit');
         ;
     }
     

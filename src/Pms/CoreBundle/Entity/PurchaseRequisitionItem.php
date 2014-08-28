@@ -25,7 +25,7 @@ class PurchaseRequisitionItem
      * @var PurchaseRequisition
      *
      * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisition", inversedBy="purchaseRequisitionItem")
-     * @ORM\JoinColumn(name="purchase_requisitions")
+     * @ORM\JoinColumn(name="purchase_requisitions", nullable=true)
      */
     private $purchaseRequisition;
 
@@ -33,42 +33,42 @@ class PurchaseRequisitionItem
      * @var Item
      *
      * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Item", inversedBy="purchaseRequisitionItem")
-     * @ORM\JoinColumn(name="items")
+     * @ORM\JoinColumn(name="items", nullable=true)
      */
     private $item;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="quantities", type="integer")
+     * @ORM\Column(name="quantities", type="integer", nullable=true)
      */
     private $quantity;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="comments", type="string")
+     * @ORM\Column(name="comments", type="string", nullable=true)
      */
     private $comment;
 
     /**
      * @var /DateTime
      *
-     * @ORM\Column(name="date_of_required", type="date")
+     * @ORM\Column(name="date_of_required", type="date", nullable=true)
      */
     private $dateOfRequired;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="status", type="integer")
+     * @ORM\Column(name="status", type="integer", nullable=true)
      */
     private $status;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="status_po", type="integer")
+     * @ORM\Column(name="status_po", type="integer", nullable=true)
      */
     private $statusPo;
 

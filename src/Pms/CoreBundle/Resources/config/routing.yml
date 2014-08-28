@@ -10,6 +10,12 @@ purchase_requisition_new:
     pattern: /purchase/requisition/new
     defaults: { _controller: PmsCoreBundle:Core:purchaseRequisitionNew }
 
+#pr_ajax_add:
+#    pattern: /pr/add
+#    defaults: { _controller: PmsCoreBundle:Core:prAjaxAdd }
+#    options:
+#            expose: true
+
 buyer_add:
     pattern: /buyer
     defaults: { _controller: PmsCoreBundle:Core:buyerAdd }

@@ -25,47 +25,126 @@ class CoreController extends Controller
 {
     public function purchaseOrderedAddAction(Request $request)
     {
-//        $purchaseRequisition = new PurchaseRequisition();
-//
-//        $form = $this->createForm(new BuyerType(), $purchaseRequisition);
-//
-//        $dql = "SELECT a FROM PmsCoreBundle:PurchaseRequisition a ORDER BY a.id DESC";
-//
-//        list($purchaseRequisition, $page) = $this->paginate($dql);
-
         return $this->render('PmsCoreBundle:PurchaseOrdered:add.html.twig', array(
-//            'purchaseRequisition' => $purchaseRequisition,
-//            'form' => $form->createView(),
-//            'page' => $page,
+
         ));
     }
 
     public function purchaseRequisitionAddAction(Request $request)
     {
-//        $purchaseRequisition = new PurchaseRequisition();
-//
-//        $form = $this->createForm(new BuyerType(), $purchaseRequisition);
-//
-//        $dql = "SELECT a FROM PmsCoreBundle:PurchaseRequisition a ORDER BY a.id DESC";
-//
-//        list($purchaseRequisition, $page) = $this->paginate($dql);
-
         return $this->render('PmsCoreBundle:PurchaseRequisition:add.html.twig', array(
-//            'purchaseRequisition' => $purchaseRequisition,
-//            'form' => $form->createView(),
-//            'page' => $page,
+
         ));
     }
 
     public function purchaseRequisitionNewAction(Request $request)
     {
-//        $purchaseRequisition = new PurchaseRequisition();
-        $form = $this->createForm(new PurchaseRequisitionType());
+        $purchaseRequisition = new PurchaseRequisition();
+        $form = $this->createForm(new PurchaseRequisitionType(), $purchaseRequisition);
+        if ($request->getMethod() == 'POST') {
+
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+
+                    $status = '1';
+                    $dateOfRequisition = $form["dateOfRequisition"]->getData();
+                    $purchaseRequisition->setStatus($status);
+                    $purchaseRequisition->setDateOfRequisition(new \DateTime($dateOfRequisition));
+
+                    $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisition')->create($purchaseRequisition);
+
+                    $this->get('session')->getFlashBag()->add(
+                        'notice',
+                        'Pr Successfully Add'
+                    );
+
+                return $this->redirect($this->generateUrl('purchase_requisition_add'));
+            }
+        }
 
         return $this->render('PmsCoreBundle:PurchaseRequisition:form.html.twig', array(
             'form' => $form->createView(),
         ));
     }
+
+//    public function prAjaxAddAction(Request $request)
+//    {
+//        $prArray = $request->request->get('prArray');
+//        $prArray = explode(',',$prArray);
+//
+//        $dateOfCost = $prArray[0];
+//        $project = $prArray[1];
+//        $item = $prArray[2];
+//
+//        if(!empty($dateOfCost) && !empty($project) && !empty($item) && !empty($quantity) && !empty($unitPrice) && !empty($lineTotal)) {
+//
+//            if($updateId) {
+//                $projectCostItem = $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCostItem')->find($updateId);
+//
+//                $user = $this->get('security.context')->getToken()->getUser()->getId();
+//                $projectCostItem->setDateOfCost(new \DateTime($dateOfCost));
+//                $projectCostItem->setApprovedBy($user);
+//                $projectCostItem->setApprovedDate(new \DateTime());
+//
+//                $projectCostItem->setProject($this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneById($project));
+//                $projectCostItem->setItem($this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneById($item));
+//                $projectCostItem->setBuyer($this->getDoctrine()->getRepository('PmsCoreBundle:Buyer')->findOneById($buyer));
+//                $projectCostItem->setCategory($this->getDoctrine()->getRepository('PmsCoreBundle:Category')->findOneById($category));
+//                $projectCostItem->setQuantity($quantity);
+//                $projectCostItem->setUnitPrice($unitPrice);
+//                $projectCostItem->setLineTotal($lineTotal);
+//                $projectCostItem->setInvoice($invoice);
+//                $projectCostItem->setGrn($grn);
+//                $projectCostItem->setSubCategory($subcategory);
+//                $projectCostItem->setPr($pr);
+//                $projectCostItem->setPo($po);
+//                $projectCostItem->setComment($comment);
+//
+//                $this->getDoctrine()->getManager()->persist($projectCostItem);
+//                $this->getDoctrine()->getManager()->flush();
+//
+//                $return = array("responseCode" => 202);
+//                $return = json_encode($return);
+//
+//                return new Response($return, 200, array('Content-Type' => 'application/json'));
+//            } else {
+//                $projectCostItem = new ProjectCostItem();
+//
+//                $user = $this->get('security.context')->getToken()->getUser()->getId();
+//                $projectCostItem->setDateOfCost(new \DateTime($dateOfCost));
+//                $projectCostItem->setCreatedBy($user);
+//                $projectCostItem->setCreatedDate(new \DateTime());
+//                $projectCostItem->setStatus(0);
+//
+//                $projectCostItem->setProject($this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneById($project));
+//                $projectCostItem->setItem($this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneById($item));
+//                $projectCostItem->setBuyer($this->getDoctrine()->getRepository('PmsCoreBundle:Buyer')->findOneById($buyer));
+//                $projectCostItem->setCategory($this->getDoctrine()->getRepository('PmsCoreBundle:Category')->findOneById($category));
+//                $projectCostItem->setQuantity($quantity);
+//                $projectCostItem->setUnitPrice($unitPrice);
+//                $projectCostItem->setLineTotal($lineTotal);
+//                $projectCostItem->setInvoice($invoice);
+//                $projectCostItem->setGrn($grn);
+//                $projectCostItem->setSubCategory($subcategory);
+//                $projectCostItem->setPr($pr);
+//                $projectCostItem->setPo($po);
+//                $projectCostItem->setComment($comment);
+//
+//                $this->getDoctrine()->getRepository("PmsCoreBundle:ProjectCostItem")->create($projectCostItem);
+//
+//                $return = array("responseCode" => '404');
+//                $return = json_encode($return);
+//
+//                return new Response($return, 200, array('Content-Type' => 'application/json'));
+//            }
+//        } else{
+//            $return = array("responseCode" => 204);
+//            $return = json_encode($return);
+//
+//            return new Response($return, 200, array('Content-Type' => 'application/json'));
+//        }
+//    }
 
     public function overViewAction(Request $request)
     {
