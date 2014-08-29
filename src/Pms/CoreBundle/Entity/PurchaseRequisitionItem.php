@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * PurchaseRequisitionItem
  *
  * @ORM\Table(name="purchase_requisition_items")
- * @ORM\Entity(repositoryClass="Pms\CoreBundle\Entity\PurchaseRequisitionItemRepository")
+ * @ORM\Entity(repositoryClass="Pms\CoreBundle\Entity\Repository\PurchaseRequisitionItemRepository")
  */
 class PurchaseRequisitionItem
 {

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ProjectCostItem
  *
  * @ORM\Table(name="project_cost_items")
- * @ORM\Entity(repositoryClass="Pms\CoreBundle\Entity\ProjectCostItemRepository")
+ * @ORM\Entity(repositoryClass="Pms\CoreBundle\Entity\Repository\ProjectCostItemRepository")
  */
 class ProjectCostItem
 {

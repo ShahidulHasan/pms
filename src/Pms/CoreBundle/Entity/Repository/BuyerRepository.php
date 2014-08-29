@@ -1,6 +1,6 @@
 <?php
 
-namespace Pms\CoreBundle\Entity;
+namespace Pms\CoreBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 

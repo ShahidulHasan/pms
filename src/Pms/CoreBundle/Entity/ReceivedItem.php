@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ReceivedItem
  *
  * @ORM\Table(name="received_items")
- * @ORM\Entity(repositoryClass="Pms\CoreBundle\Entity\ReceivedItemRepository")
+ * @ORM\Entity(repositoryClass="Pms\CoreBundle\Entity\Repository\ReceivedItemRepository")
  */
 class ReceivedItem
 {

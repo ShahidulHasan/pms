@@ -36,7 +36,7 @@ class PurchaseRequisitionType extends AbstractType
                 'required' => false,
                 'empty_value' => 'Select Project',
                 'empty_data' => null,
-                'query_builder' => function (\Pms\CoreBundle\Entity\ProjectRepository $repository)
+                'query_builder' => function (\Pms\CoreBundle\Entity\Repository\ProjectRepository $repository)
                 {
                     return $repository->createQueryBuilder('s')
                         ->where('s.status = 1');
