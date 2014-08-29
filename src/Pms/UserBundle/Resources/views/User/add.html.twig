@@ -307,4 +307,57 @@
 
     </script>
 
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            {% block documentready %}
+            {{ parent() }}
+
+            $("#user_username").keyup(function () {
+                var userName = $(this).val();
+
+                $.ajax({
+                    type: "post",
+                    url: Routing.generate('username_check'),
+                    data: "userName=" + userName,
+                    dataType: 'json',
+                    success: function (msg) {
+                        if (msg.responseCode == 200) {
+                            $('.userMessege').css('color', 'red').html(msg.user_name).fadeIn(1000);
+                        }
+                        else {
+                            $('.userMessege').css('color', 'green').html(msg.user_name).fadeIn(1000);
+                        }
+                    },
+                    error: function () {
+                        alert('Script Error');
+                    }
+                });
+            });
+
+            $("#user_email").keyup(function () {
+                var email = $(this).val();
+
+                $.ajax({
+                    type: "post",
+                    url: Routing.generate('email_check'),
+                    data: "email=" + email,
+                    dataType: 'json',
+                    success: function (msg) {
+                        if (msg.responseCode == 200) {
+                            $('.emailMessege').css('color', 'red').html(msg.email_check).fadeIn(1000);
+                        }
+                        else {
+                            $('.emailMessege').css('color', 'green').html(msg.email_check).fadeIn(1000);
+                        }
+                    },
+                    error: function () {
+                        alert('Script Error');
+                    }
+                });
+            });
+
+            {% endblock %}
+        });
+    </script>
+
 {% endblock %}

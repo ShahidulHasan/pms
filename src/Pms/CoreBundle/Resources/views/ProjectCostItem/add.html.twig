@@ -292,7 +292,127 @@
 
                 </div>
             </div>
-        </div>
     </div>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            {% block documentready %}
+            {{ parent() }}
+
+            $("#ajaxSaveprojectCostItem").click(function () {
+                var sPageURL = window.location.pathname;
+                var sURLVariables = sPageURL.split('/');
+
+                var dateOfCost = $("#projectcostitem_dateOfCost").val();
+                var project = $("#projectcostitem_project").val();
+                var item = $("#projectcostitem_item").val();
+                var quantity = $("#projectcostitem_quantity").val();
+                var unitPrice = $("#projectcostitem_unitPrice").val();
+                var lineTotal = $("#projectcostitem_lineTotal").val();
+                var invoice = $("#projectcostitem_invoice").val();
+                var grn = $("#projectcostitem_grn").val();
+                var category = $("#projectcostitem_category").val();
+                var subcategory = $("#projectcostitem_subCategory").val();
+                var pr = $("#projectcostitem_pr").val();
+                var po = $("#projectcostitem_po").val();
+                var buyer = $("#projectcostitem_buyer").val();
+                var comment = $("#projectcostitem_comment").val();
+
+                if(invoice && po){
+
+                    alert('Please insert invoice or PO number');
+                    return po;
+                }
+
+                var projectCostItemArray = new Array(dateOfCost, project, item, quantity, unitPrice, lineTotal, sURLVariables[3], invoice, grn, category, subcategory, pr, po, buyer, comment);
+
+                $.ajax({
+                    type: "post",
+                    url: Routing.generate('project_cost_ajax_add'),
+                    data: "projectCostItemArray=" + projectCostItemArray,
+                    dataType: 'json',
+                    success: function (msg) {
+                        if(msg.responseCode == 204) {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Fill The Blank Field</span></div>');
+                            $('.projectCostItemMessege').css('color', 'red').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#cost-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        } else if(msg.responseCode == 202) {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Project Cost Update Successfully</span></div>');
+                            $('.projectCostItemMessege').css('color', 'green').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#cost-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        } else {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Project Cost Add Successfully</span></div>');
+                            $('.projectCostItemMessege').css('color', 'green').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#cost-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        }
+
+                        $("#cost-list-div").load("/cost/list")
+                    }
+                });
+            });
+
+            $("#projectcostitem_category").change(function () {
+                var category = $(this).val();
+
+                $.ajax({
+                    type: "post",
+                    url: Routing.generate('get_subcategory'),
+                    data: "category=" + category,
+                    dataType: 'json',
+                    success: function (response, status) {
+                        if (response.responseCode == 200) {
+                            $('#projectcostitem_subCategory').html('');
+                            for (var i=0; i < response.subCats.length; i++){
+                                var cat = response.subCats[i];
+                                $('#projectcostitem_subCategory').append('<option value="'+cat.id+'">'+cat.categoryName+'</option>');
+                            }
+                        } else {
+                            $('.userMessege').css('color', 'green').html(msg.item_name).fadeIn(1000);
+                        }
+                    }
+                });
+            });
+
+            $(".unitPrice").keyup(function () {
+                var quantity = $("#table_project_cost").find('.quantity').val();
+                var unitPrice = $("#table_project_cost").find('.unitPrice').val();
+                var lineTotal = quantity * unitPrice;
+                $('input[type=text].lineTotal').val(lineTotal);
+            });
+
+            $(".check-by-ajax").click(function () {
+                var projectCostItemId = $(this).data('myvalue');
+
+                $.ajax({
+                    type: "post",
+                    url: Routing.generate('project_cost_ajax_checked'),
+                    data: "projectCostItemId=" + projectCostItemId,
+                    dataType: 'json',
+                    success: function (msg) {
+                        if(msg.responseCode == 202) {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Project Cost Successfully Checked</span></div>');
+                            $('.projectCostMessege').css('color', 'green').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
+                        }
+
+                        $("#cost-list-div").load("/cost/list")
+                    }
+                });
+            });
+
+            {% endblock %}
+        });
+    </script>
 
 {% endblock %}

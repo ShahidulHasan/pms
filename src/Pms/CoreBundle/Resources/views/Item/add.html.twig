@@ -136,4 +136,95 @@
         </div>
     </div>
 
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            {% block documentready %}
+            {{ parent() }}
+
+            $("#ajaxSaveItem").click(function () {
+                var sPageURL = window.location.pathname;
+                var sURLVariables = sPageURL.split('/');
+                var itemName = $("#item_itemName").val();
+                var itemUnit = $("#item_itemUnit").val();
+
+                var itemArray = new Array(itemName, sURLVariables[3], itemUnit);
+                $.ajax({
+                    type: "post",
+                    url: Routing.generate('item_ajax_add'),
+                    data: "itemArray=" + itemArray,
+                    dataType: 'json',
+                    success: function (msg) {
+                        if(msg.responseCode == 200) {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Item already exist</span></div>');
+                            $('.itemMessege').css('color', 'red').html(msg.item_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#item-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        } else if(msg.responseCode == 204) {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Insert Item</span></div>');
+                            $('.itemMessege').css('color', 'red').html(msg.item_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#item-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        } else if(msg.responseCode == 202) {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Item Update Successfully</span></div>');
+                            $('.itemMessege').css('color', 'green').html(msg.item_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#item-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        } else {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Item Add Successfully</span></div>');
+                            $('.itemMessege').css('color', 'green').html(msg.item_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#item-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        }
+
+                        $('.userMessege').fadeOut();
+                        $("#item-list-div").load("/item/list")
+                    }
+                });
+            });
+
+            $("#item_itemName").keyup(function () {
+                var itemName = $(this).val();
+
+                $.ajax({
+                    type: "post",
+                    url: Routing.generate('item_check'),
+                    data: "itemName=" + itemName,
+                    dataType: 'json',
+                    success: function (msg) {
+                        if (msg.responseCode == 200) {
+                            $('.userMessege').css('color', 'red').html(msg.item_name).fadeIn(1000);
+                        }
+                        else {
+                            $('.userMessege').css('color', 'green').html(msg.item_name).fadeIn(1000);
+                        }
+                    }
+                });
+            });
+
+            $(".item-active-list").click(function () {
+
+                $("#item-list-div").load("/item/list");
+            });
+
+            $(".item-deleted-list").click(function () {
+
+                $("#item-list-div").load("/item/deleted/list");
+            });
+
+            {% endblock %}
+        });
+    </script>
+
 {% endblock %}

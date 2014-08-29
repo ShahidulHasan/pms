@@ -125,4 +125,94 @@
         </div>
     </div>
 
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            {% block documentready %}
+            {{ parent() }}
+
+            $("#ajaxSaveBuyer").click(function () {
+                var sPageURL = window.location.pathname;
+                var sURLVariables = sPageURL.split('/');
+                var buyerName = $("#buyer_buyerName").val();
+
+                var buyerArray = new Array(buyerName, sURLVariables[3]);
+                $.ajax({
+                    type: "post",
+                    url: Routing.generate('buyer_ajax_add'),
+                    data: "buyerArray=" + buyerArray,
+                    dataType: 'json',
+                    success: function (msg) {
+                        if(msg.responseCode == 200) {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Buyer already exist</span></div>');
+                            $('.buyerMessege').css('color', 'red').html(msg.buyer_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#buyer-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        } else if(msg.responseCode == 204) {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Insert Buyer</span></div>');
+                            $('.buyerMessege').css('color', 'red').html(msg.buyer_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#buyer-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        } else if(msg.responseCode == 202) {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Buyer Update Successfully</span></div>');
+                            $('.buyerMessege').css('color', 'green').html(msg.buyer_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#buyer-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        } else {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Buyer Add Successfully</span></div>');
+                            $('.buyerMessege').css('color', 'green').html(msg.buyer_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#buyer-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        }
+
+                        $('.userMessege').fadeOut();
+                        $("#buyer-list-div").load("/buyer/list")
+                    }
+                });
+            });
+
+            $("#buyer_buyerName").keyup(function () {
+                var buyerName = $(this).val();
+
+                $.ajax({
+                    type: "post",
+                    url: Routing.generate('buyer_check'),
+                    data: "buyerName=" + buyerName,
+                    dataType: 'json',
+                    success: function (msg) {
+                        if (msg.responseCode == 200) {
+                            $('.userMessege').css('color', 'red').html(msg.buyer_name).fadeIn(1000);
+                        }
+                        else {
+                            $('.userMessege').css('color', 'green').html(msg.buyer_name).fadeIn(1000);
+                        }
+                    }
+                });
+            });
+
+            $(".buyer-active-list").click(function () {
+
+                $("#buyer-list-div").load("/buyer/list");
+            });
+
+            $(".buyer-deleted-list").click(function () {
+
+                $("#buyer-list-div").load("/buyer/deleted/list");
+            });
+
+            {% endblock %}
+        });
+    </script>
+
 {% endblock %}

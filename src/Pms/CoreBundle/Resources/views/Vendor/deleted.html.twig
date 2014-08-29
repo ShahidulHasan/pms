@@ -125,4 +125,94 @@
         </div>
     </div>
 
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            {% block documentready %}
+            {{ parent() }}
+
+            $("#ajaxSaveVendor").click(function () {
+                var sPageURL = window.location.pathname;
+                var sURLVariables = sPageURL.split('/');
+                var vendorName = $("#vendor_vendorName").val();
+
+                var vendorArray = new Array(vendorName, sURLVariables[3]);
+                $.ajax({
+                    type: "post",
+                    url: Routing.generate('vendor_ajax_add'),
+                    data: "vendorArray=" + vendorArray,
+                    dataType: 'json',
+                    success: function (msg) {
+                        if(msg.responseCode == 200) {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Vendor already exist</span></div>');
+                            $('.vendorMessege').css('color', 'red').html(msg.vendor_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#vendor-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        } else if(msg.responseCode == 204) {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Insert Vendor</span></div>');
+                            $('.vendorMessege').css('color', 'red').html(msg.vendor_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#vendor-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        } else if(msg.responseCode == 202) {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Vendor Update Successfully</span></div>');
+                            $('.vendorMessege').css('color', 'green').html(msg.vendor_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#vendor-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        } else {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Vendor Add Successfully</span></div>');
+                            $('.vendorMessege').css('color', 'green').html(msg.vendor_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#vendor-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        }
+
+                        $('.userMessege').fadeOut();
+                        $("#vendor-list-div").load("/vendor/list")
+                    }
+                });
+            });
+
+            $("#vendor_vendorName").keyup(function () {
+                var vendorName = $(this).val();
+
+                $.ajax({
+                    type: "post",
+                    url: Routing.generate('vendor_check'),
+                    data: "vendorName=" + vendorName,
+                    dataType: 'json',
+                    success: function (msg) {
+                        if (msg.responseCode == 200) {
+                            $('.userMessege').css('color', 'red').html(msg.vendor_name).fadeIn(1000);
+                        }
+                        else {
+                            $('.userMessege').css('color', 'green').html(msg.vendor_name).fadeIn(1000);
+                        }
+                    }
+                });
+            });
+
+            $(".vendor-active-list").click(function () {
+
+                $("#vendor-list-div").load("/vendor/list");
+            });
+
+            $(".vendor-deleted-list").click(function () {
+
+                $("#vendor-list-div").load("/vendor/deleted/list");
+            });
+
+            {% endblock %}
+        });
+    </script>
+
 {% endblock %}

@@ -7,81 +7,80 @@
                 <h4 class="modal-title" style="text-align: center;"> Details</h4>
             </div>
 
-<div class="modal-body">
-    <div class="row">
-        <div>
+            <div class="modal-body">
+                <div class="row">
+                    <div>
 
-            <table>
+                        <table>
+                            <tr>
+                                <td class="col-md-7">
+                                  Project Name: {{ projectCostItem[0]['projectName'] }}
+                                </td>
+                                <td class="col-md-4">
 
-                <tr>
-                    <td class="col-md-7">
-                      Project Name: {{ projectCostItem[0]['projectName'] }}
-                    </td>
-                    <td class="col-md-4">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-7">
+                                    Create Date: {{ projectCostItem[0]['dateOfCost']|date('Y-m-d') }}
+                                </td>
+                                <td class="col-md-4">
 
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-7">
-                        Create Date: {{ projectCostItem[0]['dateOfCost']|date('Y-m-d') }}
-                    </td>
-                    <td class="col-md-4">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    invoice:{{ projectCostItem[0]['invoice'] }}
+                                </td>
+                                <td>
+                                    Item Quantity: {{ projectCostItem[0]['quantity'] }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    pr:{{ projectCostItem[0]['pr'] }}
+                                </td>
+                                <td>
+                                    grn :{{ projectCostItem[0]['grn'] }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Approved Date: {{ projectCostItem[0]['createdDate']|date('Y-m-d') }}
+                                </td>
+                                <td>
 
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        invoice:{{ projectCostItem[0]['invoice'] }}
-                    </td>
-                    <td>
-                        Item Quantity: {{ projectCostItem[0]['quantity'] }}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        pr:{{ projectCostItem[0]['pr'] }}
-                    </td>
-                    <td>
-                        grn :{{ projectCostItem[0]['grn'] }}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Approved Date: {{ projectCostItem[0]['createdDate']|date('Y-m-d') }}
-                    </td>
-                    <td>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Item Unit Price:{{ projectCostItem[0]['unitPrice'] }} Tk
+                                </td>
+                                <td>
+                                    category:{{ projectCostItem[0]['categoryName'] }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Item Name: {{ projectCostItem[0]['itemName'] }}
+                                </td>
+                                <td>
+                                    po:{{ projectCostItem[0]['po'] }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Item Total:{{ projectCostItem[0]['lineTotal'] }}
+                                </td>
+                                <td>
+                                    comment:{{ projectCostItem[0]['comment'] }}
+                                </td>
+                            </tr>
+                        </table>
 
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Item Unit Price:{{ projectCostItem[0]['unitPrice'] }} Tk
-                    </td>
-                    <td>
-                        category:{{ projectCostItem[0]['categoryName'] }}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Item Name: {{ projectCostItem[0]['itemName'] }}
-                    </td>
-                    <td>
-                        po:{{ projectCostItem[0]['po'] }}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Item Total:{{ projectCostItem[0]['lineTotal'] }}
-                    </td>
-                    <td>
-                        comment:{{ projectCostItem[0]['comment'] }}
-                    </td>
-                </tr>
-            </table>
-
-        </div>
-    </div>
-</div>
+                    </div>
+                </div>
+            </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn default" data-dismiss="modal">Close</button>

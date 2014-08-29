@@ -127,4 +127,95 @@
         </div>
     </div>
 
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            {% block documentready %}
+            {{ parent() }}
+
+            $("#ajaxSaveSubCategory").click(function () {
+                var sPageURL = window.location.pathname;
+                var sURLVariables = sPageURL.split('/');
+                var subcategory = $("#subcategory_category_categoryName").val();
+                var category = $("#subcategory_subcategory").val();
+
+                var subcategoryArray = new Array(subcategory, category, sURLVariables[3]);
+                $.ajax({
+                    type: "post",
+                    url: Routing.generate('sub_category_ajax_add'),
+                    data: "subcategoryArray=" + subcategoryArray,
+                    dataType: 'json',
+                    success: function (msg) {
+                        if(msg.responseCode == 200) {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Sub-category/category already exist</span></div>');
+                            $('.subCategoryMessege').css('color', 'red').html(msg.item_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#sub-category-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        } else if(msg.responseCode == 204) {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Insert Sub-category or select Category</span></div>');
+                            $('.subCategoryMessege').css('color', 'red').html(msg.item_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#sub-category-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        } else if(msg.responseCode == 202) {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Sub-category Update Successfully</span></div>');
+                            $('.subCategoryMessege').css('color', 'green').html(msg.item_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#sub-category-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        } else {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Sub-category Add Successfully</span></div>');
+                            $('.subCategoryMessege').css('color', 'green').html(msg.item_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#sub-category-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        }
+
+                        $('.userMessege').fadeOut();
+                        $("#sub-category-list-div").load("/sub-category/list")
+                    }
+                });
+            });
+
+            $("#subcategory_category_categoryName").keyup(function () {
+                var subCategoryName = $(this).val();
+
+                $.ajax({
+                    type: "post",
+                    url: Routing.generate('sub_category_check'),
+                    data: "subCategoryName=" + subCategoryName,
+                    dataType: 'json',
+                    success: function (msg) {
+                        if (msg.responseCode == 200) {
+                            $('.userMessege').css('color', 'red').html(msg.sub_category_name).fadeIn(1000);
+                        }
+                        else {
+                            $('.userMessege').css('color', 'green').html(msg.sub_category_name).fadeIn(1000);
+                        }
+                    }
+                });
+            });
+
+            $(".sub-category-active-list").click(function () {
+
+                $("#sub-category-list-div").load("/sub-category/list");
+            });
+
+            $(".sub-category-deleted-list").click(function () {
+
+                $("#sub-category-list-div").load("/sub-category/deleted/list");
+            });
+
+            {% endblock %}
+        });
+    </script>
+
 {% endblock %}
