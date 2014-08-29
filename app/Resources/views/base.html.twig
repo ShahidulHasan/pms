@@ -45,9 +45,9 @@
     <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
     <link rel="shortcut icon" href="favicon.ico"/>
-</head>
 
-<body class="page-header-fixed">
+</head>
+<body class="page-header-fixed {{ app.request.locale }}{% block bodyClass %}{% endblock bodyClass %}">
 
 <div class="modal fade" id="ajax" tabindex="-1" role="basic" aria-hidden="true">
     {% image 'assets/img/ajax-modal-loading.gif'
@@ -99,6 +99,7 @@
 
 <div class="page-container">
 
+{% block navigation %}
     <div class="page-sidebar navbar-collapse collapse">
         <ul class="page-sidebar-menu">
             <li>
@@ -259,6 +260,7 @@
             {% endif %}
         </ul>
     </div>
+{% endblock navigation %}
 
     <div class="page-content">
         <div class="row">

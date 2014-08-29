@@ -30,18 +30,22 @@
     <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
     <link rel="shortcut icon" href="favicon.ico"/>
+
 </head>
+<body class="login {{ app.request.locale }}{% block bodyClass %}{% endblock bodyClass %}">
 
-<body class="login">
+{% block logincenter %}
+    <div class="logo">
 
-<div class="logo">
+    </div>
 
-</div>
+    {% block body %}{% endblock %}
 
-{% block body %}{% endblock %}
-<div class="copyright">
-    2013 &copy; right brain solution ltd
-</div>
+    <div class="copyright">
+        2013 &copy; right brain solution ltd
+    </div>
+{% endblock logincenter %}
+
 {% javascripts
 'assets/plugins/respond.min.js'
 'assets/plugins/excanvas.min.js'
