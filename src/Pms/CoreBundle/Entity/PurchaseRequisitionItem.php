@@ -24,7 +24,7 @@ class PurchaseRequisitionItem
     /**
      * @var PurchaseRequisition
      *
-     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisition", inversedBy="purchaseRequisitionItem")
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisition", inversedBy="purchaseRequisitionItem", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="purchase_requisitions", nullable=true)
      */
     private $purchaseRequisition;
@@ -32,7 +32,7 @@ class PurchaseRequisitionItem
     /**
      * @var Item
      *
-     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Item", inversedBy="purchaseRequisitionItem")
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Item", inversedBy="purchaseRequisitionItem", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="items", nullable=true)
      */
     private $item;
@@ -72,10 +72,14 @@ class PurchaseRequisitionItem
      */
     private $statusPo;
 
+    public function __toString()
+    {
+        return $this->getItem();
+    }
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -85,7 +89,7 @@ class PurchaseRequisitionItem
     /**
      * Set item
      *
-     * @param integer $item
+     * @param string $item
      * @return PurchaseRequisitionItem
      */
     public function setItem($item)
@@ -98,7 +102,7 @@ class PurchaseRequisitionItem
     /**
      * Get item
      *
-     * @return integer
+     * @return string
      */
     public function getItem()
     {
@@ -111,7 +115,7 @@ class PurchaseRequisitionItem
      * @param integer $purchaseRequisition
      * @return PurchaseRequisitionItem
      */
-    public function setPurchaseRequisitionId($purchaseRequisition)
+    public function setPurchaseRequisition($purchaseRequisition)
     {
         $this->purchaseRequisition = $purchaseRequisition;
 

@@ -2,6 +2,7 @@
 
 namespace Pms\CoreBundle\Controller;
 
+use Doctrine\Common\Util\Debug;
 use Doctrine\ORM\Repository;
 use Pms\CoreBundle\Entity\Category;
 use Pms\CoreBundle\Entity\Buyer;
@@ -211,6 +212,7 @@ class CoreController extends Controller
     {
         $purchaseRequisition = new PurchaseRequisition();
         $form = $this->createForm(new PurchaseRequisitionType(), $purchaseRequisition);
+
         if ($request->getMethod() == 'POST') {
 
             $form->handleRequest($request);
@@ -243,71 +245,40 @@ class CoreController extends Controller
 //        $prArray = $request->request->get('prArray');
 //        $prArray = explode(',',$prArray);
 //
-//        $dateOfCost = $prArray[0];
-//        $project = $prArray[1];
-//        $item = $prArray[2];
+//        $project = $prArray[0];
+//        $requisitionNo = $prArray[1];
+//        $dateOfRequisition = $prArray[2];
+//        $item = $prArray[3];
+//        $quantity = $prArray[4];
+//        $dateOfRequired = $prArray[5];
+//        $comment = $prArray[6];
 //
-//        if(!empty($dateOfCost) && !empty($project) && !empty($item) && !empty($quantity) && !empty($unitPrice) && !empty($lineTotal)) {
+//        if(!empty($project) && !empty($requisitionNo) && !empty($dateOfRequisition) && !empty($item) && !empty($quantity) && !empty($dateOfRequired) && !empty($comment)) {
 //
-//            if($updateId) {
-//                $projectCostItem = $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCostItem')->find($updateId);
-//
-//                $user = $this->get('security.context')->getToken()->getUser()->getId();
-//                $projectCostItem->setDateOfCost(new \DateTime($dateOfCost));
-//                $projectCostItem->setApprovedBy($user);
-//                $projectCostItem->setApprovedDate(new \DateTime());
-//
-//                $projectCostItem->setProject($this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneById($project));
-//                $projectCostItem->setItem($this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneById($item));
-//                $projectCostItem->setBuyer($this->getDoctrine()->getRepository('PmsCoreBundle:Buyer')->findOneById($buyer));
-//                $projectCostItem->setCategory($this->getDoctrine()->getRepository('PmsCoreBundle:Category')->findOneById($category));
-//                $projectCostItem->setQuantity($quantity);
-//                $projectCostItem->setUnitPrice($unitPrice);
-//                $projectCostItem->setLineTotal($lineTotal);
-//                $projectCostItem->setInvoice($invoice);
-//                $projectCostItem->setGrn($grn);
-//                $projectCostItem->setSubCategory($subcategory);
-//                $projectCostItem->setPr($pr);
-//                $projectCostItem->setPo($po);
-//                $projectCostItem->setComment($comment);
-//
-//                $this->getDoctrine()->getManager()->persist($projectCostItem);
-//                $this->getDoctrine()->getManager()->flush();
-//
-//                $return = array("responseCode" => 202);
-//                $return = json_encode($return);
-//
-//                return new Response($return, 200, array('Content-Type' => 'application/json'));
-//            } else {
-//                $projectCostItem = new ProjectCostItem();
+//                $purchaseRequisition = new PurchaseRequisition();
 //
 //                $user = $this->get('security.context')->getToken()->getUser()->getId();
-//                $projectCostItem->setDateOfCost(new \DateTime($dateOfCost));
-//                $projectCostItem->setCreatedBy($user);
-//                $projectCostItem->setCreatedDate(new \DateTime());
-//                $projectCostItem->setStatus(0);
+//            $purchaseRequisition->setDateOfRequisition(new \DateTime($dateOfRequisition));
+//            $purchaseRequisition->setCreatedBy($user);
+//            $purchaseRequisition->setCreatedDate(new \DateTime());
+//            $purchaseRequisition->setStatus(1);
+//            $purchaseRequisition->setRequisitionNo($requisitionNo);
+//            $purchaseRequisition->setProject($this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneById($project));
 //
-//                $projectCostItem->setProject($this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneById($project));
-//                $projectCostItem->setItem($this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneById($item));
-//                $projectCostItem->setBuyer($this->getDoctrine()->getRepository('PmsCoreBundle:Buyer')->findOneById($buyer));
-//                $projectCostItem->setCategory($this->getDoctrine()->getRepository('PmsCoreBundle:Category')->findOneById($category));
-//                $projectCostItem->setQuantity($quantity);
-//                $projectCostItem->setUnitPrice($unitPrice);
-//                $projectCostItem->setLineTotal($lineTotal);
-//                $projectCostItem->setInvoice($invoice);
-//                $projectCostItem->setGrn($grn);
-//                $projectCostItem->setSubCategory($subcategory);
-//                $projectCostItem->setPr($pr);
-//                $projectCostItem->setPo($po);
-//                $projectCostItem->setComment($comment);
 //
-//                $this->getDoctrine()->getRepository("PmsCoreBundle:ProjectCostItem")->create($projectCostItem);
+//            $purchaseRequisition->setItem($this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisitionItem')->findOneById($item));
+//            $purchaseRequisition->setQuantity($this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisitionItem')->findOneById($quantity));
+//            $purchaseRequisition->setDateOfRequired($this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisitionItem')->findOneById(new \DateTime($dateOfRequired)));
+//            $purchaseRequisition->setComment($this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisitionItem')->findOneById($comment));
+//
+//
+//                $this->getDoctrine()->getRepository("PmsCoreBundle:ProjectCostItem")->create($purchaseRequisition);
 //
 //                $return = array("responseCode" => '404');
 //                $return = json_encode($return);
 //
 //                return new Response($return, 200, array('Content-Type' => 'application/json'));
-//            }
+//
 //        } else{
 //            $return = array("responseCode" => 204);
 //            $return = json_encode($return);

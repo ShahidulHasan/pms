@@ -74,7 +74,7 @@ class PurchaseRequisition
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisitionItem", mappedBy="purchaseRequisition")
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisitionItem", mappedBy="purchaseRequisition", cascade={"persist", "remove"})
      */
     private $purchaseRequisitionItem;
 
@@ -110,7 +110,7 @@ class PurchaseRequisition
     /**
      * @var integer
      *
-     * @ORM\Column(name="approved_by_project_head", type="string", length=255, nullable=true)
+     * @ORM\Column(name="approved_by_project_head", type="integer", length=255, nullable=true)
      */
     private $approvedByProjectHead;
 
@@ -124,7 +124,7 @@ class PurchaseRequisition
     /**
      * @var integer
      *
-     * @ORM\Column(name="approved_by_category_head_one", type="string", length=255, nullable=true)
+     * @ORM\Column(name="approved_by_category_head_one", type="integer", length=255, nullable=true)
      */
     private $approvedByCategoryHeadOne;
 
@@ -138,7 +138,7 @@ class PurchaseRequisition
     /**
      * @var integer
      *
-     * @ORM\Column(name="approved_by_category_head_two", type="string", length=255, nullable=true)
+     * @ORM\Column(name="approved_by_category_head_two", type="integer", length=255, nullable=true)
      */
     private $approvedByCategoryHeadTwo;
 
@@ -149,10 +149,44 @@ class PurchaseRequisition
      */
     private $approvedDateCategoryHeadTwo;
 
+    public function __construct()
+    {
+        $this->purchaseRequisitionItem = new ArrayCollection();
+    }
+
+    /**
+     * @param \Pms\CoreBundle\Entity\PurchaseRequisitionItem $purchaseRequisition
+     */
+    public function addPurchaseRequisition($purchaseRequisition)
+    {
+        if (!$this->getPurchaseRequisitionItem()->contains($purchaseRequisition)) {
+            $purchaseRequisition->setPurchaseRequisition($this);
+            $this->getPurchaseRequisitionItem()->add($purchaseRequisition);
+        }
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getPurchaseRequisitionItem()
+    {
+        return $this->purchaseRequisitionItem;
+    }
+
+    /**
+     * \Pms\CoreBundle\Entity\PurchaseRequisitionItem $purchaseRequisition
+     */
+    public function removePurchaseRequisition($purchaseRequisition)
+    {
+        if ($this->getPurchaseRequisitionItem()->contains($purchaseRequisition)) {
+            $this->getPurchaseRequisitionItem()->removeElement($purchaseRequisition);
+        }
+    }
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -226,14 +260,6 @@ class PurchaseRequisition
     public function getStatus()
     {
         return $this->status;
-    }
-
-    /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function getPurchaseRequisitionItem()
-    {
-        return $this->purchaseRequisitionItem;
     }
 
     /**

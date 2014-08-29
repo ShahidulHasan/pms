@@ -870,6 +870,46 @@ PurchaseRequisition: http://themeforest.net/item/metronic-responsive-admin-dashb
             });
         });
 
+//        $("#ajaxSavePr").click(function () {
+//
+//            var project = $("#purchaserequisition_project").val();
+//            var requisitionNo = $("#purchaserequisition_requisitionNo").val();
+//            var dateOfRequisition = $("#purchaserequisition_dateOfRequisition").val();
+//            var item = $("#purchaserequisition_purchaseRequisitionItem_item").val();
+//            var quantity = $("#purchaserequisition_purchaseRequisitionItem_quantity").val();
+//            var dateOfRequired = $("#purchaserequisition_purchaseRequisitionItem_dateOfRequired").val();
+//            var comment = $("#purchaserequisition_purchaseRequisitionItem_comment").val();
+//
+//            var prArray = new Array(project, requisitionNo, dateOfRequisition, item, quantity, dateOfRequired, comment);
+//
+//            $.ajax({
+//                type: "post",
+//                url: Routing.generate('pr_ajax_add'),
+//                data: "prArray=" + prArray,
+//                dataType: 'json',
+//                success: function (msg) {
+//                    if(msg.responseCode == 204) {
+//                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Fill The Blank Field</span></div>');
+//                        $('.projectCostItemMessege').css('color', 'red').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
+//                        $(':input','#cost-form')
+//                                .not(':button, :submit, :reset, :hidden')
+//                                .val('')
+//                                .removeAttr('checked')
+//                                .removeAttr('selected');
+//                    } else {
+//                        var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Project Cost Add Successfully</span></div>');
+//                        $('.projectCostItemMessege').css('color', 'green').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
+//                        $(':input','#cost-form')
+//                                .not(':button, :submit, :reset, :hidden')
+//                                .val('')
+//                                .removeAttr('checked')
+//                                .removeAttr('selected');
+//                    }
+//                }
+//            });
+//
+//        });
+
         $("#ajaxSaveprojectCostItem").click(function () {
             var sPageURL = window.location.pathname;
             var sURLVariables = sPageURL.split('/');

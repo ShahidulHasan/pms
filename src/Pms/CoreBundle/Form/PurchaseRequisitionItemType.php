@@ -17,7 +17,7 @@ class PurchaseRequisitionItemType extends AbstractType
     {
         $builder
             ->add('quantity', 'text')
-            ->add('comment', 'text')
+            ->add('comment', 'textarea')
             ->add('dateOfRequired', 'text', array(
                 'constraints' => array(
                     new NotBlank()
@@ -36,7 +36,7 @@ class PurchaseRequisitionItemType extends AbstractType
                 'property' => 'itemName',
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => ' Select Item'
+                    'placeholder' => 'Select Item'
                 ),
                 'empty_data' => null,
                 'query_builder' => function (\Pms\CoreBundle\Entity\ItemRepository $repository)
@@ -54,7 +54,7 @@ class PurchaseRequisitionItemType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Pms\CoreBundle\Entity\PurchaseRequisitionItem'
+//            'data_class' => 'Pms\CoreBundle\Entity\PurchaseRequisitionItem'
         ));
     }
 
@@ -63,6 +63,6 @@ class PurchaseRequisitionItemType extends AbstractType
      */
     public function getName()
     {
-        return 'pms_corebundle_purchaserequisitionitem';
+        return 'purchaserequisitionitem';
     }
 }
