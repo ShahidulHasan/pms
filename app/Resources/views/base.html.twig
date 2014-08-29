@@ -270,17 +270,6 @@
 
 </div>
 
-<div class="footer">
-    <div class="footer-inner">
-        2013 &copy; Create By RBS.
-    </div>
-    <div class="footer-tools">
-        <span class="go-top">
-            <i class="fa fa-angle-up"></i>
-        </span>
-    </div>
-</div>
-
 {% javascripts
 'assets/plugins/respond.min.js'
 'assets/plugins/excanvas.min.js'
@@ -344,7 +333,6 @@
 'assets/scripts/charts.js'
 
 'assets/scripts/form-components.js' %}
-
 <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
 
@@ -359,6 +347,19 @@
         {% endblock %}
     });
 </script>
+
+{% block footer %}
+    <div class="footer">
+        <div class="footer-inner">
+            2013 &copy; Create By RBS.
+        </div>
+        <div class="footer-tools">
+        <span class="go-top">
+            <i class="fa fa-angle-up"></i>
+        </span>
+        </div>
+    </div>
+{% endblock footer %}
 
 </body>
 
