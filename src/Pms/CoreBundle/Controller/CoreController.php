@@ -585,7 +585,7 @@ class CoreController extends Controller
         $value = $paginator->paginate(
             $itemUses,
             $page = $this->get('request')->query->get('page', 1) /*page number*/,
-            5/*limit per page*/
+            10/*limit per page*/
         );
 
         return array($value, $page);

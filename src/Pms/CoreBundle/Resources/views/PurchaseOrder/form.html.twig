@@ -6,93 +6,93 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title bold" style="text-align: center;"> Purchase Requisition Form</h4>
+                <h4 class="modal-title bold" style="text-align: center;"> Purchase Order Form</h4>
             </div>
 
-            {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'purchase-form', 'novalidate': 'novalidate'} }) }}
-            <div class="modal-body">
-                <div class="row">
+            {#{{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'purchase-form', 'novalidate': 'novalidate'} }) }}#}
+            {#<div class="modal-body">#}
+                {#<div class="row">#}
 
-                    <div style="width: 100%;">
-                        <div style="width: 50%;height:70px;float: left;text-align: left;">
-                            <div class="form-group">
-                                {{ form_label(form.project, 'Project Name :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }
-                                ) }}
-                                <div class="col-md-6">
-                                    <div class="input-icon">
-                                        {{ form_widget(form.project, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;margin-left: -60px;' } }) }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="width: 41%;height:100px;float: right;">
-                            <div style="width: 100%;height:50px;float:left;">
-                                <div class="form-group">
-                                    {{ form_label(form.requisitionNo, 'Requisition No :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }
-                                    ) }}
-                                    <div class="col-md-6">
-                                        <div class="input-icon">
-                                            {{ form_widget(form.requisitionNo, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;' } }) }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="width: 100%;height:35px;float:left;">
-                                <div class="form-group">
-                                    {{ form_label(form.dateOfRequisition, 'Date :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }
-                                    ) }}
-                                    <div class="col-md-6">
-                                        <div class="input-icon">
-                                            <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                                                <span class="input-group-btn"></span>
-                                                {{ form_widget(form.dateOfRequisition, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {#<div style="width: 100%;">#}
+                        {#<div style="width: 50%;height:70px;float: left;text-align: left;">#}
+                            {#<div class="form-group">#}
+                                {#{{ form_label(form.project, 'Project Name :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }#}
+                                {#) }}#}
+                                {#<div class="col-md-6">#}
+                                    {#<div class="input-icon">#}
+                                        {#{{ form_widget(form.project, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;margin-left: -60px;' } }) }}#}
+                                    {#</div>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div style="width: 41%;height:100px;float: right;">#}
+                            {#<div style="width: 100%;height:50px;float:left;">#}
+                                {#<div class="form-group">#}
+                                    {#{{ form_label(form.requisitionNo, 'Requisition No :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }#}
+                                    {#) }}#}
+                                    {#<div class="col-md-6">#}
+                                        {#<div class="input-icon">#}
+                                            {#{{ form_widget(form.requisitionNo, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;' } }) }}#}
+                                        {#</div>#}
+                                    {#</div>#}
+                                {#</div>#}
+                            {#</div>#}
+                            {#<div style="width: 100%;height:35px;float:left;">#}
+                                {#<div class="form-group">#}
+                                    {#{{ form_label(form.dateOfRequisition, 'Date :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }#}
+                                    {#) }}#}
+                                    {#<div class="col-md-6">#}
+                                        {#<div class="input-icon">#}
+                                            {#<div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">#}
+                                                {#<span class="input-group-btn"></span>#}
+                                                {#{{ form_widget(form.dateOfRequisition, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}#}
+                                            {#</div>#}
+                                        {#</div>#}
+                                    {#</div>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
 
-                    <div style="width: 100%;">
-                        <table class="table table-striped" style="margin-top: 100px;">
-                            <thead>
-                            <tr>
-                                <th style="width: 30%;">Particulars</th>
-                                <th style="width: 20%;">Quantity</th>
-                                <th style="width: 30%;">Expected Date of Required</th>
-                                <th style="width: 20%;">Remarks</th>
-                            </tr>
-                            </thead>
-                            <tbody id="purchaseItems">
-                            <tr>
-                                <td>
-                                    {{ form_widget(form.purchaseRequisitionItem.item, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;', 'placeholder': ' Select Item'} }) }}
-                                </td>
-                                <td>
-                                    {{ form_widget(form.purchaseRequisitionItem.quantity, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
-                                </td>
-                                <td>
-                                    <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                                        <span class="input-group-btn"></span>
-                                        {{ form_widget(form.purchaseRequisitionItem.dateOfRequired, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
-                                    </div>
-                                </td>
-                                <td>
-                                    {{ form_widget(form.purchaseRequisitionItem.comment, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                    {#<div style="width: 100%;">#}
+                        {#<table class="table table-striped" style="margin-top: 100px;">#}
+                            {#<thead>#}
+                            {#<tr>#}
+                                {#<th style="width: 30%;">Particulars</th>#}
+                                {#<th style="width: 20%;">Quantity</th>#}
+                                {#<th style="width: 30%;">Expected Date of Required</th>#}
+                                {#<th style="width: 20%;">Remarks</th>#}
+                            {#</tr>#}
+                            {#</thead>#}
+                            {#<tbody id="purchaseItems">#}
+                            {#<tr>#}
+                                {#<td>#}
+                                    {#{{ form_widget(form.purchaseRequisitionItem.item, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;', 'placeholder': ' Select Item'} }) }}#}
+                                {#</td>#}
+                                {#<td>#}
+                                    {#{{ form_widget(form.purchaseRequisitionItem.quantity, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}#}
+                                {#</td>#}
+                                {#<td>#}
+                                    {#<div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">#}
+                                        {#<span class="input-group-btn"></span>#}
+                                        {#{{ form_widget(form.purchaseRequisitionItem.dateOfRequired, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}#}
+                                    {#</div>#}
+                                {#</td>#}
+                                {#<td>#}
+                                    {#{{ form_widget(form.purchaseRequisitionItem.comment, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}#}
+                                {#</td>#}
+                            {#</tr>#}
+                            {#</tbody>#}
+                        {#</table>#}
 
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                {{ form_widget(form.save, { 'attr': {'class': 'btn green button-width'} }) }}
-                {#<input type="button" name="ajaxSavePr" value="Save" id="ajaxSavePr" class="btn green button-width col-md-1" style="margin-top:2px;margin-left:10px;height:32px;">#}
-            </div>
-            {{ form_end(form) }}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+            {#<div class="modal-footer">#}
+                {#{{ form_widget(form.save, { 'attr': {'class': 'btn green button-width'} }) }}#}
+                {#&#123;&#35;<input type="button" name="ajaxSavePr" value="Save" id="ajaxSavePr" class="btn green button-width col-md-1" style="margin-top:2px;margin-left:10px;height:32px;">&#35;&#125;#}
+            {#</div>#}
+            {#{{ form_end(form) }}#}
         </div>
     </div>
 
@@ -101,44 +101,7 @@
             {% block documentready %}
             {{ parent() }}
 
-            $("#ajaxSavePr").click(function () {
-                var project = $("#purchaserequisition_project").val();
-                var requisitionNo = $("#purchaserequisition_requisitionNo").val();
-                var dateOfRequisition = $("#purchaserequisition_dateOfRequisition").val();
-                var item = $("#purchaserequisition_purchaseRequisitionItem_item").val();
-                var quantity = $("#purchaserequisition_purchaseRequisitionItem_quantity").val();
-                var dateOfRequired = $("#purchaserequisition_purchaseRequisitionItem_dateOfRequired").val();
-                var comment = $("#purchaserequisition_purchaseRequisitionItem_comment").val();
 
-                var prArray = new Array(project, requisitionNo, dateOfRequisition, item, quantity, dateOfRequired, comment);
-
-                $.ajax({
-                    type: "post",
-                    url: Routing.generate('pr_ajax_add'),
-                    data: "prArray=" + prArray,
-                    dataType: 'json',
-                    success: function (msg) {
-                        if(msg.responseCode == 204) {
-                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Fill The Blank Field</span></div>');
-                            $('.projectCostItemMessege').css('color', 'red').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
-                            $(':input','#cost-form')
-                                    .not(':button, :submit, :reset, :hidden')
-                                    .val('')
-                                    .removeAttr('checked')
-                                    .removeAttr('selected');
-                        } else {
-                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Project Cost Add Successfully</span></div>');
-                            $('.projectCostItemMessege').css('color', 'green').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
-                            $(':input','#cost-form')
-                                    .not(':button, :submit, :reset, :hidden')
-                                    .val('')
-                                    .removeAttr('checked')
-                                    .removeAttr('selected');
-                        }
-                    }
-                });
-
-            });
 
             {% endblock %}
         });
