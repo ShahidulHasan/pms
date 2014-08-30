@@ -126,7 +126,7 @@
             {% elseif Url[0] == 'report' %}{% set Report = Report|merge(["active"]) %}
             {% elseif Url[0] == 'over' %}{% set OverView = OverView|merge(["active"]) %}
             {% elseif Url[1] == 'requisition' %}{% set PR = PR|merge(["active"]) %}
-            {% elseif Url[1] == 'ordered' %}{% set PO = PO|merge(["active"]) %}
+            {% elseif Url[1] == 'order' %}{% set PO = PO|merge(["active"]) %}
             {% endif %}
 
             <li class="{{ Dashboard|join(" ") }}">
@@ -251,9 +251,9 @@
             {% endif %}
             {% if is_granted("ROLE_ADMIN") %}
                 <li class="{{ PO|join(" ") }}">
-                    <a href="/purchase/ordered">
+                    <a href="/purchase/order">
                         <i class="fa fa-gift"></i>
-                        <span class="title"> Purchase Ordered</span>
+                        <span class="title"> Purchase Order</span>
                         <span class="selected"></span>
                     </a>
                 </li>

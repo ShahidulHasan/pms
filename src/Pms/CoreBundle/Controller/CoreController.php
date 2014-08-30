@@ -6,6 +6,7 @@ use Doctrine\Common\Util\Debug;
 use Doctrine\ORM\Repository;
 use Pms\CoreBundle\Entity\Category;
 use Pms\CoreBundle\Entity\Buyer;
+use Pms\CoreBundle\Entity\PurchaseOrder;
 use Pms\CoreBundle\Entity\Vendor;
 use Pms\CoreBundle\Entity\Item;
 use Pms\CoreBundle\Entity\Project;
@@ -26,10 +27,29 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CoreController extends Controller
 {
-    public function purchaseOrderedAddAction(Request $request)
+    public function purchaseOrderAddAction(Request $request)
     {
-        return $this->render('PmsCoreBundle:PurchaseOrdered:add.html.twig', array(
+        return $this->render('PmsCoreBundle:PurchaseOrder:add.html.twig', array(
 
+        ));
+    }
+
+    public function purchaseOrderNewAction(Request $request)
+    {
+        $purchaseOrder = new PurchaseOrder();
+//        $form = $this->createForm(new PurchaseOrderType(), $purchaseOrder);
+//
+//        if ($request->getMethod() == 'POST') {
+//
+//            $form->handleRequest($request);
+//
+//            if ($form->isValid()) {
+//
+//            }
+//        }
+
+        return $this->render('PmsCoreBundle:PurchaseOrder:form.html.twig', array(
+//            'form' => $form->createView(),
         ));
     }
 
