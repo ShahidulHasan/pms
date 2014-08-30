@@ -164,6 +164,7 @@
                                     .val('')
                                     .removeAttr('checked')
                                     .removeAttr('selected');
+                            window.location.pathname = 'sub-category';
                         } else {
                             var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Sub-category Add Successfully</span></div>');
                             $('.subCategoryMessege').css('color', 'green').html(msg.item_ajax_add).fadeIn(1000).append($addLink);

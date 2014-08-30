@@ -173,6 +173,7 @@
                                     .val('')
                                     .removeAttr('checked')
                                     .removeAttr('selected');
+                            window.location.pathname = 'item';
                         } else {
                             var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Item Add Successfully</span></div>');
                             $('.itemMessege').css('color', 'green').html(msg.item_ajax_add).fadeIn(1000).append($addLink);

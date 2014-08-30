@@ -163,6 +163,7 @@
                                     .val('')
                                     .removeAttr('checked')
                                     .removeAttr('selected');
+                            window.location.pathname = 'project';
                         } else {
                             var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Project Add Successfully</span></div>');
                             $('.projectMessege').css('color', 'green').html(msg.project_ajax_add).fadeIn(1000).append($addLink);

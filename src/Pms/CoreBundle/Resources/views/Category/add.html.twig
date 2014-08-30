@@ -163,6 +163,7 @@
                                     .val('')
                                     .removeAttr('checked')
                                     .removeAttr('selected');
+                            window.location.pathname = 'category';
                         } else {
                             var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Category Add Successfully</span></div>');
                             $('.categoryMessege').css('color', 'green').html(msg.category_ajax_add).fadeIn(1000).append($addLink);

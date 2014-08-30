@@ -161,6 +161,7 @@
                                     .val('')
                                     .removeAttr('checked')
                                     .removeAttr('selected');
+                            window.location.pathname = 'buyer';
                         } else {
                             var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Buyer Add Successfully</span></div>');
                             $('.buyerMessege').css('color', 'green').html(msg.buyer_ajax_add).fadeIn(1000).append($addLink);
