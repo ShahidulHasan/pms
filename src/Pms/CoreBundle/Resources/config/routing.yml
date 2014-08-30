@@ -1,46 +1,46 @@
 vendor_add:
     pattern: /vendor
-    defaults: { _controller: PmsCoreBundle:Core:vendorAdd }
+    defaults: { _controller: PmsCoreBundle:Vendor:vendorAdd }
 
 vendor_list:
     pattern: /vendor/list
-    defaults: { _controller: PmsCoreBundle:Core:vendorList }
+    defaults: { _controller: PmsCoreBundle:Vendor:vendorList }
 
 vendor_ajax_add:
     pattern: /vendor/add
-    defaults: { _controller: PmsCoreBundle:Core:vendorAjaxAdd }
+    defaults: { _controller: PmsCoreBundle:Vendor:vendorAjaxAdd }
     options:
             expose: true
 
 vendor_check:
     pattern: /vendor/check
-    defaults: { _controller: PmsCoreBundle:Core:vendorCheck }
+    defaults: { _controller: PmsCoreBundle:Vendor:vendorCheck }
     options:
             expose: true
 
 vendor_deleted:
     pattern: /vendor/deleted
-    defaults: { _controller: PmsCoreBundle:Core:vendorDeleted }
+    defaults: { _controller: PmsCoreBundle:Vendor:vendorDeleted }
 
 vendor_deleted_list:
     pattern: /vendor/deleted/list
-    defaults: { _controller: PmsCoreBundle:Core:vendorDeletedList }
+    defaults: { _controller: PmsCoreBundle:Vendor:vendorDeletedList }
 
 vendor_delete:
     pattern: /vendor/delete/{id}
-    defaults: { _controller: PmsCoreBundle:Core:vendorDelete }
+    defaults: { _controller: PmsCoreBundle:Vendor:vendorDelete }
     requirements:
           id: \d+
 
 vendor_active:
     pattern: /vendor/active/{id}
-    defaults: { _controller: PmsCoreBundle:Core:vendorActive }
+    defaults: { _controller: PmsCoreBundle:Vendor:vendorActive }
     requirements:
           id: \d+
 
 vendor_update:
     pattern: /vendor/update/{id}
-    defaults: { _controller: PmsCoreBundle:Core:vendorUpdate }
+    defaults: { _controller: PmsCoreBundle:Vendor:vendorUpdate }
     requirements:
           id:  \d+
 
@@ -64,221 +64,221 @@ purchase_requisition_new:
 
 buyer_add:
     pattern: /buyer
-    defaults: { _controller: PmsCoreBundle:Core:buyerAdd }
+    defaults: { _controller: PmsCoreBundle:Buyer:buyerAdd }
 
 buyer_list:
     pattern: /buyer/list
-    defaults: { _controller: PmsCoreBundle:Core:buyerList }
+    defaults: { _controller: PmsCoreBundle:Buyer:buyerList }
 
 buyer_ajax_add:
     pattern: /buyer/add
-    defaults: { _controller: PmsCoreBundle:Core:buyerAjaxAdd }
+    defaults: { _controller: PmsCoreBundle:Buyer:buyerAjaxAdd }
     options:
             expose: true
 
 buyer_check:
     pattern: /buyer/check
-    defaults: { _controller: PmsCoreBundle:Core:buyerCheck }
+    defaults: { _controller: PmsCoreBundle:Buyer:buyerCheck }
     options:
             expose: true
 
 buyer_deleted:
     pattern: /buyer/deleted
-    defaults: { _controller: PmsCoreBundle:Core:buyerDeleted }
+    defaults: { _controller: PmsCoreBundle:Buyer:buyerDeleted }
 
 buyer_deleted_list:
     pattern: /buyer/deleted/list
-    defaults: { _controller: PmsCoreBundle:Core:buyerDeletedList }
+    defaults: { _controller: PmsCoreBundle:Buyer:buyerDeletedList }
 
 buyer_delete:
     pattern: /buyer/delete/{id}
-    defaults: { _controller: PmsCoreBundle:Core:buyerDelete }
+    defaults: { _controller: PmsCoreBundle:Buyer:buyerDelete }
     requirements:
           id: \d+
 
 buyer_active:
     pattern: /buyer/active/{id}
-    defaults: { _controller: PmsCoreBundle:Core:buyerActive }
+    defaults: { _controller: PmsCoreBundle:Buyer:buyerActive }
     requirements:
           id: \d+
 
 buyer_update:
     pattern: /buyer/update/{id}
-    defaults: { _controller: PmsCoreBundle:Core:buyerUpdate }
+    defaults: { _controller: PmsCoreBundle:Buyer:buyerUpdate }
     requirements:
           id:  \d+
 
 item_add:
     pattern: /item
-    defaults: { _controller: PmsCoreBundle:Core:itemAdd }
+    defaults: { _controller: PmsCoreBundle:Item:itemAdd }
 
 item_deleted:
     pattern: /item/deleted
-    defaults: { _controller: PmsCoreBundle:Core:itemDeleted }
+    defaults: { _controller: PmsCoreBundle:Item:itemDeleted }
 
 item_list:
     pattern: /item/list
-    defaults: { _controller: PmsCoreBundle:Core:itemList }
+    defaults: { _controller: PmsCoreBundle:Item:itemList }
 
 item_deleted_list:
     pattern: /item/deleted/list
-    defaults: { _controller: PmsCoreBundle:Core:itemDeletedList }
+    defaults: { _controller: PmsCoreBundle:Item:itemDeletedList }
 
 item_delete:
     pattern: /item/delete/{id}
-    defaults: { _controller: PmsCoreBundle:Core:itemDelete }
+    defaults: { _controller: PmsCoreBundle:Item:itemDelete }
     requirements:
           id: \d+
 
 item_active:
     pattern: /item/active/{id}
-    defaults: { _controller: PmsCoreBundle:Core:itemActive }
+    defaults: { _controller: PmsCoreBundle:Item:itemActive }
     requirements:
           id: \d+
 
 item_update:
     pattern: /item/update/{id}
-    defaults: { _controller: PmsCoreBundle:Core:itemUpdate }
+    defaults: { _controller: PmsCoreBundle:Item:itemUpdate }
     requirements:
           id:  \d+
 
 item_check:
     pattern: /item/check
-    defaults: { _controller: PmsCoreBundle:Core:itemCheck }
+    defaults: { _controller: PmsCoreBundle:Item:itemCheck }
     options:
             expose: true
 
 item_ajax_add:
     pattern: /item/add
-    defaults: { _controller: PmsCoreBundle:Core:itemAjaxAdd }
+    defaults: { _controller: PmsCoreBundle:Item:itemAjaxAdd }
     options:
             expose: true
 
 project_add:
     pattern: /project
-    defaults: { _controller: PmsCoreBundle:Core:projectAdd }
+    defaults: { _controller: PmsCoreBundle:Project:projectAdd }
 
 project_deleted:
     pattern: /project/deleted
-    defaults: { _controller: PmsCoreBundle:Core:projectDeleted }
+    defaults: { _controller: PmsCoreBundle:Project:projectDeleted }
 
 project_deleted_list:
     pattern: /project/deleted/list
-    defaults: { _controller: PmsCoreBundle:Core:projectDeletedList }
+    defaults: { _controller: PmsCoreBundle:Project:projectDeletedList }
 
 project_active:
     pattern: /project/active/{id}
-    defaults: { _controller: PmsCoreBundle:Core:projectActive }
+    defaults: { _controller: PmsCoreBundle:Project:projectActive }
     requirements:
           id: \d+
 
 project_list:
     pattern: /project/list
-    defaults: { _controller: PmsCoreBundle:Core:projectList }
+    defaults: { _controller: PmsCoreBundle:Project:projectList }
 
 project_delete:
     pattern: /project/delete/{id}
-    defaults: { _controller: PmsCoreBundle:Core:projectDelete }
+    defaults: { _controller: PmsCoreBundle:Project:projectDelete }
     requirements:
           id: \d+
 
 project_update:
     pattern: /project/update/{id}
-    defaults: { _controller: PmsCoreBundle:Core:projectUpdate }
+    defaults: { _controller: PmsCoreBundle:Project:projectUpdate }
     requirements:
           id:  \d+
 
 project_check:
     pattern: /project/check
-    defaults: { _controller: PmsCoreBundle:Core:projectCheck }
+    defaults: { _controller: PmsCoreBundle:Project:projectCheck }
     options:
             expose: true
 
 project_ajax_add:
     pattern: /project/add
-    defaults: { _controller: PmsCoreBundle:Core:projectAjaxAdd }
+    defaults: { _controller: PmsCoreBundle:Project:projectAjaxAdd }
     options:
             expose: true
 
 project_cost_add:
     pattern: /project-cost
-    defaults: { _controller: PmsCoreBundle:Core:projectCostItemAdd }
+    defaults: { _controller: PmsCoreBundle:ProjectCostItem:projectCostItemAdd }
 
 project_cost_list:
     pattern: /cost/list
-    defaults: { _controller: PmsCoreBundle:Core:projectCostItemList }
+    defaults: { _controller: PmsCoreBundle:ProjectCostItem:projectCostItemList }
 
 project_cost_details:
     pattern: project-cost/details/{id}
-    defaults: { _controller: PmsCoreBundle:Core:projectCostItemDetails }
+    defaults: { _controller: PmsCoreBundle:ProjectCostItem:projectCostItemDetails }
 
 project_cost_ajax_checked:
     pattern: /project-cost/checked
-    defaults: { _controller: PmsCoreBundle:Core:projectCostItemChecked }
+    defaults: { _controller: PmsCoreBundle:ProjectCostItem:projectCostItemChecked }
     options:
             expose: true
 
 project_cost_delete:
     pattern: /project-cost/delete/{id}
-    defaults: { _controller: PmsCoreBundle:Core:projectCostItemDelete }
+    defaults: { _controller: PmsCoreBundle:ProjectCostItem:projectCostItemDelete }
     requirements:
           id:  \d+
 
 project_cost_update:
     pattern: /project-cost/update/{id}
-    defaults: { _controller: PmsCoreBundle:Core:projectCostItemUpdate }
+    defaults: { _controller: PmsCoreBundle:ProjectCostItem:projectCostItemUpdate }
     requirements:
           id:  \d+
 
 project_cost_ajax_add:
     pattern: /project-cost/add
-    defaults: { _controller: PmsCoreBundle:Core:projectCostItemAjaxAdd }
+    defaults: { _controller: PmsCoreBundle:ProjectCostItem:projectCostItemAjaxAdd }
     options:
             expose: true
 
 category_check:
     pattern: /category/check
-    defaults: { _controller: PmsCoreBundle:Core:categoryCheck }
+    defaults: { _controller: PmsCoreBundle:Category:categoryCheck }
     options:
             expose: true
 
 category_deleted:
     pattern: /category/deleted
-    defaults: { _controller: PmsCoreBundle:Core:categoryDeleted }
+    defaults: { _controller: PmsCoreBundle:Category:categoryDeleted }
 
 category_deleted_list:
     pattern: /category/deleted/list
-    defaults: { _controller: PmsCoreBundle:Core:categoryDeletedList }
+    defaults: { _controller: PmsCoreBundle:Category:categoryDeletedList }
 
 category_active:
     pattern: /category/active/{id}
-    defaults: { _controller: PmsCoreBundle:Core:categoryActive }
+    defaults: { _controller: PmsCoreBundle:Category:categoryActive }
     requirements:
           id: \d+
 
 category_add:
     pattern: /category
-    defaults: { _controller: PmsCoreBundle:Core:categoryAdd }
+    defaults: { _controller: PmsCoreBundle:Category:categoryAdd }
 
 category_list:
     pattern: /category/list
-    defaults: { _controller: PmsCoreBundle:Core:categoryList }
+    defaults: { _controller: PmsCoreBundle:Category:categoryList }
 
 category_ajax_add:
     pattern: /category/add
-    defaults: { _controller: PmsCoreBundle:Core:categoryAjaxAdd }
+    defaults: { _controller: PmsCoreBundle:Category:categoryAjaxAdd }
     options:
             expose: true
 
 category_delete:
     pattern: /category/delete/{id}
-    defaults: { _controller: PmsCoreBundle:Core:categoryDelete }
+    defaults: { _controller: PmsCoreBundle:Category:categoryDelete }
     requirements:
           id: \d+
 
 category_update:
     pattern: /category/update/{id}
-    defaults: { _controller: PmsCoreBundle:Core:categoryUpdate }
+    defaults: { _controller: PmsCoreBundle:Category:categoryUpdate }
     requirements:
           id:  \d+
 

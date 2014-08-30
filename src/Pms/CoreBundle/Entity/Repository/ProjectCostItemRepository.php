@@ -621,6 +621,7 @@ class ProjectCostItemRepository extends EntityRepository
                 ->select('p.projectName')
                 ->addSelect('i.itemName')
                 ->addSelect('i.id')
+                ->addSelect('i.itemUnit')
                 ->addSelect('SUM(pc.lineTotal) as total')
                 ->addSelect('SUM(pc.quantity) as quantity')
                 ->where('pc.status = 1')
