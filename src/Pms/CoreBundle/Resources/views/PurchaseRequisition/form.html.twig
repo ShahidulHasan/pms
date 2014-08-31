@@ -65,6 +65,8 @@
                             </tr>
                             </thead>
                             <tbody id="purchaseItems">
+                            {% for item in form. %}
+
                             <tr>
                                 <td>
                                     {{ form_widget(form.purchaseRequisitionItem.item, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;', 'placeholder': ' Select Item'} }) }}
@@ -81,7 +83,25 @@
                                 <td>
                                     {{ form_widget(form.purchaseRequisitionItem.comment, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
                                 </td>
-                            </tr>
+
+                            {% endfor %}
+                            {#<tr>
+                                <td>
+                                    {{ form_widget(form.purchaseRequisitionItem.item, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;', 'placeholder': ' Select Item'} }) }}
+                                </td>
+                                <td>
+                                    {{ form_widget(form.purchaseRequisitionItem.quantity, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
+                                </td>
+                                <td>
+                                    <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                                        <span class="input-group-btn"></span>
+                                        {{ form_widget(form.purchaseRequisitionItem.dateOfRequired, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
+                                    </div>
+                                </td>
+                                <td>
+                                    {{ form_widget(form.purchaseRequisitionItem.comment, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
+                                </td>
+                            </tr>#}
                             </tbody>
                         </table>
 
