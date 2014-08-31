@@ -47,8 +47,11 @@ class PurchaseRequisitionType extends AbstractType
                     'class' => 'hidden'
                 )
             ))*/
-            ->add('purchaseRequisitionItem', 'collection', array(
-                'type' => new PurchaseRequisitionItemType()
+            ->add('purchaseRequisitionItems', 'collection', array(
+                'type' => new PurchaseRequisitionItemType(),
+                'allow_add'    => true,
+                'allow_delete' => true,
+                'prototype' => true,
             ))
             ->add('save', 'submit');
         ;

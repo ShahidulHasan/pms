@@ -54,7 +54,7 @@ class PurchaseRequisitionItemType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-//            'data_class' => 'Pms\CoreBundle\Entity\PurchaseRequisitionItem'
+            'data_class' => 'Pms\CoreBundle\Entity\PurchaseRequisitionItem'
         ));
     }
 

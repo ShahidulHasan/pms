@@ -64,44 +64,30 @@
                                 <th style="width: 20%;">Remarks</th>
                             </tr>
                             </thead>
-                            <tbody id="purchaseItems">
-                            {% for item in form. %}
+                            <tbody id="purchaseItems" class="tags" data-prototype="{% filter escape %}
+                                {{ include('PmsCoreBundle:PurchaseRequisition:purchaseRequisitionItemPrototype.html.twig', { 'form': form.purchaseRequisitionItems.vars.prototype }) }}
+                                {% endfilter %}}">
+
+                            {% for requisitionItem in form.purchaseRequisitionItems %}
 
                             <tr>
                                 <td>
-                                    {{ form_widget(form.purchaseRequisitionItem.item, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;', 'placeholder': ' Select Item'} }) }}
+                                    {{ form_widget(requisitionItem.item, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;', 'placeholder': ' Select Item'} }) }}
                                 </td>
                                 <td>
-                                    {{ form_widget(form.purchaseRequisitionItem.quantity, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
+                                    {{ form_widget(requisitionItem.quantity, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
                                 </td>
                                 <td>
                                     <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
                                         <span class="input-group-btn"></span>
-                                        {{ form_widget(form.purchaseRequisitionItem.dateOfRequired, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
+                                        {{ form_widget(requisitionItem.dateOfRequired, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
                                     </div>
                                 </td>
                                 <td>
-                                    {{ form_widget(form.purchaseRequisitionItem.comment, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
+                                    {{ form_widget(requisitionItem.comment, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
                                 </td>
-
+                            </tr>
                             {% endfor %}
-                            {#<tr>
-                                <td>
-                                    {{ form_widget(form.purchaseRequisitionItem.item, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;', 'placeholder': ' Select Item'} }) }}
-                                </td>
-                                <td>
-                                    {{ form_widget(form.purchaseRequisitionItem.quantity, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
-                                </td>
-                                <td>
-                                    <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                                        <span class="input-group-btn"></span>
-                                        {{ form_widget(form.purchaseRequisitionItem.dateOfRequired, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
-                                    </div>
-                                </td>
-                                <td>
-                                    {{ form_widget(form.purchaseRequisitionItem.comment, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
-                                </td>
-                            </tr>#}
                             </tbody>
                         </table>
 
@@ -116,8 +102,6 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-        jQuery(document).ready(function () {
             {% block documentready %}
             {{ parent() }}
 
@@ -160,8 +144,50 @@
 
             });
 
+            function addTagForm($collectionHolder, $newLinkLi) {
+                // Get the data-prototype explained earlier
+                var prototype = $collectionHolder.data('prototype');
+
+                // get the new index
+                var index = $collectionHolder.data('index');
+
+                // Replace '__name__' in the prototype's HTML to
+                // instead be a number based on how many items we have
+                var newForm = prototype.replace(/__name__/g, index);
+
+                // increase the index with one for the next item
+                $collectionHolder.data('index', index + 1);
+
+                // Display the form in the page in an li, before the "Add a tag" link li
+                var $newFormLi = $('<tr></tr>').append(newForm);
+                $newLinkLi.before($newFormLi);
+                $('.date-picker').datepicker();
+            }
+
+            var $collectionHolder;
+
+            // setup an "add a tag" link
+            var $addTagLink = $('<a href="#" class="add_tag_link">Add a tag</a>');
+            var $newLinkLi = $('<tr></tr>').append($addTagLink);
+
+            // Get the ul that holds the collection of tags
+            $collectionHolder = $('#purchaseItems');
+
+            // add the "add a tag" anchor and li to the tags ul
+            $collectionHolder.append($newLinkLi);
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+            $addTagLink.on('click', function(e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+
+                // add a new tag form (see next code block)
+                addTagForm($collectionHolder, $newLinkLi);
+            });
+
             {% endblock %}
-        });
-    </script>
 
 {% endblock %}

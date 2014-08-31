@@ -7,6 +7,7 @@ use Doctrine\ORM\Repository;
 use Pms\CoreBundle\Entity\Category;
 use Pms\CoreBundle\Entity\Buyer;
 use Pms\CoreBundle\Entity\PurchaseOrder;
+use Pms\CoreBundle\Entity\PurchaseRequisitionItem;
 use Pms\CoreBundle\Entity\Vendor;
 use Pms\CoreBundle\Entity\Item;
 use Pms\CoreBundle\Entity\Project;
@@ -62,6 +63,13 @@ class CoreController extends Controller
 
     public function purchaseRequisitionNewAction(Request $request)
     {
+
+        $ri1 = new PurchaseRequisitionItem();
+        $ri1->setQuantity(44);
+
+        $ri2 = new PurchaseRequisitionItem();
+        $ri2->setQuantity(44);
+
         $purchaseRequisition = new PurchaseRequisition();
         $form = $this->createForm(new PurchaseRequisitionType(), $purchaseRequisition);
 
@@ -71,10 +79,23 @@ class CoreController extends Controller
 
             if ($form->isValid()) {
 
+                    $em = $this->getDoctrine()->getManager();
                     $status = '1';
                     $dateOfRequisition = $form["dateOfRequisition"]->getData();
                     $purchaseRequisition->setStatus($status);
                     $purchaseRequisition->setDateOfRequisition(new \DateTime($dateOfRequisition));
+
+                    if (!empty($_POST['purchaserequisition']['purchaseRequisitionItems'])) {
+                        foreach ($_POST['purchaserequisition']['purchaseRequisitionItems'] as $item) {
+                            $pi = new PurchaseRequisitionItem();
+                            $pi->setItem($em->getRepository('PmsCoreBundle:Item')->find($item['item']));
+                            $pi->setQuantity($item['quantity']);
+                            $pi->setDateOfRequired(new \DateTime($item['dateOfRequired']));
+                            $pi->setComment($item['comment']);
+                            $pi->setPurchaseRequisition($purchaseRequisition);
+                            $purchaseRequisition->addPurchaseRequisitionItem($pi);
+                        }
+                    }
 
                     $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisition')->create($purchaseRequisition);
 

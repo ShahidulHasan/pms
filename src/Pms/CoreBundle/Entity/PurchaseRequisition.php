@@ -3,6 +3,7 @@
 namespace Pms\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -76,7 +77,7 @@ class PurchaseRequisition
      *
      * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisitionItem", mappedBy="purchaseRequisition", cascade={"persist", "remove"})
      */
-    private $purchaseRequisitionItem;
+    private $purchaseRequisitionItems;
 
     /**
      * @var ArrayCollection
@@ -568,4 +569,29 @@ class PurchaseRequisition
     {
         return $this->approvedDateCategoryHeadTwo;
     }
+
+    function setPurchaseRequisitionItems(Collection $items)
+    {
+        $this->purchaseRequisitionItems = $items;
+
+        return $this;
+    }
+
+    public function addPurchaseRequisitionItem(PurchaseRequisitionItem $item)
+    {
+        $this->purchaseRequisitionItems[] = $item;
+
+        return $this;
+    }
+
+    public function removePurchaseRequisitionItem(PurchaseRequisitionItem $item)
+    {
+        $this->purchaseRequisitionItems->removeElement($item);
+    }
+
+    public function getPurchaseRequisitionItems()
+    {
+        return $this->purchaseRequisitionItem;
+    }
+
 }
