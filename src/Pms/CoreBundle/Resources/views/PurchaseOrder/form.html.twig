@@ -5,7 +5,6 @@
     <div class="modal-dialog" style="width: 1000px;">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                 <h4 class="modal-title bold" style="text-align: center;"> Purchase Order Form</h4>
             </div>
 
@@ -13,8 +12,8 @@
             <div class="modal-body">
                 <div class="row">
 
-                    <div style="width: 100%;">
-                        <div style="width: 50%;height:70px;float: left;text-align: left;">
+                    <div class="col-md-12">
+                        <div class="col-md-6" style="height:70px;float: left;text-align: left;">
                             <div class="form-group">
 
                                 <div class="col-md-6">
@@ -24,8 +23,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div style="width: 41%;height:100px;float: right;">
-                            <div style="width: 100%;height:50px;float:left;">
+                        <div class="col-md-6" style="height:100px;float: right;">
+                            <div class="col-md-12" style="height:50px;float:left;">
                                 <div class="form-group">
                                     {{ form_label(form.orderNo, 'Order No :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }
                                     ) }}
@@ -36,7 +35,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div style="width: 100%;height:35px;float:left;">
+                            <div class="col-md-12" style="height:35px;float:left;">
                                 <div class="form-group">
                                     {{ form_label(form.dateOfDelivered, 'Date :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }
                                     ) }}
@@ -44,7 +43,7 @@
                                         <div class="input-icon">
                                             <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
                                                 <span class="input-group-btn"></span>
-                                                {{ form_widget(form.dateOfDelivered, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
+                                                {{ form_widget(form.dateOfDelivered, { 'attr': {'class': 'form-control', 'style': 'width: 188px;padding-left: 10px! important;'} }) }}
                                             </div>
                                         </div>
                                     </div>
@@ -52,38 +51,42 @@
                             </div>
                         </div>
                     </div>
-
-                    <div style="width: 100%;">
-                        <table class="table table-striped" style="margin-top: 100px;">
+<br/>
+<br/>
+<br/>
+                    <div class="col-md-12">
+                        <table class="table table-striped" style="border:1px solid grey;margin-top: 100px;">
                             <thead>
                             <tr>
-                                <th style="width: 30%;">Particulars</th>
-                                <th style="width: 20%;">Quantity</th>
-                                <th style="width: 30%;"></th>
-                                <th style="width: 20%;">Remarks</th>
+                                <th class="col-md-3" style="padding-left: 12px;">Particulars</th>
+                                <th class="col-md-2" style="padding-left: 12px;">Quantity</th>
+                                <th class="col-md-2" style="padding-left: 12px;"></th>
+                                <th class="col-md-3" style="padding-left: 12px;">Remarks</th>
+                                <th class="col-md-2"></th>
                             </tr>
                             </thead>
                             <tbody id="orderItems" class="tags" data-prototype="{% filter escape %}
                                 {{ include('PmsCoreBundle:PurchaseOrder:purchaseOrderItemPrototype.html.twig', { 'form': form.purchaseOrderItems.vars.prototype }) }}
                                 {% endfilter %}}">
+                                {% for OrderItem in form.purchaseOrderItems %}
+                                    <tr>
+                                        <td>
+                                            {{ form_widget(form.item, { 'attr': {'class': 'form-control', 'style': 'width: 200px;padding-left: 10px! important;', 'placeholder': ' Select Item'} }) }}
+                                        </td>
+                                        <td>
+                                            {{ form_widget(form.quantity, { 'attr': {'class': 'form-control', 'style': 'width: 120px;padding-left: 10px! important;'} }) }}
+                                        </td>
+                                        <td>
 
-                            {% for OrderItem in form.purchaseOrderItems %}
+                                        </td>
+                                        <td>
+                                            {{ form_widget(form.comment, { 'attr': {'class': 'form-control', 'style': 'width: 188px;padding-left: 10px! important;'} }) }}
+                                        </td>
+                                        <td>
 
-                                <tr>
-                                    <td>
-                                        {{ form_widget(OrderItem.item, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;', 'placeholder': ' Select Item'} }) }}
-                                    </td>
-                                    <td>
-                                        {{ form_widget(OrderItem.quantity, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-                                        {{ form_widget(OrderItem.comment, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
-                                    </td>
-                                </tr>
-                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
 
@@ -91,7 +94,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                {{ form_widget(form.save, { 'attr': {'class': 'btn green button-width'} }) }}
+                {{ form_widget(form.save, { 'attr': {'class': 'btn green button-width', 'style': 'width: 100px;' } }) }}
             </div>
             {{ form_end(form) }}
         </div>
@@ -125,8 +128,8 @@
     var $collectionHolder;
 
     // setup an "add a tag" link
-    var $addTagLink = $('<a href="#" class="add_tag_link">Add a tag</a>');
-    var $newLinkLi = $('<tr></tr>').append($addTagLink);
+    var $addTagLink = $('<td><div style="text-align: right;"><a href="#" class="btn default btn-xs green-stripe add_tag_link"><i class="fa fa-plus"></i> Add Item</a></div></td>');
+    var $newLinkLi = $('<tr><td></td><td></td><td></td><td></td></tr>').append($addTagLink);
 
     // Get the ul that holds the collection of tags
     $collectionHolder = $('#orderItems');

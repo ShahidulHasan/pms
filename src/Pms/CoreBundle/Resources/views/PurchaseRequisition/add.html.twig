@@ -63,10 +63,10 @@
                                                     <td class="col-md-2" style="color: {{ color|join("") }};">{{ purchaseRequisition.requisitionNo }}</td>
                                                     <td class="col-md-3" style="color: {{ color|join("") }};">{{ purchaseRequisition.project.projectName }}</td>
 
-                                                    {% if purchaseRequisition.approvedDateProjectHead == 0 %}
-                                                        <td class="col-md-1"><a href="#">Approve</a></td>
+                                                    {% if purchaseRequisition.approvedByProjectHead == 0 %}
+                                                        <td class="col-md-1"><a href="/purchase/requisition/approve/projectHead/{{ purchaseRequisition.id }}">Approve</a></td>
                                                     {% endif %}
-                                                    {% if purchaseRequisition.approvedDateProjectHead == 1 %}
+                                                    {% if purchaseRequisition.approvedByProjectHead == 1 %}
                                                         <td class="col-md-1" style="color: green;">Approved</td>
                                                     {% endif %}
 

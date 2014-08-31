@@ -461,7 +461,7 @@ class PurchaseRequisition
      * @param \DateTime $approvedDateProjectHead
      * @return PurchaseRequisition
      */
-    public function setApprovedDateProjectManager($approvedDateProjectHead)
+    public function setApprovedDateProjectHead($approvedDateProjectHead)
     {
         $this->approvedDateProjectHead = $approvedDateProjectHead;
 

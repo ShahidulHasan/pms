@@ -69,30 +69,28 @@
                             <tbody id="purchaseItems" class="tags" data-prototype="{% filter escape %}
                                 {{ include('PmsCoreBundle:PurchaseRequisition:purchaseRequisitionItemPrototype.html.twig', { 'form': form.purchaseRequisitionItems.vars.prototype }) }}
                                 {% endfilter %}}">
+                                {% for requisitionItem in form.purchaseRequisitionItems %}
+                                <tr>
+                                    <td>
+                                        {{ form_widget(form.item, { 'attr': {'class': 'form-control select2me', 'style': 'width: 180px;padding-left: 10px! important;', 'placeholder': ' Select Item'} }) }}
+                                    </td>
+                                    <td>
+                                        {{ form_widget(form.quantity, { 'attr': {'class': 'form-control', 'style': 'width: 120px;padding-left: 10px! important;'} }) }}
+                                    </td>
+                                    <td>
+                                        <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                                            <span class="input-group-btn"></span>
+                                            {{ form_widget(form.dateOfRequired, { 'attr': {'class': 'form-control', 'style': 'width: 120px;padding-left: 10px! important;'} }) }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {{ form_widget(form.comment, { 'attr': {'class': 'form-control', 'style': 'width: 200px;padding-left: 10px! important;'} }) }}
+                                    </td>
+                                    <td>
 
-                            {% for requisitionItem in form.purchaseRequisitionItems %}
-
-                            <tr>
-                                <td>
-                                    {{ form_widget(requisitionItem.item, { 'attr': {'class': 'form-control select2me', 'style': 'width: 100px;padding-left: 10px! important;', 'placeholder': ' Select Item'} }) }}
-                                </td>
-                                <td>
-                                    {{ form_widget(requisitionItem.quantity, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
-                                </td>
-                                <td>
-                                    <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                                        <span class="input-group-btn"></span>
-                                        {{ form_widget(requisitionItem.dateOfRequired, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
-                                    </div>
-                                </td>
-                                <td>
-                                    {{ form_widget(requisitionItem.comment, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px! important;'} }) }}
-                                </td>
-                                <td>
-
-                                </td>
-                            </tr>
-                            {% endfor %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
 

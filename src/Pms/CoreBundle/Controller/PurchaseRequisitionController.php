@@ -45,6 +45,9 @@ class PurchaseRequisitionController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $status = '1';
                 $dateOfRequisition = $form["dateOfRequisition"]->getData();
+                $user = $this->get('security.context')->getToken()->getUser()->getId();
+                $purchaseRequisition->setCreatedBy($user);
+                $purchaseRequisition->setCreatedDate(new \DateTime());
                 $purchaseRequisition->setStatus($status);
                 $purchaseRequisition->setDateOfRequisition(new \DateTime($dateOfRequisition));
 
@@ -56,6 +59,8 @@ class PurchaseRequisitionController extends Controller
                         $pi->setDateOfRequired(new \DateTime($item['dateOfRequired']));
                         $pi->setComment($item['comment']);
                         $pi->setPurchaseRequisition($purchaseRequisition);
+                        $pi->setStatus('1');
+                        $pi->setStatusPo('0');
                         $purchaseRequisition->addPurchaseRequisitionItem($pi);
                     }
                 }
@@ -74,6 +79,20 @@ class PurchaseRequisitionController extends Controller
         return $this->render('PmsCoreBundle:PurchaseRequisition:form.html.twig', array(
             'form' => $form->createView(),
         ));
+    }
+
+    public function purchaseRequisitionApproveByProjectHeadAction(PurchaseRequisition $purchaseRequisition)
+    {
+        $status = '1';
+        $purchaseRequisition->setApprovedByProjectHead($status);
+        $purchaseRequisition->setApprovedDateProjectHead(new \DateTime());
+        $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisition')->update($purchaseRequisition);
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            'Purchase Requisition Successfully Approved'
+        );
+
+        return $this->redirect($this->generateUrl('purchase_requisition_add'));
     }
 
     public function paginate($dql)
