@@ -5,6 +5,7 @@ namespace Pms\CoreBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class PurchaseOrderType extends AbstractType
 {
@@ -15,14 +16,24 @@ class PurchaseOrderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('orderNo')
-            ->add('claimedBy')
-            ->add('poNonpo')
-            ->add('vendor')
-            ->add('dateOfClosing')
-            ->add('dateOfDelivered')
-            ->add('project')
-            ->add('buyer')
+            ->add('orderNo', 'text')
+            ->add('dateOfDelivered', 'text', array(
+                'constraints' => array(
+                    new NotBlank()
+                ),
+                'attr' => array(
+                    'placeholder' => 'Date'
+                ),
+                'data_class' => null,
+                'read_only' => true
+            ))
+            ->add('purchaseOrderItems', 'collection', array(
+                'type' => new PurchaseOrderItemType(),
+                'allow_add'    => true,
+                'allow_delete' => true,
+                'prototype' => true,
+            ))
+            ->add('save', 'submit');
         ;
     }
     

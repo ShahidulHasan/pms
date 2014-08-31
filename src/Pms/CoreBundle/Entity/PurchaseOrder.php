@@ -2,6 +2,8 @@
 
 namespace Pms\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,44 +24,51 @@ class PurchaseOrder
     private $id;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\PurchaseOrderItem", mappedBy="purchaseOrder", cascade={"persist", "remove"})
+     */
+    private $purchaseOrderItems;
+
+    /**
      * @var integer
      *
-     * @ORM\Column(name="order_no", type="integer")
+     * @ORM\Column(name="order_no", type="integer", nullable=true)
      */
     private $orderNo;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="claimed_by", type="integer")
+     * @ORM\Column(name="claimed_by", type="integer", nullable=true)
      */
     private $claimedBy;
 
     /**
      * @var /DateTime
      *
-     * @ORM\Column(name="date_of_claimed", type="date")
+     * @ORM\Column(name="date_of_claimed", type="date", nullable=true)
      */
     private $dateOfClaimed;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="po_nonpo", type="integer")
+     * @ORM\Column(name="po_nonpo", type="integer", nullable=true)
      */
     private $poNonpo;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="status", type="integer")
+     * @ORM\Column(name="status", type="integer", nullable=true)
      */
     private $status;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="vendors", type="integer")
+     * @ORM\Column(name="vendors", type="integer", nullable=true)
      */
     private $vendor;
 
@@ -67,7 +76,7 @@ class PurchaseOrder
      * @var Project
      *
      * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Project", inversedBy="purchaseOrder")
-     * @ORM\JoinColumn(name="projects")
+     * @ORM\JoinColumn(name="projects", nullable=true)
      */
     private $project;
 
@@ -75,37 +84,95 @@ class PurchaseOrder
      * @var Buyer
      *
      * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Buyer", inversedBy="purchaseOrder")
-     * @ORM\JoinColumn(name="buyers")
+     * @ORM\JoinColumn(name="buyers", nullable=true)
      */
     private $buyer;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="created_by", type="integer")
+     * @ORM\Column(name="created_by", type="integer", nullable=true)
      */
     private $createdBy;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_date", type="datetime")
+     * @ORM\Column(name="created_date", type="datetime", nullable=true)
      */
     private $createdDate;
 
     /**
      * @var /DateTime
      *
-     * @ORM\Column(name="date_of_closings", type="date")
+     * @ORM\Column(name="date_of_closings", type="date", nullable=true)
      */
     private $dateOfClosing;
 
     /**
      * @var /DateTime
      *
-     * @ORM\Column(name="date_of_delivered", type="date")
+     * @ORM\Column(name="date_of_delivered", type="date", nullable=true)
      */
     private $dateOfDelivered;
+
+    public function __construct()
+    {
+        $this->purchaseOrderItem = new ArrayCollection();
+    }
+
+    /**
+     * @param \Pms\CoreBundle\Entity\PurchaseOrderItem $purchaseOrder
+     */
+    public function addPurchaseOrder($purchaseOrder)
+    {
+        if (!$this->getPurchaseOrderItem()->contains($purchaseOrder)) {
+            $purchaseOrder->setPurchaseOrder($this);
+            $this->getPurchaseOrderItem()->add($purchaseOrder);
+        }
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getPurchaseOrderItem()
+    {
+        return $this->purchaseOrderItem;
+    }
+
+    /**
+     * @param \Pms\CoreBundle\Entity\PurchaseOrderItem $purchaseOrder
+     */
+    public function removePurchaseOrder($purchaseOrder)
+    {
+        if ($this->getPurchaseOrderItem()->contains($purchaseOrder)) {
+            $this->getPurchaseOrderItem()->removeElement($purchaseOrder);
+        }
+    }
+
+    function setPurchaseOrderItems(Collection $items)
+    {
+        $this->purchaseOrderItems = $items;
+
+        return $this;
+    }
+
+    public function addPurchaseOrderItem(PurchaseOrderItem $item)
+    {
+        $this->purchaseOrderItems[] = $item;
+
+        return $this;
+    }
+
+    public function removePurchaseOrderItem(PurchaseOrderItem $item)
+    {
+        $this->purchaseOrderItems->removeElement($item);
+    }
+
+    public function getPurchaseOrderItems()
+    {
+        return $this->purchaseOrderItem;
+    }
 
     /**
      * Get id

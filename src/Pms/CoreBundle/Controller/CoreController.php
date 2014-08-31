@@ -7,6 +7,7 @@ use Doctrine\ORM\Repository;
 use Pms\CoreBundle\Entity\Category;
 use Pms\CoreBundle\Entity\Buyer;
 use Pms\CoreBundle\Entity\PurchaseOrder;
+use Pms\CoreBundle\Entity\PurchaseOrderItem;
 use Pms\CoreBundle\Entity\PurchaseRequisitionItem;
 use Pms\CoreBundle\Entity\Vendor;
 use Pms\CoreBundle\Entity\Item;
@@ -15,6 +16,7 @@ use Pms\CoreBundle\Entity\ProjectCostItem;
 use Pms\CoreBundle\Entity\PurchaseRequisition;
 use Pms\CoreBundle\Form\CategoryType;
 use Pms\CoreBundle\Form\BuyerType;
+use Pms\CoreBundle\Form\PurchaseOrderType;
 use Pms\CoreBundle\Form\VendorType;
 use Pms\CoreBundle\Form\ItemType;
 use Pms\CoreBundle\Form\ProjectCostItemType;
@@ -38,19 +40,44 @@ class CoreController extends Controller
     public function purchaseOrderNewAction(Request $request)
     {
         $purchaseOrder = new PurchaseOrder();
-//        $form = $this->createForm(new PurchaseOrderType(), $purchaseOrder);
-//
-//        if ($request->getMethod() == 'POST') {
-//
-//            $form->handleRequest($request);
-//
-//            if ($form->isValid()) {
-//
-//            }
-//        }
+        $form = $this->createForm(new PurchaseOrderType(), $purchaseOrder);
+
+        if ($request->getMethod() == 'POST') {
+
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+
+                $em = $this->getDoctrine()->getManager();
+                $status = '1';
+                $dateOfDelivered = $form["dateOfDelivered"]->getData();
+                $purchaseOrder->setStatus($status);
+                $purchaseOrder->setDateOfDelivered(new \DateTime($dateOfDelivered));
+
+                if (!empty($_POST['purchaseorder']['purchaseOrderItems'])) {
+                    foreach ($_POST['purchaseorder']['purchaseOrderItems'] as $item) {
+                        $pi = new PurchaseOrderItem();
+                        $pi->setItem($em->getRepository('PmsCoreBundle:Item')->find($item['item']));
+                        $pi->setQuantity($item['quantity']);
+                        $pi->setComment($item['comment']);
+                        $pi->setPurchaseOrder($purchaseOrder);
+                        $purchaseOrder->addPurchaseOrderItem($pi);
+                    }
+                }
+
+                $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseOrder')->create($purchaseOrder);
+
+                $this->get('session')->getFlashBag()->add(
+                    'notice',
+                    'Po Successfully Add'
+                );
+
+                return $this->redirect($this->generateUrl('purchase_order_add'));
+            }
+        }
 
         return $this->render('PmsCoreBundle:PurchaseOrder:form.html.twig', array(
-//            'form' => $form->createView(),
+            'form' => $form->createView(),
         ));
     }
 

@@ -9,102 +9,141 @@
                 <h4 class="modal-title bold" style="text-align: center;"> Purchase Order Form</h4>
             </div>
 
-            {#{{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'purchase-form', 'novalidate': 'novalidate'} }) }}#}
-            {#<div class="modal-body">#}
-                {#<div class="row">#}
+            {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'purchase-form', 'novalidate': 'novalidate'} }) }}
+            <div class="modal-body">
+                <div class="row">
 
-                    {#<div style="width: 100%;">#}
-                        {#<div style="width: 50%;height:70px;float: left;text-align: left;">#}
-                            {#<div class="form-group">#}
-                                {#{{ form_label(form.project, 'Project Name :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }#}
-                                {#) }}#}
-                                {#<div class="col-md-6">#}
-                                    {#<div class="input-icon">#}
-                                        {#{{ form_widget(form.project, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;margin-left: -60px;' } }) }}#}
-                                    {#</div>#}
-                                {#</div>#}
-                            {#</div>#}
-                        {#</div>#}
-                        {#<div style="width: 41%;height:100px;float: right;">#}
-                            {#<div style="width: 100%;height:50px;float:left;">#}
-                                {#<div class="form-group">#}
-                                    {#{{ form_label(form.requisitionNo, 'Requisition No :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }#}
-                                    {#) }}#}
-                                    {#<div class="col-md-6">#}
-                                        {#<div class="input-icon">#}
-                                            {#{{ form_widget(form.requisitionNo, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;' } }) }}#}
-                                        {#</div>#}
-                                    {#</div>#}
-                                {#</div>#}
-                            {#</div>#}
-                            {#<div style="width: 100%;height:35px;float:left;">#}
-                                {#<div class="form-group">#}
-                                    {#{{ form_label(form.dateOfRequisition, 'Date :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }#}
-                                    {#) }}#}
-                                    {#<div class="col-md-6">#}
-                                        {#<div class="input-icon">#}
-                                            {#<div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">#}
-                                                {#<span class="input-group-btn"></span>#}
-                                                {#{{ form_widget(form.dateOfRequisition, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}#}
-                                            {#</div>#}
-                                        {#</div>#}
-                                    {#</div>#}
-                                {#</div>#}
-                            {#</div>#}
-                        {#</div>#}
-                    {#</div>#}
+                    <div style="width: 100%;">
+                        <div style="width: 50%;height:70px;float: left;text-align: left;">
+                            <div class="form-group">
 
-                    {#<div style="width: 100%;">#}
-                        {#<table class="table table-striped" style="margin-top: 100px;">#}
-                            {#<thead>#}
-                            {#<tr>#}
-                                {#<th style="width: 30%;">Particulars</th>#}
-                                {#<th style="width: 20%;">Quantity</th>#}
-                                {#<th style="width: 30%;">Expected Date of Required</th>#}
-                                {#<th style="width: 20%;">Remarks</th>#}
-                            {#</tr>#}
-                            {#</thead>#}
-                            {#<tbody id="purchaseItems">#}
-                            {#<tr>#}
-                                {#<td>#}
-                                    {#{{ form_widget(form.purchaseRequisitionItem.item, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;', 'placeholder': ' Select Item'} }) }}#}
-                                {#</td>#}
-                                {#<td>#}
-                                    {#{{ form_widget(form.purchaseRequisitionItem.quantity, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}#}
-                                {#</td>#}
-                                {#<td>#}
-                                    {#<div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">#}
-                                        {#<span class="input-group-btn"></span>#}
-                                        {#{{ form_widget(form.purchaseRequisitionItem.dateOfRequired, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}#}
-                                    {#</div>#}
-                                {#</td>#}
-                                {#<td>#}
-                                    {#{{ form_widget(form.purchaseRequisitionItem.comment, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}#}
-                                {#</td>#}
-                            {#</tr>#}
-                            {#</tbody>#}
-                        {#</table>#}
+                                <div class="col-md-6">
+                                    <div class="input-icon">
 
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-            {#<div class="modal-footer">#}
-                {#{{ form_widget(form.save, { 'attr': {'class': 'btn green button-width'} }) }}#}
-                {#&#123;&#35;<input type="button" name="ajaxSavePr" value="Save" id="ajaxSavePr" class="btn green button-width col-md-1" style="margin-top:2px;margin-left:10px;height:32px;">&#35;&#125;#}
-            {#</div>#}
-            {#{{ form_end(form) }}#}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 41%;height:100px;float: right;">
+                            <div style="width: 100%;height:50px;float:left;">
+                                <div class="form-group">
+                                    {{ form_label(form.orderNo, 'Order No :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }
+                                    ) }}
+                                    <div class="col-md-6">
+                                        <div class="input-icon">
+                                            {{ form_widget(form.orderNo, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;' } }) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width: 100%;height:35px;float:left;">
+                                <div class="form-group">
+                                    {{ form_label(form.dateOfDelivered, 'Date :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }
+                                    ) }}
+                                    <div class="col-md-6">
+                                        <div class="input-icon">
+                                            <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                                                <span class="input-group-btn"></span>
+                                                {{ form_widget(form.dateOfDelivered, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="width: 100%;">
+                        <table class="table table-striped" style="margin-top: 100px;">
+                            <thead>
+                            <tr>
+                                <th style="width: 30%;">Particulars</th>
+                                <th style="width: 20%;">Quantity</th>
+                                <th style="width: 30%;"></th>
+                                <th style="width: 20%;">Remarks</th>
+                            </tr>
+                            </thead>
+                            <tbody id="orderItems" class="tags" data-prototype="{% filter escape %}
+                                {{ include('PmsCoreBundle:PurchaseOrder:purchaseOrderItemPrototype.html.twig', { 'form': form.purchaseOrderItems.vars.prototype }) }}
+                                {% endfilter %}}">
+
+                            {% for OrderItem in form.purchaseOrderItems %}
+
+                                <tr>
+                                    <td>
+                                        {{ form_widget(OrderItem.item, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;', 'placeholder': ' Select Item'} }) }}
+                                    </td>
+                                    <td>
+                                        {{ form_widget(OrderItem.quantity, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        {{ form_widget(OrderItem.comment, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                {{ form_widget(form.save, { 'attr': {'class': 'btn green button-width'} }) }}
+            </div>
+            {{ form_end(form) }}
         </div>
     </div>
 
-    <script type="text/javascript">
-        jQuery(document).ready(function () {
-            {% block documentready %}
-            {{ parent() }}
+{% endblock %}
 
+{% block documentready %}
+    {{ parent() }}
 
+    function addTagForm($collectionHolder, $newLinkLi) {
+    // Get the data-prototype explained earlier
+    var prototype = $collectionHolder.data('prototype');
 
-            {% endblock %}
-        });
-    </script>
+    // get the new index
+    var index = $collectionHolder.data('index');
+
+    // Replace '__name__' in the prototype's HTML to
+    // instead be a number based on how many items we have
+    var newForm = prototype.replace(/__name__/g, index);
+
+    // increase the index with one for the next item
+    $collectionHolder.data('index', index + 1);
+
+    // Display the form in the page in an li, before the "Add a tag" link li
+    var $newFormLi = $('<tr></tr>').append(newForm);
+    $newLinkLi.before($newFormLi);
+    $('.date-picker').datepicker();
+    }
+
+    var $collectionHolder;
+
+    // setup an "add a tag" link
+    var $addTagLink = $('<a href="#" class="add_tag_link">Add a tag</a>');
+    var $newLinkLi = $('<tr></tr>').append($addTagLink);
+
+    // Get the ul that holds the collection of tags
+    $collectionHolder = $('#orderItems');
+
+    // add the "add a tag" anchor and li to the tags ul
+    $collectionHolder.append($newLinkLi);
+
+    // count the current form inputs we have (e.g. 2), use that as the new
+    // index when inserting a new item (e.g. 2)
+    $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+    $addTagLink.on('click', function(e) {
+    // prevent the link from creating a "#" on the URL
+    e.preventDefault();
+
+    // add a new tag form (see next code block)
+    addTagForm($collectionHolder, $newLinkLi);
+    });
 
 {% endblock %}

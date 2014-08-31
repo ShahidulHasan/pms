@@ -103,7 +103,7 @@
 
 {% endblock %}
 
- {% block documentready %}
+{% block documentready %}
      {{ parent() }}
 
      function addTagForm($collectionHolder, $newLinkLi) {
@@ -150,4 +150,4 @@
      addTagForm($collectionHolder, $newLinkLi);
      });
 
- {% endblock %}
+{% endblock %}

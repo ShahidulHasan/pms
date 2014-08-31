@@ -175,7 +175,7 @@ class PurchaseRequisition
     }
 
     /**
-     * \Pms\CoreBundle\Entity\PurchaseRequisitionItem $purchaseRequisition
+     * @param \Pms\CoreBundle\Entity\PurchaseRequisitionItem $purchaseRequisition
      */
     public function removePurchaseRequisition($purchaseRequisition)
     {
@@ -593,5 +593,4 @@ class PurchaseRequisition
     {
         return $this->purchaseRequisitionItem;
     }
-
 }

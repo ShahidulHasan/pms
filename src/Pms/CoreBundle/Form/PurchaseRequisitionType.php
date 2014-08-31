@@ -42,11 +42,6 @@ class PurchaseRequisitionType extends AbstractType
                         ->where('s.status = 1');
                 }
             ))
-            /*->add('purchaseRequisitionItem', new PurchaseRequisitionItemType(), array(
-                'label_attr' => array(
-                    'class' => 'hidden'
-                )
-            ))*/
             ->add('purchaseRequisitionItems', 'collection', array(
                 'type' => new PurchaseRequisitionItemType(),
                 'allow_add'    => true,
