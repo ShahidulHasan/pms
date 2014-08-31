@@ -81,6 +81,7 @@
                                             <th>Sl</th>
                                             <th>Item Name</th>
                                             <th>Unit</th>
+                                            <th>Category</th>
                                             <th>Status</th>
                                             <th></th>
                                         </tr>
@@ -101,8 +102,9 @@
 
                                             <tr>
                                                 <td>{{ i }} .</td>
-                                                <td class="col-md-6" style="color: {{ color|join("") }};">{{ item.itemName }}</td>
+                                                <td class="col-md-4" style="color: {{ color|join("") }};">{{ item.itemName }}</td>
                                                 <td class="col-md-2" style="color: {{ color|join("") }};">{{ item.itemUnit }}</td>
+                                                <td class="col-md-4" style="color: {{ color|join("") }};">{{ item.category.categoryName | default() }}</td>
                                                 <td>
                                                     <a href="/item/delete/{{ item.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
                                                                 class="fa fa-trash-o"></i> Delete</a>

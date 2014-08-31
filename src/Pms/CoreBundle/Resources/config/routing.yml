@@ -46,25 +46,19 @@ vendor_update:
 
 purchase_order_add:
     pattern: /purchase/order
-    defaults: { _controller: PmsCoreBundle:Core:purchaseOrderAdd }
+    defaults: { _controller: PmsCoreBundle:PurchaseOrder:purchaseOrderAdd }
 
 purchase_order_new:
     pattern: /purchase/order/new
-    defaults: { _controller: PmsCoreBundle:Core:purchaseOrderNew }
+    defaults: { _controller: PmsCoreBundle:PurchaseOrder:purchaseOrderNew }
 
 purchase_requisition_add:
     pattern: /purchase/requisition
-    defaults: { _controller: PmsCoreBundle:Core:purchaseRequisitionAdd }
+    defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionAdd }
 
 purchase_requisition_new:
     pattern: /purchase/requisition/new
-    defaults: { _controller: PmsCoreBundle:Core:purchaseRequisitionNew }
-
-#pr_ajax_add:
-#    pattern: /pr/add
-#    defaults: { _controller: PmsCoreBundle:Core:prAjaxAdd }
-#    options:
-#            expose: true
+    defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionNew }
 
 buyer_add:
     pattern: /buyer

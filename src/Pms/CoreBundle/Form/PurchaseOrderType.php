@@ -32,6 +32,9 @@ class PurchaseOrderType extends AbstractType
                 'allow_add'    => true,
                 'allow_delete' => true,
                 'prototype' => true,
+                'label_attr' => array(
+                    'class' => 'hidden'
+                )
             ))
             ->add('save', 'submit');
         ;

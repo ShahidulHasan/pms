@@ -38,7 +38,9 @@
                                             <thead>
                                             <tr>
                                                 <th>Sl</th>
-                                                <th>purchase Requisition Date</th>
+                                                <th>Date</th>
+                                                <th>Requisition No</th>
+                                                <th>Project</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -57,13 +59,38 @@
 
                                                 <tr>
                                                     <td>{{ i }} .</td>
-                                                    <td class="col-md-11" style="color: {{ color|join("") }};">{{ purchaseRequisition.dateOfRequisition|date('Y-m-d') }}</td>
+                                                    <td class="col-md-2" style="color: {{ color|join("") }};">{{ purchaseRequisition.dateOfRequisition|date('Y-m-d') }}</td>
+                                                    <td class="col-md-2" style="color: {{ color|join("") }};">{{ purchaseRequisition.requisitionNo }}</td>
+                                                    <td class="col-md-3" style="color: {{ color|join("") }};">{{ purchaseRequisition.project.projectName }}</td>
+
+                                                    {% if purchaseRequisition.approvedDateProjectHead == 0 %}
+                                                        <td class="col-md-1"><a href="#">Approve</a></td>
+                                                    {% endif %}
+                                                    {% if purchaseRequisition.approvedDateProjectHead == 1 %}
+                                                        <td class="col-md-1" style="color: green;">Approved</td>
+                                                    {% endif %}
+
+                                                    {% if purchaseRequisition.approvedByCategoryHeadOne == 0 %}
+                                                        <td class="col-md-1"><a href="#">Approve</a></td>
+                                                    {% endif %}
+                                                    {% if purchaseRequisition.approvedByCategoryHeadOne == 1 %}
+                                                        <td class="col-md-1" style="color: green;">Approved</td>
+                                                    {% endif %}
+
+                                                    {% if purchaseRequisition.approvedByCategoryHeadTwo == 0 %}
+                                                        <td class="col-md-1"><a href="#">Approve</a></td>
+                                                    {% endif %}
+                                                    {% if purchaseRequisition.approvedByCategoryHeadTwo == 1 %}
+                                                        <td class="col-md-1" style="color: green;">Approved</td>
+                                                    {% endif %}
                                                 </tr>
 
                                             {% endfor %}
                                             </tbody>
                                         </table>
-
+                                        <div class="navigation" style="text-align: right">
+                                            {{ knp_pagination_render(purchaseRequisitions) }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

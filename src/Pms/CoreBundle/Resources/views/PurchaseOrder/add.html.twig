@@ -35,10 +35,38 @@
                                     <div class="col-md-11" style="margin-left: 4%; margin-top: 30px;">
 
                                         <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
+                                            <thead>
+                                            <tr>
+                                                <th>Sl</th>
+                                                <th>Date</th>
+                                                <th>Order No</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
 
+                                            {% if page == 1 %}{% set i = 0 %}
+                                            {% else %}{% set i = (page * 50) -50 %}
+                                            {% endif %}
+
+                                            {% for purchaseOrder in purchaseOrders %}
+                                                {% set i = i + 1 %}
+                                                {% set color = [" "] %}
+
+                                                {% if purchaseOrder.status == 0 %}{% set color = color|merge(["red"]) %}
+                                                {% elseif purchaseOrder.status == 1 %}{% set color = color|merge(["green"]) %}
+                                                {% endif %}
+
+                                                <tr>
+                                                    <td>{{ i }} .</td>
+                                                    <td class="col-md-2" style="color: {{ color|join("") }};">{{ purchaseOrder.dateOfDelivered|date('Y-m-d') }}</td>
+                                                    <td class="col-md-9" style="color: {{ color|join("") }};">{{ purchaseOrder.orderNo }}</td>
+                                                </tr>
+
+                                            {% endfor %}
+                                            </tbody>
                                         </table>
                                         <div class="navigation" style="text-align: right">
-                                            {#{{ knp_pagination_render(project) }}#}
+                                            {{ knp_pagination_render(purchaseOrders) }}
                                         </div>
                                     </div>
                                 </div>
