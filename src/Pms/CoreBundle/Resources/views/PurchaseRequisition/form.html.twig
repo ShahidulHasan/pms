@@ -5,7 +5,6 @@
     <div class="modal-dialog" style="width: 1000px;">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                 <h4 class="modal-title bold" style="text-align: center;"> Purchase Requisition Form</h4>
             </div>
 
@@ -13,24 +12,24 @@
             <div class="modal-body">
                 <div class="row">
 
-                    <div style="width: 100%;">
-                        <div style="width: 50%;height:70px;float: left;text-align: left;">
+                    <div class="col-md-12">
+                        <div class="col-md-6" style="height:70px;float: left;text-align: left;">
                             <div class="form-group">
-                                {{ form_label(form.project, 'Project Name :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }
+                                {{ form_label(form.project, 'Project Name :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left: -10px;font-weight:bold;' } }
                                 ) }}
                                 <div class="col-md-6">
                                     <div class="input-icon">
-                                        {{ form_widget(form.project, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;margin-left: -60px;' } }) }}
+                                        {{ form_widget(form.project, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;' } }) }}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div style="width: 41%;height:100px;float: right;">
-                            <div style="width: 100%;height:50px;float:left;">
+                        <div class="col-md-6" style="height:100px;float: right;">
+                            <div class="col-md-12" style="height:50px;float:left;">
                                 <div class="form-group">
                                     {{ form_label(form.requisitionNo, 'Requisition No :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }
                                     ) }}
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" style="margin-left: 55px;">
                                         <div class="input-icon">
                                             {{ form_widget(form.requisitionNo, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;' } }) }}
                                         </div>
@@ -39,13 +38,13 @@
                             </div>
                             <div style="width: 100%;height:35px;float:left;">
                                 <div class="form-group">
-                                    {{ form_label(form.dateOfRequisition, 'Date :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }
+                                    {{ form_label(form.dateOfRequisition, 'Date :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:30px;font-weight:bold;' } }
                                     ) }}
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" style="margin-left: 45px;">
                                         <div class="input-icon">
                                             <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
                                                 <span class="input-group-btn"></span>
-                                                {{ form_widget(form.dateOfRequisition, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
+                                                {{ form_widget(form.dateOfRequisition, { 'attr': {'class': 'form-control', 'style': 'width: 188px;padding-left: 10px! important;'} }) }}
                                             </div>
                                         </div>
                                     </div>
@@ -53,15 +52,18 @@
                             </div>
                         </div>
                     </div>
-
-                    <div style="width: 100%;">
-                        <table class="table table-striped" style="margin-top: 100px;">
+<br/>
+<br/>
+<br/>
+                    <div class="col-md-12">
+                        <table class="table table-striped" style="border:1px solid grey;margin-top: 100px;">
                             <thead>
                             <tr>
-                                <th style="width: 30%;">Particulars</th>
-                                <th style="width: 20%;">Quantity</th>
-                                <th style="width: 30%;">Expected Date of Required</th>
-                                <th style="width: 20%;">Remarks</th>
+                                <th class="col-md-3" style="padding-left: 12px;">Particulars</th>
+                                <th class="col-md-2" style="padding-left: 12px;">Quantity</th>
+                                <th class="col-md-2" style="padding-left: 12px;">Expected Date</th>
+                                <th class="col-md-3" style="padding-left: 12px;">Remarks</th>
+                                <th class="col-md-2"></th>
                             </tr>
                             </thead>
                             <tbody id="purchaseItems" class="tags" data-prototype="{% filter escape %}
@@ -72,7 +74,7 @@
 
                             <tr>
                                 <td>
-                                    {{ form_widget(requisitionItem.item, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;', 'placeholder': ' Select Item'} }) }}
+                                    {{ form_widget(requisitionItem.item, { 'attr': {'class': 'form-control select2me', 'style': 'width: 100px;padding-left: 10px! important;', 'placeholder': ' Select Item'} }) }}
                                 </td>
                                 <td>
                                     {{ form_widget(requisitionItem.quantity, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
@@ -84,7 +86,10 @@
                                     </div>
                                 </td>
                                 <td>
-                                    {{ form_widget(requisitionItem.comment, { 'attr': {'class': 'form-control', 'style': 'width: 183px;padding-left: 10px! important;'} }) }}
+                                    {{ form_widget(requisitionItem.comment, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px! important;'} }) }}
+                                </td>
+                                <td>
+
                                 </td>
                             </tr>
                             {% endfor %}
@@ -95,7 +100,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                {{ form_widget(form.save, { 'attr': {'class': 'btn green button-width'} }) }}
+                {{ form_widget(form.save, { 'attr': {'class': 'btn green button-width', 'style': 'width:100px;'} }) }}
             </div>
             {{ form_end(form) }}
         </div>
@@ -129,8 +134,8 @@
      var $collectionHolder;
 
      // setup an "add a tag" link
-     var $addTagLink = $('<a href="#" class="add_tag_link">Add a tag</a>');
-     var $newLinkLi = $('<tr></tr>').append($addTagLink);
+     var $addTagLink = $('<td><div style="text-align: right;"><a href="#" class="btn default btn-xs green-stripe add_tag_link"><i class="fa fa-plus"></i> Add Item</a></div></td>');
+     var $newLinkLi = $('<tr><td></td><td></td><td></td><td></td></tr>').append($addTagLink);
 
      // Get the ul that holds the collection of tags
      $collectionHolder = $('#purchaseItems');
