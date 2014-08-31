@@ -234,6 +234,12 @@ project_cost_update:
     requirements:
           id:  \d+
 
+get_subcategory:
+    pattern: /get-subcategory
+    defaults: { _controller: PmsCoreBundle:ProjectCostItem:getSubcategoryByCategory }
+    options:
+        expose: true
+
 project_cost_ajax_add:
     pattern: /project-cost/add
     defaults: { _controller: PmsCoreBundle:ProjectCostItem:projectCostItemAjaxAdd }
@@ -288,78 +294,72 @@ category_update:
 
 sub_category_check:
     pattern: /sub-category/check
-    defaults: { _controller: PmsCoreBundle:Core:subCategoryCheck }
+    defaults: { _controller: PmsCoreBundle:SubCategory:subCategoryCheck }
     options:
             expose: true
 
 sub_category_add:
     pattern: /sub-category
-    defaults: { _controller: PmsCoreBundle:Core:subCategoryAdd }
+    defaults: { _controller: PmsCoreBundle:SubCategory:subCategoryAdd }
 
 sub_category_ajax_add:
     pattern: /sub-category/add
-    defaults: { _controller: PmsCoreBundle:Core:subCategoryAjaxAdd }
+    defaults: { _controller: PmsCoreBundle:SubCategory:subCategoryAjaxAdd }
     options:
         expose: true
 
 sub_category_list:
     pattern: /sub-category/list
-    defaults: { _controller: PmsCoreBundle:Core:subCategoryList }
+    defaults: { _controller: PmsCoreBundle:SubCategory:subCategoryList }
 
 sub_category_deleted_list:
     pattern: /sub-category/deleted/list
-    defaults: { _controller: PmsCoreBundle:Core:subCategoryDeletedList }
+    defaults: { _controller: PmsCoreBundle:SubCategory:subCategoryDeletedList }
 
 sub_category_delete:
     pattern: /sub-category/delete/{id}
-    defaults: { _controller: PmsCoreBundle:Core:subCategoryDelete }
+    defaults: { _controller: PmsCoreBundle:SubCategory:subCategoryDelete }
     requirements:
           id: \d+
 
 sub_category_deleted:
     pattern: /sub-category/deleted
-    defaults: { _controller: PmsCoreBundle:Core:subCategoryDeleted }
+    defaults: { _controller: PmsCoreBundle:SubCategory:subCategoryDeleted }
 
 sub_category_active:
     pattern: /sub-category/active/{id}
-    defaults: { _controller: PmsCoreBundle:Core:subCategoryActive }
+    defaults: { _controller: PmsCoreBundle:SubCategory:subCategoryActive }
     requirements:
           id: \d+
 
-get_subcategory:
-    pattern: /get-subcategory
-    defaults: { _controller: PmsCoreBundle:Core:getSubcategoryByCategory }
-    options:
-        expose: true
-
 report_project:
     pattern: /report/project
-    defaults: { _controller: PmsCoreBundle:Core:projectReport }
+    defaults: { _controller: PmsCoreBundle:Report:projectReport }
 
 report_by_project_details:
     pattern: /report/byProject/details/{id}/{startDate}/{endDate}
-    defaults: { _controller: PmsCoreBundle:Core:byProjectDetails }
+    defaults: { _controller: PmsCoreBundle:Report:byProjectDetails }
     requirements:
           id:  \d+
 
 report_by_item_details:
     pattern: /report/byItem/details/{id}/{start}/{end}/{project}
-    defaults: { _controller: PmsCoreBundle:Core:byItemDetails }
+    defaults: { _controller: PmsCoreBundle:Report:byItemDetails }
     requirements:
           id:  \d+
 
 report_item:
     pattern: /report/item
-    defaults: { _controller: PmsCoreBundle:Core:itemReport }
+    defaults: { _controller: PmsCoreBundle:Report:itemReport }
     requirements:
           id:  \d+
 
 report_item_details:
     pattern: /report/item/details/{id}/{start}/{end}
-    defaults: { _controller: PmsCoreBundle:Core:itemDetails }
+    defaults: { _controller: PmsCoreBundle:Report:itemDetails }
     requirements:
           id:  \d+
 
 over_view:
     pattern: /over/view
-    defaults: { _controller: PmsCoreBundle:Core:overView }
+    defaults: { _controller: PmsCoreBundle:Report:overView }

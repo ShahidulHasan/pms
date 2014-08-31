@@ -346,6 +346,26 @@ class ProjectCostItemController extends Controller
         }
     }
 
+    public function getSubcategoryByCategoryAction(Request $request) {
+        $categoryId = $request->request->get('category');
+
+        $categories = $this->getDoctrine()->getRepository('PmsCoreBundle:Category')->findByParent($categoryId);
+        $subCat = array();
+        foreach ($categories as $category) {
+            $subCat[] = array('id' => $category->getId(), 'categoryName' => $category->getCategoryName());
+        }
+
+        $data = array(
+            'responseCode' => 200,
+            'subCats' => $subCat
+        );
+
+        $response = new Response(json_encode($data));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+
     public function paginateProjectCostItem($dql)
     {
         $em = $this->get('doctrine.orm.entity_manager');
