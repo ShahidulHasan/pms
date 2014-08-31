@@ -262,7 +262,7 @@
     </div>
 {% endblock navigation %}
 
-    {{ include('::script.html.twig') }}
+    {#{{ include('::script.html.twig') }}#}
 
     <div class="page-content">
         <div class="row">
@@ -274,71 +274,71 @@
 
 </div>
 
-{#{% javascripts#}
-{#'assets/plugins/respond.min.js'#}
-{#'assets/plugins/excanvas.min.js'#}
-{#'assets/plugins/jquery-1.10.2.min.js'#}
-{#'assets/plugins/jquery-migrate-1.2.1.min.js'#}
-{#'assets/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js'#}
-{#'assets/plugins/bootstrap/js/bootstrap.min.js'#}
-{#'assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js'#}
-{#'assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js'#}
-{#'assets/plugins/jquery.blockui.min.js'#}
-{#'assets/plugins/jquery.cookie.min.js'#}
-{#'assets/plugins/uniform/jquery.uniform.min.js'#}
+{% javascripts
+'assets/plugins/respond.min.js'
+'assets/plugins/excanvas.min.js'
+'assets/plugins/jquery-1.10.2.min.js'
+'assets/plugins/jquery-migrate-1.2.1.min.js'
+'assets/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js'
+'assets/plugins/bootstrap/js/bootstrap.min.js'
+'assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js'
+'assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js'
+'assets/plugins/jquery.blockui.min.js'
+'assets/plugins/jquery.cookie.min.js'
+'assets/plugins/uniform/jquery.uniform.min.js'
 
-{#'assets/plugins/flot/jquery.flot.js'#}
-{#'assets/plugins/flot/jquery.flot.resize.js'#}
-{#'assets/plugins/jquery.pulsate.min.js'#}
-{#'assets/plugins/bootstrap-daterangepicker/moment.min.js'#}
-{#'assets/plugins/bootstrap-daterangepicker/daterangepicker.js'#}
-{#'assets/plugins/gritter/js/jquery.gritter.js'#}
-{#'assets/plugins/fullcalendar/fullcalendar/fullcalendar.min.js'#}
-{#'assets/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.js'#}
-{#'assets/plugins/jquery.sparkline.min.js'#}
-{#'assets/scripts/app.js'#}
-{#'assets/scripts/index.js'#}
-{#'assets/scripts/tasks.js'#}
-{#'assets/plugins/jquery-validation/dist/jquery.validate.min.js'#}
-{#'assets/plugins/data-tables/jquery.dataTables.js'#}
-{#'assets/plugins/select2/select2.min.js'#}
+'assets/plugins/flot/jquery.flot.js'
+'assets/plugins/flot/jquery.flot.resize.js'
+'assets/plugins/jquery.pulsate.min.js'
+'assets/plugins/bootstrap-daterangepicker/moment.min.js'
+'assets/plugins/bootstrap-daterangepicker/daterangepicker.js'
+'assets/plugins/gritter/js/jquery.gritter.js'
+'assets/plugins/fullcalendar/fullcalendar/fullcalendar.min.js'
+'assets/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.js'
+'assets/plugins/jquery.sparkline.min.js'
+'assets/scripts/app.js'
+'assets/scripts/index.js'
+'assets/scripts/tasks.js'
+'assets/plugins/jquery-validation/dist/jquery.validate.min.js'
+'assets/plugins/data-tables/jquery.dataTables.js'
+'assets/plugins/select2/select2.min.js'
 
-{#'assets/plugins/jquery-validation/dist/additional-methods.min.js'#}
-{#'assets/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js'#}
-{#'assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js'#}
-{#'assets/plugins/ckeditor/ckeditor.js'#}
-{#'assets/plugins/bootstrap-markdown/js/bootstrap-markdown.js'#}
-{#'assets/plugins/bootstrap-markdown/lib/markdown.js'#}
-{#'assets/plugins/data-tables/jquery.dataTables.js'#}
-{#'assets/plugins/data-tables/DT_bootstrap.js'#}
+'assets/plugins/jquery-validation/dist/additional-methods.min.js'
+'assets/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js'
+'assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js'
+'assets/plugins/ckeditor/ckeditor.js'
+'assets/plugins/bootstrap-markdown/js/bootstrap-markdown.js'
+'assets/plugins/bootstrap-markdown/lib/markdown.js'
+'assets/plugins/data-tables/jquery.dataTables.js'
+'assets/plugins/data-tables/DT_bootstrap.js'
 
-{#'assets/scripts/form-validation.js'#}
-{#'assets/scripts/table-managed.js'#}
+'assets/scripts/form-validation.js'
+'assets/scripts/table-managed.js'
 
-{#'assets/plugins/bootstrap/js/bootstrap2-typeahead.min.js'#}
-{#'assets/plugins/fuelux/js/spinner.min.js'#}
-{#'assets/plugins/ckeditor/ckeditor.js'#}
-{#'assets/plugins/bootstrap-fileupload/bootstrap-fileupload.js'#}
-{#'assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js'#}
-{#'assets/plugins/bootstrap-daterangepicker/moment.min.js'#}
-{#'assets/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js'#}
-{#'assets/plugins/jquery.input-ip-address-control-1.0.min.js'#}
-{#'assets/plugins/jquery-multi-select/js/jquery.multi-select.js'#}
-{#'assets/plugins/jquery-multi-select/js/jquery.quicksearch.js'#}
-{#'assets/plugins/jquery.pwstrength.bootstrap/src/pwstrength.js'#}
-{#'assets/plugins/bootstrap-switch/static/js/bootstrap-switch.min.js'#}
-{#'assets/plugins/jquery-tags-input/jquery.tagsinput.min.js'#}
-{#'assets/plugins/bootstrap-markdown/js/bootstrap-markdown.js'#}
-{#'assets/plugins/bootstrap-markdown/lib/markdown.js'#}
-{#'assets/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js'#}
-{#'assets/plugins/bootstrap-touchspin/bootstrap.touchspin.js'#}
-{#'assets/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js'#}
-{#'assets/plugins/flot/jquery.flot.pie.js'#}
-{#'assets/scripts/charts.js'#}
+'assets/plugins/bootstrap/js/bootstrap2-typeahead.min.js'
+'assets/plugins/fuelux/js/spinner.min.js'
+'assets/plugins/ckeditor/ckeditor.js'
+'assets/plugins/bootstrap-fileupload/bootstrap-fileupload.js'
+'assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js'
+'assets/plugins/bootstrap-daterangepicker/moment.min.js'
+'assets/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js'
+'assets/plugins/jquery.input-ip-address-control-1.0.min.js'
+'assets/plugins/jquery-multi-select/js/jquery.multi-select.js'
+'assets/plugins/jquery-multi-select/js/jquery.quicksearch.js'
+'assets/plugins/jquery.pwstrength.bootstrap/src/pwstrength.js'
+'assets/plugins/bootstrap-switch/static/js/bootstrap-switch.min.js'
+'assets/plugins/jquery-tags-input/jquery.tagsinput.min.js'
+'assets/plugins/bootstrap-markdown/js/bootstrap-markdown.js'
+'assets/plugins/bootstrap-markdown/lib/markdown.js'
+'assets/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js'
+'assets/plugins/bootstrap-touchspin/bootstrap.touchspin.js'
+'assets/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js'
+'assets/plugins/flot/jquery.flot.pie.js'
+'assets/scripts/charts.js'
 
-{#'assets/scripts/form-components.js' %}#}
-{#<script type="text/javascript" src="{{ asset_url }}"></script>#}
-{#{% endjavascripts %}#}
+'assets/scripts/form-components.js' %}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
 
 <script type="text/javascript">
     jQuery(document).ready(function () {

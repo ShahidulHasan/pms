@@ -35,7 +35,33 @@
                                     <div class="col-md-11" style="margin-left: 4%; margin-top: 30px;">
 
                                         <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
+                                            <thead>
+                                            <tr>
+                                                <th>Sl</th>
+                                                <th>purchase Requisition Name</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
 
+                                            {% if page == 1 %}{% set i = 0 %}
+                                            {% else %}{% set i = (page * 50) -50 %}
+                                            {% endif %}
+
+                                            {% for purchaseRequisition in purchaseRequisitions %}
+                                                {% set i = i + 1 %}
+                                                {% set color = [" "] %}
+
+                                                {% if purchaseRequisition.status == 0 %}{% set color = color|merge(["red"]) %}
+                                                {% elseif purchaseRequisition.status == 1 %}{% set color = color|merge(["green"]) %}
+                                                {% endif %}
+
+                                                <tr>
+                                                    <td>{{ i }} .</td>
+                                                    <td class="col-md-11" style="color: {{ color|join("") }};">{{ purchaseRequisition.dateOfRequisition|date('Y-m-d') }}</td>
+                                                </tr>
+
+                                            {% endfor %}
+                                            </tbody>
                                         </table>
 
                                     </div>
@@ -49,53 +75,5 @@
             </div>
         </div>
     </div>
-
-    <script type="text/javascript">
-        jQuery(document).ready(function () {
-            {% block documentready %}
-            {{ parent() }}
-
-            $("#ajaxSavePr").click(function () {
-                var project = $("#purchaserequisition_project").val();
-                var requisitionNo = $("#purchaserequisition_requisitionNo").val();
-                var dateOfRequisition = $("#purchaserequisition_dateOfRequisition").val();
-                var item = $("#purchaserequisition_purchaseRequisitionItem_item").val();
-                var quantity = $("#purchaserequisition_purchaseRequisitionItem_quantity").val();
-                var dateOfRequired = $("#purchaserequisition_purchaseRequisitionItem_dateOfRequired").val();
-                var comment = $("#purchaserequisition_purchaseRequisitionItem_comment").val();
-
-                var prArray = new Array(project, requisitionNo, dateOfRequisition, item, quantity, dateOfRequired, comment);
-
-                $.ajax({
-                    type: "post",
-                    url: Routing.generate('pr_ajax_add'),
-                    data: "prArray=" + prArray,
-                    dataType: 'json',
-                    success: function (msg) {
-                        if(msg.responseCode == 204) {
-                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Fill The Blank Field</span></div>');
-                            $('.projectCostItemMessege').css('color', 'red').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
-                            $(':input','#cost-form')
-                                    .not(':button, :submit, :reset, :hidden')
-                                    .val('')
-                                    .removeAttr('checked')
-                                    .removeAttr('selected');
-                        } else {
-                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Project Cost Add Successfully</span></div>');
-                            $('.projectCostItemMessege').css('color', 'green').html(msg.project_ajax_add).fadeIn(1000).append($addLink);
-                            $(':input','#cost-form')
-                                    .not(':button, :submit, :reset, :hidden')
-                                    .val('')
-                                    .removeAttr('checked')
-                                    .removeAttr('selected');
-                        }
-                    }
-                });
-
-            });
-
-            {% endblock %}
-        });
-    </script>
 
 {% endblock %}
