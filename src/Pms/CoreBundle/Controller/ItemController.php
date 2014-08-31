@@ -2,6 +2,7 @@
 
 namespace Pms\CoreBundle\Controller;
 
+use Doctrine\Common\Util\Debug;
 use Doctrine\ORM\Repository;
 use Pms\CoreBundle\Entity\Item;
 use Pms\CoreBundle\Form\ItemType;
@@ -20,10 +21,10 @@ class ItemController extends Controller
     {
         $dql = "SELECT a FROM PmsCoreBundle:Item a WHERE a.status = 1 ORDER BY a.id DESC";
 
-        list($item, $page) = $this->paginate($dql);
+        list($items, $page) = $this->paginate($dql);
 
         return $this->render('PmsCoreBundle:Item:list.html.twig', array(
-            'item' => $item,
+            'items' => $items,
             'page' => $page,
         ));
     }
@@ -32,10 +33,10 @@ class ItemController extends Controller
     {
         $dql = "SELECT a FROM PmsCoreBundle:Item a WHERE a.status = 0 ORDER BY a.id DESC";
 
-        list($item, $page) = $this->paginate($dql);
+        list($items, $page) = $this->paginate($dql);
 
         return $this->render('PmsCoreBundle:Item:deletedList.html.twig', array(
-            'item' => $item,
+            'items' => $items,
             'page' => $page,
         ));
     }
@@ -48,10 +49,10 @@ class ItemController extends Controller
 
         $dql = "SELECT a FROM PmsCoreBundle:Item a WHERE a.status = 1 ORDER BY a.id DESC";
 
-        list($item, $page) = $this->paginate($dql);
+        list($items, $page) = $this->paginate($dql);
 
         return $this->render('PmsCoreBundle:Item:add.html.twig', array(
-            'item' => $item,
+            'items' => $items,
             'entity' => $entity,
             'form' => $form->createView(),
             'page' => $page,
@@ -66,10 +67,10 @@ class ItemController extends Controller
 
         $dql = "SELECT a FROM PmsCoreBundle:Item a WHERE a.status = 0 ORDER BY a.id DESC";
 
-        list($item, $page) = $this->paginate($dql);
+        list($items, $page) = $this->paginate($dql);
 
         return $this->render('PmsCoreBundle:Item:deleted.html.twig', array(
-            'item' => $item,
+            'items' => $items,
             'entity' => $entity,
             'form' => $form->createView(),
             'page' => $page,
@@ -108,10 +109,10 @@ class ItemController extends Controller
 
         $dql = "SELECT a FROM PmsCoreBundle:Item a WHERE a.status = 1 ORDER BY a.id DESC";
 
-        list($item, $page) = $this->paginate($dql);
+        list($items, $page) = $this->paginate($dql);
 
         return $this->render('PmsCoreBundle:Item:add.html.twig', array(
-            'item' => $item,
+            'items' => $items,
             'entity' => $entity,
             'form' => $form->createView(),
             'page' => $page,
@@ -145,6 +146,7 @@ class ItemController extends Controller
         $itemName = $itemArray[0];
         $updateId = $itemArray[1];
         $itemUnit = $itemArray[2];
+        $category = $itemArray[3];
 
         if($itemName) {
             $item = $this->getDoctrine()->getRepository('PmsCoreBundle:Item')->find($updateId);
@@ -154,6 +156,7 @@ class ItemController extends Controller
             if($item) {
                 $item->setItemName($itemName);
                 $item->setItemUnit($itemUnit);
+                $item->setCategory($this->getDoctrine()->getRepository('PmsCoreBundle:Category')->findOneById($category));
                 $this->getDoctrine()->getManager()->persist($item);
                 $this->getDoctrine()->getManager()->flush();
 
@@ -174,6 +177,7 @@ class ItemController extends Controller
                 $item->setCreatedBy($user);
                 $item->setCreatedDate(new \DateTime());
                 $item->setStatus(1);
+                $item->setCategory($this->getDoctrine()->getRepository('PmsCoreBundle:Category')->findOneById($category));
 
                 $this->getDoctrine()->getRepository("PmsCoreBundle:Item")->create($item);
 

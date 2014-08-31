@@ -30,6 +30,13 @@ class Category
     private $projectCostItem;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\Item", mappedBy="item")
+     */
+    private $item;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="categories_name", type="string", length=255)
@@ -85,6 +92,14 @@ class Category
         $this->categoryName = $categoryName;
 
         return $this;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getItem()
+    {
+        return $this->item;
     }
 
     /**

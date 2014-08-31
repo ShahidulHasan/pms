@@ -49,6 +49,15 @@
                                 <span class="userMessege" style="margin-left: 185px;"></span>
                             </div>
                             <div class="form-group">
+                                {{ form_label(form.category, 'Category Name:', {'label_attr': {'class': 'control-label col-md-2', 'style': 'margin-right:-60px;font-weight:bold;' } }
+                                ) }}
+                                <div class="col-md-8">
+                                    <div class="input-icon">
+                                        {{ form_widget(form.category, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;' } }) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 {{ form_label(form.itemUnit, 'Unit Name:', {'label_attr': {'class': 'control-label col-md-2', 'style': 'margin-right:-60px;font-weight:bold;' } }
                                 ) }}
                                 <div class="col-md-8">
@@ -82,24 +91,24 @@
                                         {% else %}{% set i = (page * 10) - 10 %}
                                         {% endif %}
 
-                                        {% for items in item %}
+                                        {% for item in items %}
                                             {% set i = i + 1 %}
                                             {% set color = [" "] %}
 
-                                            {% if items.status == 0 %}{% set color = color|merge(["red"]) %}
-                                            {% elseif items.status == 1 %}{% set color = color|merge(["green"]) %}
+                                            {% if item.status == 0 %}{% set color = color|merge(["red"]) %}
+                                            {% elseif item.status == 1 %}{% set color = color|merge(["green"]) %}
                                             {% endif %}
 
                                             <tr>
                                                 <td>{{ i }} .</td>
-                                                <td class="col-md-6" style="color: {{ color|join("") }};">{{ items.itemName }}</td>
-                                                <td class="col-md-2" style="color: {{ color|join("") }};">{{ items.itemUnit }}</td>
+                                                <td class="col-md-6" style="color: {{ color|join("") }};">{{ item.itemName }}</td>
+                                                <td class="col-md-2" style="color: {{ color|join("") }};">{{ item.itemUnit }}</td>
                                                 <td>
-                                                    <a href="/item/delete/{{ items.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
+                                                    <a href="/item/delete/{{ item.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
                                                                 class="fa fa-trash-o"></i> Delete</a>
                                                 </td>
                                                 <td>
-                                                    <a href="/item/update/{{ items.id }}" style="width: 85px;" class="btn default btn-xs blue-stripe"><i
+                                                    <a href="/item/update/{{ item.id }}" style="width: 85px;" class="btn default btn-xs blue-stripe"><i
                                                                 class="fa fa-edit"></i> Update</a>
                                                 </td>
                                             </tr>
@@ -108,7 +117,7 @@
                                         </tbody>
                                     </table>
                                     <div class="navigation" style="text-align: right">
-                                        {{ knp_pagination_render(item) }}
+                                        {{ knp_pagination_render(items) }}
                                     </div>
                                 </div>
                                 </div>
@@ -132,8 +141,9 @@
                 var sURLVariables = sPageURL.split('/');
                 var itemName = $("#item_itemName").val();
                 var itemUnit = $("#item_itemUnit").val();
+                var category = $("#item_category").val();
 
-                var itemArray = new Array(itemName, sURLVariables[3], itemUnit);
+                var itemArray = new Array(itemName, sURLVariables[3], itemUnit, category);
                 $.ajax({
                     type: "post",
                     url: Routing.generate('item_ajax_add'),

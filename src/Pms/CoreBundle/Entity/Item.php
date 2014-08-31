@@ -30,6 +30,14 @@ class Item
     private $projectCostItem;
 
     /**
+     * @var Category
+     *
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Category", inversedBy="item")
+     * @ORM\JoinColumn(name="categories")
+     */
+    private $category;
+
+    /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisitionItem", mappedBy="item")
@@ -109,6 +117,29 @@ class Item
     public function getItemName()
     {
         return $this->itemName;
+    }
+
+    /**
+     * Set category
+     *
+     * @param integer $category
+     * @return ProjectCostItem
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return integer
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 
     /**
