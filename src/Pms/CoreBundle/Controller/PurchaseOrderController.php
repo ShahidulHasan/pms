@@ -6,6 +6,7 @@ use Doctrine\Common\Util\Debug;
 use Doctrine\ORM\Repository;
 use Pms\CoreBundle\Entity\PurchaseOrder;
 use Pms\CoreBundle\Entity\PurchaseOrderItem;
+use Pms\CoreBundle\Entity\PurchaseRequisitionItem;
 use Pms\CoreBundle\Form\PurchaseOrderType;
 use Pms\CoreBundle\Form\PurchaseOrderItemType;
 
@@ -33,10 +34,6 @@ class PurchaseOrderController extends Controller
 
     public function purchaseOrderNewAction(Request $request)
     {
-        $dql = "SELECT a FROM PmsCoreBundle:PurchaseRequisitionItem a WHERE a.status = 1 ORDER BY a.id DESC";
-
-        list($purchaseRequisitions, $page) = $this->paginate($dql);
-
         $purchaseOrder = new PurchaseOrder();
         $form = $this->createForm(new PurchaseOrderType(), $purchaseOrder);
 
@@ -57,6 +54,7 @@ class PurchaseOrderController extends Controller
                         $pi = new PurchaseOrderItem();
                         $pi->setItem($em->getRepository('PmsCoreBundle:Item')->find($item['item']));
                         $pi->setQuantity($item['quantity']);
+                        $pi->setStatus('1');
                         $pi->setComment($item['comment']);
                         $pi->setPurchaseOrder($purchaseOrder);
                         $purchaseOrder->addPurchaseOrderItem($pi);
@@ -76,8 +74,26 @@ class PurchaseOrderController extends Controller
 
         return $this->render('PmsCoreBundle:PurchaseOrder:form.html.twig', array(
             'form' => $form->createView(),
-            'purchaseRequisitions' => $purchaseRequisitions,
         ));
+    }
+
+    public function purchaseOrderTotalQuantityAction(Request $request)
+    {
+        $item = $request->request->get('item');
+
+        $totalQuantityPri = $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisitionItem')->totalQuantity($item);
+        $totalQuantityPoi = $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseOrderItem')->totalQuantity($item);
+
+        if($totalQuantityPoi[0]['totalQuantity'] == null){
+            $totalQuantityPoi[0]['totalQuantity'] = 0;
+        }
+
+        $totalRequiredOfQuantity = ($totalQuantityPri[0]['totalQuantity']) - ($totalQuantityPoi[0]['totalQuantity']);
+
+        $return = array("responseCode" => 200,"quantity"=>$totalRequiredOfQuantity);
+        $return = json_encode($return);
+
+        return new Response($return, 200, array('Content-Type' => 'application/json'));
     }
 
     public function paginate($dql)

@@ -35,4 +35,17 @@ class PurchaseRequisitionItemRepository extends EntityRepository
         $this->_em->flush();
         return $this->_em;
     }
+
+    public function totalQuantity($item)
+    {
+        $total = $this->_em->getRepository('PmsCoreBundle:PurchaseRequisitionItem')
+            ->createQueryBuilder('pri')
+            ->select('SUM(pri.quantity) as totalQuantity')
+            ->where('pri.status = 1')
+            ->andWhere('pri.item = ?1')
+            ->setParameter('1', $item);
+        $totalItemQuantity = $total->getQuery()->getResult();
+
+        return $totalItemQuantity;
+    }
 }

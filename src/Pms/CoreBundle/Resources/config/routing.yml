@@ -52,6 +52,12 @@ purchase_order_new:
     pattern: /purchase/order/new
     defaults: { _controller: PmsCoreBundle:PurchaseOrder:purchaseOrderNew }
 
+purchase_order_total_quantity:
+    pattern: /purchase/total/quantity
+    defaults: { _controller: PmsCoreBundle:PurchaseOrder:purchaseOrderTotalQuantity }
+    options:
+            expose: true
+
 purchase_requisition_add:
     pattern: /purchase/requisition
     defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionAdd }
@@ -59,18 +65,6 @@ purchase_requisition_add:
 purchase_requisition_new:
     pattern: /purchase/requisition/new
     defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionNew }
-
-purchase_requisition_approve_project_head:
-    pattern: /purchase/requisition/approve/projectHead/{id}
-    defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionApproveByProjectHead }
-    requirements:
-          id: \d+
-
-purchase_requisition_approve_project_head:
-    pattern: /purchase/requisition/approve/projectHead/{id}
-    defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionApproveByProjectHead }
-    requirements:
-          id: \d+
 
 purchase_requisition_approve_project_head:
     pattern: /purchase/requisition/approve/projectHead/{id}

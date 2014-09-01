@@ -2,12 +2,12 @@
 
 namespace Pms\CoreBundle\Form;
 
-use Pms\CoreBundle\Entity\Repository\ItemRepository;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Pms\CoreBundle\Entity\Repository\PurchaseRequisitionItemRepository;
+use Pms\CoreBundle\Entity\Repository\ItemRepository;
 
 
 class PurchaseOrderItemType extends AbstractType
@@ -24,19 +24,21 @@ class PurchaseOrderItemType extends AbstractType
                 'constraints' => array(
                     new NotBlank()
                 ),
-                'class' => 'PmsCoreBundle:PurchaseRequisitionItem',
-                'property' => 'item.itemName',
+                'class' => 'PmsCoreBundle:Item',
+                'property' => 'itemName',
                 'required' => false,
                 'attr' => array(
                     'placeholder' => 'Select Item'
                 ),
                 'empty_data' => null,
-                'query_builder' => function (PurchaseRequisitionItemRepository $repository)
+                'query_builder' => function (EntityRepository $repository)
                     {
-                        return $repository->createQueryBuilder("s")
-                                          ->select("s","p")
-                                          ->leftJoin("s.item", "p");
-                    }
+                        return $repository->createQueryBuilder('i')
+                                          ->select('i')
+                                          ->where('pri.status = 1')
+                                          ->join('i.purchaseRequisitionItem', 'pri')
+                                          ->groupBy('i.id');
+                    },
             ))
             ->add('quantity', 'text')
         ;
