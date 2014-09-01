@@ -2,6 +2,10 @@
 
 namespace Pms\CoreBundle\Form;
 
+use Pms\CoreBundle\Entity\Repository\BuyerRepository;
+use Pms\CoreBundle\Entity\Repository\CategoryRepository;
+use Pms\CoreBundle\Entity\Repository\ItemRepository;
+use Pms\CoreBundle\Entity\Repository\ProjectRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -35,7 +39,7 @@ class ProjectCostItemType extends AbstractType
                 'required' => false,
                 'empty_value' => 'Select Project',
                 'empty_data' => null,
-                'query_builder' => function (\Pms\CoreBundle\Entity\Repository\ProjectRepository $repository)
+                'query_builder' => function (ProjectRepository $repository)
                     {
                         return $repository->createQueryBuilder('s')
                             ->where('s.status = 1');
@@ -52,7 +56,7 @@ class ProjectCostItemType extends AbstractType
                     'placeholder' => ' Select Item'
                 ),
                 'empty_data' => null,
-                'query_builder' => function (\Pms\CoreBundle\Entity\Repository\ItemRepository $repository)
+                'query_builder' => function (ItemRepository $repository)
                     {
                         return $repository->createQueryBuilder('s')
                             ->where('s.status = 1');
@@ -69,7 +73,7 @@ class ProjectCostItemType extends AbstractType
                     'placeholder' => ' Select Buyer'
                 ),
                 'empty_data' => null,
-                'query_builder' => function (\Pms\CoreBundle\Entity\Repository\BuyerRepository $repository)
+                'query_builder' => function (BuyerRepository $repository)
                 {
                     return $repository->createQueryBuilder('s')
                         ->where('s.status = 1');
@@ -137,7 +141,7 @@ class ProjectCostItemType extends AbstractType
                 'required' => false,
                 'empty_value' => 'Select Category',
                 'empty_data' => null,
-                'query_builder' => function (\Pms\CoreBundle\Entity\Repository\CategoryRepository $repository)
+                'query_builder' => function (CategoryRepository $repository)
                 {
                     return $repository->createQueryBuilder('s')
                         ->where('s.parent = 0')
@@ -150,7 +154,7 @@ class ProjectCostItemType extends AbstractType
                 'required' => false,
                 'empty_value' => 'Select Sub-category',
                 'empty_data' => null,
-                'query_builder' => function (\Pms\CoreBundle\Entity\Repository\CategoryRepository $repository)
+                'query_builder' => function (CategoryRepository $repository)
                 {
                     return $repository->createQueryBuilder('s')
                         ->where('s.parent > 0')

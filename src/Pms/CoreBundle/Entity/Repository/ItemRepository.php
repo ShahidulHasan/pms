@@ -36,5 +36,10 @@ class ItemRepository extends EntityRepository
         return $this->_em;
     }
 
-
+    public function getItemList()
+    {
+        return $this->createQueryBuilder("s")
+            ->select("s","p")
+            ->leftJoin("s.purchaseRequisitionItem","p");
+    }
 }

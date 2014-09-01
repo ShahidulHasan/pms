@@ -2,6 +2,7 @@
 
 namespace Pms\CoreBundle\Form;
 
+use Pms\CoreBundle\Entity\Repository\ItemRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -39,7 +40,7 @@ class PurchaseRequisitionItemType extends AbstractType
                     'placeholder' => 'Select Item'
                 ),
                 'empty_data' => null,
-                'query_builder' => function (\Pms\CoreBundle\Entity\Repository\ItemRepository $repository)
+                'query_builder' => function (ItemRepository $repository)
                 {
                     return $repository->createQueryBuilder('s')
                         ->where('s.status = 1');

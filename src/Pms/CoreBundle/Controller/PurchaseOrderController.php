@@ -33,6 +33,10 @@ class PurchaseOrderController extends Controller
 
     public function purchaseOrderNewAction(Request $request)
     {
+        $dql = "SELECT a FROM PmsCoreBundle:PurchaseRequisitionItem a WHERE a.status = 1 ORDER BY a.id DESC";
+
+        list($purchaseRequisitions, $page) = $this->paginate($dql);
+
         $purchaseOrder = new PurchaseOrder();
         $form = $this->createForm(new PurchaseOrderType(), $purchaseOrder);
 
@@ -72,6 +76,7 @@ class PurchaseOrderController extends Controller
 
         return $this->render('PmsCoreBundle:PurchaseOrder:form.html.twig', array(
             'form' => $form->createView(),
+            'purchaseRequisitions' => $purchaseRequisitions,
         ));
     }
 

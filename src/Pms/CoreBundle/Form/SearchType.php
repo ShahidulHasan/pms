@@ -2,6 +2,7 @@
 
 namespace Pms\CoreBundle\Form;
 
+use Pms\CoreBundle\Entity\Repository\CategoryRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -35,7 +36,7 @@ class SearchType extends AbstractType
                 'required' => false,
                 'empty_value' => 'Select Category',
                 'empty_data' => null,
-                'query_builder' => function (\Pms\CoreBundle\Entity\Repository\CategoryRepository $repository)
+                'query_builder' => function (CategoryRepository $repository)
                 {
                     return $repository->createQueryBuilder('s')
                         ->where('s.parent = 0')

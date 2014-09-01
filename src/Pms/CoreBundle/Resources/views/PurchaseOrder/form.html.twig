@@ -2,6 +2,36 @@
 
 {% block body %}
 
+    <div class="form-actions fluid" id="project-list-div">
+        <div class="form-group">
+            <div class="col-md-12">
+                <div class="col-md-11" style="margin-left: 4%; margin-top: 30px;">
+
+                    <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
+                        <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for purchase in purchaseRequisitions %}
+
+                            <tr>
+                                <td class="col-md-2">{{ purchase.item.itemName }}</td>
+                                <td class="col-md-2">{{ purchase.quantity }}</td>
+                            </tr>
+
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal-dialog" style="width: 1000px;">
         <div class="modal-content">
             <div class="modal-header">
