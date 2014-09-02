@@ -41,6 +41,7 @@ class PurchaseOrderItemType extends AbstractType
                     },
             ))
             ->add('quantity', 'text')
+            ->add('delete', 'button')
         ;
     }
     

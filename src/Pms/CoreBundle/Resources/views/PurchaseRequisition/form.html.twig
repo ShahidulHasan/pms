@@ -59,7 +59,7 @@
                         <table class="table table-striped" style="border:1px solid grey;margin-top: 100px;">
                             <thead>
                             <tr>
-                                <th class="col-md-3" style="padding-left: 12px;">Particulars</th>
+                                <th class="col-md-3" style="padding-left: 30px;">Particulars</th>
                                 <th class="col-md-2" style="padding-left: 12px;">Quantity</th>
                                 <th class="col-md-2" style="padding-left: 12px;">Expected Date</th>
                                 <th class="col-md-3" style="padding-left: 12px;">Remarks</th>
@@ -72,7 +72,7 @@
                                 {% for requisitionItem in form.purchaseRequisitionItems %}
                                 <tr>
                                     <td>
-                                        {{ form_widget(requisitionItem.item, { 'attr': {'class': 'form-control select2me', 'style': 'width: 180px;padding-left: 10px! important;', 'placeholder': ' Select Item'} }) }}
+                                        {{ form_widget(requisitionItem.item, { 'attr': {'class': 'form-control select2me', 'style': 'margin-left: 20px;width: 180px;padding-left: 10px! important;', 'placeholder': ' Select Item'} }) }}
                                     </td>
                                     <td>
                                         {{ form_widget(requisitionItem.quantity, { 'attr': {'class': 'form-control', 'style': 'width: 120px;padding-left: 10px! important;'} }) }}
@@ -87,7 +87,7 @@
                                         {{ form_widget(requisitionItem.comment, { 'attr': {'class': 'form-control', 'style': 'width: 200px;padding-left: 10px! important;'} }) }}
                                     </td>
                                     <td>
-
+                                        {{ form_widget(form.delete, { 'attr': {'class': 'btn', 'style': 'width: 70px;' } }) }}
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -127,13 +127,19 @@
      var $newFormLi = $('<tr></tr>').append(newForm);
      $newLinkLi.before($newFormLi);
      $('.date-picker').datepicker();
+
+    $("#purchaserequisition_purchaseRequisitionItems_" + index + "_delete").click(function () {
+    var parent = $(this).closest('tr');
+    parent.remove();
+    });
+
      }
 
      var $collectionHolder;
 
      // setup an "add a tag" link
-     var $addTagLink = $('<td><div style="text-align: right;"><a href="#" class="btn default btn-xs green-stripe add_tag_link"><i class="fa fa-plus"></i> Add Item</a></div></td>');
-     var $newLinkLi = $('<tr><td></td><td></td><td></td><td></td></tr>').append($addTagLink);
+     var $addTagLink = $('<td><div style="text-align: left;margin-left: 20px;"><a href="#" class="btn default btn-xs green-stripe add_tag_link"><i class="fa fa-plus"></i> Add Item</a></div></td><td></td><td></td><td></td><td></td>');
+     var $newLinkLi = $('<tr></tr>').append($addTagLink);
 
      // Get the ul that holds the collection of tags
      $collectionHolder = $('#purchaseItems');

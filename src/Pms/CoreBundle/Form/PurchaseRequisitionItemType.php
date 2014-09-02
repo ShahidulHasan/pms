@@ -46,6 +46,7 @@ class PurchaseRequisitionItemType extends AbstractType
                         ->where('s.status = 1');
                 }
             ))
+            ->add('delete', 'button')
         ;
     }
     

@@ -16,31 +16,31 @@
                         <div class="col-md-6" style="height:100px;float: left;text-align: left;">
                             <div class="col-md-12" style="height:50px;float:left;">
                                 <div class="form-group">
-                                    {{ form_label(form.poNonpo, 'PO/NONPO :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left: -25px;margin-right:-20px;font-weight:bold;' } }
+                                    {{ form_label(form.poNonpo, 'PO/NONPO :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left: -28px;margin-right:-12px;font-weight:bold;' } }
                                     ) }}
                                     <div class="col-md-6">
                                         <div class="input-icon">
-                                            {{ form_widget(form.poNonpo, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;width: 170px;' } }) }}
+                                            {{ form_widget(form.poNonpo, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;width: 178px;' } }) }}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12" style="height:35px;float:left;">
                                 <div class="form-group" id="vendor-group">
-                                    {{ form_label(form.vendor, 'Vendor :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left: -25px;margin-right:-20px;font-weight:bold;' } }
+                                    {{ form_label(form.vendor, 'Vendor :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left: -30px;margin-right:-20px;font-weight:bold;' } }
                                     ) }}
                                     <div class="col-md-6">
                                         <div class="input-icon">
-                                            {{ form_widget(form.vendor, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;width: 170px;' } }) }}
+                                            {{ form_widget(form.vendor, { 'attr': {'class': 'form-control select2me', 'style': 'padding-left: 10px !important;', 'placeholder': ' Select Vendor' } }) }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group" id="buyer-group">
-                                    {{ form_label(form.buyer, 'Buyer :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left: -25px;margin-right:-20px;font-weight:bold;' } }
+                                    {{ form_label(form.buyer, 'Buyer :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left: -30px;margin-right:-20px;font-weight:bold;' } }
                                     ) }}
                                     <div class="col-md-6">
                                         <div class="input-icon">
-                                            {{ form_widget(form.buyer, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;width: 170px;' } }) }}
+                                            {{ form_widget(form.buyer, { 'attr': {'class': 'form-control select2me', 'style': 'padding-left: 10px !important;', 'placeholder': ' Select Buyer' } }) }}
                                         </div>
                                     </div>
                                 </div>
@@ -81,7 +81,7 @@
                         <table class="table table-striped" style="border:1px solid grey;margin-top: 100px;">
                             <thead>
                             <tr>
-                                <th class="col-md-3" style="padding-left: 12px;">Particulars</th>
+                                <th class="col-md-3" style="padding-left: 30px;">Particulars</th>
                                 <th class="col-md-2" style="padding-left: 12px;">Quantity</th>
                                 <th class="col-md-2" style="padding-left: 12px;"></th>
                                 <th class="col-md-3" style="padding-left: 12px;">Remarks</th>
@@ -91,22 +91,22 @@
                             <tbody id="orderItems" class="tags" data-prototype="{% filter escape %}
                                 {{ include('PmsCoreBundle:PurchaseOrder:purchaseOrderItemPrototype.html.twig', { 'form': form.purchaseOrderItems.vars.prototype }) }}
                                 {% endfilter %}}">
-                                {% for OrderItem in form.purchaseOrderItems %}
+                                {% for orderItem in form.purchaseOrderItems %}
                                     <tr>
                                         <td>
-                                            {{ form_widget(form.item, { 'attr': {'class': 'form-control', 'style': 'width: 200px;padding-left: 10px! important;'} }) }}
+                                            {{ form_widget(orderItem.item, { 'attr': {'class': 'form-control', 'style': 'margin-left: 20px;width: 180px;padding-left: 10px! important;'} }) }}
                                         </td>
                                         <td>
-                                            {{ form_widget(form.quantity, { 'attr': {'class': 'form-control', 'style': 'width: 120px;padding-left: 10px! important;'} }) }}
-                                        </td>
-                                        <td>
-
-                                        </td>
-                                        <td>
-                                            {{ form_widget(form.comment, { 'attr': {'class': 'form-control', 'style': 'width: 188px;padding-left: 10px! important;'} }) }}
+                                            {{ form_widget(orderItem.quantity, { 'attr': {'class': 'form-control', 'style': 'width: 120px;padding-left: 10px! important;'} }) }}
                                         </td>
                                         <td>
 
+                                        </td>
+                                        <td>
+                                            {{ form_widget(orderItem.comment, { 'attr': {'class': 'form-control', 'style': 'width: 188px;padding-left: 10px! important;'} }) }}
+                                        </td>
+                                        <td>
+                                            {{ form_widget(orderItem.delete, { 'attr': {'class': 'btn', 'style': 'width: 70px;' } }) }}
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -160,13 +160,18 @@
     });
     });
 
+    $("#purchaseorder_purchaseOrderItems_" + index + "_delete").click(function () {
+    var parent = $(this).closest('tr');
+    parent.remove();
+    });
+
     }
 
     var $collectionHolder;
 
     // setup an "add a tag" link
-    var $addTagLink = $('<td><div style="text-align: right;"><a href="#" class="btn default btn-xs green-stripe add_tag_link"><i class="fa fa-plus"></i> Add Item</a></div></td>');
-    var $newLinkLi = $('<tr><td></td><td></td><td></td><td></td></tr>').append($addTagLink);
+    var $addTagLink = $('<td><div style="text-align: left;margin-left: 20px;"><a href="#" class="btn default btn-xs green-stripe add_tag_link"><i class="fa fa-plus"></i> Add Item</a></div></td><td></td><td></td><td></td><td></td>');
+    var $newLinkLi = $('<tr></tr>').append($addTagLink);
 
     // Get the ul that holds the collection of tags
     $collectionHolder = $('#orderItems');
@@ -198,4 +203,8 @@
     });
 
 {% endblock %}
+{#
 
+<script>
+    $(this).closest('tr')
+</script>#}
