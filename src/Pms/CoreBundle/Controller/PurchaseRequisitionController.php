@@ -6,6 +6,7 @@ use Doctrine\Common\Util\Debug;
 use Doctrine\ORM\Repository;
 use Pms\CoreBundle\Entity\PurchaseRequisition;
 use Pms\CoreBundle\Entity\PurchaseRequisitionItem;
+use Pms\CoreBundle\Form\PurchaseRequisitionEditType;
 use Pms\CoreBundle\Form\PurchaseRequisitionType;
 use Pms\CoreBundle\Form\PurchaseRequisitionItemType;
 
@@ -77,6 +78,48 @@ class PurchaseRequisitionController extends Controller
         }
 
         return $this->render('PmsCoreBundle:PurchaseRequisition:form.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+    public function purchaseRequisitionEditAction(Request $request, PurchaseRequisition $purchaseRequisition)
+    {
+        $form = $this->createForm(new PurchaseRequisitionEditType(), $purchaseRequisition);
+
+        if ($request->getMethod() == 'POST') {
+
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+
+                $em = $this->getDoctrine()->getManager();
+                $dateOfRequisition = $form["dateOfRequisition"]->getData();
+                $purchaseRequisition->setDateOfRequisition(new \DateTime($dateOfRequisition));
+
+                if (!empty($_POST['purchaserequisition']['purchaseRequisitionItems'])) {
+                    foreach ($_POST['purchaserequisition']['purchaseRequisitionItems'] as $item) {
+                        $pi = new PurchaseRequisitionItem();
+                        $pi->setItem($em->getRepository('PmsCoreBundle:Item')->find($item['item']));
+                        $pi->setQuantity($item['quantity']);
+                        $pi->setDateOfRequired(new \DateTime($item['dateOfRequired']));
+                        $pi->setComment($item['comment']);
+                        $pi->setPurchaseRequisition($purchaseRequisition);
+                        $purchaseRequisition->addPurchaseRequisitionItem($pi);
+                    }
+                }
+
+                $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisition')->update($purchaseRequisition);
+
+                $this->get('session')->getFlashBag()->add(
+                    'notice',
+                    'Purchase Requisition Successfully Update'
+                );
+
+                return $this->redirect($this->generateUrl('purchase_requisition_add'));
+            }
+        }
+
+        return $this->render('PmsCoreBundle:PurchaseRequisition:formEdit.html.twig', array(
             'form' => $form->createView(),
         ));
     }

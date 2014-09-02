@@ -66,6 +66,12 @@ purchase_requisition_new:
     pattern: /purchase/requisition/new
     defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionNew }
 
+purchase_requisition_edit:
+    pattern: /purchase/requisition/edit/{id}
+    defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionEdit }
+    requirements:
+          id: \d+
+
 purchase_requisition_approve_project_head:
     pattern: /purchase/requisition/approve/projectHead/{id}
     defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionApproveByProjectHead }

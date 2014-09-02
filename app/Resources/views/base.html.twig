@@ -209,6 +209,24 @@
             </li>
             {% endif %}
             {% if is_granted("ROLE_ADMIN") %}
+                <li class="{{ PR|join(" ") }}">
+                    <a href="/purchase/requisition">
+                        <i class="fa fa-gift"></i>
+                        <span class="title"> Purchase Requisition</span>
+                        <span class="selected"></span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if is_granted("ROLE_ADMIN") %}
+                <li class="{{ PO|join(" ") }}">
+                    <a href="/purchase/order">
+                        <i class="fa fa-gift"></i>
+                        <span class="title"> Purchase Order</span>
+                        <span class="selected"></span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if is_granted("ROLE_ADMIN") %}
             <li class="{{ Report|join(" ") }}">
                 <a href="javascript:;">
                     <i class="fa fa-bookmark-o"></i>
@@ -236,24 +254,6 @@
                     <a href="/over/view">
                         <i class="fa fa-gift"></i>
                         <span class="title"> Item overview </span>
-                        <span class="selected"></span>
-                    </a>
-                </li>
-            {% endif %}
-            {% if is_granted("ROLE_ADMIN") %}
-                <li class="{{ PR|join(" ") }}">
-                    <a href="/purchase/requisition">
-                        <i class="fa fa-gift"></i>
-                        <span class="title"> Purchase Requisition</span>
-                        <span class="selected"></span>
-                    </a>
-                </li>
-            {% endif %}
-            {% if is_granted("ROLE_ADMIN") %}
-                <li class="{{ PO|join(" ") }}">
-                    <a href="/purchase/order">
-                        <i class="fa fa-gift"></i>
-                        <span class="title"> Purchase Order</span>
                         <span class="selected"></span>
                     </a>
                 </li>
