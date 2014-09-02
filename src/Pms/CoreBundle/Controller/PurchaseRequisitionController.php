@@ -84,7 +84,7 @@ class PurchaseRequisitionController extends Controller
 
     public function purchaseRequisitionEditAction(Request $request, PurchaseRequisition $purchaseRequisition)
     {
-        $form = $this->createForm(new PurchaseRequisitionEditType(), $purchaseRequisition);
+        $form = $this->createForm(new PurchaseRequisitionType(), $purchaseRequisition);
 
         if ($request->getMethod() == 'POST') {
 
