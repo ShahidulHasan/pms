@@ -156,6 +156,18 @@
     dataType: 'json',
     success: function (response, status) {
     $("#purchaseorder_purchaseOrderItems_" + index + "_quantity").val(response.quantity);
+
+    $("#purchaseorder_purchaseOrderItems_" + index + "_quantity").keyup(function () {
+    var addedQuantity = $("#purchaseorder_purchaseOrderItems_" + index + "_quantity").val();
+    if(response.quantity < addedQuantity){
+    alert('Order is more than purchase request');
+    return false;
+    }else if(addedQuantity==0){
+    alert('Order should not be 0');
+    return false;
+    }
+    });
+
     }
     });
     });
@@ -194,11 +206,11 @@
     $("#purchaseorder_poNonpo").change(function () {
     var poNonpo = $("#purchaseorder_poNonpo").val();
         if(poNonpo==1){
-    $('#buyer-group').show();
-    $('#vendor-group').hide();
-        }else{
-    $('#vendor-group').show();
     $('#buyer-group').hide();
+    $('#vendor-group').show();
+        }else{
+    $('#vendor-group').hide();
+    $('#buyer-group').show();
         }
     });
 
