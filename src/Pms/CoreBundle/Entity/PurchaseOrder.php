@@ -66,19 +66,12 @@ class PurchaseOrder
     private $status;
 
     /**
-     * @var integer
+     * @var Vendor
      *
-     * @ORM\Column(name="vendors", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Vendor", inversedBy="purchaseOrder")
+     * @ORM\JoinColumn(name="vendors", nullable=true)
      */
     private $vendor;
-
-    /**
-     * @var Project
-     *
-     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Project", inversedBy="purchaseOrder")
-     * @ORM\JoinColumn(name="projects", nullable=true)
-     */
-    private $project;
 
     /**
      * @var Buyer
@@ -251,29 +244,6 @@ class PurchaseOrder
     public function getDateOfClaimed()
     {
         return $this->dateOfClaimed;
-    }
-
-    /**
-     * Set project
-     *
-     * @param integer $project
-     * @return PurchaseOrder
-     */
-    public function setProject($project)
-    {
-        $this->project = $project;
-
-        return $this;
-    }
-
-    /**
-     * Get project
-     *
-     * @return integer
-     */
-    public function getProject()
-    {
-        return $this->project;
     }
 
     /**

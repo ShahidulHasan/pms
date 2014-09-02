@@ -13,12 +13,35 @@
                 <div class="row">
 
                     <div class="col-md-12">
-                        <div class="col-md-6" style="height:70px;float: left;text-align: left;">
-                            <div class="form-group">
-
-                                <div class="col-md-6">
-                                    <div class="input-icon">
-
+                        <div class="col-md-6" style="height:100px;float: left;text-align: left;">
+                            <div class="col-md-12" style="height:50px;float:left;">
+                                <div class="form-group">
+                                    {{ form_label(form.poNonpo, 'PO/NONPO :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left: -25px;margin-right:-20px;font-weight:bold;' } }
+                                    ) }}
+                                    <div class="col-md-6">
+                                        <div class="input-icon">
+                                            {{ form_widget(form.poNonpo, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;width: 170px;' } }) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="height:35px;float:left;">
+                                <div class="form-group" id="vendor-group">
+                                    {{ form_label(form.vendor, 'Vendor :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left: -25px;margin-right:-20px;font-weight:bold;' } }
+                                    ) }}
+                                    <div class="col-md-6">
+                                        <div class="input-icon">
+                                            {{ form_widget(form.vendor, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;width: 170px;' } }) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="buyer-group">
+                                    {{ form_label(form.buyer, 'Buyer :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left: -25px;margin-right:-20px;font-weight:bold;' } }
+                                    ) }}
+                                    <div class="col-md-6">
+                                        <div class="input-icon">
+                                            {{ form_widget(form.buyer, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;width: 170px;' } }) }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -161,6 +184,17 @@
 
     // add a new tag form (see next code block)
     addTagForm($collectionHolder, $newLinkLi);
+    });
+
+    $("#purchaseorder_poNonpo").change(function () {
+    var poNonpo = $("#purchaseorder_poNonpo").val();
+        if(poNonpo==1){
+    $('#buyer-group').show();
+    $('#vendor-group').hide();
+        }else{
+    $('#vendor-group').show();
+    $('#buyer-group').hide();
+        }
     });
 
 {% endblock %}

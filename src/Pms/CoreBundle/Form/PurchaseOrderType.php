@@ -2,6 +2,9 @@
 
 namespace Pms\CoreBundle\Form;
 
+use Pms\CoreBundle\Entity\Repository\BuyerRepository;
+use Pms\CoreBundle\Entity\Repository\VendorRepository;
+use Pms\CoreBundle\Entity\Vendor;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -17,6 +20,15 @@ class PurchaseOrderType extends AbstractType
     {
         $builder
             ->add('orderNo', 'text')
+            ->add('poNonpo', 'choice', array(
+                'constraints' => array(
+                    new NotBlank()
+                ),
+                'choices' => array(
+                    '1' => 'PO',
+                    '0' => 'Non-PO'
+                )
+            ))
             ->add('dateOfDelivered', 'text', array(
                 'constraints' => array(
                     new NotBlank()
@@ -35,6 +47,34 @@ class PurchaseOrderType extends AbstractType
                 'label_attr' => array(
                     'class' => 'hidden'
                 )
+            ))
+            ->add('buyer', 'entity', array(
+                'class' => 'PmsCoreBundle:Buyer',
+                'property' => 'buyerName',
+                'required' => false,
+                'attr' => array(
+                    'placeholder' => ' Select Buyer'
+                ),
+                'empty_data' => null,
+                'query_builder' => function (BuyerRepository $repository)
+                    {
+                        return $repository->createQueryBuilder('s')
+                            ->where('s.status = 1');
+                    }
+            ))
+            ->add('vendor', 'entity', array(
+                'class' => 'PmsCoreBundle:Vendor',
+                'property' => 'vendorName',
+                'required' => false,
+                'attr' => array(
+                    'placeholder' => ' Select Vendor'
+                ),
+                'empty_data' => null,
+                'query_builder' => function (VendorRepository $repository)
+                    {
+                        return $repository->createQueryBuilder('s')
+                            ->where('s.status = 1');
+                    }
             ))
             ->add('save', 'submit');
         ;

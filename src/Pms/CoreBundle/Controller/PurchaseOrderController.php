@@ -46,7 +46,14 @@ class PurchaseOrderController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $status = '1';
                 $dateOfDelivered = $form["dateOfDelivered"]->getData();
+                $vendor = $form["vendor"]->getData();
+                $buyer = $form["buyer"]->getData();
+                $user = $this->get('security.context')->getToken()->getUser()->getId();
+                $purchaseOrder->setCreatedBy($user);
+                $purchaseOrder->setCreatedDate(new \DateTime());
                 $purchaseOrder->setStatus($status);
+                $purchaseOrder->setVendor($this->getDoctrine()->getRepository('PmsCoreBundle:Vendor')->findOneById($vendor));
+                $purchaseOrder->setBuyer($this->getDoctrine()->getRepository('PmsCoreBundle:Buyer')->findOneById($buyer));
                 $purchaseOrder->setDateOfDelivered(new \DateTime($dateOfDelivered));
 
                 if (!empty($_POST['purchaseorder']['purchaseOrderItems'])) {

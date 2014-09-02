@@ -2,6 +2,7 @@
 
 namespace Pms\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,6 +21,13 @@ class Vendor
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\PurchaseOrder", mappedBy="vendor")
+     */
+    private $purchaseOrder;
 
     /**
      * @var string
@@ -150,5 +158,13 @@ class Vendor
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getPurchaseOrder()
+    {
+        return $this->purchaseOrder;
     }
 }
