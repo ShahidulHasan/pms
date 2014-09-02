@@ -6,6 +6,7 @@ use Doctrine\Common\Util\Debug;
 use Doctrine\ORM\Repository;
 use Pms\CoreBundle\Entity\Category;
 use Pms\CoreBundle\Entity\Buyer;
+use Pms\CoreBundle\Entity\Document;
 use Pms\CoreBundle\Entity\PurchaseOrder;
 use Pms\CoreBundle\Entity\PurchaseOrderItem;
 use Pms\CoreBundle\Entity\PurchaseRequisitionItem;
@@ -16,6 +17,7 @@ use Pms\CoreBundle\Entity\ProjectCostItem;
 use Pms\CoreBundle\Entity\PurchaseRequisition;
 use Pms\CoreBundle\Form\CategoryType;
 use Pms\CoreBundle\Form\BuyerType;
+use Pms\CoreBundle\Form\DocumentType;
 use Pms\CoreBundle\Form\PurchaseOrderType;
 use Pms\CoreBundle\Form\VendorType;
 use Pms\CoreBundle\Form\ItemType;
@@ -30,18 +32,30 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CoreController extends Controller
 {
-//    public function paginate($dql)
-//    {
-//        $em = $this->get('doctrine.orm.entity_manager');
-//        $query = $em->createQuery($dql);
-//
-//        $paginator = $this->get('knp_paginator');
-//        $value = $paginator->paginate(
-//            $query,
-//            $page = $this->get('request')->query->get('page', 1) /*page number*/,
-//            50/*limit per page*/
-//        );
-//
-//        return array($value, $page);
-//    }
+    public function uploadAddAction(Request $request)
+    {
+        $document = new Document();
+
+        $form = $this->createForm(new DocumentType(), $document);
+        if ($request->getMethod() == 'POST') {
+
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+
+                $this->getDoctrine()->getRepository('UserBundle:User')->create($document);
+
+                $this->get('session')->getFlashBag()->add(
+                    'notice',
+                    'File Successfully Upload'
+                );
+
+                return $this->redirect($this->generateUrl('upload_add'));
+            }
+        }
+
+        return $this->render('PmsCoreBundle:Document:add.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
 }

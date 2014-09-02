@@ -37,14 +37,6 @@ class PurchaseOrderItem
     private $quantity;
 
     /**
-     * @var PurchaseRequisition
-     *
-     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisition", inversedBy="purchaseOrderItem")
-     * @ORM\JoinColumn(name="purchase_requisitions", nullable=true)
-     */
-    private $purchaseRequisition;
-
-    /**
      * @var PurchaseOrder
      *
      * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\PurchaseOrder", inversedBy="purchaseOrderItems", cascade={"persist", "remove"})
@@ -97,29 +89,6 @@ class PurchaseOrderItem
     public function getQuantity()
     {
         return $this->quantity;
-    }
-
-    /**
-     * Set purchaseRequisition
-     *
-     * @param integer $purchaseRequisition
-     * @return PurchaseOrderItem
-     */
-    public function setPurchaseRequisition($purchaseRequisition)
-    {
-        $this->purchaseRequisition = $purchaseRequisition;
-
-        return $this;
-    }
-
-    /**
-     * Get purchaseRequisition
-     *
-     * @return integer
-     */
-    public function getPurchaseRequisition()
-    {
-        return $this->purchaseRequisition;
     }
 
     /**

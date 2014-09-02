@@ -111,7 +111,7 @@
                 </div>
             </li>
 
-            {% set Route, Dashboard, User, Item, Project, Cost, Report, Category, SubCategory, OverView, Buyer, PR, PO, Vendor = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "] %}
+            {% set Route, Dashboard, User, Item, Project, Cost, Report, Category, SubCategory, OverView, Buyer, PR, PO, Vendor, Upload = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "] %}
             {% set Url = Route|split('_') %}
             {% if Url[0] == 'homepage' %}{% set Dashboard = Dashboard|merge(["active"]) %}
             {% elseif Url[0] == 'fos' %}{% set Dashboard = Dashboard|merge(["active"]) %}
@@ -127,6 +127,7 @@
             {% elseif Url[0] == 'over' %}{% set OverView = OverView|merge(["active"]) %}
             {% elseif Url[1] == 'requisition' %}{% set PR = PR|merge(["active"]) %}
             {% elseif Url[1] == 'order' %}{% set PO = PO|merge(["active"]) %}
+            {% elseif Url[1] == 'upload' %}{% set Upload = Upload|merge(["active"]) %}
             {% endif %}
 
             <li class="{{ Dashboard|join(" ") }}">
@@ -254,6 +255,15 @@
                     <a href="/over/view">
                         <i class="fa fa-gift"></i>
                         <span class="title"> Item overview </span>
+                        <span class="selected"></span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if is_granted("ROLE_ADMIN") %}
+                <li class="{{ Upload|join(" ") }}">
+                    <a href="/upload/file">
+                        <i class="fa fa-gift"></i>
+                        <span class="title"> Invoice Upload</span>
                         <span class="selected"></span>
                     </a>
                 </li>

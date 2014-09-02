@@ -1,3 +1,7 @@
+upload_add:
+    pattern: /upload/file/
+    defaults: { _controller: PmsCoreBundle:Core:uploadAdd }
+
 vendor_add:
     pattern: /vendor
     defaults: { _controller: PmsCoreBundle:Vendor:vendorAdd }

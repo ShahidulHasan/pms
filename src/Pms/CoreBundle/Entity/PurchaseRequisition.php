@@ -80,13 +80,6 @@ class PurchaseRequisition
     private $purchaseRequisitionItems;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\PurchaseOrderItem", mappedBy="purchaseRequisition")
-     */
-    private $purchaseOrderItem;
-
-    /**
      * @var Project
      *
      * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Project", inversedBy="purchaseRequisition")
@@ -261,14 +254,6 @@ class PurchaseRequisition
     public function getStatus()
     {
         return $this->status;
-    }
-
-    /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function getPurchaseOrderItem()
-    {
-        return $this->purchaseOrderItem;
     }
 
     /**
