@@ -127,7 +127,7 @@
             {% elseif Url[0] == 'over' %}{% set OverView = OverView|merge(["active"]) %}
             {% elseif Url[1] == 'requisition' %}{% set PR = PR|merge(["active"]) %}
             {% elseif Url[1] == 'order' %}{% set PO = PO|merge(["active"]) %}
-            {% elseif Url[1] == 'upload' %}{% set Upload = Upload|merge(["active"]) %}
+            {% elseif Url[0] == 'upload' %}{% set Upload = Upload|merge(["active"]) %}
             {% endif %}
 
             <li class="{{ Dashboard|join(" ") }}">

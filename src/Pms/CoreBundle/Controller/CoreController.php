@@ -6,7 +6,7 @@ use Doctrine\Common\Util\Debug;
 use Doctrine\ORM\Repository;
 use Pms\CoreBundle\Entity\Category;
 use Pms\CoreBundle\Entity\Buyer;
-use Pms\CoreBundle\Entity\Document;
+use Pms\CoreBundle\Entity\Invoice;
 use Pms\CoreBundle\Entity\PurchaseOrder;
 use Pms\CoreBundle\Entity\PurchaseOrderItem;
 use Pms\CoreBundle\Entity\PurchaseRequisitionItem;
@@ -17,7 +17,7 @@ use Pms\CoreBundle\Entity\ProjectCostItem;
 use Pms\CoreBundle\Entity\PurchaseRequisition;
 use Pms\CoreBundle\Form\CategoryType;
 use Pms\CoreBundle\Form\BuyerType;
-use Pms\CoreBundle\Form\DocumentType;
+use Pms\CoreBundle\Form\InvoiceType;
 use Pms\CoreBundle\Form\PurchaseOrderType;
 use Pms\CoreBundle\Form\VendorType;
 use Pms\CoreBundle\Form\ItemType;
@@ -34,16 +34,16 @@ class CoreController extends Controller
 {
     public function uploadAddAction(Request $request)
     {
-        $document = new Document();
+        $document = new Invoice();
 
-        $form = $this->createForm(new DocumentType(), $document);
+        $form = $this->createForm(new InvoiceType(), $document);
         if ($request->getMethod() == 'POST') {
 
             $form->handleRequest($request);
 
             if ($form->isValid()) {
 
-                $this->getDoctrine()->getRepository('UserBundle:User')->create($document);
+                $this->getDoctrine()->getRepository('PmsCoreBundle:Invoice')->create($document);
 
                 $this->get('session')->getFlashBag()->add(
                     'notice',

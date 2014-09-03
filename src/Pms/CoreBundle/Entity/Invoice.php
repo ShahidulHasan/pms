@@ -7,10 +7,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity()
- * @ORM\Table(name="document")
- */
-class Document
+ * @ORM\Table(name="invoice")
+ * @ORM\Entity(repositoryClass="Pms\CoreBundle\Entity\Repository\InvoiceRepository")
+ * @ORM\HasLifecycleCallbacks
+*/
+class Invoice
 {
     /**
      * @ORM\Id
@@ -20,10 +21,18 @@ class Document
     public $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var PurchaseRequisition
+     *
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisition", inversedBy="invoice")
+     * @ORM\JoinColumn(name="purchase_requisitions")
+     */
+    private $purchaseRequisition;
+
+    /**
+     * @ORM\Column(name="comments", type="string", length=255)
      * @Assert\NotBlank
      */
-    public $name;
+    public $comment;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -31,11 +40,34 @@ class Document
     public $path;
 
     /**
-     * @Assert\File()
+     * @Assert\File(maxSize="5M")
      */
     public $file;
 
     public $temp;
+
+    /**
+     * Set purchaseRequisition
+     *
+     * @param integer $purchaseRequisition
+     * @return Invoice
+     */
+    public function setPurchaseRequisition($purchaseRequisition)
+    {
+        $this->purchaseRequisition = $purchaseRequisition;
+
+        return $this;
+    }
+
+    /**
+     * Get purchaseRequisition
+     *
+     * @return integer
+     */
+    public function getPurchaseRequisition()
+    {
+        return $this->purchaseRequisition;
+    }
 
     /**
      * @ORM\PrePersist()
@@ -114,7 +146,7 @@ class Document
     {
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
-        return 'uploads/file';
+        return 'uploads/file/invoice';
     }
 
     /**
