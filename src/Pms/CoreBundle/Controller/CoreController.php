@@ -10,6 +10,7 @@ use Pms\CoreBundle\Entity\Invoice;
 use Pms\CoreBundle\Entity\PurchaseOrder;
 use Pms\CoreBundle\Entity\PurchaseOrderItem;
 use Pms\CoreBundle\Entity\PurchaseRequisitionItem;
+use Pms\CoreBundle\Entity\ReceivedItem;
 use Pms\CoreBundle\Entity\Vendor;
 use Pms\CoreBundle\Entity\Item;
 use Pms\CoreBundle\Entity\Project;
@@ -19,6 +20,7 @@ use Pms\CoreBundle\Form\CategoryType;
 use Pms\CoreBundle\Form\BuyerType;
 use Pms\CoreBundle\Form\InvoiceType;
 use Pms\CoreBundle\Form\PurchaseOrderType;
+use Pms\CoreBundle\Form\ReceivedItemType;
 use Pms\CoreBundle\Form\VendorType;
 use Pms\CoreBundle\Form\ItemType;
 use Pms\CoreBundle\Form\ProjectCostItemType;
@@ -55,6 +57,33 @@ class CoreController extends Controller
         }
 
         return $this->render('PmsCoreBundle:Document:add.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+    public function receiveAddAction(Request $request)
+    {
+        $document = new ReceivedItem();
+
+        $form = $this->createForm(new ReceivedItemType(), $document);
+        if ($request->getMethod() == 'POST') {
+
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+
+                $this->getDoctrine()->getRepository('PmsCoreBundle:ReceivedItem')->create($document);
+
+                $this->get('session')->getFlashBag()->add(
+                    'notice',
+                    'Received Successfully'
+                );
+
+                return $this->redirect($this->generateUrl('receive_add'));
+            }
+        }
+
+        return $this->render('PmsCoreBundle:Receive:add.html.twig', array(
             'form' => $form->createView(),
         ));
     }

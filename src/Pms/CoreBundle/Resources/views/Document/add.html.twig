@@ -28,6 +28,15 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            {{ form_label(form.invoiceNumber, 'Invoice Number:', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }
+                            ) }}
+                            <div class="col-md-2">
+                                <div class="input-icon">
+                                    {{ form_widget(form.invoiceNumber, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             {{ form_label(form.file, 'Invoice Attach :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' }}
                             ) }}
                             <div class="col-md-6">
@@ -55,6 +64,33 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            {{ form_label(form.fileCalan, 'Calan Attach :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' }}
+                            ) }}
+                            <div class="col-md-6">
+                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                                    <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <span class="uneditable-input">
+                                                        <i class="fa fa-file fileupload-exists"></i>
+                                                        <span class="fileupload-preview"></span>
+                                                    </span>
+                                                </span>
+                                                <span class="btn default btn-file">
+                                                    <span class="fileupload-new">
+                                                        <i class="fa fa-paper-clip"></i>Select file
+                                                    </span>
+                                                    <span class="fileupload-exists">
+                                                        <i class="fa fa-undo"></i>Change
+                                                    </span>
+                                                    {{ form_widget(form.fileCalan, { 'attr': {'class': 'default form-control'} }) }}
+                                                </span>
+                                        <a href="form_component.html#" class="btn red fileupload-exists"
+                                           data-dismiss="fileupload"><i class="fa fa-trash-o"></i> Remove</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             {{ form_label(form.comment, 'Remark :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }
                             ) }}
                             <div class="col-md-8">
@@ -71,8 +107,8 @@
                             </div>
                         </div>
                     </div>
+                    {{ form_end(form) }}
                 </div>
-                {{ form_end(form) }}
             </div>
         </div>
     </div>

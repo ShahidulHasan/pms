@@ -52,6 +52,13 @@ class Item
     private $purchaseOrderItem;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\ReceivedItem", mappedBy="item")
+     */
+    private $receivedItem;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="items_name", type="string", length=255)
@@ -256,5 +263,13 @@ class Item
     public function getPurchaseOrderItem()
     {
         return $this->purchaseOrderItem;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function geReceivedItem()
+    {
+        return $this->receivedItem;
     }
 }

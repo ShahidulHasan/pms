@@ -1,3 +1,7 @@
+receive_add:
+    pattern: /receive/item
+    defaults: { _controller: PmsCoreBundle:Core:receiveAdd }
+
 upload_add:
     pattern: /upload/file
     defaults: { _controller: PmsCoreBundle:Core:uploadAdd }

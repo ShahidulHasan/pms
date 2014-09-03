@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {{ include('::flash-message.html.twig') }}
+
+    <span class="buyerMessege"></span>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="portlet box light-grey">
+
+                <div class="portlet-title">
+                    <div class="caption"><i class="fa fa-reorder"></i> Receive Item</div>
+                </div>
+
+                <div class="form-body left">
+                {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'received-form', 'novalidate': 'novalidate'} }) }}
+                    <div class="form-actions fluid">
+                        <div class="form-group">
+                            {{ form_label(form.grn, 'GRN No:', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }
+                            ) }}
+                            <div class="col-md-3">
+                                <div class="input-icon">
+                                    {{ form_widget(form.grn, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.quantity, 'Quantity :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }
+                            ) }}
+                            <div class="col-md-3">
+                                <div class="input-icon">
+                                    {{ form_widget(form.quantity, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.purchaseRequisition, 'Requisition No:', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }
+                            ) }}
+                            <div class="col-md-3">
+                                <div class="input-icon">
+                                    {{ form_widget(form.purchaseRequisition, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.invoice, 'Invoice No:', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }
+                            ) }}
+                            <div class="col-md-3">
+                                <div class="input-icon">
+                                    {{ form_widget(form.invoice, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.item, 'Item :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }
+                            ) }}
+                            <div class="col-md-3">
+                                <div class="input-icon">
+                                    {{ form_widget(form.item, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-11" style="text-align: right;">
+                                <div class="input-icon">
+                                    {{ form_widget(form.save, { 'attr': {'class': 'btn green button-width', 'style': 'width:100px;margin-right:25px;' } } ) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

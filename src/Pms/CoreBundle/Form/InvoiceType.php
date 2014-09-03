@@ -23,7 +23,14 @@ class InvoiceType extends AbstractType
                     'placeholder' => 'Remark'
                 )
             ))
-            ->add('file')
+            ->add('invoiceNumber', 'text', array(
+                'attr' => array(
+                    'placeholder' => 'Invoice',
+                    'autocomplete' => 'off'
+                )
+            ))
+            ->add('file', 'file')
+            ->add('fileCalan', 'file')
             ->add('save', 'submit')
             ->add('purchaseRequisition', 'entity', array(
                 'constraints' => array(

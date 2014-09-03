@@ -124,9 +124,9 @@ class ProjectCostItem
     private $subCategory;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="invoice", type="string", length=255, nullable=true)
+     * @ORM\Column(name="invoice", type="integer", length=255, nullable=true)
      */
     private $invoice;
 
@@ -493,7 +493,7 @@ class ProjectCostItem
     /**
      * Set invoice
      *
-     * @param string $invoice
+     * @param integer $invoice
      * @return ProjectCostItem
      */
     public function setInvoice($invoice)
@@ -506,7 +506,7 @@ class ProjectCostItem
     /**
      * Get invoice
      *
-     * @return string
+     * @return integer
      */
     public function getInvoice()
     {
