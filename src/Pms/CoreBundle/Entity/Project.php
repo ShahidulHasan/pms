@@ -46,6 +46,13 @@ class Project
     /**
      * @var string
      *
+     * @ORM\Column(name="project_heads", type="string", length=255, nullable=true)
+     */
+    private $projectHead;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="created_by", type="string", length=255)
      */
     private $createdBy;
@@ -77,6 +84,29 @@ class Project
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set projectHead
+     *
+     * @param integer $projectHead
+     * @return Project
+     */
+    public function setProjectHead($projectHead)
+    {
+        $this->projectHead = $projectHead;
+
+        return $this;
+    }
+
+    /**
+     * Get projectHead
+     *
+     * @return integer
+     */
+    public function getProjectHead()
+    {
+        return $this->projectHead;
     }
 
     /**

@@ -68,9 +68,9 @@ class PurchaseRequisitionItem
     /**
      * @var integer
      *
-     * @ORM\Column(name="status_po", type="integer", nullable=true)
+     * @ORM\Column(name="purchase_order_quantity", type="integer", nullable=true)
      */
-    private $statusPo;
+    private $purchaseOrderQuantity;
 
     public function __toString()
     {
@@ -225,25 +225,25 @@ class PurchaseRequisitionItem
     }
 
     /**
-     * Set statusPo
+     * Set purchaseOrderQuantity
      *
-     * @param integer $statusPo
+     * @param integer $purchaseOrderQuantity
      * @return PurchaseRequisitionItem
      */
-    public function setStatusPo($statusPo)
+    public function setPurchaseOrderQuantity($purchaseOrderQuantity)
     {
-        $this->statusPo = $statusPo;
+        $this->purchaseOrderQuantity = $purchaseOrderQuantity;
 
         return $this;
     }
 
     /**
-     * Get statusPo
+     * Get purchaseOrderQuantity
      *
      * @return integer
      */
-    public function getStatusPo()
+    public function getPurchaseOrderQuantity()
     {
-        return $this->statusPo;
+        return $this->purchaseOrderQuantity;
     }
 }

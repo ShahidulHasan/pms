@@ -61,7 +61,7 @@ class PurchaseRequisitionController extends Controller
                         $pi->setComment($item['comment']);
                         $pi->setPurchaseRequisition($purchaseRequisition);
                         $pi->setStatus('1');
-                        $pi->setStatusPo('0');
+                        $pi->setPurchaseOrderQuantity('0');
                         $purchaseRequisition->addPurchaseRequisitionItem($pi);
                     }
                 }

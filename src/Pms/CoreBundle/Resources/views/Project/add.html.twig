@@ -47,8 +47,18 @@
                                         {{ form_widget(form.projectName, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
                                     </div>
                                 </div>
-                                <input type="button" name="ajaxSaveProject" value="Save" id="ajaxSaveProject" class="btn green button-width col-md-1" style="margin-top:2px;margin-left:10px;height:32px;">
                                 <span class="userMessege" style="margin-left: 185px;"></span>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.projectHead, 'Project Head :', {'label_attr': {'class': 'control-label col-md-2', 'style' : 'margin-right:-60px;font-weight:bold;' } }
+                                ) }}
+                                <div class="col-md-8">
+                                    <div class="input-icon">
+                                        <i class="fa"></i>
+                                        {{ form_widget(form.projectHead, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
+                                    </div>
+                                </div>
+                                <input type="button" name="ajaxSaveProject" value="Save" id="ajaxSaveProject" class="btn green button-width col-md-1" style="margin-top:2px;margin-left:10px;height:32px;">
                             </div>
                             {{ form_end(form) }}
                         </div>
@@ -63,6 +73,7 @@
                                             <tr>
                                                 <th>Sl</th>
                                                 <th>Project Name</th>
+                                                <th>Project Head</th>
                                                 <th>Status</th>
                                                 <th></th>
                                             </tr>
@@ -83,7 +94,8 @@
 
                                                 <tr>
                                                     <td>{{ i }} .</td>
-                                                    <td class="col-md-8" style="color: {{ color|join("") }};">{{ projects.projectName }}</td>
+                                                    <td class="col-md-5" style="color: {{ color|join("") }};">{{ projects.projectName }}</td>
+                                                    <td class="col-md-3" style="color: {{ color|join("") }};">{{ projects.projectHead |default() }}</td>
                                                     <td>
                                                         <a href="/project/delete/{{ projects.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
                                                                     class="fa fa-trash-o"></i> Delete</a>
@@ -121,8 +133,9 @@
                 var sPageURL = window.location.pathname;
                 var sURLVariables = sPageURL.split('/');
                 var projectName = $("#project_projectName").val();
+                var projectHead = $("#project_projectHead").val();
 
-                var projectArray = new Array(projectName, sURLVariables[3]);
+                var projectArray = new Array(projectName, sURLVariables[3], projectHead);
 
                 $.ajax({
                     type: "post",

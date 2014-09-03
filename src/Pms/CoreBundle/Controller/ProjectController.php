@@ -144,6 +144,7 @@ class ProjectController extends Controller
 
         $projectName = $projectArray[0];
         $updateId = $projectArray[1];
+        $projectHead = $projectArray[2];
 
         if($projectName) {
             $project = $this->getDoctrine()->getRepository('PmsCoreBundle:Project')->find($updateId);
@@ -152,6 +153,7 @@ class ProjectController extends Controller
             );
             if($project) {
                 $project->setProjectName($projectName);
+                $project->setProjectHead($projectHead);
                 $this->getDoctrine()->getManager()->persist($project);
                 $this->getDoctrine()->getManager()->flush();
 
@@ -167,6 +169,7 @@ class ProjectController extends Controller
             } else {
                 $project = new Project();
                 $project->setProjectName($projectName);
+                $project->setProjectHead($projectHead);
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
                 $project->setCreatedBy($user);
                 $project->setCreatedDate(new \DateTime());
