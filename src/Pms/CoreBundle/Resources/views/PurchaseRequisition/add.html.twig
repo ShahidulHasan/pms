@@ -33,7 +33,7 @@
                             <div class="form-group">
                                 <div class="col-md-12" style="margin-top: 30px;">
 
-                                    <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
+                                    <table class="table bold" style="border: 1px solid ghostwhite;">
                                         <thead>
                                         <tr>
                                             <th>Sl</th>
@@ -51,12 +51,19 @@
                                         {% for purchaseRequisition in purchaseRequisitions %}
                                             {% set i = i + 1 %}
                                             {% set color = [" "] %}
+                                            {% set bgColor = [" "] %}
 
                                             {% if purchaseRequisition.status == 0 %}{% set color = color|merge(["red"]) %}
                                             {% elseif purchaseRequisition.status == 1 %}{% set color = color|merge(["green"]) %}
                                             {% endif %}
 
-                                            <tr>
+                                            {% if purchaseRequisition.approvedByProjectHead == 0 %}{% set bgColor = bgColor|merge(["red"]) %}
+                                            {% elseif purchaseRequisition.approvedByProjectHead == 1 and purchaseRequisition.approvedByCategoryHeadOne == 0 %}{% set bgColor = bgColor|merge(["green"]) %}
+                                            {% elseif purchaseRequisition.approvedByCategoryHeadOne == 1 and purchaseRequisition.approvedByCategoryHeadTwo == 0 %}{% set bgColor = bgColor|merge(["oringe"]) %}
+                                            {% elseif purchaseRequisition.approvedByCategoryHeadtwo == 1 and purchaseRequisition.approvedByCategoryHeadTwo == 1 %}{% set bgColor = bgColor|merge(["blue"]) %}
+                                            {% endif %}
+
+                                            <tr style="background: {{ bgColor|join("") }};">
                                                 <td>{{ i }} .</td>
                                                 <td class="col-md-2" style="color: {{ color|join("") }};">{{ purchaseRequisition.dateOfRequisition|date('Y-m-d') }}</td>
                                                 <td class="col-md-2" style="color: {{ color|join("") }};">{{ purchaseRequisition.requisitionNo }}</td>

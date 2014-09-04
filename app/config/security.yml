@@ -5,7 +5,8 @@ security:
     role_hierarchy:
         ROLE_DATA:        [ROLE_USER]
         ROLE_ADMIN:       [ROLE_DATA]
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_DATA, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_BUYER:       [ROLE_DATA]
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_DATA, ROLE_ADMIN, ROLE_BUYER, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
         fos_userbundle:

@@ -87,9 +87,12 @@ class PurchaseRequisitionController extends Controller
 
             if ($form->isValid()) {
 
-                $em = $this->getDoctrine()->getManager();
-
                 if (!empty($_POST['purchaserequisition']['purchaseRequisitionItems'])) {
+
+                    $user = $this->get('security.context')->getToken()->getUser()->getId();
+                    $purchaseRequisition->setUpdatedBy($user);
+                    $purchaseRequisition->setUpdatedDate(new \DateTime());
+
                     foreach ($form->getData()->getPurchaseRequisitionItems() as $item) {
                         if($item->getId() == null){
                             $item->setPurchaseRequisition($purchaseRequisition);

@@ -119,6 +119,20 @@ class PurchaseRequisition
     /**
      * @var integer
      *
+     * @ORM\Column(name="updated_by", type="integer", nullable=true)
+     */
+    private $updatedBy;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_date", type="datetime", nullable=true)
+     */
+    private $updatedDate;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="approved_by_project_head", type="integer", length=255, nullable=true)
      */
     private $approvedByProjectHead;
@@ -284,6 +298,52 @@ class PurchaseRequisition
     public function getProject()
     {
         return $this->project;
+    }
+
+    /**
+     * Set updatedBy
+     *
+     * @param integer $updatedBy
+     * @return PurchaseRequisition
+     */
+    public function setUpdatedBy($updatedBy)
+    {
+        $this->updatedBy = $updatedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedBy
+     *
+     * @return integer
+     */
+    public function getUpdatedBy()
+    {
+        return $this->updatedBy;
+    }
+
+    /**
+     * Set updatedDate
+     *
+     * @param \DateTime $updatedDate
+     * @return PurchaseRequisition
+     */
+    public function setUpdatedDate($updatedDate)
+    {
+        $this->updatedDate = $updatedDate;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedDate
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedDate()
+    {
+        return $this->updatedDate;
     }
 
     /**
