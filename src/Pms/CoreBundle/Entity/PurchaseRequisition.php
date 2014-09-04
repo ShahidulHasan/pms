@@ -5,6 +5,7 @@ namespace Pms\CoreBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * PurchaseRequisition
@@ -159,7 +160,7 @@ class PurchaseRequisition
 
     public function __construct()
     {
-        $this->purchaseRequisitionItem = new ArrayCollection();
+        $this->purchaseRequisitionItems = new ArrayCollection();
     }
 
     /**
@@ -167,18 +168,10 @@ class PurchaseRequisition
      */
     public function addPurchaseRequisition($purchaseRequisition)
     {
-        if (!$this->getPurchaseRequisitionItem()->contains($purchaseRequisition)) {
+        if (!$this->getPurchaseRequisitionItems()->contains($purchaseRequisition)) {
             $purchaseRequisition->setPurchaseRequisition($this);
-            $this->getPurchaseRequisitionItem()->add($purchaseRequisition);
+            $this->getPurchaseRequisitionItems()->add($purchaseRequisition);
         }
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getPurchaseRequisitionItem()
-    {
-        return $this->purchaseRequisitionItem;
     }
 
     /**
@@ -186,8 +179,8 @@ class PurchaseRequisition
      */
     public function removePurchaseRequisition($purchaseRequisition)
     {
-        if ($this->getPurchaseRequisitionItem()->contains($purchaseRequisition)) {
-            $this->getPurchaseRequisitionItem()->removeElement($purchaseRequisition);
+        if ($this->getPurchaseRequisitionItems()->contains($purchaseRequisition)) {
+            $this->getPurchaseRequisitionItems()->removeElement($purchaseRequisition);
         }
     }
 
@@ -569,15 +562,9 @@ class PurchaseRequisition
         return $this->approvedDateCategoryHeadTwo;
     }
 
-    function setPurchaseRequisitionItems(Collection $items)
-    {
-        $this->purchaseRequisitionItems = $items;
-
-        return $this;
-    }
-
     public function addPurchaseRequisitionItem(PurchaseRequisitionItem $item)
     {
+        $item->setPurchaseRequisition($this);
         $this->purchaseRequisitionItems[] = $item;
 
         return $this;
@@ -590,7 +577,7 @@ class PurchaseRequisition
 
     public function getPurchaseRequisitionItems()
     {
-        return $this->purchaseRequisitionItem;
+        return $this->purchaseRequisitionItems;
     }
 
     /**
@@ -607,5 +594,22 @@ class PurchaseRequisition
     public function getReceivedItem()
     {
         return $this->receivedItem;
+    }
+
+    public function getDateOfRequisitionText() {
+        if(empty($this->dateOfRequisition)){
+            return "";
+        }
+
+        return $this->getDateOfRequisition()->format('Y-m-d');
+    }
+
+    public function setDateOfRequisitionText($date = "") {
+
+        if(!empty($date)){
+            return $this->setDateOfRequisition(new \DateTime($date));
+        }
+
+        return $this;
     }
 }

@@ -36,16 +36,20 @@ class CoreController extends Controller
 {
     public function uploadAddAction(Request $request)
     {
-        $document = new Invoice();
+        $invoice = new Invoice();
 
-        $form = $this->createForm(new InvoiceType(), $document);
+        $form = $this->createForm(new InvoiceType(), $invoice);
         if ($request->getMethod() == 'POST') {
 
             $form->handleRequest($request);
 
             if ($form->isValid()) {
 
-                $this->getDoctrine()->getRepository('PmsCoreBundle:Invoice')->create($document);
+                $user = $this->get('security.context')->getToken()->getUser()->getId();
+                $invoice->setUploadedBy($user);
+                $invoice->setUploadedDate(new \DateTime());
+
+                $this->getDoctrine()->getRepository('PmsCoreBundle:Invoice')->create($invoice);
 
                 $this->get('session')->getFlashBag()->add(
                     'notice',
@@ -56,23 +60,33 @@ class CoreController extends Controller
             }
         }
 
+        $dql = "SELECT a FROM PmsCoreBundle:Invoice a ORDER BY a.id DESC";
+
+        list($invoices, $page) = $this->paginate($dql);
+
         return $this->render('PmsCoreBundle:Document:add.html.twig', array(
             'form' => $form->createView(),
+            'invoices' => $invoices,
+            'page' => $page,
         ));
     }
 
     public function receiveAddAction(Request $request)
     {
-        $document = new ReceivedItem();
+        $receivedItem = new ReceivedItem();
 
-        $form = $this->createForm(new ReceivedItemType(), $document);
+        $form = $this->createForm(new ReceivedItemType(), $receivedItem);
         if ($request->getMethod() == 'POST') {
 
             $form->handleRequest($request);
 
             if ($form->isValid()) {
 
-                $this->getDoctrine()->getRepository('PmsCoreBundle:ReceivedItem')->create($document);
+                $user = $this->get('security.context')->getToken()->getUser()->getId();
+                $receivedItem->setReceivedBy($user);
+                $receivedItem->setReceivedDate(new \DateTime());
+
+                $this->getDoctrine()->getRepository('PmsCoreBundle:ReceivedItem')->create($receivedItem);
 
                 $this->get('session')->getFlashBag()->add(
                     'notice',
@@ -83,8 +97,29 @@ class CoreController extends Controller
             }
         }
 
+        $dql = "SELECT a FROM PmsCoreBundle:ReceivedItem a ORDER BY a.id DESC";
+
+        list($receivedItems, $page) = $this->paginate($dql);
+
         return $this->render('PmsCoreBundle:Receive:add.html.twig', array(
             'form' => $form->createView(),
+            'receivedItems' => $receivedItems,
+            'page' => $page,
         ));
+    }
+
+    public function paginate($dql)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $query = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $value = $paginator->paginate(
+            $query,
+            $page = $this->get('request')->query->get('page', 1) /*page number*/,
+            50/*limit per page*/
+        );
+
+        return array($value, $page);
     }
 }

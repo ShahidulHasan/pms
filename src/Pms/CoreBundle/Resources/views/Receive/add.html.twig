@@ -21,7 +21,7 @@
                         <div class="form-group">
                             {{ form_label(form.grn, 'GRN No:', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }
                             ) }}
-                            <div class="col-md-3">
+                            <div class="col-md-7">
                                 <div class="input-icon">
                                     {{ form_widget(form.grn, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
                                 </div>
@@ -30,7 +30,7 @@
                         <div class="form-group">
                             {{ form_label(form.quantity, 'Quantity :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }
                             ) }}
-                            <div class="col-md-3">
+                            <div class="col-md-7">
                                 <div class="input-icon">
                                     {{ form_widget(form.quantity, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
                                 </div>
@@ -39,7 +39,7 @@
                         <div class="form-group">
                             {{ form_label(form.purchaseRequisition, 'Requisition No:', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }
                             ) }}
-                            <div class="col-md-3">
+                            <div class="col-md-7">
                                 <div class="input-icon">
                                     {{ form_widget(form.purchaseRequisition, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
                                 </div>
@@ -48,7 +48,7 @@
                         <div class="form-group">
                             {{ form_label(form.invoice, 'Invoice No:', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }
                             ) }}
-                            <div class="col-md-3">
+                            <div class="col-md-7">
                                 <div class="input-icon">
                                     {{ form_widget(form.invoice, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
                                 </div>
@@ -57,7 +57,7 @@
                         <div class="form-group">
                             {{ form_label(form.item, 'Item :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }
                             ) }}
-                            <div class="col-md-3">
+                            <div class="col-md-7">
                                 <div class="input-icon">
                                     {{ form_widget(form.item, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
                                 </div>
@@ -76,5 +76,52 @@
             </div>
         </div>
     </div>
+
+    <div class="form-actions fluid" id="project-list-div">
+        <div class="form-group">
+            <div class="col-md-12">
+
+                <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
+                    <thead>
+                    <tr>
+                        <th>Sl</th>
+                        <th>Received Date</th>
+                        <th>GRN</th>
+                        <th>Quantity</th>
+                        <th>Requisition</th>
+                        <th>Invoice</th>
+                        <th>Item</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% if page == 1 %}{% set i = 0 %}
+                    {% else %}{% set i = (page * 50) - 50 %}
+                    {% endif %}
+
+                    {% for receivedItem in receivedItems %}
+                        {% set i = i + 1 %}
+                        {% set color = [" "] %}
+
+                        <tr>
+                            <td class="col-md-1">{{ i }} .</td>
+                            <td class="col-md-2" style="color: {{ color|join("") }};">{{ receivedItem.receivedDate | date('Y-m-d') }}</td>
+                            <td class="col-md-1" style="color: {{ color|join("") }};">{{ receivedItem.grn }}</td>
+                            <td class="col-md-2" style="color: {{ color|join("") }};">{{ receivedItem.quantity }}</td>
+                            <td class="col-md-2" style="color: {{ color|join("") }};">{{ receivedItem.purchaseRequisition.requisitionNo }}</td>
+                            <td class="col-md-1" style="color: {{ color|join("") }};">{{ receivedItem.invoice.invoiceNumber }}</td>
+                            <td class="col-md-3" style="color: {{ color|join("") }};">{{ receivedItem.item.itemName }}</td>
+                        </tr>
+
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div class="navigation" style="text-align: right">
+                    {{ knp_pagination_render(receivedItems) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 {% endblock %}

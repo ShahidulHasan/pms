@@ -178,6 +178,23 @@ class PurchaseRequisitionItem
         return $this->dateOfRequired;
     }
 
+    public function getDateOfRequiredText() {
+        if(empty($this->dateOfRequired)){
+            return "";
+        }
+
+        return $this->getDateOfRequired()->format('Y-m-d');
+    }
+
+    public function setDateOfRequiredText($date = "") {
+
+        if(!empty($date)){
+            return $this->setDateOfRequired(new \DateTime($date));
+        }
+
+        return $this;
+    }
+
     /**
      * Set comment
      *

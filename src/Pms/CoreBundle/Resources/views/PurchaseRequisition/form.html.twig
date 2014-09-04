@@ -80,14 +80,14 @@
                                     <td>
                                         <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
                                             <span class="input-group-btn"></span>
-                                            {{ form_widget(requisitionItem.dateOfRequired, { 'attr': {'class': 'form-control', 'style': 'width: 120px;padding-left: 10px! important;'} }) }}
+                                            {{ form_widget(requisitionItem.dateOfRequiredText, { 'attr': {'class': 'form-control', 'style': 'width: 120px;padding-left: 10px! important;'} }) }}
                                         </div>
                                     </td>
                                     <td>
                                         {{ form_widget(requisitionItem.comment, { 'attr': {'class': 'form-control', 'style': 'width: 200px;padding-left: 10px! important;'} }) }}
                                     </td>
                                     <td>
-                                        {{ form_widget(form.delete, { 'attr': {'class': 'btn', 'style': 'width: 70px;' } }) }}
+                                        {{ form_widget(requisitionItem.delete, { 'attr': {'class': 'btn', 'style': 'width: 70px;' } }) }}
                                     </td>
                                 </tr>
                                 {% endfor %}

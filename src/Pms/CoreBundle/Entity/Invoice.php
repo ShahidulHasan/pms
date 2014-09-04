@@ -65,6 +65,20 @@ class Invoice
     public $file;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="uploaded_by", type="string", length=255)
+     */
+    private $uploadedBy;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="uploaded_date", type="datetime")
+     */
+    private $uploadedDate;
+
+    /**
      * @Assert\File(maxSize="5M")
      */
     public $fileCalan;
@@ -78,6 +92,52 @@ class Invoice
     public function getReceivedItem()
     {
         return $this->receivedItem;
+    }
+
+    /**
+     * Set uploadedBy
+     *
+     * @param string $uploadedBy
+     * @return Invoice
+     */
+    public function setUploadedBy($uploadedBy)
+    {
+        $this->uploadedBy = $uploadedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get uploadedBy
+     *
+     * @return string
+     */
+    public function getUploadedBy()
+    {
+        return $this->uploadedBy;
+    }
+
+    /**
+     * Set uploadedDate
+     *
+     * @param \DateTime $uploadedDate
+     * @return Invoice
+     */
+    public function setUploadedDate($uploadedDate)
+    {
+        $this->uploadedDate = $uploadedDate;
+
+        return $this;
+    }
+
+    /**
+     * Get uploadedDate
+     *
+     * @return \DateTime
+     */
+    public function getUploadedDate()
+    {
+        return $this->uploadedDate;
     }
 
     /**

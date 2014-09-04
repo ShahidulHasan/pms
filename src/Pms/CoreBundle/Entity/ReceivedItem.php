@@ -60,6 +60,20 @@ class ReceivedItem
     private $invoice;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="received_by", type="string", length=255)
+     */
+    private $receivedBy;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="received_date", type="datetime")
+     */
+    private $receivedDate;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -67,6 +81,52 @@ class ReceivedItem
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set receivedBy
+     *
+     * @param string $receivedBy
+     * @return ReceivedItem
+     */
+    public function setReceivedBy($receivedBy)
+    {
+        $this->receivedBy = $receivedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get receivedBy
+     *
+     * @return string
+     */
+    public function getReceivedBy()
+    {
+        return $this->receivedBy;
+    }
+
+    /**
+     * Set receivedDate
+     *
+     * @param \DateTime $receivedDate
+     * @return ReceivedItem
+     */
+    public function setReceivedDate($receivedDate)
+    {
+        $this->receivedDate = $receivedDate;
+
+        return $this;
+    }
+
+    /**
+     * Get receivedDate
+     *
+     * @return \DateTime
+     */
+    public function getReceivedDate()
+    {
+        return $this->receivedDate;
     }
 
     /**

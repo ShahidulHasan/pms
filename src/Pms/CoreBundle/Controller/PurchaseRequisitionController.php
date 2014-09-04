@@ -6,13 +6,10 @@ use Doctrine\Common\Util\Debug;
 use Doctrine\ORM\Repository;
 use Pms\CoreBundle\Entity\PurchaseRequisition;
 use Pms\CoreBundle\Entity\PurchaseRequisitionItem;
-use Pms\CoreBundle\Form\PurchaseRequisitionEditType;
-use Pms\CoreBundle\Form\PurchaseRequisitionType;
-use Pms\CoreBundle\Form\PurchaseRequisitionItemType;
 
+use Pms\CoreBundle\Form\PurchaseRequisitionType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Purchase Requisition controller.
@@ -45,19 +42,17 @@ class PurchaseRequisitionController extends Controller
 
                 $em = $this->getDoctrine()->getManager();
                 $status = '1';
-                $dateOfRequisition = $form["dateOfRequisition"]->getData();
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
                 $purchaseRequisition->setCreatedBy($user);
                 $purchaseRequisition->setCreatedDate(new \DateTime());
                 $purchaseRequisition->setStatus($status);
-                $purchaseRequisition->setDateOfRequisition(new \DateTime($dateOfRequisition));
 
                 if (!empty($_POST['purchaserequisition']['purchaseRequisitionItems'])) {
                     foreach ($_POST['purchaserequisition']['purchaseRequisitionItems'] as $item) {
                         $pi = new PurchaseRequisitionItem();
                         $pi->setItem($em->getRepository('PmsCoreBundle:Item')->find($item['item']));
                         $pi->setQuantity($item['quantity']);
-                        $pi->setDateOfRequired(new \DateTime($item['dateOfRequired']));
+                        $pi->setDateOfRequired(new \DateTime($item['dateOfRequiredText']));
                         $pi->setComment($item['comment']);
                         $pi->setPurchaseRequisition($purchaseRequisition);
                         $pi->setStatus('1');
@@ -93,18 +88,13 @@ class PurchaseRequisitionController extends Controller
             if ($form->isValid()) {
 
                 $em = $this->getDoctrine()->getManager();
-                $dateOfRequisition = $form["dateOfRequisition"]->getData();
-                $purchaseRequisition->setDateOfRequisition(new \DateTime($dateOfRequisition));
 
                 if (!empty($_POST['purchaserequisition']['purchaseRequisitionItems'])) {
-                    foreach ($_POST['purchaserequisition']['purchaseRequisitionItems'] as $item) {
-                        $pi = new PurchaseRequisitionItem();
-                        $pi->setItem($em->getRepository('PmsCoreBundle:Item')->find($item['item']));
-                        $pi->setQuantity($item['quantity']);
-                        $pi->setDateOfRequired(new \DateTime($item['dateOfRequired']));
-                        $pi->setComment($item['comment']);
-                        $pi->setPurchaseRequisition($purchaseRequisition);
-                        $purchaseRequisition->addPurchaseRequisitionItem($pi);
+                    foreach ($form->getData()->getPurchaseRequisitionItems() as $item) {
+                        if($item->getId() == null){
+                            $item->setPurchaseRequisition($purchaseRequisition);
+                            $purchaseRequisition->addPurchaseRequisitionItem($item);
+                        }
                     }
                 }
 
@@ -119,7 +109,7 @@ class PurchaseRequisitionController extends Controller
             }
         }
 
-        return $this->render('PmsCoreBundle:PurchaseRequisition:formEdit.html.twig', array(
+        return $this->render('PmsCoreBundle:PurchaseRequisition:form.html.twig', array(
             'form' => $form->createView(),
         ));
     }

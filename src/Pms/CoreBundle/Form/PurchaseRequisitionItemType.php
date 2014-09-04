@@ -4,6 +4,7 @@ namespace Pms\CoreBundle\Form;
 
 use Pms\CoreBundle\Entity\Repository\ItemRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToStringTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -19,7 +20,7 @@ class PurchaseRequisitionItemType extends AbstractType
         $builder
             ->add('quantity', 'text')
             ->add('comment', 'textarea')
-            ->add('dateOfRequired', 'text', array(
+            ->add('dateOfRequiredText', 'text', array(
                 'constraints' => array(
                     new NotBlank()
                 ),

@@ -4,6 +4,7 @@ namespace Pms\CoreBundle\Form;
 
 use Pms\CoreBundle\Entity\Repository\ProjectRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToStringTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -18,7 +19,7 @@ class PurchaseRequisitionType extends AbstractType
     {
         $builder
             ->add('requisitionNo', 'text')
-            ->add('dateOfRequisition', 'text', array(
+            ->add($builder->create('dateOfRequisition', 'text', array(
                 'constraints' => array(
                     new NotBlank()
                 ),
@@ -27,7 +28,7 @@ class PurchaseRequisitionType extends AbstractType
                 ),
                 'data_class' => null,
                 'read_only' => true
-            ))
+            ))->addViewTransformer(new DateTimeToStringTransformer(null, null, 'Y-m-d')))
             ->add('project', 'entity', array(
                 'constraints' => array(
                     new NotBlank()
