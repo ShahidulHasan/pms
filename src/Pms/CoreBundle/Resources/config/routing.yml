@@ -86,6 +86,18 @@ purchase_requisition_approve_project_head:
     requirements:
           id: \d+
 
+purchase_requisition_approve_category_head_one:
+    pattern: /purchase/requisition/approve/CategoryHeadOne/{id}
+    defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionApproveByCategoryHeadOne }
+    requirements:
+          id: \d+
+
+purchase_requisition_approve_category_head_two:
+    pattern: /purchase/requisition/approve/CategoryHeadTwo/{id}
+    defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionApproveByCategoryHeadTwo }
+    requirements:
+          id: \d+
+
 buyer_add:
     pattern: /buyer
     defaults: { _controller: PmsCoreBundle:Buyer:buyerAdd }

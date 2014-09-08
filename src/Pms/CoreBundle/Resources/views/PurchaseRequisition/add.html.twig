@@ -57,10 +57,10 @@
                                             {% elseif purchaseRequisition.status == 1 %}{% set color = color|merge(["green"]) %}
                                             {% endif %}
 
-                                            {% if purchaseRequisition.approvedByProjectHead == 0 %}{% set bgColor = bgColor|merge(["red"]) %}
-                                            {% elseif purchaseRequisition.approvedByProjectHead == 1 and purchaseRequisition.approvedByCategoryHeadOne == 0 %}{% set bgColor = bgColor|merge(["green"]) %}
-                                            {% elseif purchaseRequisition.approvedByCategoryHeadOne == 1 and purchaseRequisition.approvedByCategoryHeadTwo == 0 %}{% set bgColor = bgColor|merge(["oringe"]) %}
-                                            {% elseif purchaseRequisition.approvedByCategoryHeadtwo == 1 and purchaseRequisition.approvedByCategoryHeadTwo == 1 %}{% set bgColor = bgColor|merge(["blue"]) %}
+                                            {% if purchaseRequisition.approvedByProjectHead == 0 %}{% set bgColor = bgColor|merge(["#e8e0d1"]) %}
+                                            {% elseif purchaseRequisition.approvedByProjectHead == 1 and purchaseRequisition.approvedByCategoryHeadOne == 0 %}{% set bgColor = bgColor|merge(["#dff0d8"]) %}
+                                            {% elseif purchaseRequisition.approvedByCategoryHeadOne == 1 and purchaseRequisition.approvedByCategoryHeadTwo == 0 %}{% set bgColor = bgColor|merge(["#bdd1bd"]) %}
+                                            {% elseif purchaseRequisition.approvedByCategoryHeadtwo == 1 and purchaseRequisition.approvedByCategoryHeadTwo == 1 %}{% set bgColor = bgColor|merge(["#bdc4bb"]) %}
                                             {% endif %}
 
                                             <tr style="background: {{ bgColor|join("") }};">
@@ -70,28 +70,30 @@
                                                 <td class="col-md-3" style="color: {{ color|join("") }};">{{ purchaseRequisition.project.projectName }}</td>
 
                                                 {% if purchaseRequisition.approvedByProjectHead == 0 %}
-                                                    <td class="col-md-1"><a href="/purchase/requisition/approve/projectHead/{{ purchaseRequisition.id }}">Approve</a></td>
+                                                    <td class="col-md-1"><a href="/purchase/requisition/approve/projectHead/{{ purchaseRequisition.id }}">projectHead</a></td>
                                                 {% endif %}
-                                                {% if purchaseRequisition.approvedByProjectHead == 1 %}
-                                                    <td class="col-md-1" style="color: green;">Approved</td>
-                                                {% endif %}
+                                                {#{% if purchaseRequisition.approvedByProjectHead == 1 %}#}
+                                                    {#<td class="col-md-1" style="color: green;">Approved</td>#}
+                                                {#{% endif %}#}
 
-                                                {% if purchaseRequisition.approvedByCategoryHeadOne == 0 %}
-                                                    <td class="col-md-1"><a href="#">Approve</a></td>
+                                                {% if purchaseRequisition.approvedByProjectHead == 1 and purchaseRequisition.approvedByCategoryHeadOne == 0 %}
+                                                    <td class="col-md-1"><a href="/purchase/requisition/approve/CategoryHeadOne/{{ purchaseRequisition.id }}"">CategoryHeadOne</a></td>
                                                 {% endif %}
-                                                {% if purchaseRequisition.approvedByCategoryHeadOne == 1 %}
-                                                    <td class="col-md-1" style="color: green;">Approved</td>
-                                                {% endif %}
+                                                {#{% if purchaseRequisition.approvedByCategoryHeadOne == 1 %}#}
+                                                    {#<td class="col-md-1" style="color: green;">Approved</td>#}
+                                                {#{% endif %}#}
 
-                                                {% if purchaseRequisition.approvedByCategoryHeadTwo == 0 %}
-                                                    <td class="col-md-1"><a href="#">Approve</a></td>
+                                                {% if purchaseRequisition.approvedByCategoryHeadOne == 1 and purchaseRequisition.approvedByCategoryHeadTwo == 0 %}
+                                                    <td class="col-md-1"><a href="/purchase/requisition/approve/CategoryHeadTwo/{{ purchaseRequisition.id }}">CategoryHeadTwo</a></td>
                                                 {% endif %}
                                                 {% if purchaseRequisition.approvedByCategoryHeadTwo == 1 %}
                                                     <td class="col-md-1" style="color: green;">Approved</td>
                                                 {% endif %}
                                                 <td>
-                                                    <a href="/purchase/requisition/edit/{{ purchaseRequisition.id }}" style="width: 100px;" class="btn default btn-xs green-stripe"><i
-                                                                class="fa fa-edit"></i> Edit</a>
+                                                    {% if purchaseRequisition.approvedByProjectHead == 0 or purchaseRequisition.approvedByCategoryHeadOne == 0 or purchaseRequisition.approvedByCategoryHeadTwo == 0 %}
+                                                            <a href="/purchase/requisition/edit/{{ purchaseRequisition.id }}" style="width: 100px;" class="btn default btn-xs green-stripe"><i
+                                                                        class="fa fa-edit"></i> Edit</a>
+                                                    {% endif %}
                                                 </td>
                                             </tr>
 

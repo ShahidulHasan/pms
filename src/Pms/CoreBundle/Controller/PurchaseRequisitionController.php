@@ -131,6 +131,34 @@ class PurchaseRequisitionController extends Controller
         return $this->redirect($this->generateUrl('purchase_requisition_add'));
     }
 
+    public function purchaseRequisitionApproveByCategoryHeadOneAction(PurchaseRequisition $purchaseRequisition)
+    {
+        $status = '1';
+        $purchaseRequisition->setApprovedByCategoryHeadOne($status);
+        $purchaseRequisition->setApprovedDateCategoryHeadOne(new \DateTime());
+        $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisition')->update($purchaseRequisition);
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            'Purchase Requisition Successfully Approved By Category Head'
+        );
+
+        return $this->redirect($this->generateUrl('purchase_requisition_add'));
+    }
+
+    public function purchaseRequisitionApproveByCategoryHeadTwoAction(PurchaseRequisition $purchaseRequisition)
+    {
+        $status = '1';
+        $purchaseRequisition->setApprovedByCategoryHeadTwo($status);
+        $purchaseRequisition->setApprovedDateCategoryHeadTwo(new \DateTime());
+        $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisition')->update($purchaseRequisition);
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            'Purchase Requisition Successfully Approved By Category Head'
+        );
+
+        return $this->redirect($this->generateUrl('purchase_requisition_add'));
+    }
+
     public function paginate($dql)
     {
         $em = $this->get('doctrine.orm.entity_manager');
