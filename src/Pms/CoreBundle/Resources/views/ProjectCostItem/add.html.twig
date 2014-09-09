@@ -208,7 +208,7 @@
                                                 <th>Unite Price</th>
                                                 <th>Total</th>
                                                 <th></th>
-                                                <th>Status</th>
+                                                <th></th>
                                                 <th></th>
                                             </tr>
                                             </thead>
@@ -234,16 +234,16 @@
                                                     <td class="col-md-1" style="color: {{ color|join(" ") }}">{{ projectCostItems.quantity }} {{ projectCostItems.item.itemUnit }}</td>
                                                     <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectCostItems.unitPrice }} Tk/{{ projectCostItems.item.itemUnit }}</td>
                                                     <td class="col-md-2" style="color: {{ color|join(" ") }}">{{ projectCostItems.lineTotal }} Tk</td>
-                                                    <td><a href="/project-cost/details/{{ projectCostItems.id }}" data-target="#ajax" data-toggle="modal">View</a></td>
                                                     {% if projectCostItems.status == 0 %}
                                                         <td>
                                                             <a href="#" data-myvalue="{{ projectCostItems.id }}" class="check-by-ajax btn default btn-xs red-stripe"><i
                                                                         class="fa fa-plus"></i> Check</a>
                                                         </td>
                                                         <td>
-                                                            <a href="/project-cost/update/{{ projectCostItems.id }}" style="width: 80px;" class="btn default btn-xs blue-stripe"><i
+                                                            <a href="/project-cost/update/{{ projectCostItems.id }}?page={{ page }}" style="width: 80px;" class="btn default btn-xs blue-stripe"><i
                                                                         class="fa fa-edit"></i> Update</a>
                                                         </td>
+                                                        <td></td>
                                                     {% endif %}
                                                     {% if projectCostItems.status == 1 %}
                                                         <td style=" color: red;">
@@ -251,15 +251,16 @@
                                                         </td>
                                                         {% if is_granted("ROLE_SUPER_ADMIN") %}
                                                         <td>
-                                                            <a href="/project-cost/delete/{{ projectCostItems.id }}" class="btn default btn-xs blue-stripe"><i
+                                                            <a href="/project-cost/delete/{{ projectCostItems.id }}?page={{ page }}" class="btn default btn-xs blue-stripe"><i
                                                                         class="fa fa-edit"></i> Delete</a>
                                                         </td>
                                                         <td>
-                                                            <a href="/project-cost/update/{{ projectCostItems.id }}" class="btn default btn-xs blue-stripe"><i
+                                                            <a href="/project-cost/update/{{ projectCostItems.id }}?page={{ page }}" class="btn default btn-xs blue-stripe"><i
                                                                         class="fa fa-edit"></i> Update</a>
                                                         </td>
                                                         {% endif %}
                                                     {% endif %}
+                                                    <td><a href="/project-cost/details/{{ projectCostItems.id }}" data-target="#ajax" data-toggle="modal"><i class="fa fa-info-circle"></i></a></td>
                                                 </tr>
 
                                             {% endfor %}
@@ -303,11 +304,16 @@
                 var buyer = $("#projectcostitem_buyer").val();
                 var comment = $("#projectcostitem_comment").val();
 
-                if(invoice && po){
-
-                    alert('Please insert invoice or PO number');
-                    return po;
-                }
+//                if(po==0){
+//                    return true;
+//                }else{
+//
+//                    if(invoice && po){
+//
+//                        alert('Please insert invoice or PO number');
+//                        return po;
+//                    }
+//                }
 
                 var projectCostItemArray = new Array(dateOfCost, project, item, quantity, unitPrice, lineTotal, sURLVariables[3], invoice, grn, category, subcategory, pr, po, buyer, comment);
 

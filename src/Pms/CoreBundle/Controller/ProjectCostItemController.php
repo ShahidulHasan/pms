@@ -37,6 +37,8 @@ class ProjectCostItemController extends Controller
             ->createQueryBuilder('pc')
             ->select('p.projectName')
             ->addSelect('i.itemName')
+            ->addSelect('pc.approvedBy')
+            ->addSelect('pc.createdBy')
             ->addSelect('pc.lineTotal')
             ->addSelect('c.categoryName')
             ->addSelect('pc.createdDate')
@@ -55,8 +57,27 @@ class ProjectCostItemController extends Controller
             ->join('pc.category', 'c');
         $projectCostItem = $query->getQuery()->getResult();
 
+        $userName = $projectCostItem[0]['createdBy'];
+        $approved = $projectCostItem[0]['approvedBy'];
+
+        $userQuery    = $em->getRepository('UserBundle:User')
+            ->createQueryBuilder('u')
+            ->select('u.username')
+            ->where('u.id = ?1')
+            ->setParameter('1', $userName);
+        $user = $userQuery->getQuery()->getResult();
+
+        $approvedQuery    = $em->getRepository('UserBundle:User')
+            ->createQueryBuilder('u')
+            ->select('u.username')
+            ->where('u.id = ?2')
+            ->setParameter('2', $approved);
+        $approvedUser = $approvedQuery->getQuery()->getResult();
+
         return $this->render('PmsCoreBundle:ProjectCostItem:details.html.twig', array(
             'projectCostItem' => $projectCostItem,
+            'created' => $user,
+            'approved' => $approvedUser,
         ));
     }
 
@@ -375,7 +396,7 @@ class ProjectCostItemController extends Controller
         $value = $paginator->paginate(
             $query,
             $page = $this->get('request')->query->get('page', 1) /*page number*/,
-            50/*limit per page*/
+            10/*limit per page*/
         );
 
         return array($value, $page);
