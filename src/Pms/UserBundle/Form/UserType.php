@@ -19,7 +19,8 @@ class UserType extends BaseType
             ->add('role', 'choice', array(
                 'mapped' => true,
                 'choices' => array(
-                    'ROLE_DATA' => 'Data User',
+                    'ROLE_DATA' => 'USER',
+                    'ROLE_BUYER' => 'BUYER',
                     'ROLE_ADMIN' => 'MANAGER',
                     'ROLE_SUPER_ADMIN' => 'SUPER ADMIN'
                 ),

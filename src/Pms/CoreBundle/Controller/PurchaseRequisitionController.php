@@ -29,6 +29,18 @@ class PurchaseRequisitionController extends Controller
         ));
     }
 
+    public function purchaseRequisitionClosedAction(Request $request)
+    {
+        $dql = "SELECT a FROM PmsCoreBundle:PurchaseRequisition a WHERE a.status = 0 ORDER BY a.id DESC";
+
+        list($purchaseRequisitions, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:PurchaseRequisition:closed.html.twig', array(
+            'purchaseRequisitions' => $purchaseRequisitions,
+            'page' => $page,
+        ));
+    }
+
     public function purchaseRequisitionNewAction(Request $request)
     {
         $purchaseRequisition = new PurchaseRequisition();
@@ -115,6 +127,36 @@ class PurchaseRequisitionController extends Controller
         return $this->render('PmsCoreBundle:PurchaseRequisition:form.html.twig', array(
             'form' => $form->createView(),
         ));
+    }
+
+    public function purchaseRequisitionClaimAction(PurchaseRequisition $purchaseRequisition)
+    {
+        $user = $this->get('security.context')->getToken()->getUser()->getId();
+        $purchaseRequisition->setClaimedBy($user);
+        $purchaseRequisition->setClaimedDate(new \DateTime());
+        $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisition')->update($purchaseRequisition);
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            'Purchase Requisition Successfully Claimed'
+        );
+
+        return $this->redirect($this->generateUrl('purchase_requisition_add'));
+    }
+
+    public function purchaseRequisitionCloseAction(PurchaseRequisition $purchaseRequisition)
+    {
+        $user = $this->get('security.context')->getToken()->getUser()->getId();
+        $purchaseRequisition->setClosedBy($user);
+        $purchaseRequisition->setClosedDate(new \DateTime());
+        $status = '0';
+        $purchaseRequisition->setStatus($status);
+        $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisition')->update($purchaseRequisition);
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            'Purchase Requisition Successfully Closed'
+        );
+
+        return $this->redirect($this->generateUrl('purchase_requisition_add'));
     }
 
     public function purchaseRequisitionApproveByProjectHeadAction(PurchaseRequisition $purchaseRequisition)

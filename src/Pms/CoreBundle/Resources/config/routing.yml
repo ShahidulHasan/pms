@@ -70,6 +70,10 @@ purchase_requisition_add:
     pattern: /purchase/requisition
     defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionAdd }
 
+purchase_requisition_closed:
+    pattern: /purchase/requisition/closed
+    defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionClosed }
+
 purchase_requisition_new:
     pattern: /purchase/requisition/new
     defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionNew }
@@ -77,6 +81,18 @@ purchase_requisition_new:
 purchase_requisition_edit:
     pattern: /purchase/requisition/edit/{id}
     defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionEdit }
+    requirements:
+          id: \d+
+
+purchase_requisition_claim:
+    pattern: /purchase/requisition/claim/{id}
+    defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionClaim }
+    requirements:
+          id: \d+
+
+purchase_requisition_close:
+    pattern: /purchase/requisition/close/{id}
+    defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionClose }
     requirements:
           id: \d+
 

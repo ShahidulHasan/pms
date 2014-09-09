@@ -53,11 +53,18 @@ class PurchaseRequisition
     private $claimedBy;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="claimed_date", type="datetime", nullable=true)
+     */
+    private $claimedDate;
+
+    /**
      * @var /DateTime
      *
-     * @ORM\Column(name="date_of_closings", type="date", nullable=true)
+     * @ORM\Column(name="closed_date", type="date", nullable=true)
      */
-    private $dateOfClosing;
+    private $closedDate;
 
     /**
      * @var /DateTime
@@ -65,13 +72,6 @@ class PurchaseRequisition
      * @ORM\Column(name="date_of_final_delivered", type="date", nullable=true)
      */
     private $dateOfFinalDelivered;
-
-    /**
-     * @var /DateTime
-     *
-     * @ORM\Column(name="date_of_claimed", type="date", nullable=true)
-     */
-    private $dateOfClaimed;
 
     /**
      * @var ArrayCollection
@@ -108,6 +108,13 @@ class PurchaseRequisition
      * @ORM\Column(name="created_by", type="integer", nullable=true)
      */
     private $createdBy;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="closed_by", type="integer", nullable=true)
+     */
+    private $closedBy;
 
     /**
      * @var \DateTime
@@ -347,6 +354,29 @@ class PurchaseRequisition
     }
 
     /**
+     * Set closedBy
+     *
+     * @param integer $closedBy
+     * @return PurchaseRequisition
+     */
+    public function setClosedBy($closedBy)
+    {
+        $this->closedBy = $closedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get closedBy
+     *
+     * @return integer
+     */
+    public function getClosedBy()
+    {
+        return $this->closedBy;
+    }
+
+    /**
      * Set createdBy
      *
      * @param integer $createdBy
@@ -439,26 +469,49 @@ class PurchaseRequisition
     }
 
     /**
-     * Set dateOfClosing
+     * Set claimedDate
      *
-     * @param /DateTime $dateOfClosing
+     * @param \DateTime $claimedDate
      * @return PurchaseRequisition
      */
-    public function setDateOfClosing($dateOfClosing)
+    public function setClaimedDate($claimedDate)
     {
-        $this->dateOfClosing = $dateOfClosing;
+        $this->claimedDate = $claimedDate;
 
         return $this;
     }
 
     /**
-     * Get dateOfClosing
+     * Get claimedDate
+     *
+     * @return \DateTime
+     */
+    public function getClaimedDate()
+    {
+        return $this->claimedDate;
+    }
+
+    /**
+     * Set closedDate
+     *
+     * @param /DateTime $closedDate
+     * @return PurchaseRequisition
+     */
+    public function setClosedDate($closedDate)
+    {
+        $this->closedDate = $closedDate;
+
+        return $this;
+    }
+
+    /**
+     * Get closedDate
      *
      * @return /DateTime
      */
-    public function getDateOfClosing()
+    public function getClosedDate()
     {
-        return $this->dateOfClosing;
+        return $this->closedDate;
     }
 
     /**
@@ -482,29 +535,6 @@ class PurchaseRequisition
     public function getDateOfFinalDelivered()
     {
         return $this->dateOfFinalDelivered;
-    }
-
-    /**
-     * Set dateOfClaimed
-     *
-     * @param /DateTime $dateOfClaimed
-     * @return PurchaseRequisition
-     */
-    public function setDateOfClaimed($dateOfClaimed)
-    {
-        $this->dateOfClaimed = $dateOfClaimed;
-
-        return $this;
-    }
-
-    /**
-     * Get dateOfClaimed
-     *
-     * @return /DateTime
-     */
-    public function getDateOfClaimed()
-    {
-        return $this->dateOfClaimed;
     }
 
     /**
