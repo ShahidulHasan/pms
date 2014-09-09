@@ -4,6 +4,7 @@ namespace Pms\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Pms\UserBundle\Entity\User;
 
 /**
  * Project
@@ -44,9 +45,10 @@ class Project
     private $projectName;
 
     /**
-     * @var string
+     * @var User
      *
-     * @ORM\Column(name="project_heads", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User", inversedBy="project")
+     * @ORM\JoinColumn(name="project_heads", nullable=true)
      */
     private $projectHead;
 

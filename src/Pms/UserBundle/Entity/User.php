@@ -2,6 +2,7 @@
 
 namespace Pms\UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,6 +20,27 @@ class User extends BaseUser
     protected $id;
 
     protected $role;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\PurchaseOrder", mappedBy="createdBy")
+     */
+    private $purchaseOrder;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\Project", mappedBy="projectHead")
+     */
+    private $project;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisition", mappedBy="createdBy")
+     */
+    private $purchaseRequisition;
 
     public function __construct()
     {
@@ -74,5 +96,29 @@ class User extends BaseUser
     public function getUsername()
     {
         return $this->username;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getPurchaseOrder()
+    {
+        return $this->purchaseOrder;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getProject()
+    {
+        return $this->project;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getPurchaseRequisition()
+    {
+        return $this->purchaseRequisition;
     }
 }

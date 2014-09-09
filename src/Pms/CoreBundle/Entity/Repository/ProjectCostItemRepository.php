@@ -654,13 +654,13 @@ class ProjectCostItemRepository extends EntityRepository
 
         foreach ($itemUses as $key => $item) {
 
-            $statement = $connection->prepare("SELECT project.project_name,
-                                                MAX(project_cost.unit_price) as projectHighest,
-                                                MIN(project_cost.unit_price) as projectLowest, project_cost.item
-                                                FROM project_cost
-                                                JOIN project ON project.id = project_cost.project
-                                                WHERE project_cost.item = :itemId AND project_cost.status = 1
-                                                GROUP BY project_cost.project
+            $statement = $connection->prepare("SELECT projects.projects_name,
+                                                MAX(project_cost_items.unit_prices) as projectHighest,
+                                                MIN(project_cost_items.unit_prices) as projectLowest, project_cost_items.items
+                                                FROM project_cost_items
+                                                JOIN projects ON projects.id = project_cost_items.projects
+                                                WHERE project_cost_items.items = :itemId AND project_cost_items.status = 1
+                                                GROUP BY project_cost_items.projects
                                               ");
             $statement->bindValue('itemId', $item['id']);
             $statement->execute();

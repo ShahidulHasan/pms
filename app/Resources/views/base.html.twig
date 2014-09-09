@@ -111,10 +111,11 @@
                 </div>
             </li>
 
-            {% set Route, Dashboard, User, Item, Project, Cost, Report, Category, SubCategory, OverView, Buyer, PR, PO, Vendor, Upload, Received = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "] %}
+            {% set Route, Dashboard, User, Item, Project, Cost, Report, Category, SubCategory, OverView, Buyer, PR, PO, Vendor, Upload, Received, Setting = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "] %}
             {% set Url = Route|split('_') %}
             {% if Url[0] == 'homepage' %}{% set Dashboard = Dashboard|merge(["active"]) %}
             {% elseif Url[0] == 'fos' %}{% set Dashboard = Dashboard|merge(["active"]) %}
+            {% elseif Url[0] == 'user' or Url[0] == 'buyer' or Url[0] == 'buyer' or Url[0] == 'vendor' or Url[0] == 'item' or Url[0] == 'category' or Url[0] == 'sub' or (Url[0] == 'project' and Url[1] != 'cost') %}{% set Setting = Setting|merge(["active"]) %}
             {% elseif Url[0] == 'user' %}{% set User = User|merge(["active"]) %}
             {% elseif Url[0] == 'buyer' %}{% set Buyer = Buyer|merge(["active"]) %}
             {% elseif Url[0] == 'vendor' %}{% set Vendor = Vendor|merge(["active"]) %}
@@ -123,7 +124,7 @@
             {% elseif Url[0] == 'sub' %}{% set SubCategory = SubCategory|merge(["active"]) %}
             {% elseif Url[0] == 'project' and Url[1] != 'cost' %}{% set Project = Project|merge(["active"]) %}
             {% elseif Url[0] == 'project' and Url[1] == 'cost' %}{% set Cost = Cost|merge(["active"]) %}
-            {% elseif Url[0] == 'report' %}{% set Report = Report|merge(["active"]) %}
+            {% elseif Url[0] == 'report' or Url[0] == 'over' %}{% set Report = Report|merge(["active"]) %}
             {% elseif Url[0] == 'over' %}{% set OverView = OverView|merge(["active"]) %}
             {% elseif Url[0] == 'receive' %}{% set Received = Received|merge(["active"]) %}
             {% elseif Url[1] == 'requisition' %}{% set PR = PR|merge(["active"]) %}
@@ -138,78 +139,6 @@
                     <span class="selected"></span>
                 </a>
             </li>
-            {% if is_granted("ROLE_SUPER_ADMIN") %}
-            <li class="{{ User|join(" ") }}">
-                <a href="/user">
-                    <i class="fa fa-user"></i>
-                    <span class="title"> User </span>
-                    <span class="selected"></span>
-                </a>
-            </li>
-            {% endif %}
-            {% if is_granted("ROLE_ADMIN") %}
-                <li class="{{ Vendor|join(" ") }}">
-                    <a href="/vendor">
-                        <i class="fa fa-user"></i>
-                        <span class="title"> Vendor </span>
-                        <span class="selected"></span>
-                    </a>
-                </li>
-            {% endif %}
-            {% if is_granted("ROLE_ADMIN") %}
-                <li class="{{ Buyer|join(" ") }}">
-                    <a href="/buyer">
-                        <i class="fa fa-user"></i>
-                        <span class="title"> Buyer </span>
-                        <span class="selected"></span>
-                    </a>
-                </li>
-            {% endif %}
-            {% if is_granted("ROLE_DATA") %}
-            <li class="{{ Item|join(" ") }}">
-                <a href="/item">
-                    <i class="fa fa-gift"></i>
-                    <span class="title"> Item </span>
-                    <span class="selected"></span>
-                </a>
-            </li>
-            {% endif %}
-            {% if is_granted("ROLE_ADMIN") %}
-                <li class="{{ Category|join(" ") }}">
-                    <a href="/category">
-                        <i class="fa fa-gift"></i>
-                        <span class="title"> Category </span>
-                        <span class="selected"></span>
-                    </a>
-                </li>
-            {% endif %}
-            {% if is_granted("ROLE_ADMIN") %}
-                <li class="{{ SubCategory|join(" ") }}">
-                    <a href="/sub-category">
-                        <i class="fa fa-gift"></i>
-                        <span class="title"> Sub-Category </span>
-                        <span class="selected"></span>
-                    </a>
-                </li>
-            {% endif %}
-            {% if is_granted("ROLE_SUPER_ADMIN") %}
-            <li class="{{ Project|join(" ") }}">
-                <a href="/project">
-                    <i class="fa fa-gift"></i>
-                    <span class="title"> Project </span>
-                    <span class="selected"></span>
-                </a>
-            </li>
-            {% endif %}
-            {% if is_granted("ROLE_DATA") %}
-            <li class="{{ Cost|join(" ") }}">
-                <a href="/project-cost">
-                    <i class="fa fa-gift"></i>
-                    <span class="title"> Project-cost </span>
-                    <span class="selected"></span>
-                </a>
-            </li>
-            {% endif %}
             {% if is_granted("ROLE_DATA") %}
                 <li class="{{ PR|join(" ") }}">
                     <a href="/purchase/requisition">
@@ -228,6 +157,33 @@
                     </a>
                 </li>
             {% endif %}
+            {% if is_granted("ROLE_DATA") %}
+                <li class="{{ Cost|join(" ") }}">
+                    <a href="/project-cost">
+                        <i class="fa fa-gift"></i>
+                        <span class="title"> Project-cost </span>
+                        <span class="selected"></span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if is_granted("ROLE_ADMIN") %}
+                <li class="{{ Upload|join(" ") }}">
+                    <a href="/upload/file">
+                        <i class="fa fa-gift"></i>
+                        <span class="title"> File Upload</span>
+                        <span class="selected"></span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if is_granted("ROLE_ADMIN") %}
+                <li class="{{ Received|join(" ") }}">
+                    <a href="/receive/item">
+                        <i class="fa fa-gift"></i>
+                        <span class="title"> Received Item</span>
+                        <span class="selected"></span>
+                    </a>
+                </li>
+            {% endif %}
             {% if is_granted("ROLE_ADMIN") %}
             <li class="{{ Report|join(" ") }}">
                 <a href="javascript:;">
@@ -240,42 +196,98 @@
                         <a href="/report/project">
                             <i class="fa fa-file-text"></i>
                             <span class="title"> Project </span>
+                            <span class="selected"></span>
                         </a>
                     </li>
                     <li>
                         <a href="/report/item">
                             <i class="fa fa-file-text"></i>
                             <span class="title"> Item </span>
+                            <span class="selected"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/over/view">
+                            <i class="fa fa-gift"></i>
+                            <span class="title"> Item overview </span>
+                            <span class="selected"></span>
                         </a>
                     </li>
                 </ul>
             </li>
             {% endif %}
             {% if is_granted("ROLE_ADMIN") %}
-                <li class="{{ OverView|join(" ") }}">
-                    <a href="/over/view">
-                        <i class="fa fa-gift"></i>
-                        <span class="title"> Item overview </span>
+                <li class="{{ Setting|join(" ") }}">
+                    <a href="javascript:;">
+                        <i class="fa fa-cogs"></i>
+                        <span class="title">Settings</span>
                         <span class="selected"></span>
                     </a>
-                </li>
-            {% endif %}
-            {% if is_granted("ROLE_ADMIN") %}
-                <li class="{{ Upload|join(" ") }}">
-                    <a href="/upload/file">
-                        <i class="fa fa-gift"></i>
-                        <span class="title"> Invoice Upload</span>
-                        <span class="selected"></span>
-                    </a>
-                </li>
-            {% endif %}
-            {% if is_granted("ROLE_ADMIN") %}
-                <li class="{{ Received|join(" ") }}">
-                    <a href="/receive/item">
-                        <i class="fa fa-gift"></i>
-                        <span class="title"> Received Item</span>
-                        <span class="selected"></span>
-                    </a>
+                    <ul class="sub-menu">
+                        {% if is_granted("ROLE_SUPER_ADMIN") %}
+                            <li class="{{ User|join(" ") }}">
+                                <a href="/user">
+                                    <i class="fa fa-user"></i>
+                                    <span class="title"> User </span>
+                                    <span class="selected"></span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <li class="{{ Vendor|join(" ") }}">
+                                <a href="/vendor">
+                                    <i class="fa fa-user"></i>
+                                    <span class="title"> Vendor </span>
+                                    <span class="selected"></span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <li class="{{ Buyer|join(" ") }}">
+                                <a href="/buyer">
+                                    <i class="fa fa-user"></i>
+                                    <span class="title"> Buyer </span>
+                                    <span class="selected"></span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if is_granted("ROLE_DATA") %}
+                            <li class="{{ Item|join(" ") }}">
+                                <a href="/item">
+                                    <i class="fa fa-gift"></i>
+                                    <span class="title"> Item </span>
+                                    <span class="selected"></span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <li class="{{ Category|join(" ") }}">
+                                <a href="/category">
+                                    <i class="fa fa-gift"></i>
+                                    <span class="title"> Category </span>
+                                    <span class="selected"></span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <li class="{{ SubCategory|join(" ") }}">
+                                <a href="/sub-category">
+                                    <i class="fa fa-gift"></i>
+                                    <span class="title"> Sub-Category </span>
+                                    <span class="selected"></span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if is_granted("ROLE_SUPER_ADMIN") %}
+                            <li class="{{ Project|join(" ") }}">
+                                <a href="/project">
+                                    <i class="fa fa-gift"></i>
+                                    <span class="title"> Project </span>
+                                    <span class="selected"></span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
                 </li>
             {% endif %}
         </ul>

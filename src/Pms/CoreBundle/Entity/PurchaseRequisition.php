@@ -5,6 +5,7 @@ namespace Pms\CoreBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Pms\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
@@ -103,9 +104,10 @@ class PurchaseRequisition
     private $project;
 
     /**
-     * @var integer
+     * @var User
      *
-     * @ORM\Column(name="created_by", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User", inversedBy="purchaseRequisition")
+     * @ORM\JoinColumn(name="created_by", nullable=true)
      */
     private $createdBy;
 

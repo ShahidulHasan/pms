@@ -5,6 +5,7 @@ namespace Pms\CoreBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Pms\UserBundle\Entity\User;
 
 /**
  * PurchaseOrder
@@ -40,20 +41,6 @@ class PurchaseOrder
     /**
      * @var integer
      *
-     * @ORM\Column(name="claimed_by", type="integer", nullable=true)
-     */
-    private $claimedBy;
-
-    /**
-     * @var /DateTime
-     *
-     * @ORM\Column(name="date_of_claimed", type="date", nullable=true)
-     */
-    private $dateOfClaimed;
-
-    /**
-     * @var integer
-     *
      * @ORM\Column(name="po_nonpo", type="integer", nullable=true)
      */
     private $poNonpo;
@@ -82,9 +69,10 @@ class PurchaseOrder
     private $buyer;
 
     /**
-     * @var integer
+     * @var User
      *
-     * @ORM\Column(name="created_by", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User", inversedBy="purchaseOrder")
+     * @ORM\JoinColumn(name="created_by", nullable=true)
      */
     private $createdBy;
 
@@ -198,52 +186,6 @@ class PurchaseOrder
     public function getOrderNo()
     {
         return $this->orderNo;
-    }
-
-    /**
-     * Set claimedBy
-     *
-     * @param integer $claimedBy
-     * @return PurchaseOrder
-     */
-    public function setClaimedBy($claimedBy)
-    {
-        $this->claimedBy = $claimedBy;
-
-        return $this;
-    }
-
-    /**
-     * Get claimedBy
-     *
-     * @return integer
-     */
-    public function getClaimedBy()
-    {
-        return $this->claimedBy;
-    }
-
-    /**
-     * Set dateOfClaimed
-     *
-     * @param /DateTime $dateOfClaimed
-     * @return PurchaseOrder
-     */
-    public function setDateOfClaimed($dateOfClaimed)
-    {
-        $this->dateOfClaimed = $dateOfClaimed;
-
-        return $this;
-    }
-
-    /**
-     * Get dateOfClaimed
-     *
-     * @return /DateTime
-     */
-    public function getDateOfClaimed()
-    {
-        return $this->dateOfClaimed;
     }
 
     /**

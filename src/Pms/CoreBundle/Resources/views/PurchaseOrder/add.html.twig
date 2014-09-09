@@ -32,14 +32,19 @@
                         <div class="form-actions fluid" id="project-list-div">
                             <div class="form-group">
                                 <div class="col-md-12">
-                                    <div class="col-md-11" style="margin-left: 4%; margin-top: 30px;">
+                                    <div class="col-md-12" style="margin-top: 30px;">
 
                                         <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
                                             <thead>
                                             <tr>
                                                 <th>Sl</th>
-                                                <th>Date</th>
                                                 <th>Order No</th>
+                                                <th>Delivery Date</th>
+                                                <th>Created</th>
+                                                <th>Created Date</th>
+                                                <th>Vendor</th>
+                                                <th>Buyer</th>
+                                                <th></th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -50,16 +55,15 @@
 
                                             {% for purchaseOrder in purchaseOrders %}
                                                 {% set i = i + 1 %}
-                                                {% set color = [" "] %}
-
-                                                {% if purchaseOrder.status == 0 %}{% set color = color|merge(["red"]) %}
-                                                {% elseif purchaseOrder.status == 1 %}{% set color = color|merge(["green"]) %}
-                                                {% endif %}
 
                                                 <tr>
-                                                    <td>{{ i }} .</td>
-                                                    <td class="col-md-2" style="color: {{ color|join("") }};">{{ purchaseOrder.dateOfDelivered|date('Y-m-d') }}</td>
-                                                    <td class="col-md-9" style="color: {{ color|join("") }};">{{ purchaseOrder.orderNo }}</td>
+                                                    <td class="col-md-1">{{ i }} .</td>
+                                                    <td class="col-md-2">{{ purchaseOrder.orderNo }}</td>
+                                                    <td class="col-md-2">{{ purchaseOrder.dateOfDelivered|date('Y-m-d') }}</td>
+                                                    <td class="col-md-2">{{ purchaseOrder.createdBy }}</td>
+                                                    <td class="col-md-2">{{ purchaseOrder.createdDate|date('Y-m-d') }}</td>
+                                                    <td class="col-md-2">{{ purchaseOrder.vendor.vendorName |default() }}</td>
+                                                    <td class="col-md-1">{{ purchaseOrder.buyer.buyerName |default() }}</td>
                                                 </tr>
 
                                             {% endfor %}
