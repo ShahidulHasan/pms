@@ -103,11 +103,16 @@ class PurchaseRequisition
      */
     private $project;
 
+//    /**
+//     * @var User
+//     *
+//     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User", inversedBy="purchaseRequisition")
+//     * @ORM\JoinColumn(name="created_by", nullable=true)
+//     */
     /**
-     * @var User
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User", inversedBy="purchaseRequisition")
-     * @ORM\JoinColumn(name="created_by", nullable=true)
+     * @ORM\Column(name="created_by", type="string", length=255)
      */
     private $createdBy;
 

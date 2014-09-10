@@ -20,28 +20,11 @@ class PurchaseOrderItemType extends AbstractType
     {
         $builder
             ->add('comment', 'textarea')
-            ->add('item', 'entity', array(
-                'constraints' => array(
-                    new NotBlank()
-                ),
-                'class' => 'PmsCoreBundle:Item',
-                'property' => 'itemName',
-                'required' => false,
-                'attr' => array(
-                    'placeholder' => 'Select Item'
-                ),
-                'empty_data' => null,
-                'query_builder' => function (EntityRepository $repository)
-                    {
-                        return $repository->createQueryBuilder('i')
-                                          ->select('i')
-                                          ->where('pri.status = 1')
-                                          ->join('i.purchaseRequisitionItem', 'pri')
-                                          ->groupBy('i.id');
-                    },
+            ->add('purchaseRequisitionItem', 'entity', array(
+                "class" => "PmsCoreBundle:PurchaseRequisitionItem",
+                'property'=>'item.itemName'
             ))
             ->add('quantity', 'text')
-            ->add('delete', 'button')
         ;
     }
     

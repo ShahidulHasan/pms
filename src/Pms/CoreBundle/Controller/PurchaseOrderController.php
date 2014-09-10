@@ -32,7 +32,50 @@ class PurchaseOrderController extends Controller
         ));
     }
 
+    private function purchaseOrderNewAdd()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $em->getRepository('PmsCoreBundle:PurchaseRequisitionItem')
+            ->createQueryBuilder('pri')
+            ->where('pri.quantity > pri.purchaseOrderQuantity');
+        $pri = $query->getQuery()->getResult();
+
+        return $this->render('PmsCoreBundle:PurchaseOrder:new.html.twig', array(
+            'pri' => $pri,
+        ));
+    }
+
     public function purchaseOrderNewAction(Request $request)
+    {
+        $items = $request->request->get('items');
+
+        if ($request->getMethod() == 'POST' && !empty($items)) {
+
+            $purchaseOrder = new PurchaseOrder();
+            $em = $this->getDoctrine()->getManager();
+            foreach ($items as $item) {
+                $pi = new PurchaseOrderItem();
+                $it = $em->getRepository('PmsCoreBundle:PurchaseRequisitionItem')->find($item);
+                $pi->setPurchaseRequisitionItem($it);
+                $pi->setQuantity($it->getQuantity());
+                $purchaseOrder->addPurchaseOrderItem($pi);
+            }
+
+            $form = $this->createForm(new PurchaseOrderType(), $purchaseOrder);
+
+            return $this->render('PmsCoreBundle:PurchaseOrder:form.html.twig', array(
+                'orderItems' => $items,
+                'form' => $form->createView(),
+            ));
+
+        }
+
+        return $this->purchaseOrderNewAdd();
+    }
+
+
+    public function purchaseOrderSaveAction(Request $request)
     {
         $purchaseOrder = new PurchaseOrder();
         $form = $this->createForm(new PurchaseOrderType(), $purchaseOrder);

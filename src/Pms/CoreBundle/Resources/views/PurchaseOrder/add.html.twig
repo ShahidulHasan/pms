@@ -21,8 +21,13 @@
 
                         <div class="form-actions fluid">
                             <div class="table-toolbar" style="float: right;margin-right: 20px;">
+                                {#<div class="btn-group">#}
+                                    {#<a href="/purchase/order/new" class="btn green">#}
+                                        {#New Order#}
+                                    {#</a>#}
+                                {#</div>#}
                                 <div class="btn-group">
-                                    <a href="/purchase/order/new" class="btn green">
+                                    <a href="/purchase/order/new/add" class="btn green">
                                         New Order
                                     </a>
                                 </div>
@@ -40,10 +45,11 @@
                                                 <th>Sl</th>
                                                 <th>Order No</th>
                                                 <th>Delivery Date</th>
-                                                <th>Created</th>
+                                                {#<th>Created</th>#}
                                                 <th>Created Date</th>
                                                 <th>Vendor</th>
                                                 <th>Buyer</th>
+                                                <th></th>
                                                 <th></th>
                                             </tr>
                                             </thead>
@@ -60,10 +66,11 @@
                                                     <td class="col-md-1">{{ i }} .</td>
                                                     <td class="col-md-2">{{ purchaseOrder.orderNo }}</td>
                                                     <td class="col-md-2">{{ purchaseOrder.dateOfDelivered|date('Y-m-d') }}</td>
-                                                    <td class="col-md-2">{{ purchaseOrder.createdBy }}</td>
+                                                    {#<td class="col-md-2">{{ purchaseOrder.createdBy |default() }}</td>#}
                                                     <td class="col-md-2">{{ purchaseOrder.createdDate|date('Y-m-d') }}</td>
                                                     <td class="col-md-2">{{ purchaseOrder.vendor.vendorName |default() }}</td>
                                                     <td class="col-md-1">{{ purchaseOrder.buyer.buyerName |default() }}</td>
+                                                    <td class="col-md-2"></td>
                                                 </tr>
 
                                             {% endfor %}

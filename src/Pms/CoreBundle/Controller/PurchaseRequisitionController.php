@@ -55,7 +55,7 @@ class PurchaseRequisitionController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $status = '1';
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
-                $purchaseRequisition->setCreatedBy($user);
+                $purchaseRequisition->setCreatedBy($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
                 $purchaseRequisition->setCreatedDate(new \DateTime());
                 $purchaseRequisition->setStatus($status);
 

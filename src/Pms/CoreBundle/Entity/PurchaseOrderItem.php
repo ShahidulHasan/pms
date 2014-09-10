@@ -30,6 +30,14 @@ class PurchaseOrderItem
     private $item;
 
     /**
+     * @var Project
+     *
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Project", inversedBy="purchaseOrderItem")
+     * @ORM\JoinColumn(name="projects", nullable=true)
+     */
+    private $project;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="quantities", type="integer", nullable=true)
@@ -43,6 +51,14 @@ class PurchaseOrderItem
      * @ORM\JoinColumn(name="purchase_orders", nullable=true)
      */
     private $purchaseOrder;
+
+    /**
+     * @var PurchaseRequisitionItem
+     *
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisitionItem")
+     * @ORM\JoinColumn(name="purchase_requisition_item", nullable=true)
+     */
+    private $purchaseRequisitionItem;
 
     /**
      * @var string
@@ -94,7 +110,7 @@ class PurchaseOrderItem
     /**
      * Set purchaseOrder
      *
-     * @param integer $purchaseOrder
+     * @param PurchaseOrder $purchaseOrder
      * @return PurchaseOrderItem
      */
     public function setPurchaseOrder($purchaseOrder)
@@ -141,7 +157,7 @@ class PurchaseOrderItem
      * Set comment
      *
      * @param string $comment
-     * @return PurchaseRequisitionItem
+     * @return PurchaseOrderItem
      */
     public function setComment($comment)
     {
@@ -164,7 +180,7 @@ class PurchaseOrderItem
      * Set status
      *
      * @param integer $status
-     * @return PurchaseRequisition
+     * @return PurchaseOrderItem
      */
     public function setStatus($status)
     {
@@ -181,5 +197,52 @@ class PurchaseOrderItem
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set project
+     *
+     * @param integer $project
+     * @return PurchaseOrderItem
+     */
+    public function setProject($project)
+    {
+        $this->project = $project;
+
+        return $this;
+    }
+
+    /**
+     * Get project
+     *
+     * @return integer
+     */
+    public function getProject()
+    {
+        return $this->project;
+    }
+
+    /**
+     * @return \Pms\CoreBundle\Entity\PurchaseRequisitionItem
+     */
+    public function getPurchaseRequisitionItem()
+    {
+        return $this->purchaseRequisitionItem;
+    }
+
+    /**
+     * @param \Pms\CoreBundle\Entity\PurchaseRequisitionItem $purchaseRequisitionItem
+     * @return $this
+     */
+    public function setPurchaseRequisitionItem($purchaseRequisitionItem)
+    {
+        $this->purchaseRequisitionItem = $purchaseRequisitionItem;
+        $this->item = $purchaseRequisitionItem->getItem();
+        return $this;
+    }
+
+    public function getItemName()
+    {
+        $this->item->getItemName();
     }
 }

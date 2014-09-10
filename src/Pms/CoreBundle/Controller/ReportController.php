@@ -57,7 +57,14 @@ class ReportController extends Controller
             $endDate = 0;
         }
 
-        list($itemUses, $itemTotal, $itemsPieChartData, $sumOfTopTen, $totalItemForPie, $totalSum, $categoriesPieChartData, $totalCategoryForPic) = $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCostItem')->itemReport($em, $startDate, $endDate);
+        if(!empty($_GET['search']['item'])){
+            $item = $_GET['search']['item'];
+        }else{
+
+            $item = 0;
+        }
+
+        list($itemUses, $itemTotal, $itemsPieChartData, $sumOfTopTen, $totalItemForPie, $totalSum, $categoriesPieChartData, $totalCategoryForPic) = $this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCostItem')->itemReport($em, $startDate, $endDate, $item);
 
         $formSearch = $this->createForm(new SearchType());
 

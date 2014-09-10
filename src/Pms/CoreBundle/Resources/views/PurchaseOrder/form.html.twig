@@ -94,7 +94,7 @@
                                 {% for orderItem in form.purchaseOrderItems %}
                                     <tr>
                                         <td>
-                                            {{ form_widget(orderItem.item, { 'attr': {'class': 'form-control', 'style': 'margin-left: 20px;width: 180px;padding-left: 10px! important;'} }) }}
+                                            {{ form_widget(orderItem.purchaseRequisitionItem, { 'attr': {'class': 'form-control', 'style': 'margin-left: 20px;width: 180px;padding-left: 10px! important;'} }) }}
                                         </td>
                                         <td>
                                             {{ form_widget(orderItem.quantity, { 'attr': {'class': 'form-control', 'style': 'width: 120px;padding-left: 10px! important;'} }) }}
@@ -105,9 +105,6 @@
                                         <td>
                                             {{ form_widget(orderItem.comment, { 'attr': {'class': 'form-control', 'style': 'width: 188px;padding-left: 10px! important;'} }) }}
                                         </td>
-                                        <td>
-                                            {{ form_widget(orderItem.delete, { 'attr': {'class': 'btn', 'style': 'width: 70px;' } }) }}
-                                        </td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -117,6 +114,11 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <div class="btn-group">
+                    <a href="/purchase/order" class="btn green" style="width: 100px;">
+                        Cancel
+                    </a>
+                </div>
                 {{ form_widget(form.save, { 'attr': {'class': 'btn green button-width', 'style': 'width: 100px;' } }) }}
             </div>
             {{ form_end(form) }}
@@ -128,95 +130,15 @@
 {% block documentready %}
     {{ parent() }}
 
-    function addTagForm($collectionHolder, $newLinkLi) {
-    // Get the data-prototype explained earlier
-    var prototype = $collectionHolder.data('prototype');
-
-    // get the new index
-    var index = $collectionHolder.data('index');
-
-    // Replace '__name__' in the prototype's HTML to
-    // instead be a number based on how many items we have
-    var newForm = prototype.replace(/__name__/g, index);
-
-    // increase the index with one for the next item
-    $collectionHolder.data('index', index + 1);
-
-    // Display the form in the page in an li, before the "Add a tag" link li
-    var $newFormLi = $('<tr></tr>').append(newForm);
-    $newLinkLi.before($newFormLi);
-    $('.date-picker').datepicker();
-
-    $("#purchaseorder_purchaseOrderItems_" + index + "_item").change(function () {
-    var item = $("#purchaseorder_purchaseOrderItems_" + index + "_item").val();
-    $.ajax({
-    type: "post",
-    url: Routing.generate('purchase_order_total_quantity'),
-    data: "item=" + item,
-    dataType: 'json',
-    success: function (response, status) {
-    $("#purchaseorder_purchaseOrderItems_" + index + "_quantity").val(response.quantity);
-
-    $("#purchaseorder_purchaseOrderItems_" + index + "_quantity").keyup(function () {
-    var addedQuantity = $("#purchaseorder_purchaseOrderItems_" + index + "_quantity").val();
-    if(response.quantity < addedQuantity){
-    alert('Order is more than purchase request');
-    return false;
-    }else if(addedQuantity==0){
-    alert('Order should not be 0');
-    return false;
-    }
-    });
-
-    }
-    });
-    });
-
-    $("#purchaseorder_purchaseOrderItems_" + index + "_delete").click(function () {
-    var parent = $(this).closest('tr');
-    parent.remove();
-    });
-
-    }
-
-    var $collectionHolder;
-
-    // setup an "add a tag" link
-    var $addTagLink = $('<td colspan ="5"><div style="text-align: left;margin-left: 20px;"><a href="#" class="btn default btn-xs green-stripe add_tag_link"><i class="fa fa-plus"></i> Add Item</a></div></td>');
-    var $newLinkLi = $('<tr></tr>').append($addTagLink);
-
-    // Get the ul that holds the collection of tags
-    $collectionHolder = $('#orderItems');
-
-    // add the "add a tag" anchor and li to the tags ul
-    $collectionHolder.append($newLinkLi);
-
-    // count the current form inputs we have (e.g. 2), use that as the new
-    // index when inserting a new item (e.g. 2)
-    $collectionHolder.data('index', $collectionHolder.find(':input').length);
-
-    $addTagLink.on('click', function(e) {
-    // prevent the link from creating a "#" on the URL
-    e.preventDefault();
-
-    // add a new tag form (see next code block)
-    addTagForm($collectionHolder, $newLinkLi);
-    });
-
     $("#purchaseorder_poNonpo").change(function () {
-    var poNonpo = $("#purchaseorder_poNonpo").val();
-        if(poNonpo==1){
-    $('#buyer-group').hide();
-    $('#vendor-group').show();
-        }else{
-    $('#vendor-group').hide();
-    $('#buyer-group').show();
+        var poNonpo = $("#purchaseorder_poNonpo").val();
+        if (poNonpo == 1) {
+            $('#buyer-group').hide();
+            $('#vendor-group').show();
+        } else {
+            $('#vendor-group').hide();
+            $('#buyer-group').show();
         }
     });
 
 {% endblock %}
-{#
-
-<script>
-    $(this).closest('tr')
-</script>#}

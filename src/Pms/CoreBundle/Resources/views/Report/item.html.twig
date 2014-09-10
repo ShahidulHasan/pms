@@ -22,6 +22,12 @@
                         <input type="text" placeholder="End Date" name="end_date" class="form-control" style="width: 140px;" readonly/>
                     </div>
                 </td>
+                <td style="font-size: 16px; font-weight: bold;">
+                    Or
+                </td>
+                <td>
+                    {{ form_widget(formSearch.item, { 'attr': {'class': 'form-control', 'style': 'width:140px;' } }) }}
+                </td>
                 <td>
                     {{ form_widget(formSearch.search, { 'attr': {'class': 'btn grey button-width', 'style': 'height:32px;' } } ) }}
                 </td>

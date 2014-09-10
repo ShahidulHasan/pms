@@ -303,7 +303,7 @@ class ProjectCostItemRepository extends EntityRepository
         return array($projectItems, $projectItems2, $reportData, $reportData1);
     }
 
-    public function itemReport($em, $start, $end)
+    public function itemReport($em, $start, $end, $item)
     {
 
         if (($start != 0) && ($end != 0)) {
@@ -355,6 +355,54 @@ class ProjectCostItemRepository extends EntityRepository
                 ->andWhere('pc.dateOfCost <= ?2')
                 ->setParameter('1', $start)
                 ->setParameter('2', $end)
+                ->join('pc.project', 'p')
+                ->join('pc.category', 'ca')
+                ->groupBy('ca.id')
+                ->orderBy('pc.lineTotal', 'DESC')
+                ->setMaxResults('10');
+            $topTen1      = $forPieChart1->getQuery()->getResult();
+        }else if($item != 0){
+            $itemUsesQuery    = $em->getRepository('PmsCoreBundle:ProjectCostItem')
+                ->createQueryBuilder('pc')
+                ->select('p.projectName')
+                ->addSelect('i.itemName')
+                ->addSelect('p.id')
+                ->addSelect('SUM(pc.lineTotal) as total')
+                ->addSelect('SUM(pc.status) as totalUsed')
+                ->where('pc.status = 1')
+                ->andWhere('pc.item = ?1')
+                ->setParameter('1', $item)
+                ->join('pc.project', 'p')
+                ->join('pc.item', 'i')
+                ->groupBy('i.id')
+                ->orderBy('i.id', 'DESC');
+            $itemUses = $itemUsesQuery->getQuery()->getResult();
+
+            $forPieChart = $em->getRepository('PmsCoreBundle:ProjectCostItem')
+                ->createQueryBuilder('pc')
+                ->select('p.projectName')
+                ->addSelect('i.itemName')
+                ->addSelect('p.id')
+                ->addSelect('SUM(pc.lineTotal) as total')
+                ->where('pc.status = 1')
+                ->andWhere('pc.item = ?1')
+                ->setParameter('1', $item)
+                ->join('pc.project', 'p')
+                ->join('pc.item', 'i')
+                ->groupBy('i.id')
+                ->orderBy('pc.lineTotal', 'DESC')
+                ->setMaxResults('10');
+            $topTen      = $forPieChart->getQuery()->getResult();
+
+            $forPieChart1 = $em->getRepository('PmsCoreBundle:ProjectCostItem')
+                ->createQueryBuilder('pc')
+                ->select('p.projectName')
+                ->select('ca.categoryName')
+                ->addSelect('ca.id')
+                ->addSelect('SUM(pc.lineTotal) as total')
+                ->where('pc.status = 1')
+                ->andWhere('pc.item = ?1')
+                ->setParameter('1', $item)
                 ->join('pc.project', 'p')
                 ->join('pc.category', 'ca')
                 ->groupBy('ca.id')

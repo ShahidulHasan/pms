@@ -74,7 +74,7 @@ class PurchaseRequisitionItem
 
     public function __toString()
     {
-        return $this->getItem();
+        return $this->getId() . "";
     }
     /**
      * Get id
@@ -262,5 +262,9 @@ class PurchaseRequisitionItem
     public function getPurchaseOrderQuantity()
     {
         return $this->purchaseOrderQuantity;
+    }
+
+    public function getItemName(){
+        $this->getItem()->getItemName();
     }
 }

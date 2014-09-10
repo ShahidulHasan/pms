@@ -20,27 +20,27 @@ class User extends BaseUser
     protected $id;
 
     protected $role;
-
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\PurchaseOrder", mappedBy="createdBy")
-     */
-    private $purchaseOrder;
-
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\Project", mappedBy="projectHead")
-     */
-    private $project;
-
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisition", mappedBy="createdBy")
-     */
-    private $purchaseRequisition;
+//
+//    /**
+//     * @var ArrayCollection
+//     *
+//     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\PurchaseOrder", mappedBy="createdBy")
+//     */
+//    private $purchaseOrder;
+//
+//    /**
+//     * @var ArrayCollection
+//     *
+//     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\Project", mappedBy="projectHead")
+//     */
+//    private $project;
+//
+//    /**
+//     * @var ArrayCollection
+//     *
+//     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisition", mappedBy="createdBy")
+//     */
+//    private $purchaseRequisition;
 
     public function __construct()
     {
@@ -98,27 +98,27 @@ class User extends BaseUser
         return $this->username;
     }
 
-    /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function getPurchaseOrder()
-    {
-        return $this->purchaseOrder;
-    }
-
-    /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function getProject()
-    {
-        return $this->project;
-    }
-
-    /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function getPurchaseRequisition()
-    {
-        return $this->purchaseRequisition;
-    }
+//    /**
+//     * @return \Doctrine\Common\Collections\ArrayCollection
+//     */
+//    public function getPurchaseOrder()
+//    {
+//        return $this->purchaseOrder;
+//    }
+//
+//    /**
+//     * @return \Doctrine\Common\Collections\ArrayCollection
+//     */
+//    public function getProject()
+//    {
+//        return $this->project;
+//    }
+//
+//    /**
+//     * @return \Doctrine\Common\Collections\ArrayCollection
+//     */
+//    public function getPurchaseRequisition()
+//    {
+//        return $this->purchaseRequisition;
+//    }
 }

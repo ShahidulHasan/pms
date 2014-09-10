@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="modal-dialog" style="width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title bold" style="text-align: center;"> Purchase Order Form</h4>
+            </div>
+            <form method="post" action="">
+            <div class="modal-body">
+                <div class="row">
+
+
+                    <div class="col-md-12">
+                        <table class="table table-striped" style="border:1px solid grey;margin-top: 100px;">
+                            <thead>
+                            <tr>
+                                <th class="col-md-1" style="padding-left: 30px;">Check</th>
+                                <th class="col-md-3" style="padding-left: 30px;">Particulars</th>
+                                <th class="col-md-2" style="padding-left: 12px;">Quantity</th>
+                                <th class="col-md-3" style="padding-left: 12px;">Project</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for orderItem in pri %}
+                                <tr>
+                                    <td class="col-md-1">
+                                        <input type="checkbox" name="items[]" value="{{ orderItem.id }}">
+                                    </td>
+                                    <td class="col-md-3">{{ orderItem.item.itemName }}</td>
+                                    <td class="col-md-2">
+                                        {{ orderItem.quantity }}
+                                    </td>
+                                    <td class="col-md-2">
+                                        {{ orderItem.purchaseRequisition.project.projectName }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group">
+                    <button type="submit" class="btn green">
+                        Next <i class="fa icon-next"></i>
+                    </button>
+                </div>
+            </div>
+</form>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block documentready %}
+    {{ parent() }}
+
+    $("#purchaseorder_poNonpo").change(function () {
+    var poNonpo = $("#purchaseorder_poNonpo").val();
+    if(poNonpo==1){
+    $('#buyer-group').hide();
+    $('#vendor-group').show();
+    }else{
+    $('#vendor-group').hide();
+    $('#buyer-group').show();
+    }
+    });
+
+{% endblock %}

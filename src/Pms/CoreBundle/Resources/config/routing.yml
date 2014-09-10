@@ -60,6 +60,10 @@ purchase_order_new:
     pattern: /purchase/order/new
     defaults: { _controller: PmsCoreBundle:PurchaseOrder:purchaseOrderNew }
 
+purchase_order_new_save:
+    pattern: /purchase/order/new/save
+    defaults: { _controller: PmsCoreBundle:PurchaseOrder:purchaseOrderSave }
+
 purchase_order_total_quantity:
     pattern: /purchase/total/quantity
     defaults: { _controller: PmsCoreBundle:PurchaseOrder:purchaseOrderTotalQuantity }
@@ -261,7 +265,7 @@ project_cost_list:
     defaults: { _controller: PmsCoreBundle:ProjectCostItem:projectCostItemList }
 
 project_cost_details:
-    pattern: project-cost/details/{id}
+    pattern: /project-cost/details/{id}
     defaults: { _controller: PmsCoreBundle:ProjectCostItem:projectCostItemDetails }
 
 project_cost_ajax_checked:

@@ -68,11 +68,16 @@ class PurchaseOrder
      */
     private $buyer;
 
+//    /**
+//     * @var User
+//     *
+//     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User", inversedBy="purchaseOrder")
+//     * @ORM\JoinColumn(name="created_by", nullable=true)
+//     */
     /**
-     * @var User
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User", inversedBy="purchaseOrder")
-     * @ORM\JoinColumn(name="created_by", nullable=true)
+     * @ORM\Column(name="created_by", type="string", length=255)
      */
     private $createdBy;
 
@@ -99,60 +104,33 @@ class PurchaseOrder
 
     public function __construct()
     {
-        $this->purchaseOrderItem = new ArrayCollection();
+        $this->purchaseOrderItems = new ArrayCollection();
     }
 
-    /**
-     * @param \Pms\CoreBundle\Entity\PurchaseOrderItem $purchaseOrder
-     */
-    public function addPurchaseOrder($purchaseOrder)
-    {
-        if (!$this->getPurchaseOrderItem()->contains($purchaseOrder)) {
-            $purchaseOrder->setPurchaseOrder($this);
-            $this->getPurchaseOrderItem()->add($purchaseOrder);
-        }
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getPurchaseOrderItem()
-    {
-        return $this->purchaseOrderItem;
-    }
-
-    /**
-     * @param \Pms\CoreBundle\Entity\PurchaseOrderItem $purchaseOrder
-     */
-    public function removePurchaseOrder($purchaseOrder)
-    {
-        if ($this->getPurchaseOrderItem()->contains($purchaseOrder)) {
-            $this->getPurchaseOrderItem()->removeElement($purchaseOrder);
-        }
-    }
-
-    function setPurchaseOrderItems(Collection $items)
-    {
-        $this->purchaseOrderItems = $items;
-
-        return $this;
-    }
 
     public function addPurchaseOrderItem(PurchaseOrderItem $item)
     {
-        $this->purchaseOrderItems[] = $item;
+        $item->setPurchaseOrder($this);
+
+        if (!$this->getPurchaseOrderItems()->contains($item)) {
+            $this->getPurchaseOrderItems()->removeElement($item);
+        }
+
+        $this->purchaseOrderItems->add($item);
 
         return $this;
     }
 
     public function removePurchaseOrderItem(PurchaseOrderItem $item)
     {
-        $this->purchaseOrderItems->removeElement($item);
+        if ($this->getPurchaseOrderItems()->contains($item)) {
+            $this->getPurchaseOrderItems()->removeElement($item);
+        }
     }
 
     public function getPurchaseOrderItems()
     {
-        return $this->purchaseOrderItem;
+        return $this->purchaseOrderItems;
     }
 
     /**

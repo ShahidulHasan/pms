@@ -272,4 +272,8 @@ class Item
     {
         return $this->receivedItem;
     }
+
+    public function __toString() {
+        return $this->getId();
+    }
 }
