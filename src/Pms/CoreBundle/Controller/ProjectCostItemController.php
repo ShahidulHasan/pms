@@ -330,7 +330,7 @@ class ProjectCostItemController extends Controller
 
                 $projectCostItem->setProject($this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneById($project));
                 $projectCostItem->setItem($this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneById($item));
-                $projectCostItem->setBuyer($this->getDoctrine()->getRepository('PmsCoreBundle:Buyer')->findOneById($buyer));
+                $projectCostItem->setBuyer($buyer);
                 $projectCostItem->setCategory($this->getDoctrine()->getRepository('PmsCoreBundle:Category')->findOneById($category));
                 $projectCostItem->setQuantity($quantity);
                 $projectCostItem->setUnitPrice($unitPrice);
@@ -360,7 +360,7 @@ class ProjectCostItemController extends Controller
 
                 $projectCostItem->setProject($this->getDoctrine()->getRepository('PmsCoreBundle:Project')->findOneById($project));
                 $projectCostItem->setItem($this->getDoctrine()->getRepository('PmsCoreBundle:Item')->findOneById($item));
-                $projectCostItem->setBuyer($this->getDoctrine()->getRepository('PmsCoreBundle:Buyer')->findOneById($buyer));
+                $projectCostItem->setBuyer($buyer);
                 $projectCostItem->setCategory($this->getDoctrine()->getRepository('PmsCoreBundle:Category')->findOneById($category));
                 $projectCostItem->setQuantity($quantity);
                 $projectCostItem->setUnitPrice($unitPrice);

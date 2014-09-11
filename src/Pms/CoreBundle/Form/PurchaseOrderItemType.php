@@ -23,10 +23,7 @@ class PurchaseOrderItemType extends AbstractType
                 "class" => "PmsCoreBundle:PurchaseRequisitionItem",
                 'property'=>'item.itemName'
             ))
-            ->add('purchaseRequisitionItem', 'entity', array(
-                "class" => "PmsCoreBundle:PurchaseRequisitionItem",
-                'property'=>'item.itemName'
-            ))
+            ->add('project', 'text')
             ->add('quantity', 'text')
         ;
     }

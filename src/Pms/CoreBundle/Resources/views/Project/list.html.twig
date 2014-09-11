@@ -8,6 +8,7 @@
                     <th>Sl</th>
                     <th>Project Name</th>
                     <th>Project Head</th>
+                    <th>Address</th>
                     <th>Status</th>
                     <th></th>
                 </tr>
@@ -28,8 +29,9 @@
 
                     <tr>
                         <td>{{ i }} .</td>
-                        <td class="col-md-5" style="color: {{ color|join("") }};">{{ projects.projectName }}</td>
-                        <td class="col-md-3" style="color: {{ color|join("") }};">{{ projects.projectHead |default() }}</td>
+                        <td class="col-md-3" style="color: {{ color|join("") }};">{{ projects.projectName }}</td>
+                        <td class="col-md-2" style="color: {{ color|join("") }};">{{ projects.projectHead |default() }}</td>
+                        <td class="col-md-3" style="color: {{ color|join("") }};">{{ projects.address |default() }}</td>
                         <td>
                             <a href="/project/delete/{{ projects.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
                                         class="fa fa-trash-o"></i> Delete</a>

@@ -60,7 +60,7 @@
                             </div>
                             <div class="col-md-12" style="height:35px;float:left;">
                                 <div class="form-group">
-                                    {{ form_label(form.dateOfDelivered, 'Date Of Delivered:', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }
+                                    {{ form_label(form.dateOfDelivered, 'Date Of Delivery:', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }
                                     ) }}
                                     <div class="col-md-6">
                                         <div class="input-icon">
@@ -83,7 +83,7 @@
                             <tr>
                                 <th class="col-md-3" style="padding-left: 30px;">Particulars</th>
                                 <th class="col-md-2" style="padding-left: 12px;">Quantity</th>
-                                <th class="col-md-2" style="padding-left: 12px;"></th>
+                                <th class="col-md-2" style="padding-left: 12px;">Project</th>
                                 <th class="col-md-3" style="padding-left: 12px;">Remarks</th>
                                 <th class="col-md-2"></th>
                             </tr>
@@ -94,16 +94,18 @@
                                 {% for orderItem in form.purchaseOrderItems %}
                                     <tr>
                                         <td>
-                                            {{ form_widget(orderItem.purchaseRequisitionItem, { 'attr': {'class': 'form-control', 'style': 'margin-left: 20px;width: 180px;padding-left: 10px! important;'} }) }}
+                                            {{ form_widget(orderItem.purchaseRequisitionItem, { 'attr': {'class': 'form-control', 'style': 'margin-left: 20px;width: 200px;padding-left: 10px! important;'} }) }}
                                         </td>
                                         <td>
                                             {{ form_widget(orderItem.quantity, { 'attr': {'class': 'form-control', 'style': 'width: 120px;padding-left: 10px! important;'} }) }}
                                         </td>
                                         <td>
-
+                                            {{ form_widget(orderItem.project, { 'attr': {'class': 'form-control', 'style': 'width: 200px;padding-left: 10px! important;'} }) }}
                                         </td>
                                         <td>
                                             {{ form_widget(orderItem.comment, { 'attr': {'class': 'form-control', 'style': 'width: 188px;padding-left: 10px! important;'} }) }}
+                                        </td>
+                                        <td>
                                         </td>
                                     </tr>
                                 {% endfor %}

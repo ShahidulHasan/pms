@@ -51,6 +51,13 @@ class Project
      */
     private $projectName;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="string", length=255)
+     */
+    private $address;
+
 //    /**
 //     * @var User
 //     *
@@ -121,6 +128,29 @@ class Project
     public function getProjectHead()
     {
         return $this->projectHead;
+    }
+
+    /**
+     * Set address
+     *
+     * @param string $address
+     * @return Project
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
     }
 
     /**

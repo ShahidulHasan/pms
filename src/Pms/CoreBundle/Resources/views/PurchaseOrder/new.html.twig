@@ -8,48 +8,50 @@
                 <h4 class="modal-title bold" style="text-align: center;"> Purchase List</h4>
             </div>
             <form method="post" action="">
-            <div class="modal-body">
-                <div class="row">
+                <div class="modal-body">
+                    <div class="row">
 
-
-                    <div class="col-md-12">
-                        <table class="table table-striped" style="border:1px solid grey;margin-top: 100px;">
-                            <thead>
-                            <tr>
-                                <th class="col-md-1" style="padding-left: 30px;">Check</th>
-                                <th class="col-md-3" style="padding-left: 30px;">Particulars</th>
-                                <th class="col-md-2" style="padding-left: 12px;">Quantity</th>
-                                <th class="col-md-3" style="padding-left: 12px;">Project</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for orderItem in pri %}
+                        <div class="col-md-12">
+                            <table class="table table-striped" style="border:1px solid grey;margin-top: 100px;">
+                                <thead>
                                 <tr>
-                                    <td class="col-md-1">
-                                        <input type="checkbox" name="items[]" value="{{ orderItem.id }}">
-                                    </td>
-                                    <td class="col-md-3">{{ orderItem.item.itemName }}</td>
-                                    <td class="col-md-2">
-                                        {{ orderItem.quantity }}
-                                    </td>
-                                    <td class="col-md-2">
-                                        {{ orderItem.purchaseRequisition.project.projectName }}</td>
+                                    <th class="col-md-1" style="padding-left: 30px;">Check</th>
+                                    <th class="col-md-3" style="padding-left: 30px;">Particulars</th>
+                                    <th class="col-md-2" style="padding-left: 12px;">Quantity</th>
+                                    <th class="col-md-3" style="padding-left: 12px;">Project</th>
                                 </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                {% for orderItem in pri %}
+                                    <tr>
+                                        <td class="col-md-1">
+                                            <input type="checkbox" name="items[]" value="{{ orderItem.id }}">
+                                        </td>
+                                        <td class="col-md-3">
+                                            {{ orderItem.item.itemName }}
+                                        </td>
+                                        <td class="col-md-2">
+                                            {{ orderItem.quantity }}
+                                        </td>
+                                        <td class="col-md-2">
+                                            {{ orderItem.purchaseRequisition.project.projectName }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
 
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <div class="btn-group">
-                    <button type="submit" class="btn green">
-                        Next <i class="fa icon-next"></i>
-                    </button>
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <button type="submit" class="btn green">
+                            Next <i class="fa icon-next"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
-</form>
+            </form>
         </div>
     </div>
 

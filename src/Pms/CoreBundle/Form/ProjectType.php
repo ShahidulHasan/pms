@@ -27,6 +27,7 @@ class ProjectType extends AbstractType
                     'autocomplete' => 'off'
                 )
             ))
+            ->add('address', 'textarea')
             ->add('projectHead', 'entity', array(
                 'class' => 'UserBundle:User',
                 'property' => 'username',

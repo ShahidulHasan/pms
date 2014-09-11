@@ -69,8 +69,8 @@
                                                     {#<td class="col-md-2">{{ purchaseOrder.createdBy |default() }}</td>#}
                                                     <td class="col-md-2">{{ purchaseOrder.createdDate|date('Y-m-d') }}</td>
                                                     <td class="col-md-2">{{ purchaseOrder.vendor.vendorName |default() }}</td>
-                                                    <td class="col-md-1">{{ purchaseOrder.buyer.buyerName |default() }}</td>
-                                                    <td class="col-md-2"></td>
+                                                    <td class="col-md-2">{{ purchaseOrder.buyer.buyerName |default() }}</td>
+                                                    <td class="col-md-1"></td>
                                                 </tr>
 
                                             {% endfor %}

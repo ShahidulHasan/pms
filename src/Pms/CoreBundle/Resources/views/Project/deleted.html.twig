@@ -47,8 +47,29 @@
                                         {{ form_widget(form.projectName, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
                                     </div>
                                 </div>
-                                <input type="button" name="ajaxSaveProject" value="Save" id="ajaxSaveProject" class="btn green button-width col-md-1" style="margin-top:2px;margin-left:10px;height:32px;">
                                 <span class="userMessege" style="margin-left: 185px;"></span>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.projectHead, 'Project Head :', {'label_attr': {'class': 'control-label col-md-2', 'style' : 'margin-right:-60px;font-weight:bold;' } }
+                                ) }}
+                                <div class="col-md-8">
+                                    <div class="input-icon">
+                                        <i class="fa"></i>
+                                        {{ form_widget(form.projectHead, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.address, 'Address :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'margin-right:-60px;font-weight:bold;' } }
+                                ) }}
+                                <div class="col-md-8">
+                                    <div class="input-icon">
+                                        {{ form_widget(form.address, { 'attr': {'class': 'form-control col-md-4', 'style': 'height:72px;'} }) }}
+                                    </div>
+                                </div>
+                                <br/>
+                                <br/>
+                                <input type="button" name="ajaxSaveProject" value="Save" id="ajaxSaveProject" class="btn green button-width col-md-1" style="margin-top:2px;margin-left:10px;height:32px;">
                             </div>
                             {{ form_end(form) }}
                         </div>
@@ -64,6 +85,7 @@
                                                 <th>Sl</th>
                                                 <th>Project Name</th>
                                                 <th>Project Head</th>
+                                                <th>Address</th>
                                                 <th>Status</th>
                                                 <th></th>
                                             </tr>
@@ -84,8 +106,9 @@
 
                                                 <tr>
                                                     <td>{{ i }} .</td>
-                                                    <td class="col-md-5" style="color: {{ color|join("") }};">{{ projects.projectName }}</td>
-                                                    <td class="col-md-3" style="color: {{ color|join("") }};">{{ projects.projectHead |default() }}</td>
+                                                    <td class="col-md-3" style="color: {{ color|join("") }};">{{ projects.projectName }}</td>
+                                                    <td class="col-md-2" style="color: {{ color|join("") }};">{{ projects.projectHead |default() }}</td>
+                                                    <td class="col-md-3" style="color: {{ color|join("") }};">{{ projects.address |default() }}</td>
                                                     <td style="color: red;">
                                                         <a href="#" style="width: 85px;" class="btn default btn-xs red-stripe"><i
                                                                     class="fa fa-times"></i> Deleted</a>
@@ -124,8 +147,9 @@
                 var sURLVariables = sPageURL.split('/');
                 var projectName = $("#project_projectName").val();
                 var projectHead = $("#project_projectHead").val();
+                var address = $("#project_address").val();
 
-                var projectArray = new Array(projectName, sURLVariables[3], projectHead);
+                var projectArray = new Array(projectName, sURLVariables[3], projectHead, address);
 
                 $.ajax({
                     type: "post",
