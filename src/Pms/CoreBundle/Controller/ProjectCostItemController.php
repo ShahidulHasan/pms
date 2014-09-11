@@ -39,10 +39,12 @@ class ProjectCostItemController extends Controller
             ->addSelect('i.itemName')
             ->addSelect('pc.approvedBy')
             ->addSelect('pc.createdBy')
+            ->addSelect('pc.buyer')
             ->addSelect('pc.lineTotal')
             ->addSelect('c.categoryName')
             ->addSelect('pc.createdDate')
             ->addSelect('pc.dateOfCost')
+            ->addSelect('pc.subCategory')
             ->addSelect('pc.quantity')
             ->addSelect('pc.unitPrice')
             ->addSelect('pc.invoice')
@@ -59,6 +61,8 @@ class ProjectCostItemController extends Controller
 
         $userName = $projectCostItem[0]['createdBy'];
         $approved = $projectCostItem[0]['approvedBy'];
+        $buyer = $projectCostItem[0]['buyer'];
+        $subCategory = $projectCostItem[0]['subCategory'];
 
         $userQuery    = $em->getRepository('UserBundle:User')
             ->createQueryBuilder('u')
@@ -74,10 +78,26 @@ class ProjectCostItemController extends Controller
             ->setParameter('2', $approved);
         $approvedUser = $approvedQuery->getQuery()->getResult();
 
+        $buyerQuery    = $em->getRepository('PmsCoreBundle:Buyer')
+            ->createQueryBuilder('u')
+            ->select('u.buyerName')
+            ->where('u.id = ?3')
+            ->setParameter('3', $buyer);
+        $buyerUser = $buyerQuery->getQuery()->getResult();
+
+        $subCategoryQuery    = $em->getRepository('PmsCoreBundle:Category')
+            ->createQueryBuilder('u')
+            ->select('u.categoryName')
+            ->where('u.id = ?4')
+            ->setParameter('4', $subCategory);
+        $subCategoryUser = $subCategoryQuery->getQuery()->getResult();
+
         return $this->render('PmsCoreBundle:ProjectCostItem:details.html.twig', array(
             'projectCostItem' => $projectCostItem,
             'created' => $user,
             'approved' => $approvedUser,
+            'buyer' => $buyerUser,
+            'subCategory' => $subCategoryUser,
         ));
     }
 

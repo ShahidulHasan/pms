@@ -30,7 +30,7 @@
                                 </div>
                                 <br/>
                                 <div>
-                                    grn : {{ projectCostItem[0]['grn'] }}
+                                    GRN No# : {{ projectCostItem[0]['grn'] }}
                                 </div>
                                 <br/>
                                 <div>
@@ -54,6 +54,14 @@
                             <div style="width: 45%;float:right;">
                                 <div>
                                     Category : {{ projectCostItem[0]['categoryName'] }}
+                                </div>
+                                <br/>
+                                <div>
+                                    Sub-category : {{ subCategory[0]['categoryName'] |default() }}
+                                </div>
+                                <br/>
+                                <div>
+                                    Buyer : {{ buyer[0]['buyerName'] |default() }}
                                 </div>
                                 <br/>
                                 <div>

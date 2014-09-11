@@ -74,7 +74,6 @@ class PurchaseOrderController extends Controller
         return $this->purchaseOrderNewAdd();
     }
 
-
     public function purchaseOrderSaveAction(Request $request)
     {
         $purchaseOrder = new PurchaseOrder();

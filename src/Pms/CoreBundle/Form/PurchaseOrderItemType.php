@@ -9,7 +9,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Pms\CoreBundle\Entity\Repository\ItemRepository;
 
-
 class PurchaseOrderItemType extends AbstractType
 {
     /**
@@ -20,6 +19,10 @@ class PurchaseOrderItemType extends AbstractType
     {
         $builder
             ->add('comment', 'textarea')
+            ->add('purchaseRequisitionItem', 'entity', array(
+                "class" => "PmsCoreBundle:PurchaseRequisitionItem",
+                'property'=>'item.itemName'
+            ))
             ->add('purchaseRequisitionItem', 'entity', array(
                 "class" => "PmsCoreBundle:PurchaseRequisitionItem",
                 'property'=>'item.itemName'
