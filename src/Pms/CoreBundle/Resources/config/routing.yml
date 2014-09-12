@@ -2,6 +2,10 @@ receive_add:
     pattern: /receive/item
     defaults: { _controller: PmsCoreBundle:Core:receiveAdd }
 
+receive_add_new:
+    pattern: /receive/item/new
+    defaults: { _controller: PmsCoreBundle:Core:receiveNew }
+
 upload_add:
     pattern: /upload/file
     defaults: { _controller: PmsCoreBundle:Core:uploadAdd }
@@ -63,6 +67,10 @@ purchase_order_new:
 purchase_order_new_save:
     pattern: /purchase/order/new/save
     defaults: { _controller: PmsCoreBundle:PurchaseOrder:purchaseOrderSave }
+
+purchase_order_details:
+    pattern: /purchase/order/details/{id}
+    defaults: { _controller: PmsCoreBundle:PurchaseOrder:purchaseOrderDetails }
 
 purchase_order_total_quantity:
     pattern: /purchase/total/quantity

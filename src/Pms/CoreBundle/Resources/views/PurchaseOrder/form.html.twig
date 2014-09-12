@@ -8,7 +8,7 @@
                 <h4 class="modal-title bold" style="text-align: center;"> Purchase Order Form</h4>
             </div>
 
-            {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'purchase-form', 'novalidate': 'novalidate'} }) }}
+            {{ form_start(form, {'action': path('purchase_order_new_save'), 'attr': {'class': 'form-horizontal', 'id': 'purchase-form', 'novalidate': 'novalidate'} } ) }}
             <div class="modal-body">
                 <div class="row">
 
@@ -100,9 +100,6 @@
                                             {{ form_widget(orderItem.quantity, { 'attr': {'class': 'form-control', 'style': 'width: 120px;padding-left: 10px! important;'} }) }}
                                         </td>
                                         <td>
-                                            {{ form_widget(orderItem.project, { 'attr': {'class': 'form-control', 'style': 'width: 200px;padding-left: 10px! important;'} }) }}
-                                        </td>
-                                        <td>
                                             {{ form_widget(orderItem.comment, { 'attr': {'class': 'form-control', 'style': 'width: 188px;padding-left: 10px! important;'} }) }}
                                         </td>
                                         <td>
@@ -116,6 +113,11 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <div class="btn-group">
+                    <a href="javascript:history.back()" class="btn green" style="width: 100px;" onclick="window.history.back();">
+                        << Previous
+                    </a>
+                </div>
                 <div class="btn-group">
                     <a href="/purchase/order" class="btn green" style="width: 100px;">
                         Cancel

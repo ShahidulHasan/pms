@@ -18,37 +18,42 @@ class InvoiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('comment', 'textarea', array(
+            ->add('description', 'textarea', array(
                 'attr' => array(
-                    'placeholder' => 'Remark'
+                    'placeholder' => 'Description'
                 )
             ))
-            ->add('invoiceNumber', 'text', array(
+            ->add('title', 'text', array(
                 'attr' => array(
-                    'placeholder' => 'Invoice',
-                    'autocomplete' => 'off'
+                    'placeholder' => 'Title'
                 )
             ))
+//            ->add('invoiceNumber', 'text', array(
+//                'attr' => array(
+//                    'placeholder' => 'Invoice',
+//                    'autocomplete' => 'off'
+//                )
+//            ))
             ->add('file', 'file')
-            ->add('fileCalan', 'file')
+//            ->add('fileCalan', 'file')
             ->add('save', 'submit')
-            ->add('purchaseRequisition', 'entity', array(
-                'constraints' => array(
-                    new NotBlank()
-                ),
-                'class' => 'PmsCoreBundle:PurchaseRequisition',
-                'property' => 'requisitionNo',
-                'required' => false,
-                'attr' => array(
-                    'placeholder' => 'Select Requisition'
-                ),
-                'empty_data' => null,
-                'query_builder' => function (PurchaseRequisitionRepository $repository)
-                    {
-                        return $repository->createQueryBuilder('pr')
-                            ->where('pr.status = 1');
-                    }
-            ))
+//            ->add('purchaseRequisition', 'entity', array(
+//                'constraints' => array(
+//                    new NotBlank()
+//                ),
+//                'class' => 'PmsCoreBundle:PurchaseRequisition',
+//                'property' => 'requisitionNo',
+//                'required' => false,
+//                'attr' => array(
+//                    'placeholder' => 'Select Requisition'
+//                ),
+//                'empty_data' => null,
+//                'query_builder' => function (PurchaseRequisitionRepository $repository)
+//                    {
+//                        return $repository->createQueryBuilder('pr')
+//                            ->where('pr.status = 1');
+//                    }
+//            ))
         ;
     }
     

@@ -113,10 +113,8 @@ class PurchaseOrder
         $item->setPurchaseOrder($this);
 
         if (!$this->getPurchaseOrderItems()->contains($item)) {
-            $this->getPurchaseOrderItems()->removeElement($item);
+            $this->purchaseOrderItems->add($item);
         }
-
-        $this->purchaseOrderItems->add($item);
 
         return $this;
     }

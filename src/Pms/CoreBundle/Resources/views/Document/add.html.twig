@@ -18,26 +18,26 @@
                 <div class="form-body left">
                 {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'upload-form', 'novalidate': 'novalidate'} }) }}
                     <div class="form-actions fluid">
+                        {#<div class="form-group">#}
+                            {#{{ form_label(form.purchaseRequisition, 'Requisition No:', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }#}
+                            {#) }}#}
+                            {#<div class="col-md-2">#}
+                                {#<div class="input-icon">#}
+                                    {#{{ form_widget(form.purchaseRequisition, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="form-group">#}
+                            {#{{ form_label(form.invoiceNumber, 'Invoice Number:', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }#}
+                            {#) }}#}
+                            {#<div class="col-md-2">#}
+                                {#<div class="input-icon">#}
+                                    {#{{ form_widget(form.invoiceNumber, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#</div>#}
                         <div class="form-group">
-                            {{ form_label(form.purchaseRequisition, 'Requisition No:', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }
-                            ) }}
-                            <div class="col-md-2">
-                                <div class="input-icon">
-                                    {{ form_widget(form.purchaseRequisition, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            {{ form_label(form.invoiceNumber, 'Invoice Number:', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }
-                            ) }}
-                            <div class="col-md-2">
-                                <div class="input-icon">
-                                    {{ form_widget(form.invoiceNumber, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            {{ form_label(form.file, 'Invoice Attach :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' }}
+                            {{ form_label(form.file, 'File Attach :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' }}
                             ) }}
                             <div class="col-md-6">
                                 <div class="fileupload fileupload-new" data-provides="fileupload">
@@ -63,39 +63,48 @@
                                 </div>
                             </div>
                         </div>
+                        {#<div class="form-group">#}
+                            {#{{ form_label(form.fileCalan, 'Calan Attach :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' }}#}
+                            {#) }}#}
+                            {#<div class="col-md-6">#}
+                                {#<div class="fileupload fileupload-new" data-provides="fileupload">#}
+                                    {#<div class="input-group">#}
+                                                {#<span class="input-group-btn">#}
+                                                    {#<span class="uneditable-input">#}
+                                                        {#<i class="fa fa-file fileupload-exists"></i>#}
+                                                        {#<span class="fileupload-preview"></span>#}
+                                                    {#</span>#}
+                                                {#</span>#}
+                                                {#<span class="btn default btn-file">#}
+                                                    {#<span class="fileupload-new">#}
+                                                        {#<i class="fa fa-paper-clip"></i>Select file#}
+                                                    {#</span>#}
+                                                    {#<span class="fileupload-exists">#}
+                                                        {#<i class="fa fa-undo"></i>Change#}
+                                                    {#</span>#}
+                                                    {#{{ form_widget(form.fileCalan, { 'attr': {'class': 'default form-control'} }) }}#}
+                                                {#</span>#}
+                                        {#<a href="form_component.html#" class="btn red fileupload-exists"#}
+                                           {#data-dismiss="fileupload"><i class="fa fa-trash-o"></i> Remove</a>#}
+                                    {#</div>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#</div>#}
                         <div class="form-group">
-                            {{ form_label(form.fileCalan, 'Calan Attach :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' }}
+                            {{ form_label(form.title, 'Title :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }
                             ) }}
-                            <div class="col-md-6">
-                                <div class="fileupload fileupload-new" data-provides="fileupload">
-                                    <div class="input-group">
-                                                <span class="input-group-btn">
-                                                    <span class="uneditable-input">
-                                                        <i class="fa fa-file fileupload-exists"></i>
-                                                        <span class="fileupload-preview"></span>
-                                                    </span>
-                                                </span>
-                                                <span class="btn default btn-file">
-                                                    <span class="fileupload-new">
-                                                        <i class="fa fa-paper-clip"></i>Select file
-                                                    </span>
-                                                    <span class="fileupload-exists">
-                                                        <i class="fa fa-undo"></i>Change
-                                                    </span>
-                                                    {{ form_widget(form.fileCalan, { 'attr': {'class': 'default form-control'} }) }}
-                                                </span>
-                                        <a href="form_component.html#" class="btn red fileupload-exists"
-                                           data-dismiss="fileupload"><i class="fa fa-trash-o"></i> Remove</a>
-                                    </div>
+                            <div class="col-md-8">
+                                <div class="input-icon">
+                                    {{ form_widget(form.title, { 'attr': {'class': 'form-control col-md-4', 'style': 'padding-left: 10px !important;'} }) }}
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            {{ form_label(form.comment, 'Remark :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }
+                            {{ form_label(form.description, 'Description :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }
                             ) }}
                             <div class="col-md-8">
                                 <div class="input-icon">
-                                    {{ form_widget(form.comment, { 'attr': {'class': 'form-control col-md-4', 'style': 'height:72px;'} }) }}
+                                    {{ form_widget(form.description, { 'attr': {'class': 'form-control col-md-4', 'style': 'height:72px;'} }) }}
                                 </div>
                             </div>
                         </div>

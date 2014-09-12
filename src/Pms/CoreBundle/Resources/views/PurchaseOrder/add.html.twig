@@ -12,7 +12,7 @@
             <div class="portlet box light-grey">
 
                 <div class="portlet-title">
-                    <div class="caption"><i class="fa fa-reorder"></i> Purchase Order</div>
+                    <div class="caption"><i class="fa fa-reorder"></i> PO. List</div>
                 </div>
 
                 <div class="portlet-body form">
@@ -21,14 +21,9 @@
 
                         <div class="form-actions fluid">
                             <div class="table-toolbar" style="float: right;margin-right: 20px;">
-                                {#<div class="btn-group">#}
-                                    {#<a href="/purchase/order/new" class="btn green">#}
-                                        {#New Order#}
-                                    {#</a>#}
-                                {#</div>#}
                                 <div class="btn-group">
                                     <a href="/purchase/order/new" class="btn green">
-                                        New Order
+                                        Create PO
                                     </a>
                                 </div>
                             </div>
@@ -43,13 +38,11 @@
                                             <thead>
                                             <tr>
                                                 <th>Sl</th>
-                                                <th>Order No</th>
+                                                <th>PO. No</th>
+                                                <th>Created Date</th>
                                                 <th>Delivery Date</th>
                                                 {#<th>Created</th>#}
-                                                <th>Created Date</th>
-                                                <th>Vendor</th>
-                                                <th>Buyer</th>
-                                                <th></th>
+                                                <th>Vendor/Buyer</th>
                                                 <th></th>
                                             </tr>
                                             </thead>
@@ -65,12 +58,13 @@
                                                 <tr>
                                                     <td class="col-md-1">{{ i }} .</td>
                                                     <td class="col-md-2">{{ purchaseOrder.orderNo }}</td>
+                                                    <td class="col-md-2">{{ purchaseOrder.createdDate|date('Y-m-d') }}</td>
                                                     <td class="col-md-2">{{ purchaseOrder.dateOfDelivered|date('Y-m-d') }}</td>
                                                     {#<td class="col-md-2">{{ purchaseOrder.createdBy |default() }}</td>#}
-                                                    <td class="col-md-2">{{ purchaseOrder.createdDate|date('Y-m-d') }}</td>
-                                                    <td class="col-md-2">{{ purchaseOrder.vendor.vendorName |default() }}</td>
-                                                    <td class="col-md-2">{{ purchaseOrder.buyer.buyerName |default() }}</td>
-                                                    <td class="col-md-1"></td>
+                                                    <td class="col-md-2">{{ purchaseOrder.vendor.vendorName |default() }}{{ purchaseOrder.buyer.buyerName |default() }}</td>
+                                                    <td class="col-md-1">
+                                                    <a href="/purchase/order/details/{{ purchaseOrder.id }}" data-target="#ajax" data-toggle="modal"><i class="fa fa-info-circle"></i></a>
+                                                    </td>
                                                 </tr>
 
                                             {% endfor %}

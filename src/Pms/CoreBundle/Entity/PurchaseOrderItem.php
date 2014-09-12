@@ -238,6 +238,7 @@ class PurchaseOrderItem
     {
         $this->purchaseRequisitionItem = $purchaseRequisitionItem;
         $this->item = $purchaseRequisitionItem->getItem();
+        $this->project = $purchaseRequisitionItem->getPurchaseRequisition()->getProject();
         return $this;
     }
 

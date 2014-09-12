@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="modal-dialog" style="width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title bold" style="text-align: center;"> Purchase Requisition Form</h4>
+            </div>
+
+            {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'received-form', 'novalidate': 'novalidate'} }) }}
+            <div class="form-actions fluid">
+
+
+
+
+                            {#<tbody id="purchaseItems" class="tags" data-prototype="{% filter escape %}#}
+                                {#{{ include('PmsCoreBundle:Receive:receiveItemPrototype.html.twig', { 'form': form.purchaseRequisitionItems.vars.prototype }) }}#}
+                                {#{% endfilter %}}">#}
+                                {% for requisitionItem in form.purchaseRequisitionItem %}
+                                    <div class="form-group">
+                                        {{ form_label(form.grn, 'GRN No:', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }
+                                        ) }}
+                                        <div class="col-md-7">
+                                            <div class="input-icon">
+                                                {{ form_widget(form.grn, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(form.quantity, 'Quantity :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }
+                                        ) }}
+                                        <div class="col-md-7">
+                                            <div class="input-icon">
+                                                {{ form_widget(form.quantity, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(form.purchaseRequisition, 'Requisition No:', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }
+                                        ) }}
+                                        <div class="col-md-7">
+                                            <div class="input-icon">
+                                                {{ form_widget(form.purchaseRequisition, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(form.item, 'Item :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }
+                                        ) }}
+                                        <div class="col-md-7">
+                                            <div class="input-icon">
+                                                {{ form_widget(form.item, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group">
+                    <a href="/receive/item" class="btn green" style="width: 100px;">
+                       Cancel
+                    </a>
+                </div>
+                {{ form_widget(form.save, { 'attr': {'class': 'btn green button-width', 'style': 'width:100px;'} }) }}
+            </div>
+            {{ form_end(form) }}
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block documentready %}
+     {{ parent() }}
+
+     function addTagForm($collectionHolder, $newLinkLi) {
+     // Get the data-prototype explained earlier
+     var prototype = $collectionHolder.data('prototype');
+
+     // get the new index
+     var index = $collectionHolder.data('index');
+
+     // Replace '__name__' in the prototype's HTML to
+     // instead be a number based on how many items we have
+     var newForm = prototype.replace(/__name__/g, index);
+
+     // increase the index with one for the next item
+     $collectionHolder.data('index', index + 1);
+
+     // Display the form in the page in an li, before the "Add a tag" link li
+     var $newFormLi = $('<tr></tr>').append(newForm);
+     $newLinkLi.before($newFormLi);
+     $('.date-picker').datepicker();
+
+    $("#purchaserequisition_purchaseRequisitionItems_" + index + "_delete").click(function () {
+    var parent = $(this).closest('tr');
+    parent.remove();
+    });
+
+     }
+
+     var $collectionHolder;
+
+     // setup an "add a tag" link
+     var $addTagLink = $('<td colspan ="5"><div style="text-align: left;margin-left: 20px;"><a href="#" class="btn default btn-xs green-stripe add_tag_link"><i class="fa fa-plus"></i> Add Item</a></div></td>');
+     var $newLinkLi = $('<tr></tr>').append($addTagLink);
+
+     // Get the ul that holds the collection of tags
+     $collectionHolder = $('#purchaseItems');
+
+     // add the "add a tag" anchor and li to the tags ul
+     $collectionHolder.append($newLinkLi);
+
+     // count the current form inputs we have (e.g. 2), use that as the new
+     // index when inserting a new item (e.g. 2)
+     $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+     $addTagLink.on('click', function(e) {
+     // prevent the link from creating a "#" on the URL
+     e.preventDefault();
+
+     // add a new tag form (see next code block)
+     addTagForm($collectionHolder, $newLinkLi);
+     });
+
+{% endblock %}

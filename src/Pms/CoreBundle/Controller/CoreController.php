@@ -71,6 +71,49 @@ class CoreController extends Controller
         ));
     }
 
+    private function  receiveNewAdd()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->getRepository('PmsCoreBundle:PurchaseRequisitionItem')
+            ->createQueryBuilder('pri')
+            ->where('pri.status = 1');
+        $pri = $query->getQuery()->getResult();
+
+        return $this->render('PmsCoreBundle:Receive:new.html.twig', array(
+            'pri' => $pri,
+        ));
+    }
+
+    public function receiveNewAction(Request $request)
+    {
+        $items = $request->request->get('items');
+
+        if ($request->getMethod() == 'POST' && !empty($items)) {
+
+            $receivedItem = new ReceivedItem();
+//            $em = $this->getDoctrine()->getManager();
+//            foreach ($items as $item) {
+//                $pi = new PurchaseOrderItem();
+//                $it = $em->getRepository('PmsCoreBundle:PurchaseRequisitionItem')->find($item);
+//                $quantityRequisition = $it->getQuantity();
+//                $quantityPurchaseOrder = $it->getPurchaseOrderQuantity();
+//                $quantityRest = ($quantityRequisition - $quantityPurchaseOrder);
+//                $pi->setPurchaseRequisitionItem($it);
+//                $pi->setQuantity($quantityRest);
+//                $purchaseOrder->addPurchaseOrderItem($pi);
+//            }
+
+            $form = $this->createForm(new ReceivedItemType(), $receivedItem);
+
+            return $this->render('PmsCoreBundle:Receive:form.html.twig', array(
+                'orderItems' => $items,
+                'form' => $form->createView(),
+            ));
+        }
+
+        return $this->receiveNewAdd();
+    }
+
     public function receiveAddAction(Request $request)
     {
         $receivedItem = new ReceivedItem();

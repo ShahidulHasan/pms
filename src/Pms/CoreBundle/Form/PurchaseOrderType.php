@@ -6,6 +6,7 @@ use Pms\CoreBundle\Entity\Repository\BuyerRepository;
 use Pms\CoreBundle\Entity\Repository\VendorRepository;
 use Pms\CoreBundle\Entity\Vendor;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToStringTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -29,7 +30,7 @@ class PurchaseOrderType extends AbstractType
                     '0' => 'Non-PO'
                 )
             ))
-            ->add('dateOfDelivered', 'text', array(
+            ->add($builder->create('dateOfDelivered', 'text', array(
                 'constraints' => array(
                     new NotBlank()
                 ),
@@ -38,7 +39,7 @@ class PurchaseOrderType extends AbstractType
                 ),
                 'data_class' => null,
                 'read_only' => true
-            ))
+            ))->addViewTransformer(new DateTimeToStringTransformer(null, null, 'Y-m-d')))
             ->add('purchaseOrderItems', 'collection', array(
                 'type' => new PurchaseOrderItemType(),
                 'allow_add'    => true,

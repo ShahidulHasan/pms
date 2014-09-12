@@ -57,8 +57,11 @@ class PurchaseOrderController extends Controller
             foreach ($items as $item) {
                 $pi = new PurchaseOrderItem();
                 $it = $em->getRepository('PmsCoreBundle:PurchaseRequisitionItem')->find($item);
+                $quantityRequisition = $it->getQuantity();
+                $quantityPurchaseOrder = $it->getPurchaseOrderQuantity();
+                $quantityRest = ($quantityRequisition - $quantityPurchaseOrder);
                 $pi->setPurchaseRequisitionItem($it);
-                $pi->setQuantity($it->getQuantity());
+                $pi->setQuantity($quantityRest);
                 $purchaseOrder->addPurchaseOrderItem($pi);
             }
 
@@ -85,29 +88,21 @@ class PurchaseOrderController extends Controller
 
             if ($form->isValid()) {
 
-                $em = $this->getDoctrine()->getManager();
-                $status = '1';
-                $dateOfDelivered = $form["dateOfDelivered"]->getData();
-                $vendor = $form["vendor"]->getData();
-                $buyer = $form["buyer"]->getData();
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
                 $purchaseOrder->setCreatedBy($user);
                 $purchaseOrder->setCreatedDate(new \DateTime());
-                $purchaseOrder->setStatus($status);
-                $purchaseOrder->setVendor($this->getDoctrine()->getRepository('PmsCoreBundle:Vendor')->findOneById($vendor));
-                $purchaseOrder->setBuyer($this->getDoctrine()->getRepository('PmsCoreBundle:Buyer')->findOneById($buyer));
-                $purchaseOrder->setDateOfDelivered(new \DateTime($dateOfDelivered));
+                $purchaseOrder->setStatus('1');
 
-                if (!empty($_POST['purchaseorder']['purchaseOrderItems'])) {
-                    foreach ($_POST['purchaseorder']['purchaseOrderItems'] as $item) {
-                        $pi = new PurchaseOrderItem();
-                        $pi->setItem($em->getRepository('PmsCoreBundle:Item')->find($item['item']));
-                        $pi->setQuantity($item['quantity']);
-                        $pi->setStatus('1');
-                        $pi->setComment($item['comment']);
-                        $pi->setPurchaseOrder($purchaseOrder);
-                        $purchaseOrder->addPurchaseOrderItem($pi);
-                    }
+                /** @var PurchaseOrderItem $item */
+                foreach ($purchaseOrder->getPurchaseOrderItems() as $item) {
+                    $purchaseRequisitionItem = $item->getPurchaseRequisitionItem();
+
+                    $quantityOld = $purchaseRequisitionItem->getPurchaseOrderQuantity();
+                    $purchaseRequisitionItem->setPurchaseOrderQuantity($quantityOld + $item->getQuantity());
+
+                    $item->setPurchaseRequisitionItem($purchaseRequisitionItem);
+                    $item->setPurchaseOrder($purchaseOrder);
+                    $item->setStatus('1');
                 }
 
                 $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseOrder')->create($purchaseOrder);
@@ -143,6 +138,22 @@ class PurchaseOrderController extends Controller
         $return = json_encode($return);
 
         return new Response($return, 200, array('Content-Type' => 'application/json'));
+    }
+
+    public function purchaseOrderDetailsAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $em->getRepository('PmsCoreBundle:PurchaseOrder')
+            ->createQueryBuilder('po')
+            ->select('po.orderNo')
+            ->where('po.id = ?1')
+            ->setParameter('1', $id);
+        $po = $query->getQuery()->getResult();
+
+        return $this->render('PmsCoreBundle:PurchaseOrder:details.html.twig', array(
+            'po' => $po,
+        ));
     }
 
     public function paginate($dql)

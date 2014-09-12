@@ -25,39 +25,51 @@ class Invoice
      * @var PurchaseRequisition
      *
      * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisition", inversedBy="invoice")
-     * @ORM\JoinColumn(name="purchase_requisitions")
+     * @ORM\JoinColumn(name="purchase_requisitions", nullable=true)
      */
     private $purchaseRequisition;
-
+//
+//    /**
+//     * @var ArrayCollection
+//     *
+//     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\ReceivedItem", mappedBy="invoice", cascade={"persist", "remove"})
+//     */
     /**
-     * @var ArrayCollection
+     * @var ReceivedItem
      *
-     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\ReceivedItem", mappedBy="invoice", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\ReceivedItem", inversedBy="invoice")
+     * @ORM\JoinColumn(name="received_item", nullable=true)
      */
     private $receivedItem;
 
     /**
-     * @ORM\Column(name="comments", type="string", length=255)
+     * @ORM\Column(name="titles", type="string", length=255)
      * @Assert\NotBlank
      */
-    public $comment;
+    public $title;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="invoice_numbers", type="string", length=255, nullable=true)
+     * @ORM\Column(name="descriptions", type="string", length=255)
+     * @Assert\NotBlank
      */
-    private $invoiceNumber;
+    public $description;
+
+//    /**
+//     * @var string
+//     *
+//     * @ORM\Column(name="invoice_numbers", type="string", length=255, nullable=true)
+//     */
+//    private $invoiceNumber;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     public $path;
 
-    /**
-     * @ORM\Column(name="calan", type="string", length=255, nullable=true)
-     */
-    public $calan;
+//    /**
+//     * @ORM\Column(name="calan", type="string", length=255, nullable=true)
+//     */
+//    public $calan;
 
     /**
      * @Assert\File(maxSize="5M")
@@ -78,16 +90,39 @@ class Invoice
      */
     private $uploadedDate;
 
-    /**
-     * @Assert\File(maxSize="5M")
-     */
-    public $fileCalan;
+//    /**
+//     * @Assert\File(maxSize="5M")
+//     */
+//    public $fileCalan;
 
     public $temp;
-    public $tempCalan;
+//    public $tempCalan;
+
+//    /**
+//     * @return \Doctrine\Common\Collections\ArrayCollection
+//     */
+//    public function getReceivedItem()
+//    {
+//        return $this->receivedItem;
+//    }
 
     /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
+     * Set receivedItem
+     *
+     * @param integer $receivedItem
+     * @return Invoice
+     */
+    public function setReceivedItem($receivedItem)
+    {
+        $this->receivedItem = $receivedItem;
+
+        return $this;
+    }
+
+    /**
+     * Get receivedItem
+     *
+     * @return integer
      */
     public function getReceivedItem()
     {
@@ -139,29 +174,29 @@ class Invoice
     {
         return $this->uploadedDate;
     }
-
-    /**
-     * Set invoiceNumber
-     *
-     * @param integer $invoiceNumber
-     * @return Invoice
-     */
-    public function setInvoiceNumber($invoiceNumber)
-    {
-        $this->invoiceNumber = $invoiceNumber;
-
-        return $this;
-    }
-
-    /**
-     * Get invoiceNumber
-     *
-     * @return integer
-     */
-    public function getInvoiceNumber()
-    {
-        return $this->invoiceNumber;
-    }
+//
+//    /**
+//     * Set invoiceNumber
+//     *
+//     * @param integer $invoiceNumber
+//     * @return Invoice
+//     */
+//    public function setInvoiceNumber($invoiceNumber)
+//    {
+//        $this->invoiceNumber = $invoiceNumber;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get invoiceNumber
+//     *
+//     * @return integer
+//     */
+//    public function getInvoiceNumber()
+//    {
+//        return $this->invoiceNumber;
+//    }
 
     /**
      * Set purchaseRequisition
@@ -263,7 +298,7 @@ class Invoice
     {
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
-        return 'uploads/file/invoice';
+        return 'uploads/file';
     }
 
     /**
@@ -289,108 +324,108 @@ class Invoice
             ? null
             : $this->getUploadDir() . '/' . $this->path;
     }
-
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function preUploadCalan()
-    {
-        if (null !== $this->getFileCalan()) {
-            // do whatever you want to generate a unique name
-            $filename = sha1(uniqid(mt_rand(), true));
-            $this->calan = $filename . '.' . $this->getFileCalan()->guessExtension();
-        }
-    }
-
-    /**
-     * Get fileCalan.
-     *
-     * @return UploadedFile
-     */
-    public function getFileCalan()
-    {
-        return $this->fileCalan;
-    }
-
-    /**
-     * Sets fileCalan.
-     *
-     * @param UploadedFile $fileCalan
-     */
-    public function setFileCalan(UploadedFile $fileCalan = null)
-    {
-        $this->fileCalan = $fileCalan;
-        // check if we have an old image path
-        if (isset($this->calan)) {
-            // store the old name to delete after the update
-            $this->$tempCalan = $this->calan;
-            $this->calan = null;
-        } else {
-            $this->calan = 'initial';
-        }
-    }
-
-    /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
-    public function uploadCalan()
-    {
-        if (null === $this->getFileCalan()) {
-            return;
-        }
-
-        // if there is an error when moving the file, an exception will
-        // be automatically thrown by move(). This will properly prevent
-        // the entity from being persisted to the database on error
-        $this->getFileCalan()->move($this->getUploadRootDirCalan(), $this->calan);
-
-        // check if we have an old image
-        if (isset($this->tempCalan)) {
-            // delete the old image
-            unlink($this->getUploadRootDirCalan() . '/' . $this->tempCalan);
-            // clear the temp image path
-            $this->tempCalan = null;
-        }
-        $this->fileCalan = null;
-    }
-
-    protected function getUploadRootDirCalan()
-    {
-        // the absolute directory path where uploaded
-        // documents should be saved
-        return __DIR__ . '/../../../../web/' . $this->getUploadDirCalan();
-    }
-
-    protected function getUploadDirCalan()
-    {
-        // get rid of the __DIR__ so it doesn't screw up
-        // when displaying uploaded doc/image in the view.
-        return 'uploads/file/calan';
-    }
-
-    /**
-     * @ORM\PostRemove()
-     */
-    public function removeUploadCalan()
-    {
-        if ($fileCalan = $this->getAbsolutePathCalan()) {
-            unlink($fileCalan);
-        }
-    }
-
-    public function getAbsolutePathCalan()
-    {
-        return null === $this->calan
-            ? null
-            : $this->getUploadRootDirCalan() . '/' . $this->calan;
-    }
-
-    public function getWebPathCalan()
-    {
-        return null === $this->calan
-            ? null
-            : $this->getUploadDirCalan() . '/' . $this->calan;
-    }
+//
+//    /**
+//     * @ORM\PrePersist()
+//     * @ORM\PreUpdate()
+//     */
+//    public function preUploadCalan()
+//    {
+//        if (null !== $this->getFileCalan()) {
+//            // do whatever you want to generate a unique name
+//            $filename = sha1(uniqid(mt_rand(), true));
+//            $this->calan = $filename . '.' . $this->getFileCalan()->guessExtension();
+//        }
+//    }
+//
+//    /**
+//     * Get fileCalan.
+//     *
+//     * @return UploadedFile
+//     */
+//    public function getFileCalan()
+//    {
+//        return $this->fileCalan;
+//    }
+//
+//    /**
+//     * Sets fileCalan.
+//     *
+//     * @param UploadedFile $fileCalan
+//     */
+//    public function setFileCalan(UploadedFile $fileCalan = null)
+//    {
+//        $this->fileCalan = $fileCalan;
+//        // check if we have an old image path
+//        if (isset($this->calan)) {
+//            // store the old name to delete after the update
+//            $this->$tempCalan = $this->calan;
+//            $this->calan = null;
+//        } else {
+//            $this->calan = 'initial';
+//        }
+//    }
+//
+//    /**
+//     * @ORM\PostPersist()
+//     * @ORM\PostUpdate()
+//     */
+//    public function uploadCalan()
+//    {
+//        if (null === $this->getFileCalan()) {
+//            return;
+//        }
+//
+//        // if there is an error when moving the file, an exception will
+//        // be automatically thrown by move(). This will properly prevent
+//        // the entity from being persisted to the database on error
+//        $this->getFileCalan()->move($this->getUploadRootDirCalan(), $this->calan);
+//
+//        // check if we have an old image
+//        if (isset($this->tempCalan)) {
+//            // delete the old image
+//            unlink($this->getUploadRootDirCalan() . '/' . $this->tempCalan);
+//            // clear the temp image path
+//            $this->tempCalan = null;
+//        }
+//        $this->fileCalan = null;
+//    }
+//
+//    protected function getUploadRootDirCalan()
+//    {
+//        // the absolute directory path where uploaded
+//        // documents should be saved
+//        return __DIR__ . '/../../../../web/' . $this->getUploadDirCalan();
+//    }
+//
+//    protected function getUploadDirCalan()
+//    {
+//        // get rid of the __DIR__ so it doesn't screw up
+//        // when displaying uploaded doc/image in the view.
+//        return 'uploads/file/calan';
+//    }
+//
+//    /**
+//     * @ORM\PostRemove()
+//     */
+//    public function removeUploadCalan()
+//    {
+//        if ($fileCalan = $this->getAbsolutePathCalan()) {
+//            unlink($fileCalan);
+//        }
+//    }
+//
+//    public function getAbsolutePathCalan()
+//    {
+//        return null === $this->calan
+//            ? null
+//            : $this->getUploadRootDirCalan() . '/' . $this->calan;
+//    }
+//
+//    public function getWebPathCalan()
+//    {
+//        return null === $this->calan
+//            ? null
+//            : $this->getUploadDirCalan() . '/' . $this->calan;
+//    }
 }

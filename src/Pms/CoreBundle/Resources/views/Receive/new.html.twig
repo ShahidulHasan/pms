@@ -5,7 +5,7 @@
     <div class="modal-dialog" style="width: 1000px;">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title bold" style="text-align: center;"> Open Item List</h4>
+                <h4 class="modal-title bold" style="text-align: center;"> Requisition Item List</h4>
             </div>
             <form method="post" action="">
                 <div class="modal-body">
@@ -24,26 +24,27 @@
                                 <tbody>
                                 {% for orderItem in pri %}
 
-                                    {% set quantityRequisition = orderItem.quantity %}
-                                    {% set quantityOrder = orderItem.purchaseOrderQuantity %}
-                                    {% set quantityNeed = quantityRequisition - quantityOrder %}
+                                    {% if orderItem.purchaseRequisition.createdBy == app.user.id %}
 
+                                        <tr>
+                                            <td class="col-md-1">
+                                                <input type="checkbox" name="items[]" value="{{ orderItem.id }}">
+                                            </td>
+                                            <td class="col-md-3">
+                                                {{ orderItem.item.itemName }}
+                                            </td>
+                                            <td class="col-md-2">
+                                                {{ orderItem.quantity }}
+                                            </td>
+                                            <td class="col-md-2">
+                                                {{ orderItem.purchaseRequisition.project.projectName | default() }}
+                                            </td>
+                                        </tr>
 
-                                    <tr>
-                                        <td class="col-md-1">
-                                            <input type="checkbox" name="items[]" value="{{ orderItem.id }}">
-                                        </td>
-                                        <td class="col-md-3">
-                                            {{ orderItem.item.itemName }}
-                                        </td>
-                                        <td class="col-md-2">
-                                            {{ quantityNeed }}
-                                        </td>
-                                        <td class="col-md-2">
-                                            {{ orderItem.purchaseRequisition.project.projectName | default() }}
-                                        </td>
-                                    </tr>
+                                    {% endif %}
+
                                 {% endfor %}
+
                                 </tbody>
                             </table>
 
@@ -60,21 +61,5 @@
             </form>
         </div>
     </div>
-
-{% endblock %}
-
-{% block documentready %}
-    {{ parent() }}
-
-    $("#purchaseorder_poNonpo").change(function () {
-    var poNonpo = $("#purchaseorder_poNonpo").val();
-    if(poNonpo==1){
-    $('#buyer-group').hide();
-    $('#vendor-group').show();
-    }else{
-    $('#vendor-group').hide();
-    $('#buyer-group').show();
-    }
-    });
 
 {% endblock %}

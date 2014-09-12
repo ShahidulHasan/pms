@@ -3,8 +3,11 @@
 namespace Pms\CoreBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
+use Pms\CoreBundle\Entity\Repository\PurchaseRequisitionItemRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Pms\CoreBundle\Entity\Repository\ItemRepository;
@@ -19,12 +22,10 @@ class PurchaseOrderItemType extends AbstractType
     {
         $builder
             ->add('comment', 'textarea')
-            ->add('purchaseRequisitionItem', 'entity', array(
-                "class" => "PmsCoreBundle:PurchaseRequisitionItem",
-                'property'=>'item.itemName'
-            ))
-            ->add('project', 'text')
             ->add('quantity', 'text')
+            ->add('purchaseRequisitionItem', 'entity_hidden', array(
+                "class" => "PmsCoreBundle:PurchaseRequisitionItem",
+            ))
         ;
     }
     

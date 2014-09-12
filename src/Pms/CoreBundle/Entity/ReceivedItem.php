@@ -2,6 +2,7 @@
 
 namespace Pms\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -51,11 +52,16 @@ class ReceivedItem
      */
     private $quantity;
 
+//    /**
+//     * @var Invoice
+//     *
+//     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Invoice", inversedBy="receivedItem")
+//     * @ORM\JoinColumn(name="invoices")
+//     */
     /**
-     * @var Invoice
+     * @var ArrayCollection
      *
-     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Invoice", inversedBy="receivedItem")
-     * @ORM\JoinColumn(name="invoices")
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\Invoice", mappedBy="receivedItem", cascade={"persist", "remove"})
      */
     private $invoice;
 
@@ -152,23 +158,31 @@ class ReceivedItem
         return $this->quantity;
     }
 
-    /**
-     * Set invoice
-     *
-     * @param integer $invoice
-     * @return ReceivedItem
-     */
-    public function setInvoice($invoice)
-    {
-        $this->invoice = $invoice;
+//    /**
+//     * Set invoice
+//     *
+//     * @param integer $invoice
+//     * @return ReceivedItem
+//     */
+//    public function setInvoice($invoice)
+//    {
+//        $this->invoice = $invoice;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get invoice
+//     *
+//     * @return integer
+//     */
+//    public function getInvoice()
+//    {
+//        return $this->invoice;
+//    }
 
-        return $this;
-    }
-
     /**
-     * Get invoice
-     *
-     * @return integer
+     * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function getInvoice()
     {
