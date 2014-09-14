@@ -32,18 +32,25 @@ class ReceivedItem
     /**
      * @var PurchaseRequisitionItem
      *
-     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisitionItem", inversedBy="receivedItem")
-     * @ORM\JoinColumn(name="purchase_requisition_items")
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisitionItem")
+     * @ORM\JoinColumn(name="purchase_requisition_item", nullable=true)
      */
     private $purchaseRequisitionItem;
-
     /**
      * @var Item
      *
      * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Item", inversedBy="receivedItem", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="received_items", nullable=true)
+     * @ORM\JoinColumn(name="items", nullable=true)
      */
     private $item;
+
+    /**
+     * @var Receive
+     *
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Receive", inversedBy="receiveItems", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="receives", nullable=true)
+     */
+    private $receive;
 
     /**
      * @var integer
@@ -61,20 +68,6 @@ class ReceivedItem
     private $invoice;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="received_by", type="string", length=255)
-     */
-    private $receivedBy;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="received_date", type="datetime")
-     */
-    private $receivedDate;
-
-    /**
      * Get id
      *
      * @return integer 
@@ -82,52 +75,6 @@ class ReceivedItem
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set receivedBy
-     *
-     * @param string $receivedBy
-     * @return ReceivedItem
-     */
-    public function setReceivedBy($receivedBy)
-    {
-        $this->receivedBy = $receivedBy;
-
-        return $this;
-    }
-
-    /**
-     * Get receivedBy
-     *
-     * @return string
-     */
-    public function getReceivedBy()
-    {
-        return $this->receivedBy;
-    }
-
-    /**
-     * Set receivedDate
-     *
-     * @param \DateTime $receivedDate
-     * @return ReceivedItem
-     */
-    public function setReceivedDate($receivedDate)
-    {
-        $this->receivedDate = $receivedDate;
-
-        return $this;
-    }
-
-    /**
-     * Get receivedDate
-     *
-     * @return \DateTime
-     */
-    public function getReceivedDate()
-    {
-        return $this->receivedDate;
     }
 
     /**
@@ -177,26 +124,22 @@ class ReceivedItem
     }
 
     /**
-     * Set purchaseRequisitionItem
-     *
-     * @param integer $purchaseRequisitionItem
-     * @return ReceivedItem
-     */
-    public function setPurchaseRequisitionItem($purchaseRequisitionItem)
-    {
-        $this->purchaseRequisitionItem = $purchaseRequisitionItem;
-
-        return $this;
-    }
-
-    /**
-     * Get purchaseRequisitionItem
-     *
-     * @return integer
+     * @return \Pms\CoreBundle\Entity\PurchaseRequisitionItem
      */
     public function getPurchaseRequisitionItem()
     {
         return $this->purchaseRequisitionItem;
+    }
+
+    /**
+     * @param \Pms\CoreBundle\Entity\PurchaseRequisitionItem $purchaseRequisitionItem
+     * @return $this
+     */
+    public function setPurchaseRequisitionItem($purchaseRequisitionItem)
+    {
+        $this->purchaseRequisitionItem = $purchaseRequisitionItem;
+        $this->item = $purchaseRequisitionItem->getItem();
+        return $this;
     }
 
     /**
@@ -243,5 +186,28 @@ class ReceivedItem
     public function getItem()
     {
         return $this->item;
+    }
+
+    /**
+     * Set receive
+     *
+     * @param Receive $receive
+     * @return ReceivedItem
+     */
+    public function setReceive($receive)
+    {
+        $this->receive = $receive;
+
+        return $this;
+    }
+
+    /**
+     * Get receive
+     *
+     * @return integer
+     */
+    public function getReceive()
+    {
+        return $this->receive;
     }
 }

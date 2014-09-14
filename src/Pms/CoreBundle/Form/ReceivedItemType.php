@@ -23,51 +23,6 @@ class ReceivedItemType extends AbstractType
                     'autocomplete' => 'off'
                 )
             ))
-            ->add('quantity', 'text', array(
-                'constraints' => array(
-                    new NotBlank()
-                ),
-                'attr' => array(
-                    'placeholder' => 'Quantity',
-                    'autocomplete' => 'off'
-                )
-            ))
-            ->add('purchaseRequisitionItem', 'entity', array(
-                'constraints' => array(
-                    new NotBlank()
-                ),
-                'class' => 'PmsCoreBundle:PurchaseRequisitionItem',
-                'property' => 'purchaseRequisition.requisitionNo',
-                'required' => false,
-                'attr' => array(
-                    'placeholder' => 'Select Item'
-                ),
-                'empty_data' => null,
-                'query_builder' => function (EntityRepository $repository)
-                    {
-                        return $repository->createQueryBuilder('i')
-                            ->where('i.status = 1');
-                    },
-            ))
-            ->add('item', 'entity', array(
-                'constraints' => array(
-                    new NotBlank()
-                ),
-                'class' => 'PmsCoreBundle:Item',
-                'property' => 'itemName',
-                'required' => false,
-                'attr' => array(
-                    'placeholder' => 'Select Item'
-                ),
-                'empty_data' => null,
-                'query_builder' => function (EntityRepository $repository)
-                    {
-                        return $repository->createQueryBuilder('i')
-                            ->select('i')
-                            ->where('pri.status = 1')
-                            ->join('i.purchaseRequisitionItem', 'pri');
-                    },
-            ))
             ->add('invoice', 'entity', array(
                 'constraints' => array(
                     new NotBlank()
@@ -78,17 +33,12 @@ class ReceivedItemType extends AbstractType
                 'attr' => array(
                     'placeholder' => 'Select Invoice'
                 ),
-                'empty_data' => null,
-                'query_builder' => function (EntityRepository $repository)
-                    {
-                        return $repository->createQueryBuilder('i')
-                            ->select('i')
-                            ->where('pri.status = 1')
-                            ->join('i.purchaseRequisition', 'pri')
-                            ->groupBy('i.id');
-                    },
+                'empty_data' => null
             ))
-            ->add('save', 'submit')
+            ->add('quantity', 'text')
+            ->add('purchaseRequisitionItem', 'entity_hidden', array(
+                "class" => "PmsCoreBundle:PurchaseRequisitionItem",
+            ))
         ;
     }
     

@@ -17,33 +17,38 @@
                         <table class="table table-striped" style="border:1px solid grey;margin-top: 100px;">
                             <thead>
                             <tr>
-                                <th class="col-md-3" style="padding-left: 30px;">item</th>
-                                <th class="col-md-2" style="padding-left: 12px;">grn</th>
-                                <th class="col-md-2" style="padding-left: 12px;">invoice</th>
-                                <th class="col-md-3" style="padding-left: 12px;">quantity</th>
-                                <th class="col-md-2" style="padding-left: 12px;">requisition</th>
+                                <th class="col-md-1" style="">Sl</th>
+                                <th class="col-md-3" style="">Item</th>
+                                <th class="col-md-3" style="padding-left: 12px;">Quantity</th>
+                                <th class="col-md-2" style="padding-left: 12px;">Invoice</th>
+                                <th class="col-md-2" style="padding-left: 12px;">GRN#</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {#{% for orderItem in form %}#}
+                            {% set i = 0 %}
+                            {% set j = 1 %}
+                            {% for orderItem in form.receiveItems %}
                                 <tr>
                                     <td>
-                                        {{ form_widget(form.item, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
+                                        {{ j }}
                                     </td>
                                     <td>
-                                        {{ form_widget(form.grn, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
+                                        {{ form_widget(orderItem.purchaseRequisitionItem, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
+                                        <span>{{ item[i] }}</span>
                                     </td>
                                     <td>
-                                        {{ form_widget(form.invoice, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
+                                        {{ form_widget(orderItem.quantity, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
                                     </td>
                                     <td>
-                                        {{ form_widget(form.quantity, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
+                                        {{ form_widget(orderItem.invoice, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
                                     </td>
                                     <td>
-                                        {{ form_widget(form.purchaseRequisitionItem, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
+                                        {{ form_widget(orderItem.grn, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
                                     </td>
                                 </tr>
-                            {#{% endfor %}#}
+                                {% set i = i + 1 %}
+                                {% set j = j + 1 %}
+                            {% endfor %}
                             </tbody>
                         </table>
 

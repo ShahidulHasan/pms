@@ -10,6 +10,7 @@ use Pms\CoreBundle\Entity\Invoice;
 use Pms\CoreBundle\Entity\PurchaseOrder;
 use Pms\CoreBundle\Entity\PurchaseOrderItem;
 use Pms\CoreBundle\Entity\PurchaseRequisitionItem;
+use Pms\CoreBundle\Entity\Receive;
 use Pms\CoreBundle\Entity\ReceivedItem;
 use Pms\CoreBundle\Entity\Vendor;
 use Pms\CoreBundle\Entity\Item;
@@ -21,6 +22,7 @@ use Pms\CoreBundle\Form\BuyerType;
 use Pms\CoreBundle\Form\InvoiceType;
 use Pms\CoreBundle\Form\PurchaseOrderType;
 use Pms\CoreBundle\Form\ReceivedItemType;
+use Pms\CoreBundle\Form\ReceiveType;
 use Pms\CoreBundle\Form\VendorType;
 use Pms\CoreBundle\Form\ItemType;
 use Pms\CoreBundle\Form\ProjectCostItemType;
@@ -91,18 +93,24 @@ class CoreController extends Controller
         if ($request->getMethod() == 'POST' && !empty($items)) {
 
             $em = $this->getDoctrine()->getManager();
+            $pir = new Receive();
+            $it1 =array();
             foreach ($items as $item) {
                 $pi = new ReceivedItem();
                 $it = $em->getRepository('PmsCoreBundle:PurchaseRequisitionItem')->find($item);
+                $ite = $em->getRepository('PmsCoreBundle:Item')->find($it->getItem());
                 $pi->setPurchaseRequisitionItem($it);
                 $pi->setItem($it->getItem());
                 $pi->setQuantity($it->getQuantity());
+                $pir->addReceiveItem($pi);
+                $it1[]       = $ite->getItemName();
             }
 
-            $form = $this->createForm(new ReceivedItemType(), $pi);
+            $form = $this->createForm(new ReceiveType(), $pir);
 
             return $this->render('PmsCoreBundle:Receive:form.html.twig', array(
                 'orderItems' => $items,
+                'item' => $it1,
                 'form' => $form->createView(),
             ));
         }
@@ -112,7 +120,7 @@ class CoreController extends Controller
 
     public function receiveAddAction(Request $request)
     {
-        $dql = "SELECT a FROM PmsCoreBundle:ReceivedItem a ORDER BY a.id DESC";
+        $dql = "SELECT a FROM PmsCoreBundle:Receive a ORDER BY a.id DESC";
 
         list($receivedItems, $page) = $this->paginate($dql);
 
@@ -124,9 +132,9 @@ class CoreController extends Controller
 
     public function receiveSaveAction(Request $request)
     {
-        $receivedItem = new ReceivedItem();
+        $receivedItem = new Receive();
 
-        $form = $this->createForm(new ReceivedItemType(), $receivedItem);
+        $form = $this->createForm(new ReceiveType(), $receivedItem);
         if ($request->getMethod() == 'POST') {
 
             $form->handleRequest($request);
@@ -137,7 +145,7 @@ class CoreController extends Controller
                 $receivedItem->setReceivedBy($user);
                 $receivedItem->setReceivedDate(new \DateTime());
 
-                $this->getDoctrine()->getRepository('PmsCoreBundle:ReceivedItem')->create($receivedItem);
+                $this->getDoctrine()->getRepository('PmsCoreBundle:Receive')->create($receivedItem);
 
                 $this->get('session')->getFlashBag()->add(
                     'notice',
@@ -148,7 +156,7 @@ class CoreController extends Controller
             }
         }
 
-        $dql = "SELECT a FROM PmsCoreBundle:ReceivedItem a ORDER BY a.id DESC";
+        $dql = "SELECT a FROM PmsCoreBundle:Receive a ORDER BY a.id DESC";
 
         list($receivedItems, $page) = $this->paginate($dql);
 
