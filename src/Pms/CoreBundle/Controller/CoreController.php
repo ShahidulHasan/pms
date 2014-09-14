@@ -159,6 +159,26 @@ class CoreController extends Controller
         ));
     }
 
+    public function itemProjectAction(Request $request){
+        $itemProject = $request->request->get('itemProject');
+        $itemProject = explode(',',$itemProject);
+
+        $item = $itemProject[0];
+        $project = $itemProject[1];
+
+        $purchaseRequisitionItem = $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisitionItem')->find($item);
+
+        if ($item) {
+            $return = array("responseCode" => 200, "item_name" => "Item name already exist.");
+            $return = json_encode($return);
+            return new Response($return, 200, array('Content-Type' => 'application/json'));
+        } else {
+            $return = array("responseCode" => '404', "item_name" => "Item name available.");
+            $return = json_encode($return);
+            return new Response($return, 200, array('Content-Type' => 'application/json'));
+        }
+    }
+
     public function paginate($dql)
     {
         $em = $this->get('doctrine.orm.entity_manager');

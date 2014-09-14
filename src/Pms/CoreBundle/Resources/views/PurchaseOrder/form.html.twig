@@ -91,20 +91,24 @@
                             <tbody id="orderItems" class="tags" data-prototype="{% filter escape %}
                                 {{ include('PmsCoreBundle:PurchaseOrder:purchaseOrderItemPrototype.html.twig', { 'form': form.purchaseOrderItems.vars.prototype }) }}
                                 {% endfilter %}}">
+                            {% set i = 0 %}
                                 {% for orderItem in form.purchaseOrderItems %}
                                     <tr>
                                         <td>
                                             {{ form_widget(orderItem.purchaseRequisitionItem, { 'attr': {'class': 'form-control', 'style': 'margin-left: 20px;width: 200px;padding-left: 10px! important;'} }) }}
+                                            <span id="item{{ i }}"></span>
                                         </td>
                                         <td>
                                             {{ form_widget(orderItem.quantity, { 'attr': {'class': 'form-control', 'style': 'width: 120px;padding-left: 10px! important;'} }) }}
                                         </td>
                                         <td>
-                                            {{ form_widget(orderItem.comment, { 'attr': {'class': 'form-control', 'style': 'width: 188px;padding-left: 10px! important;'} }) }}
+                                            <span id="project{{ i }}"></span>
                                         </td>
                                         <td>
+                                            {{ form_widget(orderItem.comment, { 'attr': {'class': 'form-control', 'style': 'width: 188px;padding-left: 10px! important;'} }) }}
                                         </td>
                                     </tr>
+                                    {% set i = i + 1 %}
                                 {% endfor %}
                             </tbody>
                         </table>
@@ -134,8 +138,35 @@
 {% block documentready %}
     {{ parent() }}
 
-    {#var x = $("#purchaseorder_purchaseOrderItems_0_purchaseRequisitionItem").val();#}
-    {#$("#purchaseorder_orderNo").val(x);#}
+    var length = {{ i|json_encode|raw }};
+
+    var i;
+    for( i = 0; i< length; i++){
+    var x = $("#purchaseorder_purchaseOrderItems_" + i + "_purchaseRequisitionItem").val();
+    var item = "item"+i;
+    var project = "project"+i;
+
+    var itemProject = new Array(item, project);
+
+    $.ajax({
+    type: "post",
+    url: Routing.generate('item_project_find'),
+    data: "itemProject=" + itemProject,
+    dataType: 'json',
+    success: function (msg) {
+    if(msg.responseCode == 204) {
+
+    } else{
+
+    }
+
+    }
+    });
+
+    document.getElementById(item).innerHTML = x;
+    document.getElementById(project).innerHTML = x;
+    }
+
     $("#purchaseorder_poNonpo").change(function () {
         var poNonpo = $("#purchaseorder_poNonpo").val();
         if (poNonpo == 1) {

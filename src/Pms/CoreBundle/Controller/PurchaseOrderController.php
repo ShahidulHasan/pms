@@ -159,6 +159,7 @@ class PurchaseOrderController extends Controller
     {
         $purchaseOrder = new PurchaseOrder();
         $em = $this->getDoctrine()->getManager();
+        $i = 0;
         foreach ($items as $item) {
             $pi = new PurchaseOrderItem();
             $it = $em->getRepository('PmsCoreBundle:PurchaseRequisitionItem')->find($item);
@@ -168,6 +169,7 @@ class PurchaseOrderController extends Controller
             $pi->setPurchaseRequisitionItem($it);
             $pi->setQuantity($quantityRest);
             $purchaseOrder->addPurchaseOrderItem($pi);
+            $i =  $i + 1;
         }
 
         $form = $this->createForm(new PurchaseOrderType(), $purchaseOrder);
@@ -175,6 +177,7 @@ class PurchaseOrderController extends Controller
         return $this->render('PmsCoreBundle:PurchaseOrder:form.html.twig', array(
             'orderItems' => $items,
             'form' => $form->createView(),
+            'i' => $i,
         ));
     }
 } 

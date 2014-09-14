@@ -60,6 +60,12 @@ vendor_update:
     requirements:
           id:  \d+
 
+item_project_find:
+    pattern: /itemProject
+    defaults: { _controller: PmsCoreBundle:Core:itemProject }
+    options:
+            expose: true
+
 purchase_order_add:
     pattern: /purchase/order
     defaults: { _controller: PmsCoreBundle:PurchaseOrder:purchaseOrderAdd }
