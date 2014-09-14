@@ -68,12 +68,6 @@ class PurchaseOrder
      */
     private $buyer;
 
-//    /**
-//     * @var User
-//     *
-//     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User", inversedBy="purchaseOrder")
-//     * @ORM\JoinColumn(name="created_by", nullable=true)
-//     */
     /**
      * @var string
      *

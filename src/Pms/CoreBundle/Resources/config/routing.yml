@@ -6,6 +6,10 @@ receive_add_new:
     pattern: /receive/item/new
     defaults: { _controller: PmsCoreBundle:Core:receiveNew }
 
+receive_save:
+    pattern: /receive/save
+    defaults: { _controller: PmsCoreBundle:Core:receiveSave }
+
 upload_add:
     pattern: /upload/file
     defaults: { _controller: PmsCoreBundle:Core:uploadAdd }

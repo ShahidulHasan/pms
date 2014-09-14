@@ -51,27 +51,7 @@ class PurchaseOrderController extends Controller
         $items = $request->request->get('items');
 
         if ($request->getMethod() == 'POST' && !empty($items)) {
-
-            $purchaseOrder = new PurchaseOrder();
-            $em = $this->getDoctrine()->getManager();
-            foreach ($items as $item) {
-                $pi = new PurchaseOrderItem();
-                $it = $em->getRepository('PmsCoreBundle:PurchaseRequisitionItem')->find($item);
-                $quantityRequisition = $it->getQuantity();
-                $quantityPurchaseOrder = $it->getPurchaseOrderQuantity();
-                $quantityRest = ($quantityRequisition - $quantityPurchaseOrder);
-                $pi->setPurchaseRequisitionItem($it);
-                $pi->setQuantity($quantityRest);
-                $purchaseOrder->addPurchaseOrderItem($pi);
-            }
-
-            $form = $this->createForm(new PurchaseOrderType(), $purchaseOrder);
-
-            return $this->render('PmsCoreBundle:PurchaseOrder:form.html.twig', array(
-                'orderItems' => $items,
-                'form' => $form->createView(),
-            ));
-
+            return $this->purchaseOrderForm($items);
         }
 
         return $this->purchaseOrderNewAdd();
@@ -169,5 +149,32 @@ class PurchaseOrderController extends Controller
         );
 
         return array($value, $page);
+    }
+
+    /**
+     * @param $items
+     * @return Response
+     */
+    protected function purchaseOrderForm($items)
+    {
+        $purchaseOrder = new PurchaseOrder();
+        $em = $this->getDoctrine()->getManager();
+        foreach ($items as $item) {
+            $pi = new PurchaseOrderItem();
+            $it = $em->getRepository('PmsCoreBundle:PurchaseRequisitionItem')->find($item);
+            $quantityRequisition = $it->getQuantity();
+            $quantityPurchaseOrder = $it->getPurchaseOrderQuantity();
+            $quantityRest = ($quantityRequisition - $quantityPurchaseOrder);
+            $pi->setPurchaseRequisitionItem($it);
+            $pi->setQuantity($quantityRest);
+            $purchaseOrder->addPurchaseOrderItem($pi);
+        }
+
+        $form = $this->createForm(new PurchaseOrderType(), $purchaseOrder);
+
+        return $this->render('PmsCoreBundle:PurchaseOrder:form.html.twig', array(
+            'orderItems' => $items,
+            'form' => $form->createView(),
+        ));
     }
 } 

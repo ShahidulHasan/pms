@@ -88,12 +88,12 @@ class PurchaseRequisition
      */
     private $invoice;
 
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\Invoice", mappedBy="purchaseRequisition", cascade={"persist", "remove"})
-     */
-    private $receivedItem;
+//    /**
+//     * @var ArrayCollection
+//     *
+//     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\Invoice", mappedBy="purchaseRequisition", cascade={"persist", "remove"})
+//     */
+//    private $receivedItem;
 
     /**
      * @var Project
@@ -685,13 +685,13 @@ class PurchaseRequisition
         return $this->invoice;
     }
 
-    /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function getReceivedItem()
-    {
-        return $this->receivedItem;
-    }
+//    /**
+//     * @return \Doctrine\Common\Collections\ArrayCollection
+//     */
+//    public function getReceivedItem()
+//    {
+//        return $this->receivedItem;
+//    }
 
     public function getDateOfRequisitionText() {
         if(empty($this->dateOfRequisition)){

@@ -2,6 +2,7 @@
 
 namespace Pms\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -38,6 +39,13 @@ class PurchaseRequisitionItem
     private $item;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\ReceivedItem", mappedBy="purchaseRequisitionItem", cascade={"persist", "remove"})
+     */
+    private $receivedItem;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="quantities", type="integer", nullable=true)
@@ -71,6 +79,14 @@ class PurchaseRequisitionItem
      * @ORM\Column(name="purchase_order_quantity", type="integer")
      */
     private $purchaseOrderQuantity;
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getReceivedItem()
+    {
+        return $this->receivedItem;
+    }
 
     public function __toString()
     {

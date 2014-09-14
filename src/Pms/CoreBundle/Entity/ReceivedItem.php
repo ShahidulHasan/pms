@@ -30,12 +30,12 @@ class ReceivedItem
     private $grn;
 
     /**
-     * @var PurchaseRequisition
+     * @var PurchaseRequisitionItem
      *
-     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisition", inversedBy="receivedItem")
-     * @ORM\JoinColumn(name="purchase_requisitions")
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisitionItem", inversedBy="receivedItem")
+     * @ORM\JoinColumn(name="purchase_requisition_items")
      */
-    private $purchaseRequisition;
+    private $purchaseRequisitionItem;
 
     /**
      * @var Item
@@ -52,16 +52,11 @@ class ReceivedItem
      */
     private $quantity;
 
-//    /**
-//     * @var Invoice
-//     *
-//     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Invoice", inversedBy="receivedItem")
-//     * @ORM\JoinColumn(name="invoices")
-//     */
     /**
-     * @var ArrayCollection
+     * @var Invoice
      *
-     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\Invoice", mappedBy="receivedItem", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Invoice", inversedBy="receivedItem")
+     * @ORM\JoinColumn(name="invoices")
      */
     private $invoice;
 
@@ -158,31 +153,23 @@ class ReceivedItem
         return $this->quantity;
     }
 
-//    /**
-//     * Set invoice
-//     *
-//     * @param integer $invoice
-//     * @return ReceivedItem
-//     */
-//    public function setInvoice($invoice)
-//    {
-//        $this->invoice = $invoice;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get invoice
-//     *
-//     * @return integer
-//     */
-//    public function getInvoice()
-//    {
-//        return $this->invoice;
-//    }
+    /**
+     * Set invoice
+     *
+     * @param integer $invoice
+     * @return ReceivedItem
+     */
+    public function setInvoice($invoice)
+    {
+        $this->invoice = $invoice;
+
+        return $this;
+    }
 
     /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
+     * Get invoice
+     *
+     * @return integer
      */
     public function getInvoice()
     {
@@ -190,26 +177,26 @@ class ReceivedItem
     }
 
     /**
-     * Set purchaseRequisition
+     * Set purchaseRequisitionItem
      *
-     * @param integer $purchaseRequisition
+     * @param integer $purchaseRequisitionItem
      * @return ReceivedItem
      */
-    public function setPurchaseRequisition($purchaseRequisition)
+    public function setPurchaseRequisitionItem($purchaseRequisitionItem)
     {
-        $this->purchaseRequisition = $purchaseRequisition;
+        $this->purchaseRequisitionItem = $purchaseRequisitionItem;
 
         return $this;
     }
 
     /**
-     * Get purchaseRequisition
+     * Get purchaseRequisitionItem
      *
      * @return integer
      */
-    public function getPurchaseRequisition()
+    public function getPurchaseRequisitionItem()
     {
-        return $this->purchaseRequisition;
+        return $this->purchaseRequisitionItem;
     }
 
     /**

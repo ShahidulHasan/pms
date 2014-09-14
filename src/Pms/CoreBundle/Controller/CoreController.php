@@ -90,20 +90,16 @@ class CoreController extends Controller
 
         if ($request->getMethod() == 'POST' && !empty($items)) {
 
-            $receivedItem = new ReceivedItem();
-//            $em = $this->getDoctrine()->getManager();
-//            foreach ($items as $item) {
-//                $pi = new PurchaseOrderItem();
-//                $it = $em->getRepository('PmsCoreBundle:PurchaseRequisitionItem')->find($item);
-//                $quantityRequisition = $it->getQuantity();
-//                $quantityPurchaseOrder = $it->getPurchaseOrderQuantity();
-//                $quantityRest = ($quantityRequisition - $quantityPurchaseOrder);
-//                $pi->setPurchaseRequisitionItem($it);
-//                $pi->setQuantity($quantityRest);
-//                $purchaseOrder->addPurchaseOrderItem($pi);
-//            }
+            $em = $this->getDoctrine()->getManager();
+            foreach ($items as $item) {
+                $pi = new ReceivedItem();
+                $it = $em->getRepository('PmsCoreBundle:PurchaseRequisitionItem')->find($item);
+                $pi->setPurchaseRequisitionItem($it);
+                $pi->setItem($it->getItem());
+                $pi->setQuantity($it->getQuantity());
+            }
 
-            $form = $this->createForm(new ReceivedItemType(), $receivedItem);
+            $form = $this->createForm(new ReceivedItemType(), $pi);
 
             return $this->render('PmsCoreBundle:Receive:form.html.twig', array(
                 'orderItems' => $items,
@@ -115,6 +111,18 @@ class CoreController extends Controller
     }
 
     public function receiveAddAction(Request $request)
+    {
+        $dql = "SELECT a FROM PmsCoreBundle:ReceivedItem a ORDER BY a.id DESC";
+
+        list($receivedItems, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:Receive:add.html.twig', array(
+            'receivedItems' => $receivedItems,
+            'page' => $page,
+        ));
+    }
+
+    public function receiveSaveAction(Request $request)
     {
         $receivedItem = new ReceivedItem();
 

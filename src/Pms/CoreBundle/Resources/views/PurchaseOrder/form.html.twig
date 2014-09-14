@@ -134,6 +134,8 @@
 {% block documentready %}
     {{ parent() }}
 
+    {#var x = $("#purchaseorder_purchaseOrderItems_0_purchaseRequisitionItem").val();#}
+    {#$("#purchaseorder_orderNo").val(x);#}
     $("#purchaseorder_poNonpo").change(function () {
         var poNonpo = $("#purchaseorder_poNonpo").val();
         if (poNonpo == 1) {
