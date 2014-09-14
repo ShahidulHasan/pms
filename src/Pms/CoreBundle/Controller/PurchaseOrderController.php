@@ -159,25 +159,31 @@ class PurchaseOrderController extends Controller
     {
         $purchaseOrder = new PurchaseOrder();
         $em = $this->getDoctrine()->getManager();
-        $i = 0;
+        $it1 =array();
+        $pr1 =array();
         foreach ($items as $item) {
             $pi = new PurchaseOrderItem();
             $it = $em->getRepository('PmsCoreBundle:PurchaseRequisitionItem')->find($item);
+            $ite = $em->getRepository('PmsCoreBundle:Item')->find($it->getItem());
+            $itp = $em->getRepository('PmsCoreBundle:PurchaseRequisition')->find($it->getPurchaseRequisition());
+            $itpr = $em->getRepository('PmsCoreBundle:Project')->find($itp->getProject());
             $quantityRequisition = $it->getQuantity();
             $quantityPurchaseOrder = $it->getPurchaseOrderQuantity();
             $quantityRest = ($quantityRequisition - $quantityPurchaseOrder);
             $pi->setPurchaseRequisitionItem($it);
             $pi->setQuantity($quantityRest);
             $purchaseOrder->addPurchaseOrderItem($pi);
-            $i =  $i + 1;
+            $it1[]                     = $ite->getItemName();
+            $pr1[]                     = $itpr->getProjectName();
         }
 
         $form = $this->createForm(new PurchaseOrderType(), $purchaseOrder);
 
         return $this->render('PmsCoreBundle:PurchaseOrder:form.html.twig', array(
             'orderItems' => $items,
+            'item' => $it1,
+            'project' => $pr1,
             'form' => $form->createView(),
-            'i' => $i,
         ));
     }
 } 

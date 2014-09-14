@@ -81,34 +81,40 @@
                         <table class="table table-striped" style="border:1px solid grey;margin-top: 100px;">
                             <thead>
                             <tr>
+                                <th class="col-md-1" style="">Sl</th>
                                 <th class="col-md-3" style="padding-left: 30px;">Particulars</th>
                                 <th class="col-md-2" style="padding-left: 12px;">Quantity</th>
                                 <th class="col-md-2" style="padding-left: 12px;">Project</th>
                                 <th class="col-md-3" style="padding-left: 12px;">Remarks</th>
-                                <th class="col-md-2"></th>
                             </tr>
                             </thead>
+
                             <tbody id="orderItems" class="tags" data-prototype="{% filter escape %}
                                 {{ include('PmsCoreBundle:PurchaseOrder:purchaseOrderItemPrototype.html.twig', { 'form': form.purchaseOrderItems.vars.prototype }) }}
                                 {% endfilter %}}">
                             {% set i = 0 %}
+                            {% set j = 1 %}
                                 {% for orderItem in form.purchaseOrderItems %}
                                     <tr>
                                         <td>
+                                            {{ j }}
+                                        </td>
+                                        <td>
                                             {{ form_widget(orderItem.purchaseRequisitionItem, { 'attr': {'class': 'form-control', 'style': 'margin-left: 20px;width: 200px;padding-left: 10px! important;'} }) }}
-                                            <span id="item{{ i }}"></span>
+                                            <span>{{ item[i] }}</span>
                                         </td>
                                         <td>
                                             {{ form_widget(orderItem.quantity, { 'attr': {'class': 'form-control', 'style': 'width: 120px;padding-left: 10px! important;'} }) }}
                                         </td>
                                         <td>
-                                            <span id="project{{ i }}"></span>
+                                            <span>{{ project[i] }}</span>
                                         </td>
                                         <td>
                                             {{ form_widget(orderItem.comment, { 'attr': {'class': 'form-control', 'style': 'width: 188px;padding-left: 10px! important;'} }) }}
                                         </td>
                                     </tr>
                                     {% set i = i + 1 %}
+                                    {% set j = j + 1 %}
                                 {% endfor %}
                             </tbody>
                         </table>
@@ -137,35 +143,6 @@
 
 {% block documentready %}
     {{ parent() }}
-
-    var length = {{ i|json_encode|raw }};
-
-    var i;
-    for( i = 0; i< length; i++){
-    var x = $("#purchaseorder_purchaseOrderItems_" + i + "_purchaseRequisitionItem").val();
-    var item = "item"+i;
-    var project = "project"+i;
-
-    var itemProject = new Array(item, project);
-
-    $.ajax({
-    type: "post",
-    url: Routing.generate('item_project_find'),
-    data: "itemProject=" + itemProject,
-    dataType: 'json',
-    success: function (msg) {
-    if(msg.responseCode == 204) {
-
-    } else{
-
-    }
-
-    }
-    });
-
-    document.getElementById(item).innerHTML = x;
-    document.getElementById(project).innerHTML = x;
-    }
 
     $("#purchaseorder_poNonpo").change(function () {
         var poNonpo = $("#purchaseorder_poNonpo").val();
