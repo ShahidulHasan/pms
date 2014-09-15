@@ -145,6 +145,11 @@ class CoreController extends Controller
                 $receivedItem->setReceivedBy($user);
                 $receivedItem->setReceivedDate(new \DateTime());
 
+                /** @var ReceivedItem $item */
+                foreach ($receivedItem->getReceiveItems() as $item) {
+                    $item->setReceive($receivedItem);
+                }
+
                 $this->getDoctrine()->getRepository('PmsCoreBundle:Receive')->create($receivedItem);
 
                 $this->get('session')->getFlashBag()->add(
