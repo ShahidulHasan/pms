@@ -2,6 +2,7 @@
 
 namespace Pms\CoreBundle\Form;
 
+use Pms\UserBundle\Entity\Repository\UserRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -26,6 +27,30 @@ class CategoryType extends AbstractType
                 'attr' => array(
                     'autocomplete' => 'off'
                 )
+            ))
+            ->add('head', 'entity', array(
+                'class' => 'UserBundle:User',
+                'property' => 'username',
+                'required' => false,
+                'empty_value' => 'Select Head',
+                'empty_data' => null,
+                'query_builder' => function (UserRepository $repository)
+                    {
+                        return $repository->createQueryBuilder('s')
+                            ->where('s.enabled = 1');
+                    }
+            ))
+            ->add('subHead', 'entity', array(
+                'class' => 'UserBundle:User',
+                'property' => 'username',
+                'required' => false,
+                'empty_value' => 'Select Sub Head',
+                'empty_data' => null,
+                'query_builder' => function (UserRepository $repository)
+                    {
+                        return $repository->createQueryBuilder('s')
+                            ->where('s.enabled = 1');
+                    }
             ))
         ;
     }

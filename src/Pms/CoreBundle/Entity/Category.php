@@ -23,6 +23,20 @@ class Category
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="heads", type="string", length=255, nullable=true)
+     */
+    private $head;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sub_heads", type="string", length=255, nullable=true)
+     */
+    private $subHead;
+
+    /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\ProjectCostItem", mappedBy="category")
@@ -79,6 +93,52 @@ class Category
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set head
+     *
+     * @param integer $head
+     * @return Category
+     */
+    public function setHead($head)
+    {
+        $this->head = $head;
+
+        return $this;
+    }
+
+    /**
+     * Get head
+     *
+     * @return integer
+     */
+    public function getHead()
+    {
+        return $this->head;
+    }
+
+    /**
+     * Set subHead
+     *
+     * @param integer $subHead
+     * @return Category
+     */
+    public function setSubHead($subHead)
+    {
+        $this->subHead = $subHead;
+
+        return $this;
+    }
+
+    /**
+     * Get subHead
+     *
+     * @return integer
+     */
+    public function getSubHead()
+    {
+        return $this->subHead;
     }
 
     /**

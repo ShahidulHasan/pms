@@ -260,12 +260,4 @@ class Project
     {
         return $this->purchaseRequisition;
     }
-
-    /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function getPurchaseOrderItem()
-    {
-        return $this->purchaseOrderItem;
-    }
 }

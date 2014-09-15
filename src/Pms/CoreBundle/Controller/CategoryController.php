@@ -47,6 +47,8 @@ class CategoryController extends Controller
 
         $categoryName = $categoryArray[0];
         $updateId = $categoryArray[1];
+        $categoryHead = $categoryArray[2];
+        $categorySubHead = $categoryArray[3];
 
         if($categoryName) {
             $category = $this->getDoctrine()->getRepository('PmsCoreBundle:Category')->find($updateId);
@@ -55,6 +57,8 @@ class CategoryController extends Controller
             );
             if($category) {
                 $category->setCategoryName($categoryName);
+                $category->setHead($categoryHead);
+                $category->setSubHead($categorySubHead);
                 $this->getDoctrine()->getManager()->persist($category);
                 $this->getDoctrine()->getManager()->flush();
 
@@ -70,6 +74,8 @@ class CategoryController extends Controller
             } else {
                 $category = new Category();
                 $category->setCategoryName($categoryName);
+                $category->setHead($categoryHead);
+                $category->setSubHead($categorySubHead);
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
                 $category->setCreatedBy($user);
                 $category->setCreatedDate(new \DateTime());
