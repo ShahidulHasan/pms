@@ -69,9 +69,10 @@ class PurchaseOrder
     private $buyer;
 
     /**
-     * @var string
+     * @var User
      *
-     * @ORM\Column(name="created_by", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="created_by", nullable=true)
      */
     private $createdBy;
 
@@ -161,7 +162,7 @@ class PurchaseOrder
     /**
      * Set buyer
      *
-     * @param integer $buyer
+     * @param Buyer $buyer
      * @return PurchaseOrder
      */
     public function setBuyer($buyer)
@@ -174,7 +175,7 @@ class PurchaseOrder
     /**
      * Get buyer
      *
-     * @return integer
+     * @return Buyer
      */
     public function getBuyer()
     {
@@ -184,7 +185,7 @@ class PurchaseOrder
     /**
      * Set createdBy
      *
-     * @param integer $createdBy
+     * @param User $createdBy
      * @return PurchaseOrder
      */
     public function setCreatedBy($createdBy)
@@ -197,7 +198,7 @@ class PurchaseOrder
     /**
      * Get createdBy
      *
-     * @return integer
+     * @return User
      */
     public function getCreatedBy()
     {
@@ -322,7 +323,7 @@ class PurchaseOrder
     /**
      * Set vendor
      *
-     * @param integer $vendor
+     * @param Vendor $vendor
      * @return PurchaseOrder
      */
     public function setVendor($vendor)
@@ -335,7 +336,7 @@ class PurchaseOrder
     /**
      * Get vendor
      *
-     * @return integer
+     * @return Vendor
      */
     public function getVendor()
     {

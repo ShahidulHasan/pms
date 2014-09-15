@@ -107,7 +107,7 @@ class ReceivedItem
     /**
      * Set item
      *
-     * @param integer $item
+     * @param Item $item
      * @return ReceivedItem
      */
     public function setItem($item)
@@ -120,7 +120,7 @@ class ReceivedItem
     /**
      * Get item
      *
-     * @return integer
+     * @return Item
      */
     public function getItem()
     {
@@ -143,7 +143,7 @@ class ReceivedItem
     /**
      * Get receive
      *
-     * @return integer
+     * @return Receive
      */
     public function getReceive()
     {

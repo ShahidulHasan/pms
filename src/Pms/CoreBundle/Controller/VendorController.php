@@ -130,7 +130,7 @@ class VendorController extends Controller
                 $vendor = new Vendor();
                 $vendor->setVendorName($vendorName);
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
-                $vendor->setCreatedBy($user);
+                $vendor->setCreatedBy($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
                 $vendor->setCreatedDate(new \DateTime());
                 $vendor->setStatus(1);
 

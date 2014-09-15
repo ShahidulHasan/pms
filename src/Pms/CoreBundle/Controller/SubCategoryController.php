@@ -147,7 +147,7 @@ class SubCategoryController extends Controller
                 $category = new Category();
                 $category->setCategoryName($subCategoryName);
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
-                $category->setCreatedBy($user);
+                $category->setCreatedBy($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
                 $category->setCreatedDate(new \DateTime());
                 $category->setStatus(1);
                 $category->setParent($parent);

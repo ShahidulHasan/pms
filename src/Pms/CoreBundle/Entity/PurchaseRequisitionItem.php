@@ -105,7 +105,7 @@ class PurchaseRequisitionItem
     /**
      * Set item
      *
-     * @param string $item
+     * @param Item $item
      * @return PurchaseRequisitionItem
      */
     public function setItem($item)
@@ -118,7 +118,7 @@ class PurchaseRequisitionItem
     /**
      * Get item
      *
-     * @return string
+     * @return Item
      */
     public function getItem()
     {
@@ -128,7 +128,7 @@ class PurchaseRequisitionItem
     /**
      * Set purchaseRequisition
      *
-     * @param integer $purchaseRequisition
+     * @param PurchaseRequisition $purchaseRequisition
      * @return PurchaseRequisitionItem
      */
     public function setPurchaseRequisition($purchaseRequisition)
@@ -141,7 +141,7 @@ class PurchaseRequisitionItem
     /**
      * Get purchaseRequisition
      *
-     * @return integer
+     * @return PurchaseRequisition
      */
     public function getPurchaseRequisition()
     {

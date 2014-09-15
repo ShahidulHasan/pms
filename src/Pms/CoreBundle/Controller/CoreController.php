@@ -142,7 +142,7 @@ class CoreController extends Controller
             if ($form->isValid()) {
 
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
-                $receivedItem->setReceivedBy($user);
+                $receivedItem->setReceivedBy($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
                 $receivedItem->setReceivedDate(new \DateTime());
 
                 /** @var ReceivedItem $item */

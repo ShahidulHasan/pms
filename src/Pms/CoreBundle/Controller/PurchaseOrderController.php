@@ -69,7 +69,7 @@ class PurchaseOrderController extends Controller
             if ($form->isValid()) {
 
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
-                $purchaseOrder->setCreatedBy($user);
+                $purchaseOrder->setCreatedBy($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
                 $purchaseOrder->setCreatedDate(new \DateTime());
                 $purchaseOrder->setStatus('1');
 

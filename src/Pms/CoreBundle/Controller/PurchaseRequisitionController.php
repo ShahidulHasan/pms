@@ -119,7 +119,7 @@ class PurchaseRequisitionController extends Controller
                 if (!empty($_POST['purchaserequisition']['purchaseRequisitionItems'])) {
 
                     $user = $this->get('security.context')->getToken()->getUser()->getId();
-                    $purchaseRequisition->setUpdatedBy($user);
+                    $purchaseRequisition->setUpdatedBy($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
                     $purchaseRequisition->setUpdatedDate(new \DateTime());
 
                     foreach ($form->getData()->getPurchaseRequisitionItems() as $item) {
@@ -149,7 +149,7 @@ class PurchaseRequisitionController extends Controller
     public function purchaseRequisitionClaimAction(PurchaseRequisition $purchaseRequisition)
     {
         $user = $this->get('security.context')->getToken()->getUser()->getId();
-        $purchaseRequisition->setClaimedBy($user);
+        $purchaseRequisition->setClaimedBy($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
         $purchaseRequisition->setClaimedDate(new \DateTime());
         $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisition')->update($purchaseRequisition);
         $this->get('session')->getFlashBag()->add(
@@ -163,7 +163,7 @@ class PurchaseRequisitionController extends Controller
     public function purchaseRequisitionCloseAction(PurchaseRequisition $purchaseRequisition)
     {
         $user = $this->get('security.context')->getToken()->getUser()->getId();
-        $purchaseRequisition->setClosedBy($user);
+        $purchaseRequisition->setClosedBy($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
         $purchaseRequisition->setClosedDate(new \DateTime());
         $status = '0';
         $purchaseRequisition->setStatus($status);

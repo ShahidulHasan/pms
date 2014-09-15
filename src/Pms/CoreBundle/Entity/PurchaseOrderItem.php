@@ -123,7 +123,7 @@ class PurchaseOrderItem
     /**
      * Get purchaseOrder
      *
-     * @return integer
+     * @return PurchaseOrder
      */
     public function getPurchaseOrder()
     {
@@ -133,7 +133,7 @@ class PurchaseOrderItem
     /**
      * Set item
      *
-     * @param integer $item
+     * @param Item $item
      * @return PurchaseOrderItem
      */
     public function setItem($item)
@@ -146,7 +146,7 @@ class PurchaseOrderItem
     /**
      * Get item
      *
-     * @return integer
+     * @return Item
      */
     public function getItem()
     {
@@ -202,7 +202,7 @@ class PurchaseOrderItem
     /**
      * Set project
      *
-     * @param integer $project
+     * @param Project $project
      * @return PurchaseOrderItem
      */
     public function setProject($project)
@@ -215,7 +215,7 @@ class PurchaseOrderItem
     /**
      * Get project
      *
-     * @return integer
+     * @return Project
      */
     public function getProject()
     {

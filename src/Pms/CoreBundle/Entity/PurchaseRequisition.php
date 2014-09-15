@@ -47,9 +47,10 @@ class PurchaseRequisition
     private $dateOfRequisition;
 
     /**
-     * @var integer
+     * @var User
      *
-     * @ORM\Column(name="claimed_by", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="claimed_by", nullable=true)
      */
     private $claimedBy;
 
@@ -103,23 +104,19 @@ class PurchaseRequisition
      */
     private $project;
 
-//    /**
-//     * @var User
-//     *
-//     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User", inversedBy="purchaseRequisition")
-//     * @ORM\JoinColumn(name="created_by", nullable=true)
-//     */
     /**
-     * @var string
+     * @var User
      *
-     * @ORM\Column(name="created_by", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="created_by", nullable=true)
      */
     private $createdBy;
 
     /**
-     * @var integer
+     * @var User
      *
-     * @ORM\Column(name="closed_by", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="closed_by", nullable=true)
      */
     private $closedBy;
 
@@ -131,9 +128,10 @@ class PurchaseRequisition
     private $createdDate;
 
     /**
-     * @var integer
+     * @var User
      *
-     * @ORM\Column(name="updated_by", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="updated_by", nullable=true)
      */
     private $updatedBy;
 
@@ -317,7 +315,7 @@ class PurchaseRequisition
     /**
      * Set updatedBy
      *
-     * @param integer $updatedBy
+     * @param User $updatedBy
      * @return PurchaseRequisition
      */
     public function setUpdatedBy($updatedBy)
@@ -330,7 +328,7 @@ class PurchaseRequisition
     /**
      * Get updatedBy
      *
-     * @return integer
+     * @return User
      */
     public function getUpdatedBy()
     {
@@ -363,7 +361,7 @@ class PurchaseRequisition
     /**
      * Set closedBy
      *
-     * @param integer $closedBy
+     * @param User $closedBy
      * @return PurchaseRequisition
      */
     public function setClosedBy($closedBy)
@@ -376,7 +374,7 @@ class PurchaseRequisition
     /**
      * Get closedBy
      *
-     * @return integer
+     * @return User
      */
     public function getClosedBy()
     {
@@ -386,7 +384,7 @@ class PurchaseRequisition
     /**
      * Set createdBy
      *
-     * @param integer $createdBy
+     * @param User $createdBy
      * @return PurchaseRequisition
      */
     public function setCreatedBy($createdBy)
@@ -399,7 +397,7 @@ class PurchaseRequisition
     /**
      * Get createdBy
      *
-     * @return integer
+     * @return User
      */
     public function getCreatedBy()
     {
@@ -455,7 +453,7 @@ class PurchaseRequisition
     /**
      * Set claimedBy
      *
-     * @param integer $claimedBy
+     * @param User $claimedBy
      * @return PurchaseRequisition
      */
     public function setClaimedBy($claimedBy)
@@ -468,7 +466,7 @@ class PurchaseRequisition
     /**
      * Get claimedBy
      *
-     * @return integer
+     * @return User
      */
     public function getClaimedBy()
     {

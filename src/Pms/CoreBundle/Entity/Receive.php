@@ -4,6 +4,7 @@ namespace Pms\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Pms\UserBundle\Entity\User;
 
 /**
  * Receive
@@ -23,9 +24,10 @@ class Receive
     private $id;
 
     /**
-     * @var string
+     * @var User
      *
-     * @ORM\Column(name="received_by", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="received_by", nullable=true)
      */
     private $receivedBy;
 
@@ -159,7 +161,7 @@ class Receive
     /**
      * Set invoice
      *
-     * @param integer $invoice
+     * @param Invoice $invoice
      * @return Receive
      */
     public function setInvoice($invoice)
@@ -172,7 +174,7 @@ class Receive
     /**
      * Get invoice
      *
-     * @return integer
+     * @return Invoice
      */
     public function getInvoice()
     {
@@ -182,7 +184,7 @@ class Receive
     /**
      * Set calan
      *
-     * @param integer $calan
+     * @param Invoice $calan
      * @return Receive
      */
     public function setCalan($calan)
@@ -195,7 +197,7 @@ class Receive
     /**
      * Get calan
      *
-     * @return integer
+     * @return Invoice
      */
     public function getCalan()
     {
@@ -238,7 +240,7 @@ class Receive
     /**
      * Set receivedBy
      *
-     * @param string $receivedBy
+     * @param User $receivedBy
      * @return Receive
      */
     public function setReceivedBy($receivedBy)
@@ -251,7 +253,7 @@ class Receive
     /**
      * Get receivedBy
      *
-     * @return string
+     * @return User
      */
     public function getReceivedBy()
     {
