@@ -174,7 +174,7 @@ class ItemController extends Controller
                 $item->setItemName($itemName);
                 $item->setItemUnit($itemUnit);
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
-                $item->setCreatedBy($user);
+                $item->setCreatedBy($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
                 $item->setCreatedDate(new \DateTime());
                 $item->setStatus(1);
                 $item->setCategory($this->getDoctrine()->getRepository('PmsCoreBundle:Category')->findOneById($category));

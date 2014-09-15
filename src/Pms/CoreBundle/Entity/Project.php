@@ -24,27 +24,6 @@ class Project
     private $id;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\ProjectCostItem", mappedBy="project")
-     */
-    private $projectCostItem;
-
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisition", mappedBy="project")
-     */
-    private $purchaseRequisition;
-
-//    /**
-//     * @var ArrayCollection
-//     *
-//     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\PurchaseOrderItem", mappedBy="project")
-//     */
-//    private $purchaseOrderItem;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="projects_name", type="string", length=255)
@@ -58,23 +37,40 @@ class Project
      */
     private $address;
 
-//    /**
-//     * @var User
-//     *
-//     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User", inversedBy="project")
-//     * @ORM\JoinColumn(name="project_heads", nullable=true)
-//     */
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="project_heads", type="string", length=255)
+     * @ORM\Column(name="status", type="integer")
+     */
+    private $status;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\ProjectCostItem", mappedBy="project")
+     */
+    private $projectCostItem;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisition", mappedBy="project")
+     */
+    private $purchaseRequisition;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="project_heads", nullable=true)
      */
     private $projectHead;
 
     /**
-     * @var string
+     * @var User
      *
-     * @ORM\Column(name="created_by", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="created_by", nullable=true)
      */
     private $createdBy;
 
@@ -84,13 +80,6 @@ class Project
      * @ORM\Column(name="created_date", type="datetime")
      */
     private $createdDate;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="status", type="integer")
-     */
-    private $status;
 
     public function __construct()
     {
@@ -110,7 +99,7 @@ class Project
     /**
      * Set projectHead
      *
-     * @param integer $projectHead
+     * @param User $projectHead
      * @return Project
      */
     public function setProjectHead($projectHead)
@@ -123,7 +112,7 @@ class Project
     /**
      * Get projectHead
      *
-     * @return integer
+     * @return User
      */
     public function getProjectHead()
     {
@@ -169,7 +158,7 @@ class Project
     /**
      * Get projectName
      *
-     * @return string 
+     * @return User
      */
     public function getProjectName()
     {
@@ -179,7 +168,7 @@ class Project
     /**
      * Set createdBy
      *
-     * @param string $createdBy
+     * @param User $createdBy
      * @return Project
      */
     public function setCreatedBy($createdBy)

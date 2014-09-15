@@ -57,8 +57,8 @@ class CategoryController extends Controller
             );
             if($category) {
                 $category->setCategoryName($categoryName);
-                $category->setHead($categoryHead);
-                $category->setSubHead($categorySubHead);
+                $category->setHead($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($categoryHead));
+                $category->setSubHead($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($categorySubHead));
                 $this->getDoctrine()->getManager()->persist($category);
                 $this->getDoctrine()->getManager()->flush();
 
@@ -74,10 +74,10 @@ class CategoryController extends Controller
             } else {
                 $category = new Category();
                 $category->setCategoryName($categoryName);
-                $category->setHead($categoryHead);
-                $category->setSubHead($categorySubHead);
+                $category->setHead($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($categoryHead));
+                $category->setSubHead($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($categorySubHead));
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
-                $category->setCreatedBy($user);
+                $category->setCreatedBy($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
                 $category->setCreatedDate(new \DateTime());
                 $category->setStatus(1);
                 $category->setParent(0);

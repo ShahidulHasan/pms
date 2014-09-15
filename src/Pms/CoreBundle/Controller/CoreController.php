@@ -48,7 +48,7 @@ class CoreController extends Controller
             if ($form->isValid()) {
 
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
-                $invoice->setUploadedBy($user);
+                $invoice->setUploadedBy($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
                 $invoice->setUploadedDate(new \DateTime());
 
                 $this->getDoctrine()->getRepository('PmsCoreBundle:Invoice')->create($invoice);

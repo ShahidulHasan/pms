@@ -4,6 +4,7 @@ namespace Pms\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Pms\UserBundle\Entity\User;
 
 /**
  * Buyer
@@ -51,9 +52,10 @@ class Buyer
     private $buyerName;
 
     /**
-     * @var string
+     * @var User
      *
-     * @ORM\Column(name="created_by", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="created_by", nullable=true)
      */
     private $createdBy;
 
@@ -107,7 +109,7 @@ class Buyer
     /**
      * Set createdBy
      *
-     * @param string $createdBy
+     * @param User $createdBy
      * @return Buyer
      */
     public function setCreatedBy($createdBy)
@@ -120,7 +122,7 @@ class Buyer
     /**
      * Get createdBy
      *
-     * @return string
+     * @return User
      */
     public function getCreatedBy()
     {

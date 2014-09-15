@@ -4,6 +4,7 @@ namespace Pms\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Pms\UserBundle\Entity\User;
 
 /**
  * Category
@@ -23,16 +24,18 @@ class Category
     private $id;
 
     /**
-     * @var string
+     * @var User
      *
-     * @ORM\Column(name="heads", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="category_heads", nullable=true)
      */
     private $head;
 
     /**
-     * @var string
+     * @var User
      *
-     * @ORM\Column(name="sub_heads", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="category_sub_heads", nullable=true)
      */
     private $subHead;
 
@@ -58,9 +61,10 @@ class Category
     private $categoryName;
 
     /**
-     * @var string
+     * @var User
      *
-     * @ORM\Column(name="created_by", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="created_by", nullable=true)
      */
     private $createdBy;
 
@@ -98,7 +102,7 @@ class Category
     /**
      * Set head
      *
-     * @param integer $head
+     * @param User $head
      * @return Category
      */
     public function setHead($head)
@@ -111,7 +115,7 @@ class Category
     /**
      * Get head
      *
-     * @return integer
+     * @return User
      */
     public function getHead()
     {
@@ -121,7 +125,7 @@ class Category
     /**
      * Set subHead
      *
-     * @param integer $subHead
+     * @param User $subHead
      * @return Category
      */
     public function setSubHead($subHead)
@@ -134,7 +138,7 @@ class Category
     /**
      * Get subHead
      *
-     * @return integer
+     * @return User
      */
     public function getSubHead()
     {
@@ -175,7 +179,7 @@ class Category
     /**
      * Set createdBy
      *
-     * @param string $createdBy
+     * @param User $createdBy
      * @return Category
      */
     public function setCreatedBy($createdBy)
@@ -188,7 +192,7 @@ class Category
     /**
      * Get createdBy
      *
-     * @return string
+     * @return User
      */
     public function getCreatedBy()
     {

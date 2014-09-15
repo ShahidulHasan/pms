@@ -4,6 +4,7 @@ namespace Pms\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Pms\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -71,9 +72,10 @@ class Invoice
     public $file;
 
     /**
-     * @var string
+     * @var User
      *
-     * @ORM\Column(name="uploaded_by", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="uploaded_by", nullable=true)
      */
     private $uploadedBy;
 
@@ -103,7 +105,7 @@ class Invoice
     /**
      * Set uploadedBy
      *
-     * @param string $uploadedBy
+     * @param User $uploadedBy
      * @return Invoice
      */
     public function setUploadedBy($uploadedBy)
@@ -116,7 +118,7 @@ class Invoice
     /**
      * Get uploadedBy
      *
-     * @return string
+     * @return User
      */
     public function getUploadedBy()
     {

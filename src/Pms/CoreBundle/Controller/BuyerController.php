@@ -131,7 +131,7 @@ class BuyerController extends Controller
                 $buyer = new Buyer();
                 $buyer->setBuyerName($buyerName);
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
-                $buyer->setCreatedBy($user);
+                $buyer->setCreatedBy($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
                 $buyer->setCreatedDate(new \DateTime());
                 $buyer->setStatus(1);
 

@@ -154,7 +154,7 @@ class ProjectController extends Controller
             );
             if($project) {
                 $project->setProjectName($projectName);
-                $project->setProjectHead($projectHead);
+                $project->setProjectHead($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($projectHead));
                 $project->setAddress($address);
                 $this->getDoctrine()->getManager()->persist($project);
                 $this->getDoctrine()->getManager()->flush();
@@ -171,10 +171,10 @@ class ProjectController extends Controller
             } else {
                 $project = new Project();
                 $project->setProjectName($projectName);
-                $project->setProjectHead($projectHead);
+                $project->setProjectHead($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($projectHead));
                 $project->setAddress($address);
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
-                $project->setCreatedBy($user);
+                $project->setCreatedBy($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
                 $project->setCreatedDate(new \DateTime());
                 $project->setStatus(1);
 
