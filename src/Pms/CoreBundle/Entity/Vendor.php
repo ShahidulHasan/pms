@@ -30,6 +30,13 @@ class Vendor
     private $purchaseOrder;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\Receive", mappedBy="vendor")
+     */
+    private $receive;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="vendors_name", type="string", length=255)
@@ -166,5 +173,13 @@ class Vendor
     public function getPurchaseOrder()
     {
         return $this->purchaseOrder;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getReceive()
+    {
+        return $this->receive;
     }
 }

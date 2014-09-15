@@ -37,17 +37,101 @@ class Receive
     private $receivedDate;
 
     /**
+     * @var Invoice
+     *
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Invoice", inversedBy="receive")
+     * @ORM\JoinColumn(name="invoices")
+     */
+    private $invoice;
+
+    /**
+     * @var Invoice
+     *
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Invoice")
+     * @ORM\JoinColumn(name="calan")
+     */
+    private $calan;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="grn", type="string", length=255, nullable=true)
+     */
+    private $grn;
+
+    /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\ReceivedItem", mappedBy="receive", cascade={"persist", "remove"})
      */
     private $receiveItems;
 
+    /**
+     * @var Vendor
+     *
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Vendor", inversedBy="receive")
+     * @ORM\JoinColumn(name="vendors", nullable=true)
+     */
+    private $vendor;
+
+    /**
+     * @var Buyer
+     *
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Buyer", inversedBy="receive")
+     * @ORM\JoinColumn(name="buyers", nullable=true)
+     */
+    private $buyer;
+
     public function __construct()
     {
         $this->receiveItems = new ArrayCollection();
     }
 
+    /**
+     * Set buyer
+     *
+     * @param integer $buyer
+     * @return Receive
+     */
+    public function setBuyer($buyer)
+    {
+        $this->buyer = $buyer;
+
+        return $this;
+    }
+
+    /**
+     * Get buyer
+     *
+     * @return integer
+     */
+    public function getBuyer()
+    {
+        return $this->buyer;
+    }
+
+    /**
+     * Set vendor
+     *
+     * @param integer $vendor
+     * @return Receive
+     */
+    public function setVendor($vendor)
+    {
+        $this->vendor = $vendor;
+
+        return $this;
+    }
+
+    /**
+     * Get vendor
+     *
+     * @return integer
+     */
+    public function getVendor()
+    {
+        return $this->vendor;
+    }
 
     public function addReceiveItem(ReceivedItem $item)
     {
@@ -73,6 +157,75 @@ class Receive
     }
 
     /**
+     * Set invoice
+     *
+     * @param integer $invoice
+     * @return Receive
+     */
+    public function setInvoice($invoice)
+    {
+        $this->invoice = $invoice;
+
+        return $this;
+    }
+
+    /**
+     * Get invoice
+     *
+     * @return integer
+     */
+    public function getInvoice()
+    {
+        return $this->invoice;
+    }
+
+    /**
+     * Set calan
+     *
+     * @param integer $calan
+     * @return Receive
+     */
+    public function setCalan($calan)
+    {
+        $this->calan = $calan;
+
+        return $this;
+    }
+
+    /**
+     * Get calan
+     *
+     * @return integer
+     */
+    public function getCalan()
+    {
+        return $this->calan;
+    }
+
+    /**
+     * Set grn
+     *
+     * @param string $grn
+     * @return Receive
+     */
+    public function setGrn($grn)
+    {
+        $this->grn = $grn;
+
+        return $this;
+    }
+
+    /**
+     * Get grn
+     *
+     * @return string
+     */
+    public function getGrn()
+    {
+        return $this->grn;
+    }
+
+    /**
      * Get id
      *
      * @return integer 
@@ -86,7 +239,7 @@ class Receive
      * Set receivedBy
      *
      * @param string $receivedBy
-     * @return ReceivedItem
+     * @return Receive
      */
     public function setReceivedBy($receivedBy)
     {
@@ -109,7 +262,7 @@ class Receive
      * Set receivedDate
      *
      * @param \DateTime $receivedDate
-     * @return ReceivedItem
+     * @return Receive
      */
     public function setReceivedDate($receivedDate)
     {

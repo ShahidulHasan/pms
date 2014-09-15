@@ -23,13 +23,6 @@ class ReceivedItem
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="grn", type="string", length=255, nullable=true)
-     */
-    private $grn;
-
-    /**
      * @var PurchaseRequisitionItem
      *
      * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisitionItem")
@@ -58,14 +51,6 @@ class ReceivedItem
      * @ORM\Column(name="quantities", type="integer")
      */
     private $quantity;
-
-    /**
-     * @var Invoice
-     *
-     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Invoice", inversedBy="receivedItem")
-     * @ORM\JoinColumn(name="invoices")
-     */
-    private $invoice;
 
     /**
      * Get id
@@ -101,29 +86,6 @@ class ReceivedItem
     }
 
     /**
-     * Set invoice
-     *
-     * @param integer $invoice
-     * @return ReceivedItem
-     */
-    public function setInvoice($invoice)
-    {
-        $this->invoice = $invoice;
-
-        return $this;
-    }
-
-    /**
-     * Get invoice
-     *
-     * @return integer
-     */
-    public function getInvoice()
-    {
-        return $this->invoice;
-    }
-
-    /**
      * @return \Pms\CoreBundle\Entity\PurchaseRequisitionItem
      */
     public function getPurchaseRequisitionItem()
@@ -140,29 +102,6 @@ class ReceivedItem
         $this->purchaseRequisitionItem = $purchaseRequisitionItem;
         $this->item = $purchaseRequisitionItem->getItem();
         return $this;
-    }
-
-    /**
-     * Set grn
-     *
-     * @param string $grn
-     * @return ReceivedItem
-     */
-    public function setGrn($grn)
-    {
-        $this->grn = $grn;
-
-        return $this;
-    }
-
-    /**
-     * Get grn
-     *
-     * @return string
-     */
-    public function getGrn()
-    {
-        return $this->grn;
     }
 
     /**

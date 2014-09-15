@@ -32,15 +32,9 @@ class Invoice
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\ReceivedItem", mappedBy="invoice", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\Receive", mappedBy="invoice", cascade={"persist", "remove"})
      */
-//    /**
-//     * @var ReceivedItem
-//     *
-//     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\ReceivedItem", inversedBy="invoice")
-//     * @ORM\JoinColumn(name="received_item", nullable=true)
-//     */
-    private $receivedItem;
+    private $receive;
 
     /**
      * @ORM\Column(name="titles", type="string", length=255)
@@ -101,33 +95,10 @@ class Invoice
     /**
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
-    public function getReceivedItem()
+    public function getReceive()
     {
-        return $this->receivedItem;
+        return $this->receive;
     }
-
-//    /**
-//     * Set receivedItem
-//     *
-//     * @param integer $receivedItem
-//     * @return Invoice
-//     */
-//    public function setReceivedItem($receivedItem)
-//    {
-//        $this->receivedItem = $receivedItem;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get receivedItem
-//     *
-//     * @return integer
-//     */
-//    public function getReceivedItem()
-//    {
-//        return $this->receivedItem;
-//    }
 
     /**
      * Set uploadedBy

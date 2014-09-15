@@ -19,16 +19,16 @@ class PurchaseRequisitionType extends AbstractType
     {
         $builder
             ->add('requisitionNo', 'text')
-            ->add($builder->create('dateOfRequisition', 'text', array(
-                'constraints' => array(
-                    new NotBlank()
-                ),
-                'attr' => array(
-                    'placeholder' => 'Date'
-                ),
-                'data_class' => null,
-                'read_only' => true
-            ))->addViewTransformer(new DateTimeToStringTransformer(null, null, 'Y-m-d')))
+//            ->add($builder->create('dateOfRequisition', 'text', array(
+//                'constraints' => array(
+//                    new NotBlank()
+//                ),
+//                'attr' => array(
+//                    'placeholder' => 'Date'
+//                ),
+//                'data_class' => null,
+//                'read_only' => true
+//            ))->addViewTransformer(new DateTimeToStringTransformer(null, null, 'Y-m-d')))
             ->add('project', 'entity', array(
                 'constraints' => array(
                     new NotBlank()

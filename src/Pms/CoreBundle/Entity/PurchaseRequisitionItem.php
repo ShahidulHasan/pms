@@ -76,7 +76,7 @@ class PurchaseRequisitionItem
     /**
      * @var integer
      *
-     * @ORM\Column(name="purchase_order_quantity", type="integer")
+     * @ORM\Column(name="purchase_order_quantity", type="integer", nullable=true)
      */
     private $purchaseOrderQuantity;
 

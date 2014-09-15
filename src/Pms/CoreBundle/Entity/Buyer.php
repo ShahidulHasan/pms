@@ -32,6 +32,13 @@ class Buyer
     /**
      * @var ArrayCollection
      *
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\Receive", mappedBy="buyer")
+     */
+    private $receive;
+
+    /**
+     * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\ProjectCostItem", mappedBy="buyer")
      */
     private $projectCostItem;
@@ -180,5 +187,13 @@ class Buyer
     public function getPurchaseOrder()
     {
         return $this->purchaseOrder;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getReceive()
+    {
+        return $this->receive;
     }
 }

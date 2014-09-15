@@ -18,7 +18,9 @@
                                     <th class="col-md-1" style="">Check</th>
                                     <th class="col-md-3" style="">Particulars</th>
                                     <th class="col-md-2" style="">Quantity</th>
-                                    <th class="col-md-3" style="">Project</th>
+                                    <th class="col-md-2" style="">Project</th>
+                                    <th class="col-md-1" style="">Req. Number</th>
+                                    <th class="col-md-1" style="">PR Date</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -38,6 +40,12 @@
                                             </td>
                                             <td class="col-md-2">
                                                 {{ orderItem.purchaseRequisition.project.projectName | default() }}
+                                            </td>
+                                            <td class="col-md-2">
+                                                {{ orderItem.purchaseRequisition.requisitionNo | default() }}
+                                            </td>
+                                            <td class="col-md-2">
+                                                {{ orderItem.purchaseRequisition.dateOfRequisition | date("Y/m/d") }}
                                             </td>
                                         </tr>
 

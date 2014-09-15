@@ -127,6 +127,9 @@
                                                                     class="fa fa-edit"></i> Edit</a>
                                                     </td>
                                                 {% endif %}
+                                                <td class="col-md-1">
+                                                    <a href="/purchase/requisition/details/{{ purchaseRequisition.id }}" data-target="#ajax" data-toggle="modal"><i class="fa fa-info-circle"></i></a>
+                                                </td>
                                             </tr>
 
                                         {% endfor %}

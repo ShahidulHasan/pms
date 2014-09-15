@@ -17,24 +17,7 @@ class ReceivedItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('grn', 'text', array(
-                'attr' => array(
-                    'placeholder' => 'GRN#',
-                    'autocomplete' => 'off'
-                )
-            ))
-            ->add('invoice', 'entity', array(
-                'constraints' => array(
-                    new NotBlank()
-                ),
-                'class' => 'PmsCoreBundle:Invoice',
-                'property' => 'title',
-                'required' => false,
-                'attr' => array(
-                    'placeholder' => 'Select Invoice'
-                ),
-                'empty_data' => null
-            ))
+
             ->add('quantity', 'text')
             ->add('purchaseRequisitionItem', 'entity_hidden', array(
                 "class" => "PmsCoreBundle:PurchaseRequisitionItem",

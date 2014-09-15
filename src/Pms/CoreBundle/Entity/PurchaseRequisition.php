@@ -42,7 +42,7 @@ class PurchaseRequisition
     /**
      * @var /DateTime
      *
-     * @ORM\Column(name="date_of_requisitions", type="date", nullable=true)
+     * @ORM\Column(name="date_of_requisitions", type="datetime", nullable=true)
      */
     private $dateOfRequisition;
 

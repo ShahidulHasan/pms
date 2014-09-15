@@ -29,6 +29,22 @@ class PurchaseRequisitionController extends Controller
         ));
     }
 
+    public function purchaseRequisitionDetailsAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $em->getRepository('PmsCoreBundle:PurchaseRequisition')
+            ->createQueryBuilder('pr')
+            ->select('pr.requisitionNo')
+            ->where('pr.id = ?1')
+            ->setParameter('1', $id);
+        $pr = $query->getQuery()->getResult();
+
+        return $this->render('PmsCoreBundle:PurchaseRequisition:details.html.twig', array(
+            'pr' => $pr,
+        ));
+    }
+
     public function purchaseRequisitionClosedAction(Request $request)
     {
         $dql = "SELECT a FROM PmsCoreBundle:PurchaseRequisition a WHERE a.status = 0 ORDER BY a.id DESC";
@@ -57,6 +73,7 @@ class PurchaseRequisitionController extends Controller
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
                 $purchaseRequisition->setCreatedBy($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
                 $purchaseRequisition->setCreatedDate(new \DateTime());
+                $purchaseRequisition->setDateOfRequisition(new \DateTime());
                 $purchaseRequisition->setStatus($status);
 
                 if (!empty($_POST['purchaserequisition']['purchaseRequisitionItems'])) {

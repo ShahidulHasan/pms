@@ -13,6 +13,69 @@
 
                 <div class="form-body left">
                     {{ form_start(form, {'action': path('receive_save'), 'attr': {'class': 'form-horizontal', 'id': 'received-form', 'novalidate': 'novalidate'} }) }}
+                <div class="modal-body">
+                    <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="col-md-6" style="height:100px;float: left;text-align: left;margin-top: 35px;">
+                            <div class="col-md-12" style="height:35px;float:left;">
+                                <div class="form-group">
+                                    {{ form_label(form.vendor, 'Vendor :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left: -30px;margin-right:-20px;font-weight:bold;' } }
+                                    ) }}
+                                    <div class="col-md-6">
+                                        <div class="input-icon">
+                                            {{ form_widget(form.vendor, { 'attr': {'class': 'form-control select2me', 'style': 'padding-left: 10px !important;', 'placeholder': ' Select Vendor' } }) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    {{ form_label(form.buyer, 'Buyer :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left: -30px;margin-right:-20px;font-weight:bold;' } }
+                                    ) }}
+                                    <div class="col-md-6">
+                                        <div class="input-icon">
+                                            {{ form_widget(form.buyer, { 'attr': {'class': 'form-control select2me', 'style': 'padding-left: 10px !important;', 'placeholder': ' Select Buyer' } }) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="height:100px;float: right;margin-top: 35px;">
+                            <div class="col-md-12" style="height:50px;float:left;">
+                                <div class="form-group">
+                                    {{ form_label(form.grn, 'GRN# :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }
+                                    ) }}
+                                    <div class="col-md-6">
+                                        <div class="input-icon">
+                                            {{ form_widget(form.grn, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="height:50px;float:left;">
+                                <div class="form-group">
+                                    {{ form_label(form.invoice, 'Invoice:', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }
+                                    ) }}
+                                    <div class="col-md-6">
+                                        <div class="input-icon">
+                                            {{ form_widget(form.invoice, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="height:50px;float:left;">
+                                <div class="form-group">
+                                    {{ form_label(form.calan, 'Calan:', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }
+                                    ) }}
+                                    <div class="col-md-6">
+                                        <div class="input-icon">
+                                            {{ form_widget(form.calan, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-actions fluid">
                         <table class="table table-striped" style="border:1px solid grey;margin-top: 100px;">
                             <thead>
@@ -20,8 +83,8 @@
                                 <th class="col-md-1" style="">Sl</th>
                                 <th class="col-md-3" style="">Item</th>
                                 <th class="col-md-3" style="padding-left: 12px;">Quantity</th>
-                                <th class="col-md-2" style="padding-left: 12px;">Invoice</th>
-                                <th class="col-md-2" style="padding-left: 12px;">GRN#</th>
+                                <th class="col-md-2" style="padding-left: 12px;"></th>
+                                <th class="col-md-2" style="padding-left: 12px;"></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -40,10 +103,8 @@
                                         {{ form_widget(orderItem.quantity, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
                                     </td>
                                     <td>
-                                        {{ form_widget(orderItem.invoice, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
                                     </td>
                                     <td>
-                                        {{ form_widget(orderItem.grn, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
                                     </td>
                                 </tr>
                                 {% set i = i + 1 %}
@@ -70,6 +131,8 @@
                     {{ form_end(form) }}
                 </div>
             </div>
+        </div>
+    </div>
         </div>
     </div>
 
