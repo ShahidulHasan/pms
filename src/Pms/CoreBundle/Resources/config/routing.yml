@@ -90,6 +90,10 @@ purchase_requisition_closed:
     pattern: /purchase/requisition/closed
     defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionClosed }
 
+purchase_requisition_open:
+    pattern: /purchase/requisition/open
+    defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionOpen }
+
 purchase_requisition_new:
     pattern: /purchase/requisition/new
     defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionNew }

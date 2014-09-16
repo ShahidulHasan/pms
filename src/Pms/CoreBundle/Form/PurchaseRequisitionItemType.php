@@ -38,7 +38,8 @@ class PurchaseRequisitionItemType extends AbstractType
                 'property' => 'itemName',
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => 'Select Item'
+                    'placeholder' => 'Select Item',
+                    'class' => 'select2me'
                 ),
                 'empty_data' => null,
                 'query_builder' => function (ItemRepository $repository)

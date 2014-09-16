@@ -141,58 +141,54 @@
                                 <div class="col-md-12">
 
                                     <form action="{{ path('project_cost_add') }}" method="get" {{ form_enctype(formSearch) }} name="search">
-
                                         <div class="portlet-body">
+                                            <table id="table_project_cost">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            {{ form_widget(formSearch.project, { 'attr': {'class': 'form-control', 'style': 'width:140px;' } }) }}
+                                                        </td>
+                                                        <td>
+                                                            {{ form_widget(formSearch.item, { 'attr': {'class': 'form-control', 'style': 'width:140px;' } }) }}
+                                                        </td>
+                                                        <td>
+                                                            <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                                                                <span class="input-group-btn"></span>
+                                                                <input type="text" placeholder="Start Date" name="start_date" class="form-control" style="width: 140px;" readonly/>
+                                                            </div>
+                                                        </td>
+                                                        <td style="font-size: 16px; font-weight: bold;">
+                                                            To
+                                                        </td>
+                                                        <td>
+                                                            <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                                                                <span class="input-group-btn"></span>
+                                                                <input type="text" placeholder="End Date" name="end_date" class="form-control" style="width: 140px;" readonly/>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
 
-                                                <table id="table_project_cost">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                {{ form_widget(formSearch.project, { 'attr': {'class': 'form-control', 'style': 'width:140px;' } }) }}
-                                                            </td>
-                                                            <td>
-                                                                {{ form_widget(formSearch.item, { 'attr': {'class': 'form-control', 'style': 'width:140px;' } }) }}
-                                                            </td>
-                                                            <td>
-                                                                <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                                                                    <span class="input-group-btn"></span>
-                                                                    <input type="text" placeholder="Start Date" name="start_date" class="form-control" style="width: 140px;" readonly/>
-                                                                </div>
-                                                            </td>
-                                                            <td style="font-size: 16px; font-weight: bold;">
-                                                                To
-                                                            </td>
-                                                            <td>
-                                                                <div class="input-group input-small date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                                                                    <span class="input-group-btn"></span>
-                                                                    <input type="text" placeholder="End Date" name="end_date" class="form-control" style="width: 140px;" readonly/>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
+                                                    <tr>
+                                                        <td>
+                                                            {{ form_widget(formSearch.categoryWise, { 'attr': {'class': 'form-control', 'style': 'width:140px;' } }) }}
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="invoice" placeholder="invoice" class="form-control" style="width: 140px;"/>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="grn" placeholder="GRN#" class="form-control" style="width: 140px;"/>
+                                                        </td>
+                                                        <td>
 
-                                                        <tr>
-                                                            <td>
-                                                                {{ form_widget(formSearch.categoryWise, { 'attr': {'class': 'form-control', 'style': 'width:140px;' } }) }}
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" name="invoice" placeholder="invoice" class="form-control" style="width: 140px;"/>
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" name="grn" placeholder="GRN#" class="form-control" style="width: 140px;"/>
-                                                            </td>
-                                                            <td>
-
-                                                            </td>
-                                                            <td>
-                                                                {{ form_widget(formSearch.search, { 'attr': {'class': 'btn grey button-width', 'style': 'height:32px;' } } ) }}
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-
+                                                        </td>
+                                                        <td>
+                                                            {{ form_widget(formSearch.search, { 'attr': {'class': 'btn grey button-width', 'style': 'height:32px;' } } ) }}
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
-
-                                </form>
+                                    </form>
                                 </div>
 
                                     <div class="col-md-12" style="margin-top: 30px; margin-left: 0;" id="cost-list-div">

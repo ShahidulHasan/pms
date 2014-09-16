@@ -57,6 +57,18 @@ class PurchaseRequisitionController extends Controller
         ));
     }
 
+    public function purchaseRequisitionOpenAction(Request $request)
+    {
+        $dql = "SELECT a FROM PmsCoreBundle:PurchaseRequisition a WHERE a.status = 0 ORDER BY a.id DESC";
+
+        list($purchaseRequisitions, $page) = $this->paginate($dql);
+
+        return $this->render('PmsCoreBundle:PurchaseRequisition:open.html.twig', array(
+            'purchaseRequisitions' => $purchaseRequisitions,
+            'page' => $page,
+        ));
+    }
+
     public function purchaseRequisitionNewAction(Request $request)
     {
         $purchaseRequisition = new PurchaseRequisition();
