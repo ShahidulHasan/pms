@@ -67,6 +67,22 @@ class Project
     private $projectHead;
 
     /**
+     * @var Area
+     *
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Area")
+     * @ORM\JoinColumn(name="projects_area", nullable=true)
+     */
+    private $projectArea;
+
+    /**
+     * @var ProjectCategory
+     *
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\ProjectCategory")
+     * @ORM\JoinColumn(name="projects_category", nullable=true)
+     */
+    private $projectCategory;
+
+    /**
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
@@ -117,6 +133,52 @@ class Project
     public function getProjectHead()
     {
         return $this->projectHead;
+    }
+
+    /**
+     * Set projectArea
+     *
+     * @param Area $projectArea
+     * @return Project
+     */
+    public function setProjectArea($projectArea)
+    {
+        $this->projectArea = $projectArea;
+
+        return $this;
+    }
+
+    /**
+     * Get projectArea
+     *
+     * @return Area
+     */
+    public function getProjectArea()
+    {
+        return $this->projectArea;
+    }
+
+    /**
+     * Set projectCategory
+     *
+     * @param ProjectCategory $projectCategory
+     * @return Project
+     */
+    public function setProjectCategory($projectCategory)
+    {
+        $this->projectCategory = $projectCategory;
+
+        return $this;
+    }
+
+    /**
+     * Get projectCategory
+     *
+     * @return ProjectCategory
+     */
+    public function getProjectCategory()
+    {
+        return $this->projectCategory;
     }
 
     /**

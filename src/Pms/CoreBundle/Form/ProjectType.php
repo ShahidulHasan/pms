@@ -2,6 +2,8 @@
 
 namespace Pms\CoreBundle\Form;
 
+use Pms\CoreBundle\Entity\Repository\AreaRepository;
+use Pms\CoreBundle\Entity\Repository\ProjectCategoryRepository;
 use Pms\UserBundle\Entity\Repository\UserRepository;
 use Pms\UserBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
@@ -38,6 +40,30 @@ class ProjectType extends AbstractType
                     {
                         return $repository->createQueryBuilder('s')
                             ->where('s.enabled = 1');
+                    }
+            ))
+            ->add('projectArea', 'entity', array(
+                'class' => 'PmsCoreBundle:Area',
+                'property' => 'areaName',
+                'required' => false,
+                'empty_value' => 'Select Area',
+                'empty_data' => null,
+                'query_builder' => function (AreaRepository $repository)
+                    {
+                        return $repository->createQueryBuilder('s')
+                            ->where('s.status = 1');
+                    }
+            ))
+            ->add('projectCategory', 'entity', array(
+                'class' => 'PmsCoreBundle:ProjectCategory',
+                'property' => 'projectCategoryName',
+                'required' => false,
+                'empty_value' => 'Select Category',
+                'empty_data' => null,
+                'query_builder' => function (ProjectCategoryRepository $repository)
+                    {
+                        return $repository->createQueryBuilder('s')
+                            ->where('s.status = 1');
                     }
             ))
         ;

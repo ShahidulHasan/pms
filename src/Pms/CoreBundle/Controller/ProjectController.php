@@ -146,6 +146,8 @@ class ProjectController extends Controller
         $updateId = $projectArray[1];
         $projectHead = $projectArray[2];
         $address = $projectArray[3];
+        $category = $projectArray[4];
+        $area = $projectArray[5];
 
         if($projectName) {
             $project = $this->getDoctrine()->getRepository('PmsCoreBundle:Project')->find($updateId);
@@ -156,6 +158,8 @@ class ProjectController extends Controller
                 $project->setProjectName($projectName);
                 $project->setProjectHead($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($projectHead));
                 $project->setAddress($address);
+                $project->setProjectCategory($this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCategory')->findOneById($category));
+                $project->setProjectArea($this->getDoctrine()->getRepository('PmsCoreBundle:Area')->findOneById($area));
                 $this->getDoctrine()->getManager()->persist($project);
                 $this->getDoctrine()->getManager()->flush();
 
@@ -175,6 +179,8 @@ class ProjectController extends Controller
                 $project->setAddress($address);
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
                 $project->setCreatedBy($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
+                $project->setProjectCategory($this->getDoctrine()->getRepository('PmsCoreBundle:ProjectCategory')->findOneById($category));
+                $project->setProjectArea($this->getDoctrine()->getRepository('PmsCoreBundle:Area')->findOneById($area));
                 $project->setCreatedDate(new \DateTime());
                 $project->setStatus(1);
 

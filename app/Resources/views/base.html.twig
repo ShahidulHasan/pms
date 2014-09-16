@@ -111,7 +111,7 @@
                 </div>
             </li>
 
-            {% set Route, Dashboard, User, Item, Project, Cost, Report, Category, SubCategory, OverView, Buyer, PR, PO, Vendor, Upload, Received, Setting = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "] %}
+            {% set Route, Dashboard, User, Item, Project, Cost, Report, Category, SubCategory, OverView, Buyer, PR, PO, Vendor, Upload, Received, Setting, Type = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "] %}
             {% set Url = Route|split('_') %}
             {% if Url[0] == 'homepage' %}{% set Dashboard = Dashboard|merge(["active"]) %}
             {% elseif Url[0] == 'fos' %}{% set Dashboard = Dashboard|merge(["active"]) %}
@@ -124,6 +124,7 @@
             {% elseif Url[0] == 'sub' %}{% set SubCategory = SubCategory|merge(["active"]) %}
             {% elseif Url[0] == 'project' and Url[1] != 'cost' %}{% set Project = Project|merge(["active"]) %}
             {% elseif Url[0] == 'project' and Url[1] == 'cost' %}{% set Cost = Cost|merge(["active"]) %}
+            {% elseif Url[0] == 'project' and Url[1] == 'type' %}{% set Type = Type|merge(["active"]) %}
             {% elseif Url[0] == 'report' or Url[0] == 'over' %}{% set Report = Report|merge(["active"]) %}
             {% elseif Url[0] == 'over' %}{% set OverView = OverView|merge(["active"]) %}
             {% elseif Url[0] == 'receive' %}{% set Received = Received|merge(["active"]) %}
@@ -287,6 +288,24 @@
                                 </a>
                             </li>
                         {% endif %}
+                        {#{% if is_granted("ROLE_SUPER_ADMIN") %}#}
+                            {#<li class="{{ Type|join(" ") }}">#}
+                                {#<a href="/project-type">#}
+                                    {#<i class="fa fa-gift"></i>#}
+                                    {#<span class="title"> Project Type </span>#}
+                                    {#<span class="selected"></span>#}
+                                {#</a>#}
+                            {#</li>#}
+                        {#{% endif %}#}
+                        {#{% if is_granted("ROLE_SUPER_ADMIN") %}#}
+                            {#<li class="{{ Area|join(" ") }}">#}
+                                {#<a href="/area">#}
+                                    {#<i class="fa fa-gift"></i>#}
+                                    {#<span class="title"> Area </span>#}
+                                    {#<span class="selected"></span>#}
+                                {#</a>#}
+                            {#</li>#}
+                        {#{% endif %}#}
                     </ul>
                 </li>
             {% endif %}
