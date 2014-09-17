@@ -6,7 +6,7 @@
                 <thead>
                 <tr>
                     <th>Sl</th>
-                    <th>Buyer Name</th>
+                    <th{% if buyers.isSorted('a.buyerName') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(buyers, 'Buyer Name', 'a.buyerName') }}</th>
                     <th>Status</th>
                     <th></th>
                 </tr>
