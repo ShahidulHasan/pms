@@ -1,5 +1,3 @@
-{% block body %}
-
     <div class="modal-dialog" style="width: 800px;">
         <div class="modal-content">
             <div class="modal-header">
@@ -18,23 +16,7 @@
                                 </div>
                                 <br/>
                                 <div>
-
-                                </div>
-                                <br/>
-                                <div>
-
-                                </div>
-                                <br/>
-                                <div>
-
-                                </div>
-                                <br/>
-                                <div>
-
-                                </div>
-                                <br/>
-                                <div>
-
+                                    Project : {{ pr[0]['projectName'] }}
                                 </div>
                                 <br/>
                                 <div>
@@ -68,23 +50,45 @@
 
                                 </div>
                                 <br/>
-                                <div>
 
-                                </div>
-                                <br/>
-                                <div>
-
-                                </div>
-                                <br/>
-                                <div>
-
-                                </div>
-                                <br/>
-                                <div>
-
-                                </div>
                             </div>
                         </div>
+
+                        <table class="table bold" style="border: 1px solid ghostwhite;">
+                            <thead>
+                            <tr>
+                                <th>Sl</th>
+                                <th>Item</th>
+                                <th>Quantity</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% set i = 0 %}
+                            {% for prItem in pri %}
+                                {% set i = i + 1 %}
+
+                                <tr style="">
+                                    <td class="col-md-1">{{ i }} .</td>
+                                    <td class="col-md-1">{{ prItem.item.itemName }}</td>
+                                    <td class="col-md-1">{{ prItem.quantity }}</td>
+                                    {% if prItem.purchaseRequisition.approvedByCategoryHeadTwo == 1 %}
+                                        {% if prItem.claimedBy != null %}
+                                            <td class="col-md-1">
+                                                claimed by {{ prItem.claimedBy.username }} <a href="/purchase/requisition/item/close/{{ prItem.id }}">Click for Close</a>
+                                            </td>
+                                        {% endif %}
+                                        {% if prItem.claimedBy == null %}
+                                            <td class="col-md-1">
+                                                <a href="/purchase/requisition/item/claim/{{ prItem.id }}">Claim</a>
+                                            </td>
+                                        {% endif %}
+                                    {% endif %}
+                                </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
 
                     </div>
                 </div>
@@ -94,7 +98,4 @@
                 <button type="button" class="btn default" data-dismiss="modal">Close</button>
             </div>
         </div>
-
     </div>
-
-{% endblock %}

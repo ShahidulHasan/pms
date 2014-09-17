@@ -36,12 +36,19 @@ class PurchaseRequisitionController extends Controller
         $query = $em->getRepository('PmsCoreBundle:PurchaseRequisition')
             ->createQueryBuilder('pr')
             ->select('pr.requisitionNo')
+            ->addSelect('p.projectName')
             ->where('pr.id = ?1')
-            ->setParameter('1', $id);
+            ->setParameter('1', $id)
+            ->join('pr.project','p');
         $pr = $query->getQuery()->getResult();
+
+        $dql = "SELECT a FROM PmsCoreBundle:PurchaseRequisitionItem a WHERE a.purchaseRequisition = '$id'";
+
+        $pri = $this->details($dql);
 
         return $this->render('PmsCoreBundle:PurchaseRequisition:details.html.twig', array(
             'pr' => $pr,
+            'pri' => $pri,
         ));
     }
 
@@ -80,26 +87,18 @@ class PurchaseRequisitionController extends Controller
 
             if ($form->isValid()) {
 
-                $em = $this->getDoctrine()->getManager();
-                $status = '1';
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
                 $purchaseRequisition->setCreatedBy($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
                 $purchaseRequisition->setCreatedDate(new \DateTime());
                 $purchaseRequisition->setDateOfRequisition(new \DateTime());
-                $purchaseRequisition->setStatus($status);
+                $purchaseRequisition->setStatus('1');
 
-                if (!empty($_POST['purchaserequisition']['purchaseRequisitionItems'])) {
-                    foreach ($_POST['purchaserequisition']['purchaseRequisitionItems'] as $item) {
-                        $pi = new PurchaseRequisitionItem();
-                        $pi->setItem($em->getRepository('PmsCoreBundle:Item')->find($item['item']));
-                        $pi->setQuantity($item['quantity']);
-                        $pi->setDateOfRequired(new \DateTime($item['dateOfRequiredText']));
-                        $pi->setComment($item['comment']);
-                        $pi->setPurchaseRequisition($purchaseRequisition);
-                        $pi->setStatus('1');
-                        $pi->setPurchaseOrderQuantity('0');
-                        $purchaseRequisition->addPurchaseRequisitionItem($pi);
-                    }
+                /** @var PurchaseRequisitionItem $item */
+                foreach ($purchaseRequisition->getPurchaseRequisitionItems() as $item) {
+
+                    $item->setPurchaseRequisition($purchaseRequisition);
+                    $item->setPurchaseOrderQuantity('0');
+                    $item->setStatus('1');
                 }
 
                 $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisition')->create($purchaseRequisition);
@@ -158,12 +157,12 @@ class PurchaseRequisitionController extends Controller
         ));
     }
 
-    public function purchaseRequisitionClaimAction(PurchaseRequisition $purchaseRequisition)
+    public function purchaseRequisitionClaimAction(PurchaseRequisitionItem $purchaseRequisitionItem)
     {
         $user = $this->get('security.context')->getToken()->getUser()->getId();
-        $purchaseRequisition->setClaimedBy($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
-        $purchaseRequisition->setClaimedDate(new \DateTime());
-        $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisition')->update($purchaseRequisition);
+        $purchaseRequisitionItem->setClaimedBy($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
+        $purchaseRequisitionItem->setClaimedDate(new \DateTime());
+        $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisition')->update($purchaseRequisitionItem);
         $this->get('session')->getFlashBag()->add(
             'notice',
             'Purchase Requisition Successfully Claimed'
@@ -243,5 +242,20 @@ class PurchaseRequisitionController extends Controller
         );
 
         return array($value, $page);
+    }
+
+    public function details($dql)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $query = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $value = $paginator->paginate(
+            $query,
+            $page = $this->get('request')->query->get('page', 1) /*page number*/,
+            50/*limit per page*/
+        );
+
+        return $value;
     }
 } 

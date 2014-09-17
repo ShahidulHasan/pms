@@ -133,7 +133,7 @@
                                             <thead>
                                             <tr>
                                                 <th>Sl</th>
-                                                <th>User Name</th>
+                                                <th{% if users.isSorted('a.username') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(users, 'User Name', 'a.username') }}</th>
                                                 <th>Access Role</th>
                                                 <th>Edit</th>
                                             </tr>

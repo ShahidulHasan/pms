@@ -79,7 +79,7 @@
                                             <thead>
                                             <tr>
                                                 <th>Sl</th>
-                                                <th>Item Name</th>
+                                                <th{% if items.isSorted('a.itemName') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(items, 'Item Name', 'a.itemName') }}</th>
                                                 <th>Unit</th>
                                                 <th>Category</th>
                                                 <th>Status</th>

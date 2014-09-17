@@ -4,6 +4,7 @@ namespace Pms\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Pms\UserBundle\Entity\User;
 
 /**
  * PurchaseRequisitionItem
@@ -79,6 +80,67 @@ class PurchaseRequisitionItem
      * @ORM\Column(name="purchase_order_quantity", type="integer", nullable=true)
      */
     private $purchaseOrderQuantity;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="claimed_by", nullable=true)
+     */
+    private $claimedBy;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="claimed_date", type="datetime", nullable=true)
+     */
+    private $claimedDate;
+
+    /**
+     * Set claimedBy
+     *
+     * @param User $claimedBy
+     * @return PurchaseRequisition
+     */
+    public function setClaimedBy($claimedBy)
+    {
+        $this->claimedBy = $claimedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get claimedBy
+     *
+     * @return User
+     */
+    public function getClaimedBy()
+    {
+        return $this->claimedBy;
+    }
+
+    /**
+     * Set claimedDate
+     *
+     * @param \DateTime $claimedDate
+     * @return PurchaseRequisition
+     */
+    public function setClaimedDate($claimedDate)
+    {
+        $this->claimedDate = $claimedDate;
+
+        return $this;
+    }
+
+    /**
+     * Get claimedDate
+     *
+     * @return \DateTime
+     */
+    public function getClaimedDate()
+    {
+        return $this->claimedDate;
+    }
 
     /**
      * @return \Doctrine\Common\Collections\ArrayCollection

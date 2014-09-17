@@ -83,7 +83,7 @@
                                             <thead>
                                             <tr>
                                                 <th>Sl</th>
-                                                <th>Project Name</th>
+                                                <th{% if project.isSorted('a.projectName') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(project, 'Project Name', 'a.projectName') }}</th>
                                                 <th>Project Head</th>
                                                 <th>Address</th>
                                                 <th>Status</th>

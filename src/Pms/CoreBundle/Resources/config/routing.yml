@@ -105,13 +105,13 @@ purchase_requisition_edit:
           id: \d+
 
 purchase_requisition_claim:
-    pattern: /purchase/requisition/claim/{id}
+    pattern: /purchase/requisition/item/claim/{id}
     defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionClaim }
     requirements:
           id: \d+
 
 purchase_requisition_close:
-    pattern: /purchase/requisition/close/{id}
+    pattern: /purchase/requisition/item/close/{id}
     defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionClose }
     requirements:
           id: \d+

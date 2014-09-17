@@ -61,7 +61,7 @@
                                             <thead>
                                             <tr>
                                                 <th>Sl</th>
-                                                <th>Vendor Name</th>
+                                                <th{% if vendors.isSorted('a.vendorName') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(vendors, 'Vendor Name', 'a.vendorName') }}</th>
                                                 <th>Status</th>
                                                 <th></th>
                                             </tr>

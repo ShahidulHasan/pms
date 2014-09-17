@@ -46,20 +46,20 @@ class PurchaseRequisition
      */
     private $dateOfRequisition;
 
-    /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="claimed_by", nullable=true)
-     */
-    private $claimedBy;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="claimed_date", type="datetime", nullable=true)
-     */
-    private $claimedDate;
+//    /**
+//     * @var User
+//     *
+//     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
+//     * @ORM\JoinColumn(name="claimed_by", nullable=true)
+//     */
+//    private $claimedBy;
+//
+//    /**
+//     * @var \DateTime
+//     *
+//     * @ORM\Column(name="claimed_date", type="datetime", nullable=true)
+//     */
+//    private $claimedDate;
 
     /**
      * @var /DateTime
@@ -450,51 +450,51 @@ class PurchaseRequisition
         return $this->approvedByProjectHead;
     }
 
-    /**
-     * Set claimedBy
-     *
-     * @param User $claimedBy
-     * @return PurchaseRequisition
-     */
-    public function setClaimedBy($claimedBy)
-    {
-        $this->claimedBy = $claimedBy;
-
-        return $this;
-    }
-
-    /**
-     * Get claimedBy
-     *
-     * @return User
-     */
-    public function getClaimedBy()
-    {
-        return $this->claimedBy;
-    }
-
-    /**
-     * Set claimedDate
-     *
-     * @param \DateTime $claimedDate
-     * @return PurchaseRequisition
-     */
-    public function setClaimedDate($claimedDate)
-    {
-        $this->claimedDate = $claimedDate;
-
-        return $this;
-    }
-
-    /**
-     * Get claimedDate
-     *
-     * @return \DateTime
-     */
-    public function getClaimedDate()
-    {
-        return $this->claimedDate;
-    }
+//    /**
+//     * Set claimedBy
+//     *
+//     * @param User $claimedBy
+//     * @return PurchaseRequisition
+//     */
+//    public function setClaimedBy($claimedBy)
+//    {
+//        $this->claimedBy = $claimedBy;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get claimedBy
+//     *
+//     * @return User
+//     */
+//    public function getClaimedBy()
+//    {
+//        return $this->claimedBy;
+//    }
+//
+//    /**
+//     * Set claimedDate
+//     *
+//     * @param \DateTime $claimedDate
+//     * @return PurchaseRequisition
+//     */
+//    public function setClaimedDate($claimedDate)
+//    {
+//        $this->claimedDate = $claimedDate;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get claimedDate
+//     *
+//     * @return \DateTime
+//     */
+//    public function getClaimedDate()
+//    {
+//        return $this->claimedDate;
+//    }
 
     /**
      * Set closedDate

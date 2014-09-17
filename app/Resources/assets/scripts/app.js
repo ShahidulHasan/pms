@@ -527,6 +527,10 @@ var App = function () {
         });
     }
 
+    $('#ajax').on('hidden.bs.modal',function(){
+        $(this).removeData('bs.modal');
+    });
+
     // Handles Bootstrap Tooltips.
     var handleTooltips = function () {
         jQuery('.tooltips').tooltip();
