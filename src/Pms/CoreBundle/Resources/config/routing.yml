@@ -184,6 +184,52 @@ buyer_update:
     requirements:
           id:  \d+
 
+area_add:
+    pattern: /area
+    defaults: { _controller: PmsCoreBundle:Area:areaAdd }
+
+area_deleted:
+    pattern: /area/deleted
+    defaults: { _controller: PmsCoreBundle:Area:areaDeleted }
+
+area_deleted_list:
+    pattern: /area/deleted/list
+    defaults: { _controller: PmsCoreBundle:Area:areaDeletedList }
+
+area_active:
+    pattern: /area/active/{id}
+    defaults: { _controller: PmsCoreBundle:Area:areaActive }
+    requirements:
+          id: \d+
+
+area_list:
+    pattern: /area/list
+    defaults: { _controller: PmsCoreBundle:Area:areaList }
+
+area_delete:
+    pattern: /area/delete/{id}
+    defaults: { _controller: PmsCoreBundle:Area:areaDelete }
+    requirements:
+          id: \d+
+
+area_update:
+    pattern: /area/update/{id}
+    defaults: { _controller: PmsCoreBundle:Area:areaUpdate }
+    requirements:
+          id:  \d+
+
+area_check:
+    pattern: /area/check
+    defaults: { _controller: PmsCoreBundle:Area:areaCheck }
+    options:
+            expose: true
+
+area_ajax_add:
+    pattern: /area/add
+    defaults: { _controller: PmsCoreBundle:Area:areaAjaxAdd }
+    options:
+            expose: true
+
 item_add:
     pattern: /item
     defaults: { _controller: PmsCoreBundle:Item:itemAdd }
@@ -227,6 +273,52 @@ item_check:
 item_ajax_add:
     pattern: /item/add
     defaults: { _controller: PmsCoreBundle:Item:itemAjaxAdd }
+    options:
+            expose: true
+
+project_category_add:
+    pattern: /project-type
+    defaults: { _controller: PmsCoreBundle:ProjectCategory:projectCategoryAdd }
+
+project_category_deleted:
+    pattern: /project-type/category/deleted
+    defaults: { _controller: PmsCoreBundle:ProjectCategory:projectCategoryDeleted }
+
+project_category_deleted_list:
+    pattern: /project-type/category/deleted/list
+    defaults: { _controller: PmsCoreBundle:ProjectCategory:projectCategoryDeletedList }
+
+project_category_active:
+    pattern: /project-type/category/active/{id}
+    defaults: { _controller: PmsCoreBundle:ProjectCategory:projectCategoryActive }
+    requirements:
+          id: \d+
+
+project_category_list:
+    pattern: /project-type/category/list
+    defaults: { _controller: PmsCoreBundle:ProjectCategory:projectCategoryList }
+
+project_category_delete:
+    pattern: /project-type/category/delete/{id}
+    defaults: { _controller: PmsCoreBundle:ProjectCategory:projectCategoryDelete }
+    requirements:
+          id: \d+
+
+project_category_update:
+    pattern: /project-type/category/update/{id}
+    defaults: { _controller: PmsCoreBundle:ProjectCategory:projectCategoryUpdate }
+    requirements:
+          id:  \d+
+
+project_category_check:
+    pattern: /project-type/category/check
+    defaults: { _controller: PmsCoreBundle:ProjectCategory:projectCategoryCheck }
+    options:
+            expose: true
+
+project_category_ajax_add:
+    pattern: /project-type/category/add
+    defaults: { _controller: PmsCoreBundle:ProjectCategory:projectCategoryAjaxAdd }
     options:
             expose: true
 

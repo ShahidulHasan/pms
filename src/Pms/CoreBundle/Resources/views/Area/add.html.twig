@@ -1,0 +1,192 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {{ include('::flash-message.html.twig') }}
+
+    <span class="areaMessege"></span>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="page-title"></h3>
+            <ul class="page-breadcrumb breadcrumb">
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="portlet box light-grey">
+
+                <div class="portlet-title">
+                    <div class="caption"><i class="fa fa-reorder"></i> Area</div>
+                </div>
+
+                <div class="portlet-body form">
+
+                    <div class="form-body left">
+
+                        <div class="form-actions fluid">
+                            {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'area-form', 'novalidate': 'novalidate'} }) }}
+                            <div class="form-group">
+                                {{ form_label(form.areaName, 'Area Name :', {'label_attr': {'class': 'control-label col-md-2', 'style' : 'margin-right:-60px;font-weight:bold;' } }
+                                ) }}
+                                <div class="col-md-8">
+                                    <div class="input-icon">
+                                        <i class="fa"></i>
+                                        {{ form_widget(form.areaName, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
+                                    </div>
+                                </div>
+                                <input type="button" name="ajaxSaveArea" value="Save" id="ajaxSaveArea" class="btn green button-width col-md-1" style="margin-top:2px;margin-left:10px;height:32px;">
+                                <span class="userMessege" style="margin-left: 185px;"></span>
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+
+                        <div class="form-actions fluid" id="project-category-list-div">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="col-md-11" style="margin-left: 4%; margin-top: 30px;">
+
+                                        <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
+                                            <thead>
+                                            <tr>
+                                                <th>Sl</th>
+                                                {#<th{% if project.isSorted('a.projectName') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(project, 'Project Name', 'a.projectName') }}</th>#}
+                                                <th>Project Head</th>
+
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            {% if page == 1 %}{% set i = 0 %}
+                                            {% else %}{% set i = (page * 10) -10 %}
+                                            {% endif %}
+
+                                            {% for projects in area %}
+                                                {% set i = i + 1 %}
+                                                {% set color = [" "] %}
+
+                                                {% if projects.status == 0 %}{% set color = color|merge(["red"]) %}
+                                                {% elseif projects.status == 1 %}{% set color = color|merge(["green"]) %}
+                                                {% endif %}
+
+                                                <tr>
+                                                    <td>{{ i }} .</td>
+                                                    <td class="col-md-3" style="color: {{ color|join("") }};">{{ projects.areaName }}</td>
+
+                                                </tr>
+
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        <div class="navigation" style="text-align: right">
+                                            {{ knp_pagination_render(area) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            {% block documentready %}
+            {{ parent() }}
+
+            $("#ajaxSaveArea").click(function () {
+                var sPageURL = window.location.pathname;
+                var sURLVariables = sPageURL.split('/');
+                var area = $("#area_areaName").val();
+
+                var areaArray = new Array(area, sURLVariables[3]);
+                $.ajax({
+                    type: "post",
+                    url: Routing.generate('area_ajax_add'),
+                    data: "areaArray=" + areaArray,
+                    dataType: 'json',
+                    success: function (msg) {
+                        if(msg.responseCode == 200) {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Area already exist</span></div>');
+                            $('.areaMessege').css('color', 'red').html(msg.project_category_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#project-category-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        } else if(msg.responseCode == 204) {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Insert Area</span></div>');
+                            $('.areaMessege').css('color', 'red').html(msg.project_category_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#project-category-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        } else if(msg.responseCode == 202) {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Area Update Successfully</span></div>');
+                            $('.areaMessege').css('color', 'green').html(msg.project_category_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#project-category-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                            window.location.pathname = 'buyer';
+                        } else {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Area Add Successfully</span></div>');
+                            $('.areaMessege').css('color', 'green').html(msg.project_category_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#project-category-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        }
+
+                        $('.areaMessege').fadeOut();
+                        $("#area-list-div").load("/area/list")
+                    }
+                });
+            });
+
+            $("#area_areaName").keyup(function () {
+                var area = $(this).val();
+
+                $.ajax({
+                    type: "post",
+                    url: Routing.generate('area_check'),
+                    data: "area=" + area,
+                    dataType: 'json',
+                    success: function (msg) {
+                        if (msg.responseCode == 200) {
+                            $('.userMessege').css('color', 'red').html(msg.area_name).fadeIn(1000);
+                        }
+                        else {
+                            $('.userMessege').css('color', 'green').html(msg.area_name).fadeIn(1000);
+                        }
+                    }
+                });
+            });
+
+            $(".area-active-list").click(function () {
+
+                $("#area-list-div").load("/area/list");
+            });
+
+            $(".area-deleted-list").click(function () {
+
+                $("#area-list-div").load("/area/deleted/list");
+            });
+
+            {% endblock %}
+        });
+    </script>
+
+{% endblock %}
