@@ -54,7 +54,7 @@ class PurchaseRequisitionController extends Controller
 
     public function purchaseRequisitionClosedAction(Request $request)
     {
-        $dql = "SELECT a FROM PmsCoreBundle:PurchaseRequisition a WHERE a.status = 0 ORDER BY a.id DESC";
+        $dql = "SELECT a FROM PmsCoreBundle:PurchaseRequisition a WHERE a.approveStatus = 4 ORDER BY a.id DESC";
 
         list($purchaseRequisitions, $page) = $this->paginate($dql);
 
@@ -66,7 +66,7 @@ class PurchaseRequisitionController extends Controller
 
     public function purchaseRequisitionOpenAction(Request $request)
     {
-        $dql = "SELECT a FROM PmsCoreBundle:PurchaseRequisition a WHERE a.status = 0 ORDER BY a.id DESC";
+        $dql = "SELECT a FROM PmsCoreBundle:PurchaseRequisition a WHERE a.approveStatus = 3 ORDER BY a.id DESC";
 
         list($purchaseRequisitions, $page) = $this->paginate($dql);
 
@@ -92,6 +92,7 @@ class PurchaseRequisitionController extends Controller
                 $purchaseRequisition->setCreatedDate(new \DateTime());
                 $purchaseRequisition->setDateOfRequisition(new \DateTime());
                 $purchaseRequisition->setStatus('1');
+                $purchaseRequisition->setApproveStatus('0');
 
                 /** @var PurchaseRequisitionItem $item */
                 foreach ($purchaseRequisition->getPurchaseRequisitionItems() as $item) {
@@ -190,7 +191,9 @@ class PurchaseRequisitionController extends Controller
     public function purchaseRequisitionApproveByProjectHeadAction(PurchaseRequisition $purchaseRequisition)
     {
         $status = '1';
-        $purchaseRequisition->setApprovedByProjectHead($status);
+        $purchaseRequisition->setApproveStatus($status);
+        $user = $this->get('security.context')->getToken()->getUser()->getId();
+        $purchaseRequisition->setApprovedByProjectHead($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
         $purchaseRequisition->setApprovedDateProjectHead(new \DateTime());
         $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisition')->update($purchaseRequisition);
         $this->get('session')->getFlashBag()->add(
@@ -203,8 +206,10 @@ class PurchaseRequisitionController extends Controller
 
     public function purchaseRequisitionApproveByCategoryHeadOneAction(PurchaseRequisition $purchaseRequisition)
     {
-        $status = '1';
-        $purchaseRequisition->setApprovedByCategoryHeadOne($status);
+        $status = '2';
+        $purchaseRequisition->setApproveStatus($status);
+        $user = $this->get('security.context')->getToken()->getUser()->getId();
+        $purchaseRequisition->setApprovedByCategoryHeadOne($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
         $purchaseRequisition->setApprovedDateCategoryHeadOne(new \DateTime());
         $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisition')->update($purchaseRequisition);
         $this->get('session')->getFlashBag()->add(
@@ -217,8 +222,10 @@ class PurchaseRequisitionController extends Controller
 
     public function purchaseRequisitionApproveByCategoryHeadTwoAction(PurchaseRequisition $purchaseRequisition)
     {
-        $status = '1';
-        $purchaseRequisition->setApprovedByCategoryHeadTwo($status);
+        $status = '3';
+        $purchaseRequisition->setApproveStatus($status);
+        $user = $this->get('security.context')->getToken()->getUser()->getId();
+        $purchaseRequisition->setApprovedByCategoryHeadTwo($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
         $purchaseRequisition->setApprovedDateCategoryHeadTwo(new \DateTime());
         $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisition')->update($purchaseRequisition);
         $this->get('session')->getFlashBag()->add(

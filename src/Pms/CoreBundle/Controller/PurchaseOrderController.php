@@ -72,6 +72,7 @@ class PurchaseOrderController extends Controller
                 $purchaseOrder->setCreatedBy($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
                 $purchaseOrder->setCreatedDate(new \DateTime());
                 $purchaseOrder->setStatus('1');
+                $purchaseOrder->setApproveStatus('0');
 
                 /** @var PurchaseOrderItem $item */
                 foreach ($purchaseOrder->getPurchaseOrderItems() as $item) {
@@ -149,7 +150,9 @@ class PurchaseOrderController extends Controller
     public function purchaseOrderApproveOneAction(PurchaseOrder $purchaseOrder)
     {
         $status = '1';
-        $purchaseOrder->setApprovedOne($status);
+        $purchaseOrder->setApproveStatus($status);
+        $user = $this->get('security.context')->getToken()->getUser()->getId();
+        $purchaseOrder->setApprovedOne($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
         $purchaseOrder->setApprovedOneDate(new \DateTime());
         $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseOrder')->update($purchaseOrder);
         $this->get('session')->getFlashBag()->add(
@@ -162,8 +165,10 @@ class PurchaseOrderController extends Controller
 
     public function purchaseOrderApproveTwoAction(PurchaseOrder $purchaseOrder)
     {
-        $status = '1';
-        $purchaseOrder->setApprovedTwo($status);
+        $status = '2';
+        $purchaseOrder->setApproveStatus($status);
+        $user = $this->get('security.context')->getToken()->getUser()->getId();
+        $purchaseOrder->setApprovedTwo($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
         $purchaseOrder->setApprovedTwoDate(new \DateTime());
         $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseOrder')->update($purchaseOrder);
         $this->get('session')->getFlashBag()->add(
@@ -176,8 +181,10 @@ class PurchaseOrderController extends Controller
 
     public function purchaseOrderApproveThreeAction(PurchaseOrder $purchaseOrder)
     {
-        $status = '1';
-        $purchaseOrder->setApprovedThree($status);
+        $status = '3';
+        $purchaseOrder->setApproveStatus($status);
+        $user = $this->get('security.context')->getToken()->getUser()->getId();
+        $purchaseOrder->setApprovedThree($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
         $purchaseOrder->setApprovedThreeDate(new \DateTime());
         $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseOrder')->update($purchaseOrder);
         $this->get('session')->getFlashBag()->add(

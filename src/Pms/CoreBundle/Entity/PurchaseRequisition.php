@@ -121,9 +121,10 @@ class PurchaseRequisition
     private $updatedDate;
 
     /**
-     * @var integer
+     * @var User
      *
-     * @ORM\Column(name="approved_by_project_head", type="integer", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="approved_by_project_head", nullable=true)
      */
     private $approvedByProjectHead;
 
@@ -135,9 +136,10 @@ class PurchaseRequisition
     private $approvedDateProjectHead;
 
     /**
-     * @var integer
+     * @var User
      *
-     * @ORM\Column(name="approved_by_category_head_one", type="integer", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="approved_by_category_head_one", nullable=true)
      */
     private $approvedByCategoryHeadOne;
 
@@ -149,9 +151,10 @@ class PurchaseRequisition
     private $approvedDateCategoryHeadOne;
 
     /**
-     * @var integer
+     * @var User
      *
-     * @ORM\Column(name="approved_by_category_head_two", type="integer", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="approved_by_category_head_two", nullable=true)
      */
     private $approvedByCategoryHeadTwo;
 
@@ -161,6 +164,13 @@ class PurchaseRequisition
      * @ORM\Column(name="approved_date_category_head_two", type="datetime", nullable=true)
      */
     private $approvedDateCategoryHeadTwo;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="approve_status", type="integer", nullable=true)
+     */
+    private $approveStatus;
 
     public function __construct()
     {
@@ -408,7 +418,7 @@ class PurchaseRequisition
     /**
      * Set approvedByProjectHead
      *
-     * @param integer $approvedByProjectHead
+     * @param User $approvedByProjectHead
      * @return PurchaseRequisition
      */
     public function setApprovedByProjectHead($approvedByProjectHead)
@@ -421,58 +431,12 @@ class PurchaseRequisition
     /**
      * Get approvedByProjectHead
      *
-     * @return integer
+     * @return User
      */
     public function getApprovedByProjectHead()
     {
         return $this->approvedByProjectHead;
     }
-
-//    /**
-//     * Set claimedBy
-//     *
-//     * @param User $claimedBy
-//     * @return PurchaseRequisition
-//     */
-//    public function setClaimedBy($claimedBy)
-//    {
-//        $this->claimedBy = $claimedBy;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get claimedBy
-//     *
-//     * @return User
-//     */
-//    public function getClaimedBy()
-//    {
-//        return $this->claimedBy;
-//    }
-//
-//    /**
-//     * Set claimedDate
-//     *
-//     * @param \DateTime $claimedDate
-//     * @return PurchaseRequisition
-//     */
-//    public function setClaimedDate($claimedDate)
-//    {
-//        $this->claimedDate = $claimedDate;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get claimedDate
-//     *
-//     * @return \DateTime
-//     */
-//    public function getClaimedDate()
-//    {
-//        return $this->claimedDate;
-//    }
 
     /**
      * Set closedDate
@@ -496,6 +460,30 @@ class PurchaseRequisition
     {
         return $this->closedDate;
     }
+
+    /**
+     * Set approveStatus
+     *
+     * @param integer $approveStatus
+     * @return PurchaseRequisition
+     */
+    public function setApproveStatus($approveStatus)
+    {
+        $this->approveStatus = $approveStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get approveStatus
+     *
+     * @return integer
+     */
+    public function getApproveStatus()
+    {
+        return $this->approveStatus;
+    }
+
 
     /**
      * Set dateOfFinalDelivered
@@ -546,7 +534,7 @@ class PurchaseRequisition
     /**
      * Set approvedByCategoryHeadOne
      *
-     * @param integer $approvedByCategoryHeadOne
+     * @param User $approvedByCategoryHeadOne
      * @return PurchaseRequisition
      */
     public function setApprovedByCategoryHeadOne($approvedByCategoryHeadOne)
@@ -559,7 +547,7 @@ class PurchaseRequisition
     /**
      * Get approvedByCategoryHeadOne
      *
-     * @return integer
+     * @return User
      */
     public function getApprovedByCategoryHeadOne()
     {
@@ -592,7 +580,7 @@ class PurchaseRequisition
     /**
      * Set approvedByCategoryHeadTwo
      *
-     * @param integer $approvedByCategoryHeadTwo
+     * @param User $approvedByCategoryHeadTwo
      * @return PurchaseRequisition
      */
     public function setApprovedByCategoryHeadTwo($approvedByCategoryHeadTwo)
@@ -605,7 +593,7 @@ class PurchaseRequisition
     /**
      * Get approvedByCategoryHeadTwo
      *
-     * @return integer
+     * @return User
      */
     public function getApprovedByCategoryHeadTwo()
     {
@@ -661,15 +649,8 @@ class PurchaseRequisition
         return $this->invoice;
     }
 
-//    /**
-//     * @return \Doctrine\Common\Collections\ArrayCollection
-//     */
-//    public function getReceivedItem()
-//    {
-//        return $this->receivedItem;
-//    }
-
-    public function getDateOfRequisitionText() {
+    public function getDateOfRequisitionText()
+    {
         if(empty($this->dateOfRequisition)){
             return "";
         }
@@ -677,8 +658,8 @@ class PurchaseRequisition
         return $this->getDateOfRequisition()->format('Y-m-d');
     }
 
-    public function setDateOfRequisitionText($date = "") {
-
+    public function setDateOfRequisitionText($date = "")
+    {
         if(!empty($date)){
             return $this->setDateOfRequisition(new \DateTime($date));
         }

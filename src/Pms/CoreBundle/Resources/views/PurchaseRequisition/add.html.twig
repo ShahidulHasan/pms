@@ -76,9 +76,11 @@
                                             {% set i = i + 1 %}
                                             {% set bgColor = [" "] %}
 
-                                            {% if purchaseRequisition.approvedByProjectHead == 0 %}{% set bgColor = bgColor|merge(["#FFE4B2"]) %}
-                                            {% elseif purchaseRequisition.approvedByProjectHead == 1 and purchaseRequisition.approvedByCategoryHeadOne == 0 %}{% set bgColor = bgColor|merge(["#E6E6FF"]) %}
-                                            {% elseif purchaseRequisition.approvedByCategoryHeadOne == 1 and purchaseRequisition.approvedByCategoryHeadTwo == 0 %}{% set bgColor = bgColor|merge(["#CCCCFF"]) %}
+                                            {% if purchaseRequisition.approveStatus == 0 %}{% set bgColor = bgColor|merge(["#FFE4B2"]) %}
+                                            {% elseif purchaseRequisition.approveStatus == 1 %}{% set bgColor = bgColor|merge(["#E6E6FF"]) %}
+                                            {% elseif purchaseRequisition.approveStatus == 2 %}{% set bgColor = bgColor|merge(["#CCCCFF"]) %}
+                                            {% elseif purchaseRequisition.approveStatus == 3 %}{% set bgColor = bgColor|merge(["#9999FF"]) %}
+                                            {% elseif purchaseRequisition.approveStatus == 4 %}{% set bgColor = bgColor|merge(["#B2D9B2"]) %}
                                             {% endif %}
 
                                             <tr style="background: {{ bgColor|join("") }};">
@@ -87,19 +89,19 @@
                                                 <td class="col-md-1">{{ purchaseRequisition.requisitionNo }}</td>
                                                 <td class="col-md-3">{{ purchaseRequisition.project.projectName }}</td>
 
-                                                {% if purchaseRequisition.approvedByProjectHead == 0 %}
+                                                {% if purchaseRequisition.approvedByProjectHead == null %}
                                                     <td class="col-md-1"><a href="/purchase/requisition/approve/projectHead/{{ purchaseRequisition.id }}">Rise</a></td>
                                                 {% endif %}
 
-                                                {% if purchaseRequisition.approvedByProjectHead == 1 and purchaseRequisition.approvedByCategoryHeadOne == 0 %}
+                                                {% if purchaseRequisition.approvedByProjectHead != null and purchaseRequisition.approvedByCategoryHeadOne == null %}
                                                     <td class="col-md-1"><a href="/purchase/requisition/approve/CategoryHeadOne/{{ purchaseRequisition.id }}">Approved</a></td>
                                                 {% endif %}
 
-                                                {% if purchaseRequisition.approvedByCategoryHeadOne == 1 and purchaseRequisition.approvedByCategoryHeadTwo == 0 %}
+                                                {% if purchaseRequisition.approvedByCategoryHeadOne != null and purchaseRequisition.approvedByCategoryHeadTwo == null %}
                                                     <td class="col-md-1"><a href="/purchase/requisition/approve/CategoryHeadTwo/{{ purchaseRequisition.id }}">Validated</a></td>
                                                 {% endif %}
 
-                                                {% if purchaseRequisition.approvedByCategoryHeadTwo == 1 %}
+                                                {% if purchaseRequisition.approvedByCategoryHeadTwo != null %}
                                                     <td class="col-md-1">
 
                                                     </td>
@@ -108,12 +110,13 @@
                                                     </td>
                                                 {% endif %}
 
-                                                {% if purchaseRequisition.approvedByProjectHead == 0 or purchaseRequisition.approvedByCategoryHeadOne == 0 or purchaseRequisition.approvedByCategoryHeadTwo == 0 %}
+                                                {% if purchaseRequisition.approvedByProjectHead == null or purchaseRequisition.approvedByCategoryHeadOne == null or purchaseRequisition.approvedByCategoryHeadTwo == null %}
                                                     <td>
                                                         <a href="/purchase/requisition/edit/{{ purchaseRequisition.id }}" style="width: 100px;" class="btn default btn-xs green-stripe"><i
                                                                     class="fa fa-edit"></i> Edit</a>
                                                     </td>
                                                 {% endif %}
+
                                                 <td class="col-md-1">
                                                     <a href="/purchase/requisition/details/{{ purchaseRequisition.id }}" data-target="#ajax" data-toggle="modal"><i class="fa fa-info-circle"></i></a>
                                                 </td>

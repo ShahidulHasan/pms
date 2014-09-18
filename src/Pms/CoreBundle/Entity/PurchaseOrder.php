@@ -53,6 +53,13 @@ class PurchaseOrder
     private $status;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="approve_status", type="integer", nullable=true)
+     */
+    private $approveStatus;
+
+    /**
      * @var Vendor
      *
      * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Vendor", inversedBy="purchaseOrder")
@@ -98,9 +105,10 @@ class PurchaseOrder
     private $dateOfDelivered;
 
     /**
-     * @var integer
+     * @var User
      *
-     * @ORM\Column(name="approved_one", type="integer", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="approved_one", nullable=true)
      */
     private $approvedOne;
 
@@ -112,9 +120,10 @@ class PurchaseOrder
     private $approvedOneDate;
 
     /**
-     * @var integer
+     * @var User
      *
-     * @ORM\Column(name="approved_two", type="integer", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="approved_two", nullable=true)
      */
     private $approvedTwo;
 
@@ -126,9 +135,10 @@ class PurchaseOrder
     private $approvedTwoDate;
 
     /**
-     * @var integer
+     * @var User
      *
-     * @ORM\Column(name="approved_three", type="integer", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="approved_three", nullable=true)
      */
     private $approvedThree;
 
@@ -340,6 +350,29 @@ class PurchaseOrder
     }
 
     /**
+     * Set approveStatus
+     *
+     * @param integer $approveStatus
+     * @return PurchaseOrder
+     */
+    public function setApproveStatus($approveStatus)
+    {
+        $this->approveStatus = $approveStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get approveStatus
+     *
+     * @return integer
+     */
+    public function getApproveStatus()
+    {
+        return $this->approveStatus;
+    }
+
+    /**
      * Set poNonpo
      *
      * @param integer $poNonpo
@@ -388,7 +421,7 @@ class PurchaseOrder
     /**
      * Set approvedOne
      *
-     * @param integer $approvedOne
+     * @param User $approvedOne
      * @return PurchaseOrder
      */
     public function setApprovedOne($approvedOne)
@@ -401,7 +434,7 @@ class PurchaseOrder
     /**
      * Get approvedOne
      *
-     * @return integer
+     * @return User
      */
     public function getApprovedOne()
     {
@@ -435,7 +468,7 @@ class PurchaseOrder
     /**
      * Set approvedTwo
      *
-     * @param integer $approvedTwo
+     * @param User $approvedTwo
      * @return PurchaseOrder
      */
     public function setApprovedTwo($approvedTwo)
@@ -448,7 +481,7 @@ class PurchaseOrder
     /**
      * Get approvedTwo
      *
-     * @return integer
+     * @return User
      */
     public function getApprovedTwo()
     {
@@ -481,7 +514,7 @@ class PurchaseOrder
     /**
      * Set approvedThree
      *
-     * @param integer $approvedThree
+     * @param User $approvedThree
      * @return PurchaseOrder
      */
     public function setApprovedThree($approvedThree)
@@ -494,7 +527,7 @@ class PurchaseOrder
     /**
      * Get approvedThree
      *
-     * @return integer
+     * @return User
      */
     public function getApprovedThree()
     {

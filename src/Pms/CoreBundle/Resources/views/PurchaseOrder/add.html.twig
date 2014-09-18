@@ -59,22 +59,19 @@
                                                     <td class="col-md-2">{{ purchaseOrder.createdDate|date('Y-m-d') }}</td>
                                                     <td class="col-md-2">{{ purchaseOrder.vendor.vendorName |default() }}{{ purchaseOrder.buyer.buyerName |default() }}</td>
 
-                                                    {% if purchaseOrder.approvedOne == 0 %}
+                                                    {% if purchaseOrder.approvedOne == null %}
                                                         <td class="col-md-1"><a href="/purchase/order/approve/one/{{ purchaseOrder.id }}">Open</a></td>
                                                     {% endif %}
 
-                                                    {% if purchaseOrder.approvedOne == 1 and purchaseOrder.approvedTwo == 0 %}
+                                                    {% if purchaseOrder.approvedOne != null and purchaseOrder.approvedTwo == null %}
                                                         <td class="col-md-1"><a href="/purchase/order/approve/two/{{ purchaseOrder.id }}">Approved</a></td>
                                                     {% endif %}
 
-                                                    {% if purchaseOrder.approvedTwo == 1 and purchaseOrder.approvedThree == 0 %}
+                                                    {% if purchaseOrder.approvedTwo != null and purchaseOrder.approvedThree == null %}
                                                         <td class="col-md-1"><a href="/purchase/order/approve/three/{{ purchaseOrder.id }}">Validated</a></td>
                                                     {% endif %}
 
-                                                    {% if purchaseOrder.approvedThree == 1 %}
-                                                        <td class="col-md-1">
-
-                                                        </td>
+                                                    {% if purchaseOrder.approvedThree != null %}
                                                         <td class="col-md-1">
                                                             Verified
                                                         </td>
