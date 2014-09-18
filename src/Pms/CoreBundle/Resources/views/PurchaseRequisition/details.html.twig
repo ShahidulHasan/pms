@@ -78,18 +78,16 @@
                                     <td class="col-md-1">{{ prItem.quantity }}</td>
                                     <td class="col-md-1">{{ prItem.dateOfRequired | date('Y/m/d') }}</td>
                                     <td class="col-md-1">{{ prItem.comment }}</td>
+                                    <td class="col-md-1">
                                     {% if prItem.purchaseRequisition.approvedByCategoryHeadTwo == 1 %}
                                         {% if prItem.claimedBy != null %}
-                                            <td class="col-md-1">
-                                                claimed by {{ prItem.claimedBy.username }} <a href="/purchase/requisition/item/close/{{ prItem.id }}">Click for Close</a>
-                                            </td>
+                                            claimed by {{ prItem.claimedBy.username }} <a href="/purchase/requisition/item/close/{{ prItem.id }}">Click for Close</a>
                                         {% endif %}
                                         {% if prItem.claimedBy == null %}
-                                            <td class="col-md-1">
-                                                <a href="/purchase/requisition/item/claim/{{ prItem.id }}">Claim</a>
-                                            </td>
+                                            <a href="/purchase/requisition/item/claim/{{ prItem.id }}">Claim</a>
                                         {% endif %}
                                     {% endif %}
+                                    </td>
                                 </tr>
 
                             {% endfor %}

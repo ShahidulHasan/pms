@@ -2,37 +2,15 @@
 
 namespace Pms\CoreBundle\Controller;
 
-use Doctrine\Common\Util\Debug;
 use Doctrine\ORM\Repository;
-use Pms\CoreBundle\Entity\Category;
-use Pms\CoreBundle\Entity\Buyer;
 use Pms\CoreBundle\Entity\Invoice;
-use Pms\CoreBundle\Entity\PurchaseOrder;
-use Pms\CoreBundle\Entity\PurchaseOrderItem;
 use Pms\CoreBundle\Entity\PurchaseRequisitionItem;
 use Pms\CoreBundle\Entity\Receive;
 use Pms\CoreBundle\Entity\ReceivedItem;
-use Pms\CoreBundle\Entity\Vendor;
-use Pms\CoreBundle\Entity\Item;
-use Pms\CoreBundle\Entity\Project;
-use Pms\CoreBundle\Entity\ProjectCostItem;
-use Pms\CoreBundle\Entity\PurchaseRequisition;
-use Pms\CoreBundle\Form\CategoryType;
-use Pms\CoreBundle\Form\BuyerType;
 use Pms\CoreBundle\Form\InvoiceType;
-use Pms\CoreBundle\Form\PurchaseOrderType;
-use Pms\CoreBundle\Form\ReceivedItemType;
 use Pms\CoreBundle\Form\ReceiveType;
-use Pms\CoreBundle\Form\VendorType;
-use Pms\CoreBundle\Form\ItemType;
-use Pms\CoreBundle\Form\ProjectCostItemType;
-use Pms\CoreBundle\Form\ProjectType;
-use Pms\CoreBundle\Form\PurchaseRequisitionType;
-use Pms\CoreBundle\Form\SearchType;
-use Pms\CoreBundle\Form\SubCategoryType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class CoreController extends Controller
 {
@@ -125,7 +103,7 @@ class CoreController extends Controller
         list($receivedItems, $page) = $this->paginate($dql);
 
         return $this->render('PmsCoreBundle:Receive:add.html.twig', array(
-            'receivedItems' => $receivedItems,
+            'receivedI' => $receivedItems,
             'page' => $page,
         ));
     }

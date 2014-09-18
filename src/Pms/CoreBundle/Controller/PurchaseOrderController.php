@@ -127,13 +127,65 @@ class PurchaseOrderController extends Controller
         $query = $em->getRepository('PmsCoreBundle:PurchaseOrder')
             ->createQueryBuilder('po')
             ->select('po.orderNo')
+            ->addSelect('po.dateOfDelivered')
+            ->addSelect('u.username')
+            ->addSelect('po.dateOfDelivered')
+            ->addSelect('po.createdDate')
             ->where('po.id = ?1')
-            ->setParameter('1', $id);
+            ->setParameter('1', $id)
+            ->join('po.createdBy', 'u');
         $po = $query->getQuery()->getResult();
+
+        $dql = "SELECT a FROM PmsCoreBundle:PurchaseOrderItem a WHERE a.purchaseOrder = '$id'";
+
+        $poi = $this->details($dql);
 
         return $this->render('PmsCoreBundle:PurchaseOrder:details.html.twig', array(
             'po' => $po,
+            'poi' => $poi,
         ));
+    }
+
+    public function purchaseOrderApproveOneAction(PurchaseOrder $purchaseOrder)
+    {
+        $status = '1';
+        $purchaseOrder->setApprovedOne($status);
+        $purchaseOrder->setApprovedOneDate(new \DateTime());
+        $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseOrder')->update($purchaseOrder);
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            'Purchase Order Successfully Approved'
+        );
+
+        return $this->redirect($this->generateUrl('purchase_order_add'));
+    }
+
+    public function purchaseOrderApproveTwoAction(PurchaseOrder $purchaseOrder)
+    {
+        $status = '1';
+        $purchaseOrder->setApprovedTwo($status);
+        $purchaseOrder->setApprovedTwoDate(new \DateTime());
+        $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseOrder')->update($purchaseOrder);
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            'Purchase Order Successfully Approved'
+        );
+
+        return $this->redirect($this->generateUrl('purchase_order_add'));
+    }
+
+    public function purchaseOrderApproveThreeAction(PurchaseOrder $purchaseOrder)
+    {
+        $status = '1';
+        $purchaseOrder->setApprovedThree($status);
+        $purchaseOrder->setApprovedThreeDate(new \DateTime());
+        $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseOrder')->update($purchaseOrder);
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            'Purchase Order Successfully Approved'
+        );
+
+        return $this->redirect($this->generateUrl('purchase_order_add'));
     }
 
     public function paginate($dql)
@@ -149,6 +201,21 @@ class PurchaseOrderController extends Controller
         );
 
         return array($value, $page);
+    }
+
+    public function details($dql)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $query = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $value = $paginator->paginate(
+            $query,
+            $page = $this->get('request')->query->get('page', 1) /*page number*/,
+            50/*limit per page*/
+        );
+
+        return $value;
     }
 
     /**

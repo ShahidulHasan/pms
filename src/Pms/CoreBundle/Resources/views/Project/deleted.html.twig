@@ -97,7 +97,7 @@
                         <div class="form-actions fluid" id="project-list-div">
                             <div class="form-group">
                                 <div class="col-md-12">
-                                    <div class="col-md-11" style="margin-left: 4%; margin-top: 30px;">
+                                    <div class="col-md-12" style="margin-top: 30px;">
 
                                         <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
                                             <thead>
@@ -105,8 +105,9 @@
                                                 <th>Sl</th>
                                                 <th{% if project.isSorted('a.projectName') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(project, 'Project Name', 'a.projectName') }}</th>
                                                 <th>Project Head</th>
+                                                <th>Type</th>
+                                                <th>Area</th>
                                                 <th>Address</th>
-                                                <th>Status</th>
                                                 <th></th>
                                             </tr>
                                             </thead>
@@ -125,15 +126,17 @@
                                                 {% endif %}
 
                                                 <tr>
-                                                    <td>{{ i }} .</td>
-                                                    <td class="col-md-3" style="color: {{ color|join("") }};">{{ projects.projectName }}</td>
+                                                    <td class="col-md-1">{{ i }} .</td>
+                                                    <td class="col-md-2" style="color: {{ color|join("") }};">{{ projects.projectName }}</td>
                                                     <td class="col-md-2" style="color: {{ color|join("") }};">{{ projects.projectHead |default() }}</td>
-                                                    <td class="col-md-3" style="color: {{ color|join("") }};">{{ projects.address |default() }}</td>
-                                                    <td style="color: red;">
+                                                    <td class="col-md-1" style="color: {{ color|join("") }};">{{ projects.projectCategory.projectCategoryName |default() }}</td>
+                                                    <td class="col-md-1" style="color: {{ color|join("") }};">{{ projects.projectArea.areaName |default() }}</td>
+                                                    <td class="col-md-2" style="color: {{ color|join("") }};">{{ projects.address |default() }}</td>
+                                                    <td class="col-md-1" style="color: red;">
                                                         <a href="#" style="width: 85px;" class="btn default btn-xs red-stripe"><i
                                                                     class="fa fa-times"></i> Deleted</a>
                                                     </td>
-                                                    <td>
+                                                    <td class="col-md-1">
                                                         <a href="/project/active/{{ projects.id }}" class="btn default btn-xs green-stripe" style="width: 85px;"><i
                                                                     class="fa fa-repeat"></i> Restore</a>
                                                     </td>

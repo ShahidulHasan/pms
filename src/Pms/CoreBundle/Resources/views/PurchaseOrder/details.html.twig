@@ -18,19 +18,7 @@
                                 </div>
                                 <br/>
                                 <div>
-
-                                </div>
-                                <br/>
-                                <div>
-
-                                </div>
-                                <br/>
-                                <div>
-
-                                </div>
-                                <br/>
-                                <div>
-
+                                    Date : {{ po[0]['dateOfDelivered'] |date('Y-m-d') }}
                                 </div>
                                 <br/>
                                 <div>
@@ -53,7 +41,11 @@
                             </div>
                             <div style="width: 45%;float:right;">
                                 <div>
-
+                                    Created By : {{ po[0]['username'] }}
+                                </div>
+                                <br/>
+                                <div>
+                                    Date : {{ po[0]['createdDate'] |date('Y-m-d') }}
                                 </div>
                                 <br/>
                                 <div>
@@ -68,23 +60,41 @@
 
                                 </div>
                                 <br/>
-                                <div>
 
-                                </div>
-                                <br/>
-                                <div>
-
-                                </div>
-                                <br/>
-                                <div>
-
-                                </div>
-                                <br/>
-                                <div>
-
-                                </div>
                             </div>
                         </div>
+
+                        <table class="table bold" style="border: 1px solid ghostwhite;">
+                            <thead>
+                            <tr>
+                                <th>Sl</th>
+                                <th>Item</th>
+                                <th>Quantity</th>
+                                <th>Project</th>
+                                <th>comment</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% set i = 0 %}
+                            {% for prItem in poi %}
+                                {% set i = i + 1 %}
+
+                                <tr style="">
+                                    <td class="col-md-1">{{ i }} .</td>
+                                    <td class="col-md-1">{{ prItem.item.itemName }}</td>
+                                    <td class="col-md-1">{{ prItem.quantity }}</td>
+                                    <td class="col-md-1">{{ prItem.project.projectName }}</td>
+                                    <td class="col-md-1">{{ prItem.comment }}</td>
+                                    <td class="col-md-1">
+
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
 
                     </div>
                 </div>

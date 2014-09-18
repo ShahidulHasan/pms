@@ -60,6 +60,24 @@ vendor_update:
     requirements:
           id:  \d+
 
+purchase_order_approve_one:
+    pattern: /purchase/order/approve/one/{id}
+    defaults: { _controller: PmsCoreBundle:PurchaseOrder:purchaseOrderApproveOne }
+    requirements:
+          id: \d+
+
+purchase_order_approve_two:
+    pattern: /purchase/order/approve/two/{id}
+    defaults: { _controller: PmsCoreBundle:PurchaseOrder:purchaseOrderApproveTwo }
+    requirements:
+          id: \d+
+
+purchase_order_approve_three:
+    pattern: /purchase/order/approve/three/{id}
+    defaults: { _controller: PmsCoreBundle:PurchaseOrder:purchaseOrderApproveThree }
+    requirements:
+          id: \d+
+
 purchase_order_add:
     pattern: /purchase/order
     defaults: { _controller: PmsCoreBundle:PurchaseOrder:purchaseOrderAdd }

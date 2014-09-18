@@ -36,10 +36,11 @@
                     <tr>
                         <th>Sl</th>
                         <th>Received Date</th>
+                        <th>Received By</th>
                         <th>GRN</th>
-                        <th>Quantity</th>
                         <th>Invoice</th>
-                        <th>Item</th>
+                        <th>Calan</th>
+                        <th>Vendor/Buyer</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -48,24 +49,25 @@
                     {% else %}{% set i = (page * 50) - 50 %}
                     {% endif %}
 
-                    {% for receivedItem in receivedItems %}
+                    {% for receivedItem in receivedI %}
                         {% set i = i + 1 %}
                         {% set color = [" "] %}
 
                         <tr>
                             <td class="col-md-1">{{ i }} .</td>
-                            <td class="col-md-2" style="color: {{ color|join("") }};">{{ receivedItem.receivedDate | date('Y-m-d') }}</td>
-                            {#<td class="col-md-1" style="color: {{ color|join("") }};">{{ receivedItem.receiveItems.grn }}</td>#}
-                            {#<td class="col-md-2" style="color: {{ color|join("") }};">{{ receivedItem.quantity }}</td>#}
-                            {#<td class="col-md-1" style="color: {{ color|join("") }};">{{ receivedItem.invoice.title }}</td>#}
-                            {#<td class="col-md-3" style="color: {{ color|join("") }};">{{ receivedItem.item.itemName }}</td>#}
+                            <td class="col-md-1" style="color: {{ color|join("") }};">{{ receivedItem.receivedDate | date('Y-m-d') }}</td>
+                            <td class="col-md-1" style="color: {{ color|join("") }};">{{ receivedItem.receivedBy.username }}</td>
+                            <td class="col-md-1" style="color: {{ color|join("") }};">{{ receivedItem.grn }}</td>
+                            <td class="col-md-1" style="color: {{ color|join("") }};">{{ receivedItem.invoice.title }}</td>
+                            <td class="col-md-1" style="color: {{ color|join("") }};">{{ receivedItem.calan.title }}</td>
+                            <td class="col-md-1" style="color: {{ color|join("") }};">{{ receivedItem.vendor.vendorName |default() }} {{ receivedItem.buyer.buyerName |default() }}</td>
                         </tr>
 
                     {% endfor %}
                     </tbody>
                 </table>
                 <div class="navigation" style="text-align: right">
-                    {{ knp_pagination_render(receivedItems) }}
+                    {{ knp_pagination_render(receivedI) }}
                 </div>
             </div>
         </div>

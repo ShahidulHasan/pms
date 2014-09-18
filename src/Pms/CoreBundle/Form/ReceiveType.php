@@ -97,6 +97,6 @@ class ReceiveType extends AbstractType
      */
     public function getName()
     {
-        return 'pms_corebundle_receive';
+        return 'receive';
     }
 }

@@ -46,21 +46,6 @@ class PurchaseRequisition
      */
     private $dateOfRequisition;
 
-//    /**
-//     * @var User
-//     *
-//     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
-//     * @ORM\JoinColumn(name="claimed_by", nullable=true)
-//     */
-//    private $claimedBy;
-//
-//    /**
-//     * @var \DateTime
-//     *
-//     * @ORM\Column(name="claimed_date", type="datetime", nullable=true)
-//     */
-//    private $claimedDate;
-
     /**
      * @var /DateTime
      *
@@ -88,13 +73,6 @@ class PurchaseRequisition
      * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\Invoice", mappedBy="purchaseRequisition", cascade={"persist", "remove"})
      */
     private $invoice;
-
-//    /**
-//     * @var ArrayCollection
-//     *
-//     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\Invoice", mappedBy="purchaseRequisition", cascade={"persist", "remove"})
-//     */
-//    private $receivedItem;
 
     /**
      * @var Project
