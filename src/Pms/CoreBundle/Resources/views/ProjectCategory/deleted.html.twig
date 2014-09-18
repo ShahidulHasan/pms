@@ -1,0 +1,206 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {{ include('::flash-message.html.twig') }}
+
+    <span class="projectCategoryMessege"></span>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="page-title"></h3>
+            <ul class="page-breadcrumb breadcrumb">
+                <li>
+                    <i class="fa fa-gift"></i>
+                    <a href="#" class="project-category-active-list">Active Project Type</a>
+                    <i class="fa">|</i>
+                </li>
+                <li>
+                    <i class="fa fa-gift"></i>
+                    <a href="#" class="project-category-deleted-list">Deleted Project Type</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="portlet box light-grey">
+
+                <div class="portlet-title">
+                    <div class="caption"><i class="fa fa-reorder"></i> Project Type</div>
+                </div>
+
+                <div class="portlet-body form">
+
+                    <div class="form-body left">
+
+                        <div class="form-actions fluid">
+                            {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'project-category-form', 'novalidate': 'novalidate'} }) }}
+                            <div class="form-group">
+                                {{ form_label(form.projectCategoryName, 'Project Type :', {'label_attr': {'class': 'control-label col-md-2', 'style' : 'margin-right:-60px;font-weight:bold;' } }
+                                ) }}
+                                <div class="col-md-8">
+                                    <div class="input-icon">
+                                        <i class="fa"></i>
+                                        {{ form_widget(form.projectCategoryName, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;'} }) }}
+                                    </div>
+                                </div>
+                                <input type="button" name="ajaxSaveProjectCategory" value="Save" id="ajaxSaveProjectCategory" class="btn green button-width col-md-1" style="margin-top:2px;margin-left:10px;height:32px;">
+                                <span class="userMessege" style="margin-left: 185px;"></span>
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+
+                        <div class="form-actions fluid" id="project-category-list-div">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="col-md-11" style="margin-left: 4%; margin-top: 30px;">
+
+                                        <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
+                                            <thead>
+                                            <tr>
+                                                <th>Sl</th>
+                                                <th{% if projectCategory.isSorted('a.projectName') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(projectCategory, 'Project Type', 'a.projectCategoryName') }}</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            {% if page == 1 %}{% set i = 0 %}
+                                            {% else %}{% set i = (page * 10) -10 %}
+                                            {% endif %}
+
+                                            {% for projectsCategory in projectCategory %}
+                                                {% set i = i + 1 %}
+                                                {% set color = [" "] %}
+
+                                                {% if projectsCategory.status == 0 %}{% set color = color|merge(["red"]) %}
+                                                {% elseif projectsCategory.status == 1 %}{% set color = color|merge(["green"]) %}
+                                                {% endif %}
+
+                                                <tr>
+                                                    <td class="col-md-1">{{ i }} .</td>
+                                                    <td class="col-md-3" style="color: {{ color|join("") }};">{{ projectsCategory.projectCategoryName }}</td>
+                                                    <td class="col-md-1" style="color: red;">
+                                                        <a href="#" style="width: 85px;" class="btn default btn-xs red-stripe"><i
+                                                                    class="fa fa-times"></i> Deleted</a>
+                                                    </td>
+                                                    <td class="col-md-1">
+                                                        <a href="/project-type/active/{{ projectsCategory.id }}" class="btn default btn-xs green-stripe" style="width: 85px;"><i
+                                                                    class="fa fa-repeat"></i> Restore</a>
+                                                    </td>
+                                                </tr>
+
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        <div class="navigation" style="text-align: right">
+                                            {{ knp_pagination_render(projectCategory) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            {% block documentready %}
+            {{ parent() }}
+
+            $("#ajaxSaveProjectCategory").click(function () {
+                var sPageURL = window.location.pathname;
+                var sURLVariables = sPageURL.split('/');
+                var projectCategory = $("#projectcategory_projectCategoryName").val();
+
+                var projectCategoryArray = new Array(projectCategory, sURLVariables[3]);
+                $.ajax({
+                    type: "post",
+                    url: Routing.generate('project_category_ajax_add'),
+                    data: "projectCategoryArray=" + projectCategoryArray,
+                    dataType: 'json',
+                    success: function (msg) {
+                        if(msg.responseCode == 200) {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Project Type already exist</span></div>');
+                            $('.projectCategoryMessege').css('color', 'red').html(msg.project_category_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#project-category-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        } else if(msg.responseCode == 204) {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Please Insert Project Type</span></div>');
+                            $('.projectCategoryMessege').css('color', 'red').html(msg.project_category_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#project-category-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        } else if(msg.responseCode == 202) {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Project Type Update Successfully</span></div>');
+                            $('.projectCategoryMessege').css('color', 'green').html(msg.project_category_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#project-category-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                            window.location.pathname = 'project-type';
+                        } else {
+                            var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Project Type Add Successfully</span></div>');
+                            $('.projectCategoryMessege').css('color', 'green').html(msg.project_category_ajax_add).fadeIn(1000).append($addLink);
+                            $(':input','#project-category-form')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                        }
+
+                        $('.projectCategoryMessege').fadeOut();
+                        $("#project-category-list-div").load("/project-type/list")
+                    }
+                });
+            });
+
+            $("#projectcategory_projectCategoryName").keyup(function () {
+                var projectCategory = $(this).val();
+
+                $.ajax({
+                    type: "post",
+                    url: Routing.generate('project_category_check'),
+                    data: "projectCategory=" + projectCategory,
+                    dataType: 'json',
+                    success: function (msg) {
+                        if (msg.responseCode == 200) {
+                            $('.userMessege').css('color', 'red').html(msg.project_category_name).fadeIn(1000);
+                        }
+                        else {
+                            $('.userMessege').css('color', 'green').html(msg.project_category_name).fadeIn(1000);
+                        }
+                    }
+                });
+            });
+
+            $(".project-category-active-list").click(function () {
+
+                $("#project-category-list-div").load("/project-type/list");
+            });
+
+            $(".project-category-deleted-list").click(function () {
+
+                $("#project-category-list-div").load("/project-type/deleted/list");
+            });
+
+            {% endblock %}
+        });
+    </script>
+
+{% endblock %}

@@ -281,43 +281,43 @@ project_category_add:
     defaults: { _controller: PmsCoreBundle:ProjectCategory:projectCategoryAdd }
 
 project_category_deleted:
-    pattern: /project-type/category/deleted
+    pattern: /project-type/deleted
     defaults: { _controller: PmsCoreBundle:ProjectCategory:projectCategoryDeleted }
 
 project_category_deleted_list:
-    pattern: /project-type/category/deleted/list
+    pattern: /project-type/deleted/list
     defaults: { _controller: PmsCoreBundle:ProjectCategory:projectCategoryDeletedList }
 
 project_category_active:
-    pattern: /project-type/category/active/{id}
+    pattern: /project-type/active/{id}
     defaults: { _controller: PmsCoreBundle:ProjectCategory:projectCategoryActive }
     requirements:
           id: \d+
 
 project_category_list:
-    pattern: /project-type/category/list
+    pattern: /project-type/list
     defaults: { _controller: PmsCoreBundle:ProjectCategory:projectCategoryList }
 
 project_category_delete:
-    pattern: /project-type/category/delete/{id}
+    pattern: /project-type/delete/{id}
     defaults: { _controller: PmsCoreBundle:ProjectCategory:projectCategoryDelete }
     requirements:
           id: \d+
 
 project_category_update:
-    pattern: /project-type/category/update/{id}
+    pattern: /project-type/update/{id}
     defaults: { _controller: PmsCoreBundle:ProjectCategory:projectCategoryUpdate }
     requirements:
           id:  \d+
 
 project_category_check:
-    pattern: /project-type/category/check
+    pattern: /project-type/check
     defaults: { _controller: PmsCoreBundle:ProjectCategory:projectCategoryCheck }
     options:
             expose: true
 
 project_category_ajax_add:
-    pattern: /project-type/category/add
+    pattern: /project-type/add
     defaults: { _controller: PmsCoreBundle:ProjectCategory:projectCategoryAjaxAdd }
     options:
             expose: true

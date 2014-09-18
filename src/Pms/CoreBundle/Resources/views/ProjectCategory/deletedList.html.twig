@@ -1,0 +1,49 @@
+<div class="form-group">
+    <div class="col-md-12">
+        <div class="col-md-11" style="margin-left: 4%; margin-top: 30px;">
+
+            <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
+                <thead>
+                <tr>
+                    <th>Sl</th>
+                    <th>Project type</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% if page == 1 %}{% set i = 0 %}
+                {% else %}{% set i = (page * 10) -10 %}
+                {% endif %}
+
+                {% for projectsCategory in projectCategory %}
+                    {% set i = i + 1 %}
+                    {% set color = [" "] %}
+
+                    {% if projectsCategory.status == 0 %}{% set color = color|merge(["red"]) %}
+                    {% elseif projectsCategory.status == 1 %}{% set color = color|merge(["green"]) %}
+                    {% endif %}
+
+                    <tr>
+                        <td class="col-md-1">{{ i }} .</td>
+                        <td class="col-md-3" style="color: {{ color|join("") }};">{{ projectsCategory.projectCategoryName }}</td>
+                        <td class="col-md-1" style="color: red;">
+                            <a href="#" style="width: 85px;" class="btn default btn-xs red-stripe"><i
+                                        class="fa fa-times"></i> Deleted</a>
+                        </td>
+                        <td class="col-md-1">
+                            <a href="/project-type/active/{{ projectsCategory.id }}" class="btn default btn-xs green-stripe" style="width: 85px;"><i
+                                        class="fa fa-repeat"></i> Restore</a>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="navigation" style="text-align: right">
+                {{ knp_pagination_render(projectCategory) }}
+            </div>
+        </div>
+    </div>
+</div>

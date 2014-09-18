@@ -10,7 +10,15 @@
         <div class="col-md-12">
             <h3 class="page-title"></h3>
             <ul class="page-breadcrumb breadcrumb">
-
+                <li>
+                    <i class="fa fa-gift"></i>
+                    <a href="#" class="area-active-list">Active Area</a>
+                    <i class="fa">|</i>
+                </li>
+                <li>
+                    <i class="fa fa-gift"></i>
+                    <a href="#" class="area-deleted-list">Deleted Area</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -45,7 +53,7 @@
                             {{ form_end(form) }}
                         </div>
 
-                        <div class="form-actions fluid" id="project-category-list-div">
+                        <div class="form-actions fluid" id="area-list-div">
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <div class="col-md-11" style="margin-left: 4%; margin-top: 30px;">
@@ -54,9 +62,8 @@
                                             <thead>
                                             <tr>
                                                 <th>Sl</th>
-                                                {#<th{% if project.isSorted('a.projectName') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(project, 'Project Name', 'a.projectName') }}</th>#}
-                                                <th>Project Head</th>
-
+                                                <th{% if area.isSorted('a.areaName') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(area, 'Area Name', 'a.areaName') }}</th>
+                                                <th></th>
                                                 <th></th>
                                             </tr>
                                             </thead>
@@ -66,18 +73,25 @@
                                             {% else %}{% set i = (page * 10) -10 %}
                                             {% endif %}
 
-                                            {% for projects in area %}
+                                            {% for areas in area %}
                                                 {% set i = i + 1 %}
                                                 {% set color = [" "] %}
 
-                                                {% if projects.status == 0 %}{% set color = color|merge(["red"]) %}
-                                                {% elseif projects.status == 1 %}{% set color = color|merge(["green"]) %}
+                                                {% if areas.status == 0 %}{% set color = color|merge(["red"]) %}
+                                                {% elseif areas.status == 1 %}{% set color = color|merge(["green"]) %}
                                                 {% endif %}
 
                                                 <tr>
-                                                    <td>{{ i }} .</td>
-                                                    <td class="col-md-3" style="color: {{ color|join("") }};">{{ projects.areaName }}</td>
-
+                                                    <td class="col-md-1">{{ i }} .</td>
+                                                    <td class="col-md-3" style="color: {{ color|join("") }};">{{ areas.areaName }}</td>
+                                                    <td class="col-md-1">
+                                                        <a href="/area/delete/{{ areas.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
+                                                                    class="fa fa-trash-o"></i> Delete</a>
+                                                    </td>
+                                                    <td class="col-md-1">
+                                                        <a href="/area/update/{{ areas.id }}" style="width: 85px;" class="btn default btn-xs blue-stripe"><i
+                                                                    class="fa fa-edit"></i> Update</a>
+                                                    </td>
                                                 </tr>
 
                                             {% endfor %}
@@ -139,7 +153,7 @@
                                     .val('')
                                     .removeAttr('checked')
                                     .removeAttr('selected');
-                            window.location.pathname = 'buyer';
+                            window.location.pathname = 'area';
                         } else {
                             var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Area Add Successfully</span></div>');
                             $('.areaMessege').css('color', 'green').html(msg.project_category_ajax_add).fadeIn(1000).append($addLink);

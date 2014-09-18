@@ -10,7 +10,15 @@
         <div class="col-md-12">
             <h3 class="page-title"></h3>
             <ul class="page-breadcrumb breadcrumb">
-
+                <li>
+                    <i class="fa fa-gift"></i>
+                    <a href="#" class="project-category-active-list">Active Project Type</a>
+                    <i class="fa">|</i>
+                </li>
+                <li>
+                    <i class="fa fa-gift"></i>
+                    <a href="#" class="project-category-deleted-list">Deleted Project Type</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -54,9 +62,8 @@
                                             <thead>
                                             <tr>
                                                 <th>Sl</th>
-                                                {#<th{% if project.isSorted('a.projectName') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(project, 'Project Name', 'a.projectName') }}</th>#}
-                                                <th>Project Head</th>
-
+                                                <th{% if projectCategory.isSorted('a.projectName') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(projectCategory, 'Project Type', 'a.projectCategoryName') }}</th>
+                                                <th></th>
                                                 <th></th>
                                             </tr>
                                             </thead>
@@ -66,18 +73,25 @@
                                             {% else %}{% set i = (page * 10) -10 %}
                                             {% endif %}
 
-                                            {% for projects in projectCategory %}
+                                            {% for projectsCategory in projectCategory %}
                                                 {% set i = i + 1 %}
                                                 {% set color = [" "] %}
 
-                                                {% if projects.status == 0 %}{% set color = color|merge(["red"]) %}
-                                                {% elseif projects.status == 1 %}{% set color = color|merge(["green"]) %}
+                                                {% if projectsCategory.status == 0 %}{% set color = color|merge(["red"]) %}
+                                                {% elseif projectsCategory.status == 1 %}{% set color = color|merge(["green"]) %}
                                                 {% endif %}
 
                                                 <tr>
-                                                    <td>{{ i }} .</td>
-                                                    <td class="col-md-3" style="color: {{ color|join("") }};">{{ projects.projectCategoryName }}</td>
-
+                                                    <td class="col-md-1">{{ i }} .</td>
+                                                    <td class="col-md-3" style="color: {{ color|join("") }};">{{ projectsCategory.projectCategoryName }}</td>
+                                                    <td class="col-md-1">
+                                                        <a href="/project-type/delete/{{ projectsCategory.id }}" style="width: 85px;" class="btn default btn-xs green-stripe"><i
+                                                                    class="fa fa-trash-o"></i> Delete</a>
+                                                    </td>
+                                                    <td class="col-md-1">
+                                                        <a href="/project-type/update/{{ projectsCategory.id }}" style="width: 85px;" class="btn default btn-xs blue-stripe"><i
+                                                                    class="fa fa-edit"></i> Update</a>
+                                                    </td>
                                                 </tr>
 
                                             {% endfor %}
@@ -139,7 +153,7 @@
                                     .val('')
                                     .removeAttr('checked')
                                     .removeAttr('selected');
-                            window.location.pathname = 'buyer';
+                            window.location.pathname = 'project-type';
                         } else {
                             var $addLink = $('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button><span>Project Type Add Successfully</span></div>');
                             $('.projectCategoryMessege').css('color', 'green').html(msg.project_category_ajax_add).fadeIn(1000).append($addLink);

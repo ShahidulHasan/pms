@@ -83,10 +83,10 @@ class AreaController extends Controller
 
         $this->get('session')->getFlashBag()->add(
             'notice',
-            'Project Successfully Deleted'
+            'Area Successfully Deleted'
         );
 
-        return $this->redirect($this->generateUrl('project_category_add'));
+        return $this->redirect($this->generateUrl('area_add'));
     }
 
     public function areaActiveAction(Area $entity)
@@ -96,7 +96,7 @@ class AreaController extends Controller
 
         $this->get('session')->getFlashBag()->add(
             'notice',
-            'Project Successfully Restored'
+            'Area Successfully Restored'
         );
 
         return $this->redirect($this->generateUrl('area_deleted'));
