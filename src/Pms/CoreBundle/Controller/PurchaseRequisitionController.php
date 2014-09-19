@@ -88,7 +88,6 @@ class PurchaseRequisitionController extends Controller
             if ($form->isValid()) {
 
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
-                $emailFrom = $this->get('security.context')->getToken()->getUser()->getEmail();
                 $purchaseRequisition->setCreatedBy($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
                 $purchaseRequisition->setCreatedDate(new \DateTime());
                 $purchaseRequisition->setDateOfRequisition(new \DateTime());
@@ -105,11 +104,30 @@ class PurchaseRequisitionController extends Controller
 
                 $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisition')->create($purchaseRequisition);
 
+                $em = $this->getDoctrine()->getManager();
+
+                $emailQuery = $em->getRepository('UserBundle:User')
+                                 ->createQueryBuilder('u')
+                                 ->select('u.email')
+                                 ->where('u.enabled = 1');
+                $emails      = $emailQuery->getQuery()->getResult();
+
+                $emailArray = array();
+                foreach ($emails as $email) {
+                    $emailArray[] = $email;
+                }
+
+                Debug::dump($emailArray);die;
+
+                $reqNo = $purchaseRequisition->getRequisitionNo();
+                $emailFrom = $this->get('security.context')->getToken()->getUser()->getEmail();
+//                $emailArray = array('shanto_646596@yahoo.com','shanto.646596@gmail.com');
+
                 $emailSend = \Swift_Message::newInstance()
                     ->setSubject('Purchase Requisition')
                     ->setFrom($emailFrom)
-                    ->setTo('shanto.646596@gmail.com','shanto_646596@ya.com')
-                    ->setBody('New Purchase Requisition Rise, Requisition number :'.$user);
+                    ->setTo($emailArray)
+                    ->setBody('New Purchase Requisition Rise, Requisition number :'.$reqNo);
 
                 $this->get('mailer')->send($emailSend);
 
