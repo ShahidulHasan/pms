@@ -53,7 +53,6 @@ class ItemController extends Controller
 
         return $this->render('PmsCoreBundle:Item:add.html.twig', array(
             'items' => $items,
-            'entity' => $entity,
             'form' => $form->createView(),
             'page' => $page,
         ));

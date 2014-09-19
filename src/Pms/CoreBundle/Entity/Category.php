@@ -49,7 +49,7 @@ class Category
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\Item", mappedBy="item")
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\Item", mappedBy="category")
      */
     private $item;
 
@@ -156,14 +156,6 @@ class Category
         $this->categoryName = $categoryName;
 
         return $this;
-    }
-
-    /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function getItem()
-    {
-        return $this->item;
     }
 
     /**
@@ -274,5 +266,13 @@ class Category
     public function getProjectCostItem()
     {
         return $this->projectCostItem;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getItem()
+    {
+        return $this->item;
     }
 }

@@ -20,7 +20,7 @@ class Invoice
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    public $id;
+    private $id;
 
     /**
      * @var PurchaseRequisition
@@ -41,13 +41,13 @@ class Invoice
      * @ORM\Column(name="titles", type="string", length=255)
      * @Assert\NotBlank
      */
-    public $title;
+    private $title;
 
     /**
      * @ORM\Column(name="descriptions", type="string", length=255)
      * @Assert\NotBlank
      */
-    public $description;
+    private $description;
 
 //    /**
 //     * @var string
@@ -59,7 +59,7 @@ class Invoice
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    public $path;
+    private $path;
 
 //    /**
 //     * @ORM\Column(name="calan", type="string", length=255, nullable=true)
@@ -100,6 +100,62 @@ class Invoice
     public function getReceive()
     {
         return $this->receive;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Invoice
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Invoice
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**

@@ -115,7 +115,7 @@
             {% set Url = Route|split('_') %}
             {% if Url[0] == 'homepage' %}{% set Dashboard = Dashboard|merge(["active"]) %}
             {% elseif Url[0] == 'fos' %}{% set Dashboard = Dashboard|merge(["active"]) %}
-            {% elseif Url[0] == 'user' or Url[0] == 'buyer' or Url[0] == 'buyer' or Url[0] == 'vendor' or Url[0] == 'item' or Url[0] == 'category' or Url[0] == 'sub' or (Url[0] == 'project' and Url[1] != 'cost') %}{% set Setting = Setting|merge(["active"]) %}
+            {% elseif Url[0] == 'user' or Url[0] == 'buyer' or Url[0] == 'buyer' or Url[0] == 'vendor' or Url[0] == 'item' or Url[0] == 'area' or Url[0] == 'category' or Url[0] == 'sub' or (Url[0] == 'project' and Url[1] != 'cost') %}{% set Setting = Setting|merge(["active"]) %}
             {% elseif Url[0] == 'user' %}{% set User = User|merge(["active"]) %}
             {% elseif Url[0] == 'buyer' %}{% set Buyer = Buyer|merge(["active"]) %}
             {% elseif Url[0] == 'vendor' %}{% set Vendor = Vendor|merge(["active"]) %}

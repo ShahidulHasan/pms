@@ -44,16 +44,11 @@ class ProjectCostItem
      */
     private $item;
 
-//    /**
-//     * @var Buyer
-//     *
-//     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Buyer", inversedBy="projectCostItem")
-//     * @ORM\JoinColumn(name="buyers", nullable=true)
-//     */
     /**
-     * @var string
+     * @var Buyer
      *
-     * @ORM\Column(name="buyers", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Buyer", inversedBy="projectCostItem")
+     * @ORM\JoinColumn(name="buyers", nullable=true)
      */
     private $buyer;
 
@@ -268,7 +263,7 @@ class ProjectCostItem
     /**
      * Set buyer
      *
-     * @param integer $buyer
+     * @param Buyer $buyer
      * @return ProjectCostItem
      */
     public function setBuyer($buyer)
@@ -281,7 +276,7 @@ class ProjectCostItem
     /**
      * Get buyer
      *
-     * @return integer
+     * @return Buyer
      */
     public function getBuyer()
     {

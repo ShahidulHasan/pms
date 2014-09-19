@@ -59,6 +59,13 @@ class Project
     private $purchaseRequisition;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\PurchaseOrderItem", mappedBy="project")
+     */
+    private $purchaseOrderItem;
+
+    /**
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
@@ -310,5 +317,13 @@ class Project
     public function getPurchaseRequisition()
     {
         return $this->purchaseRequisition;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getPurchaseOrderItem()
+    {
+        return $this->purchaseOrderItem;
     }
 }
