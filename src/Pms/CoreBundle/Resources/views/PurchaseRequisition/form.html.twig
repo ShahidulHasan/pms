@@ -77,6 +77,7 @@
                                 </tr>
                                 {% endfor %}
                             </tbody>
+                            <tfoot></tfoot>
                         </table>
 
                     </div>
@@ -97,56 +98,87 @@
 {% endblock %}
 
 {% block documentready %}
-     {{ parent() }}
+    {{ parent() }}
 
-     function addTagForm($collectionHolder, $newLinkLi) {
-     // Get the data-prototype explained earlier
-     var prototype = $collectionHolder.data('prototype');
+    window.items;
 
-     // get the new index
-     var index = $collectionHolder.data('index');
+    function addTagForm($collectionHolder, $newLinkLi) {
+        // Get the data-prototype explained earlier
+        var prototype = $collectionHolder.data('prototype');
 
-     // Replace '__name__' in the prototype's HTML to
-     // instead be a number based on how many items we have
-     var newForm = prototype.replace(/__name__/g, index);
+        // get the new index
+        var index = $collectionHolder.data('index');
 
-     // increase the index with one for the next item
-     $collectionHolder.data('index', index + 1);
+        // Replace '__name__' in the prototype's HTML to
+        // instead be a number based on how many items we have
+        var newForm = prototype.replace(/__name__/g, index);
 
-     // Display the form in the page in an li, before the "Add a tag" link li
-     var $newFormLi = $('<tr></tr>').append(newForm);
-     $newLinkLi.before($newFormLi);
-     $('.date-picker').datepicker();
+        // increase the index with one for the next item
+        $collectionHolder.data('index', index + 1);
 
-    $("#purchaserequisition_purchaseRequisitionItems_" + index + "_delete").click(function () {
-    var parent = $(this).closest('tr');
-    parent.remove();
+        // Display the form in the page in an li, before the "Add a tag" link li
+        var $newFormLi = $('<tr></tr>').append(newForm);
+        $newLinkLi.before($newFormLi);
+        $('.date-picker').datepicker();
+
+        $("#purchaserequisition_purchaseRequisitionItems_0_item").change(function () {
+            var item = $(this).val();
+
+            $.ajax({
+                type: "post",
+                url: Routing.generate('category_wise_item'),
+                data: "item=" + item,
+                dataType: 'json',
+                success: function (response, status) {
+                    if (response.responseCode == 200) {
+
+                        window.items = response.categoryWiseItem;
+
+                    } else {
+                        $('.userMessege').css('color', 'green').html(msg.item_name).fadeIn(1000);
+                    }
+                }
+            });
+        });
+
+        $("#purchaserequisition_purchaseRequisitionItems_" + index + "_delete").click(function () {
+            var parent = $(this).closest('tr');
+            parent.remove();
+        });
+
+    }
+
+    var $collectionHolder;
+
+    // setup an "add a tag" link
+    var $addTagLink = $('<td colspan ="5"><div style="text-align: left;margin-left: 20px;"><a href="#" class="btn default btn-xs green-stripe add_tag_link"><i class="fa fa-plus"></i> Add Item</a></div></td>');
+    var $newLinkLi = $('<tr></tr>').append($addTagLink);
+
+    // Get the ul that holds the collection of tags
+    $collectionHolder = $('#purchaseItems');
+
+    // add the "add a tag" anchor and li to the tags ul
+    $collectionHolder.append($newLinkLi);
+
+    // count the current form inputs we have (e.g. 2), use that as the new
+    // index when inserting a new item (e.g. 2)
+    $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+    $addTagLink.on('click', function (e) {
+        // prevent the link from creating a "#" on the URL
+        e.preventDefault();
+
+        // add a new tag form (see next code block)
+        addTagForm($collectionHolder, $newLinkLi);
+
+        var trLength = $('tbody#purchaseItems').find('tr').length;
+        if (trLength > 2) {
+            var lastSelect =$('tbody#purchaseItems').find('tr:eq('+(trLength-2)+')').find('select:first');
+            lastSelect.html('');
+            for (i=0; i < window.items.length; i++){
+                lastSelect.append('<option value="'+window.items[i].id+'">'+window.items[i].itemName+'</option>');
+            }
+        }
     });
-
-     }
-
-     var $collectionHolder;
-
-     // setup an "add a tag" link
-     var $addTagLink = $('<td colspan ="5"><div style="text-align: left;margin-left: 20px;"><a href="#" class="btn default btn-xs green-stripe add_tag_link"><i class="fa fa-plus"></i> Add Item</a></div></td>');
-     var $newLinkLi = $('<tr></tr>').append($addTagLink);
-
-     // Get the ul that holds the collection of tags
-     $collectionHolder = $('#purchaseItems');
-
-     // add the "add a tag" anchor and li to the tags ul
-     $collectionHolder.append($newLinkLi);
-
-     // count the current form inputs we have (e.g. 2), use that as the new
-     // index when inserting a new item (e.g. 2)
-     $collectionHolder.data('index', $collectionHolder.find(':input').length);
-
-     $addTagLink.on('click', function(e) {
-     // prevent the link from creating a "#" on the URL
-     e.preventDefault();
-
-     // add a new tag form (see next code block)
-     addTagForm($collectionHolder, $newLinkLi);
-     });
 
 {% endblock %}

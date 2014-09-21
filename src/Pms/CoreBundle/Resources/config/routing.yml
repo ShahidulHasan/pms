@@ -156,6 +156,12 @@ purchase_requisition_approve_category_head_two:
     requirements:
           id: \d+
 
+category_wise_item:
+    pattern: /category/wise/item
+    defaults: { _controller: PmsCoreBundle:PurchaseRequisition:categoryWiseItem }
+    options:
+        expose: true
+
 buyer_add:
     pattern: /buyer
     defaults: { _controller: PmsCoreBundle:Buyer:buyerAdd }

@@ -10,6 +10,7 @@ use Pms\CoreBundle\Entity\PurchaseRequisitionItem;
 use Pms\CoreBundle\Form\PurchaseRequisitionType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Purchase Requisition controller.
@@ -17,6 +18,43 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PurchaseRequisitionController extends Controller
 {
+    public function categoryWiseItemAction(Request $request) {
+        $item = $request->request->get('item');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $em->getRepository('PmsCoreBundle:Item')
+            ->createQueryBuilder('i')
+            ->select('c.id')
+            ->where('i.id = ?1')
+            ->setParameter('1', $item)
+            ->join('i.category','c');
+        $categoryId = $query->getQuery()->getResult();
+
+        $query1 = $em->getRepository('PmsCoreBundle:Item')
+            ->createQueryBuilder('i')
+            ->select('i.id')
+            ->addSelect('i.itemName')
+            ->where('i.category = ?1')
+            ->setParameter('1', $categoryId);
+        $categories = $query1->getQuery()->getResult();
+
+        $categoryWiseItem = array();
+        foreach ($categories as $category) {
+            $categoryWiseItem[] = $category;
+        }
+
+        $data = array(
+            'responseCode' => 200,
+            'categoryWiseItem' => $categoryWiseItem
+        );
+
+        $response = new Response(json_encode($data));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+
     public function purchaseRequisitionAddAction(Request $request)
     {
         $dql = "SELECT a FROM PmsCoreBundle:PurchaseRequisition a WHERE a.status = 1 ORDER BY a.id DESC";
@@ -49,6 +87,7 @@ class PurchaseRequisitionController extends Controller
         return $this->render('PmsCoreBundle:PurchaseRequisition:details.html.twig', array(
             'pr' => $pr,
             'pri' => $pri,
+            'id' => $id,
         ));
     }
 
@@ -112,16 +151,12 @@ class PurchaseRequisitionController extends Controller
                                  ->where('u.enabled = 1');
                 $emails      = $emailQuery->getQuery()->getResult();
 
-                $emailArray = array();
                 foreach ($emails as $email) {
-                    $emailArray[] = $email;
+                    $emailArray[] =implode(',',$email);
                 }
-
-                Debug::dump($emailArray);die;
 
                 $reqNo = $purchaseRequisition->getRequisitionNo();
                 $emailFrom = $this->get('security.context')->getToken()->getUser()->getEmail();
-//                $emailArray = array('shanto_646596@yahoo.com','shanto.646596@gmail.com');
 
                 $emailSend = \Swift_Message::newInstance()
                     ->setSubject('Purchase Requisition')
@@ -261,6 +296,26 @@ class PurchaseRequisitionController extends Controller
         );
 
         return $this->redirect($this->generateUrl('purchase_requisition_add'));
+    }
+
+    public function detailsPdfAction($id)
+    {
+//        $file = $this->getDoctrine()
+//            ->getRepository('BclOfferBundle:Offer')
+//            ->find($id);
+//
+//        $html = $this->renderView(
+//            'BclOfferBundle:Offer:view.html.twig',
+//            array('file' => $file)
+//        );
+//
+//        $dompdf = $this->get('slik_dompdf');
+//        // Generate the pdf
+//        $dompdf->getpdf($html);
+//        // Or get the output to handle it yourself
+//        $pdfoutput = $dompdf->output();
+//        $filePath = "uploads/file/pdf/" . $file->getId() . ".pdf";
+//        file_put_contents($filePath, $pdfoutput);
     }
 
     public function paginate($dql)
