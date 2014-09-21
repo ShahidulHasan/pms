@@ -94,6 +94,10 @@ purchase_order_details:
     pattern: /purchase/order/details/{id}
     defaults: { _controller: PmsCoreBundle:PurchaseOrder:purchaseOrderDetails }
 
+purchase_order_print:
+    pattern: /purchase/order/print/{id}
+    defaults: { _controller: PmsCoreBundle:PurchaseOrder:purchaseOrderPrint }
+
 purchase_order_total_quantity:
     pattern: /purchase/total/quantity
     defaults: { _controller: PmsCoreBundle:PurchaseOrder:purchaseOrderTotalQuantity }
@@ -137,6 +141,10 @@ purchase_requisition_close:
 purchase_requisition_details:
     pattern: /purchase/requisition/details/{id}
     defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionDetails }
+
+purchase_requisition_print:
+    pattern: /purchase/requisition/print/{id}
+    defaults: { _controller: PmsCoreBundle:PurchaseRequisition:purchaseRequisitionPrint }
 
 purchase_requisition_approve_project_head:
     pattern: /purchase/requisition/approve/projectHead/{id}

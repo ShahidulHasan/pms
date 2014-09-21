@@ -91,6 +91,30 @@ class PurchaseRequisitionController extends Controller
         ));
     }
 
+    public function purchaseRequisitionPrintAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $em->getRepository('PmsCoreBundle:PurchaseRequisition')
+            ->createQueryBuilder('pr')
+            ->select('pr.requisitionNo')
+            ->addSelect('p.projectName')
+            ->where('pr.id = ?1')
+            ->setParameter('1', $id)
+            ->join('pr.project','p');
+        $pr = $query->getQuery()->getResult();
+
+        $dql = "SELECT a FROM PmsCoreBundle:PurchaseRequisitionItem a WHERE a.purchaseRequisition = '$id'";
+
+        $pri = $this->details($dql);
+
+        return $this->render('PmsCoreBundle:PurchaseRequisition:print.html.twig', array(
+            'pr' => $pr,
+            'pri' => $pri,
+            'id' => $id,
+        ));
+    }
+
     public function purchaseRequisitionClosedAction(Request $request)
     {
         $dql = "SELECT a FROM PmsCoreBundle:PurchaseRequisition a WHERE a.approveStatus = 4 ORDER BY a.id DESC";
@@ -162,7 +186,12 @@ class PurchaseRequisitionController extends Controller
                     ->setSubject('Purchase Requisition')
                     ->setFrom($emailFrom)
                     ->setTo($emailArray)
-                    ->setBody('New Purchase Requisition Rise, Requisition number :'.$reqNo);
+                    ->setBody(
+                        $this->renderView(
+                            'PmsCoreBundle:PurchaseRequisition:email.html.twig',
+                            array('reqNo' => $reqNo)
+                        )
+                    );
 
                 $this->get('mailer')->send($emailSend);
 

@@ -144,6 +144,33 @@ class PurchaseOrderController extends Controller
         return $this->render('PmsCoreBundle:PurchaseOrder:details.html.twig', array(
             'po' => $po,
             'poi' => $poi,
+            'id' => $id,
+        ));
+    }
+
+    public function purchaseOrderPrintAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $em->getRepository('PmsCoreBundle:PurchaseOrder')
+            ->createQueryBuilder('po')
+            ->select('po.orderNo')
+            ->addSelect('po.dateOfDelivered')
+            ->addSelect('u.username')
+            ->addSelect('po.dateOfDelivered')
+            ->addSelect('po.createdDate')
+            ->where('po.id = ?1')
+            ->setParameter('1', $id)
+            ->join('po.createdBy', 'u');
+        $po = $query->getQuery()->getResult();
+
+        $dql = "SELECT a FROM PmsCoreBundle:PurchaseOrderItem a WHERE a.purchaseOrder = '$id'";
+
+        $poi = $this->details($dql);
+
+        return $this->render('PmsCoreBundle:PurchaseOrder:print.html.twig', array(
+            'po' => $po,
+            'poi' => $poi,
         ));
     }
 

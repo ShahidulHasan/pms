@@ -3,8 +3,7 @@
     <div class="modal-dialog" style="width: 800px;">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title" style="text-align: center;"> Details</h4>
+                <h4 class="modal-title" style="text-align: center;"> </h4>
             </div>
 
             <div class="modal-body">
@@ -14,11 +13,15 @@
                         <div style="width: 100%;background: red;font-size: 14px;">
                             <div style="width: 45%;float:left;margin-left: 5%;">
                                 <div style="font-weight: bold;">
-                                    Purchase Requisition No. : {{ pr[0]['requisitionNo'] }}
+                                    Purchase Order No. : {{ po[0]['orderNo'] }}
                                 </div>
                                 <br/>
                                 <div>
-                                    Project : {{ pr[0]['projectName'] }}
+                                    Date : {{ po[0]['dateOfDelivered'] |date('Y-m-d') }}
+                                </div>
+                                <br/>
+                                <div>
+
                                 </div>
                                 <br/>
                                 <div>
@@ -37,7 +40,11 @@
                             </div>
                             <div style="width: 45%;float:right;">
                                 <div>
-
+                                    Created By : {{ po[0]['username'] }}
+                                </div>
+                                <br/>
+                                <div>
+                                    Date : {{ po[0]['createdDate'] |date('Y-m-d') }}
                                 </div>
                                 <br/>
                                 <div>
@@ -62,31 +69,24 @@
                                 <th>Sl</th>
                                 <th>Item</th>
                                 <th>Quantity</th>
-                                <th>Required date</th>
+                                <th>Project</th>
                                 <th>comment</th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
                             {% set i = 0 %}
-                            {% for prItem in pri %}
+                            {% for prItem in poi %}
                                 {% set i = i + 1 %}
 
                                 <tr style="">
                                     <td class="col-md-1">{{ i }} .</td>
                                     <td class="col-md-1">{{ prItem.item.itemName }}</td>
                                     <td class="col-md-1">{{ prItem.quantity }}</td>
-                                    <td class="col-md-1">{{ prItem.dateOfRequired | date('Y/m/d') }}</td>
+                                    <td class="col-md-1">{{ prItem.project.projectName }}</td>
                                     <td class="col-md-1">{{ prItem.comment }}</td>
                                     <td class="col-md-1">
-                                    {% if prItem.purchaseRequisition.approvedByCategoryHeadTwo == 1 %}
-                                        {% if prItem.claimedBy != null %}
-                                            claimed by {{ prItem.claimedBy.username }} <a href="/purchase/requisition/item/close/{{ prItem.id }}">Click for Close</a>
-                                        {% endif %}
-                                        {% if prItem.claimedBy == null %}
-                                            <a href="/purchase/requisition/item/claim/{{ prItem.id }}">Claim</a>
-                                        {% endif %}
-                                    {% endif %}
+
                                     </td>
                                 </tr>
 
@@ -100,10 +100,10 @@
             </div>
 
             <div class="modal-footer">
-                <a class="btn blue" onclick="javascript: window.open('/purchase/requisition/print/{{ id }}').print();">Print <i class="fa fa-print"></i></a>
-                <button type="button" class="btn default" data-dismiss="modal">Close</button>
+
             </div>
         </div>
+
     </div>
 
-    {% endblock %}
+{% endblock %}
