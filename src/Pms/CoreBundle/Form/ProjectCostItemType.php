@@ -6,6 +6,7 @@ use Pms\CoreBundle\Entity\Repository\BuyerRepository;
 use Pms\CoreBundle\Entity\Repository\CategoryRepository;
 use Pms\CoreBundle\Entity\Repository\ItemRepository;
 use Pms\CoreBundle\Entity\Repository\ProjectRepository;
+use Pms\UserBundle\Entity\Repository\UserRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -66,17 +67,17 @@ class ProjectCostItemType extends AbstractType
                 'constraints' => array(
                     new NotBlank()
                 ),
-                'class' => 'PmsCoreBundle:Buyer',
-                'property' => 'buyerName',
+                'class' => 'UserBundle:User',
+                'property' => 'username',
                 'required' => false,
                 'attr' => array(
                     'placeholder' => ' Select Buyer'
                 ),
                 'empty_data' => null,
-                'query_builder' => function (BuyerRepository $repository)
+                'query_builder' => function (UserRepository $repository)
                 {
-                    return $repository->createQueryBuilder('s')
-                        ->where('s.status = 1');
+                    return $repository->createQueryBuilder('u')
+                        ->where('u.enabled = 1');
                 }
             ))
             ->add('quantity', 'text', array(

@@ -57,7 +57,7 @@
                                                     <td class="col-md-1">{{ i }} .</td>
                                                     <td class="col-md-2">{{ purchaseOrder.orderNo }}</td>
                                                     <td class="col-md-2">{{ purchaseOrder.createdDate|date('Y-m-d') }}</td>
-                                                    <td class="col-md-2">{{ purchaseOrder.vendor.vendorName |default() }}{{ purchaseOrder.buyer.buyerName |default() }}</td>
+                                                    <td class="col-md-2">{{ purchaseOrder.vendor.vendorName |default() }}{{ purchaseOrder.buyer.username |default() }}</td>
 
                                                     {% if purchaseOrder.approvedOne == null %}
                                                         <td class="col-md-1"><a href="/purchase/order/approve/one/{{ purchaseOrder.id }}">Open</a></td>

@@ -4,6 +4,7 @@ namespace Pms\CoreBundle\Form;
 
 use Pms\CoreBundle\Entity\Repository\BuyerRepository;
 use Pms\CoreBundle\Entity\Repository\VendorRepository;
+use Pms\UserBundle\Entity\Repository\UserRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -27,17 +28,17 @@ class ReceiveType extends AbstractType
                 )
             ))
             ->add('buyer', 'entity', array(
-                'class' => 'PmsCoreBundle:Buyer',
-                'property' => 'buyerName',
+                'class' => 'UserBundle:User',
+                'property' => 'username',
                 'required' => false,
                 'attr' => array(
                     'placeholder' => ' Select Buyer'
                 ),
                 'empty_data' => null,
-                'query_builder' => function (BuyerRepository $repository)
+                'query_builder' => function (UserRepository $repository)
                     {
-                        return $repository->createQueryBuilder('s')
-                            ->where('s.status = 1');
+                        return $repository->createQueryBuilder('u')
+                            ->where('u.enabled = 1');
                     }
             ))
             ->add('vendor', 'entity', array(

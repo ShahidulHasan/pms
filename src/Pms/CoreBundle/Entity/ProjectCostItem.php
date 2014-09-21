@@ -3,6 +3,7 @@
 namespace Pms\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Pms\UserBundle\Entity\User;
 
 /**
  * ProjectCostItem
@@ -43,11 +44,17 @@ class ProjectCostItem
      * @ORM\JoinColumn(name="items")
      */
     private $item;
-
+//
+//    /**
+//     * @var Buyer
+//     *
+//     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Buyer", inversedBy="projectCostItem")
+//     * @ORM\JoinColumn(name="buyers", nullable=true)
+//     */
     /**
-     * @var Buyer
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Buyer", inversedBy="projectCostItem")
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="buyers", nullable=true)
      */
     private $buyer;
@@ -263,7 +270,7 @@ class ProjectCostItem
     /**
      * Set buyer
      *
-     * @param Buyer $buyer
+     * @param User $buyer
      * @return ProjectCostItem
      */
     public function setBuyer($buyer)
@@ -276,7 +283,7 @@ class ProjectCostItem
     /**
      * Get buyer
      *
-     * @return Buyer
+     * @return User
      */
     public function getBuyer()
     {

@@ -111,13 +111,12 @@
                 </div>
             </li>
 
-            {% set Route, Dashboard, User, Item, Project, Cost, Report, Category, SubCategory, OverView, Buyer, PR, PO, Vendor, Upload, Received, Setting, Type, Area = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "] %}
+            {% set Route, Dashboard, User, Item, Project, Cost, Report, Category, SubCategory, OverView, PR, PO, Vendor, Upload, Received, Setting, Type, Area = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "] %}
             {% set Url = Route|split('_') %}
             {% if Url[0] == 'homepage' %}{% set Dashboard = Dashboard|merge(["active"]) %}
             {% elseif Url[0] == 'fos' %}{% set Dashboard = Dashboard|merge(["active"]) %}
-            {% elseif Url[0] == 'user' or Url[0] == 'buyer' or Url[0] == 'buyer' or Url[0] == 'vendor' or Url[0] == 'item' or Url[0] == 'area' or Url[0] == 'category' or Url[0] == 'sub' or (Url[0] == 'project' and Url[1] != 'cost') %}{% set Setting = Setting|merge(["active"]) %}
+            {% elseif Url[0] == 'user' or Url[0] == 'vendor' or Url[0] == 'item' or Url[0] == 'area' or Url[0] == 'category' or Url[0] == 'sub' or (Url[0] == 'project' and Url[1] != 'cost') %}{% set Setting = Setting|merge(["active"]) %}
             {% elseif Url[0] == 'user' %}{% set User = User|merge(["active"]) %}
-            {% elseif Url[0] == 'buyer' %}{% set Buyer = Buyer|merge(["active"]) %}
             {% elseif Url[0] == 'vendor' %}{% set Vendor = Vendor|merge(["active"]) %}
             {% elseif Url[0] == 'item' %}{% set Item = Item|merge(["active"]) %}
             {% elseif Url[0] == 'category' %}{% set Category = Category|merge(["active"]) %}
@@ -240,15 +239,6 @@
                                 <a href="/vendor">
                                     <i class="fa fa-user"></i>
                                     <span class="title"> Vendor </span>
-                                    <span class="selected"></span>
-                                </a>
-                            </li>
-                        {% endif %}
-                        {% if is_granted("ROLE_ADMIN") %}
-                            <li class="{{ Buyer|join(" ") }}">
-                                <a href="/buyer">
-                                    <i class="fa fa-user"></i>
-                                    <span class="title"> Buyer </span>
                                     <span class="selected"></span>
                                 </a>
                             </li>

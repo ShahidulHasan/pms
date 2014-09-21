@@ -60,7 +60,7 @@
                             <td class="col-md-1" style="color: {{ color|join("") }};">{{ receivedItem.grn }}</td>
                             <td class="col-md-1" style="color: {{ color|join("") }};">{{ receivedItem.invoice.title }}</td>
                             <td class="col-md-1" style="color: {{ color|join("") }};">{{ receivedItem.calan.title }}</td>
-                            <td class="col-md-1" style="color: {{ color|join("") }};">{{ receivedItem.vendor.vendorName |default() }} {{ receivedItem.buyer.buyerName |default() }}</td>
+                            <td class="col-md-1" style="color: {{ color|join("") }};">{{ receivedItem.vendor.vendorName |default() }} {{ receivedItem.buyer.username |default() }}</td>
                         </tr>
 
                     {% endfor %}

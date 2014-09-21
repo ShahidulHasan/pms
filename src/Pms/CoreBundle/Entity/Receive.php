@@ -77,11 +77,17 @@ class Receive
     private $vendor;
 
     /**
-     * @var Buyer
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Buyer", inversedBy="receive")
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="buyers", nullable=true)
      */
+//    /**
+//     * @var Buyer
+//     *
+//     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Buyer", inversedBy="receive")
+//     * @ORM\JoinColumn(name="buyers", nullable=true)
+//     */
     private $buyer;
 
     public function __construct()
@@ -92,7 +98,7 @@ class Receive
     /**
      * Set buyer
      *
-     * @param integer $buyer
+     * @param User $buyer
      * @return Receive
      */
     public function setBuyer($buyer)
@@ -105,7 +111,7 @@ class Receive
     /**
      * Get buyer
      *
-     * @return integer
+     * @return User
      */
     public function getBuyer()
     {

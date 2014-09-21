@@ -68,11 +68,17 @@ class PurchaseOrder
     private $vendor;
 
     /**
-     * @var Buyer
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Buyer", inversedBy="purchaseOrder")
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="buyers", nullable=true)
      */
+//    /**
+//     * @var Buyer
+//     *
+//     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Buyer", inversedBy="purchaseOrder")
+//     * @ORM\JoinColumn(name="buyers", nullable=true)
+//     */
     private $buyer;
 
     /**
@@ -214,7 +220,7 @@ class PurchaseOrder
     /**
      * Set buyer
      *
-     * @param Buyer $buyer
+     * @param User $buyer
      * @return PurchaseOrder
      */
     public function setBuyer($buyer)
@@ -227,7 +233,7 @@ class PurchaseOrder
     /**
      * Get buyer
      *
-     * @return Buyer
+     * @return User
      */
     public function getBuyer()
     {
