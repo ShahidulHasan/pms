@@ -61,9 +61,21 @@ class PurchaseRequisitionController extends Controller
 
         list($purchaseRequisitions, $page) = $this->paginate($dql);
 
+        $dql1 = "SELECT a FROM PmsCoreBundle:PurchaseRequisition a WHERE a.approveStatus = 3 ORDER BY a.id DESC";
+
+        list($purchaseRequisitions1, $page1) = $this->paginate($dql1);
+
+        $dql2 = "SELECT a FROM PmsCoreBundle:PurchaseRequisition a WHERE a.approveStatus = 4 ORDER BY a.id DESC";
+
+        list($purchaseRequisitions2, $page2) = $this->paginate($dql2);
+
         return $this->render('PmsCoreBundle:PurchaseRequisition:add.html.twig', array(
             'purchaseRequisitions' => $purchaseRequisitions,
+            'purchaseRequisitions1' => $purchaseRequisitions1,
+            'purchaseRequisitions2' => $purchaseRequisitions2,
             'page' => $page,
+            'page1' => $page1,
+            'page2' => $page2,
         ));
     }
 

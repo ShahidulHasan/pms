@@ -79,7 +79,7 @@
                                     <td class="col-md-1">{{ prItem.dateOfRequired | date('Y/m/d') }}</td>
                                     <td class="col-md-1">{{ prItem.comment }}</td>
                                     <td class="col-md-1">
-                                    {% if prItem.purchaseRequisition.approvedByCategoryHeadTwo == 1 %}
+                                    {% if prItem.purchaseRequisition.approvedByCategoryHeadTwo != null %}
                                         {% if prItem.claimedBy != null %}
                                             claimed by {{ prItem.claimedBy.username }} <a href="/purchase/requisition/item/close/{{ prItem.id }}">Click for Close</a>
                                         {% endif %}
@@ -106,4 +106,4 @@
         </div>
     </div>
 
-    {% endblock %}
+{% endblock %}

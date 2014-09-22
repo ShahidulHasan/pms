@@ -280,7 +280,7 @@ class PurchaseRequisition
     /**
      * Set project
      *
-     * @param integer $project
+     * @param Project $project
      * @return PurchaseRequisition
      */
     public function setProject($project)
@@ -293,7 +293,7 @@ class PurchaseRequisition
     /**
      * Get project
      *
-     * @return integer
+     * @return Project
      */
     public function getProject()
     {

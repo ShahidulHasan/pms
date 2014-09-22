@@ -1,5 +1,30 @@
 /* here you can put your own css to customize and override the theme */
 
+thead, tr, th, a{
+    font-family: 'Open Sans', sans-serif;
+    color: #fff !important;
+}
+
+table, tr, td{
+    font-family: 'Open Sans', sans-serif;
+    color: black !important;
+}
+
+[tooltip]:before {
+    position : absolute;
+    content : attr(tooltip);
+    opacity : 0;
+}
+
+[tooltip]:hover:before {
+    padding-left:100px ;
+    opacity : 1;
+}
+
+[tooltip]:not([tooltip-persistent]):before {
+    pointer-events: none;
+}
+
 .left_top {
     margin-left: 14px !important;
     margin-top: 12px !important;
