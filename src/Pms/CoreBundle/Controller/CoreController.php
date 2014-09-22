@@ -125,6 +125,11 @@ class CoreController extends Controller
 
                 /** @var ReceivedItem $item */
                 foreach ($receivedItem->getReceiveItems() as $item) {
+                    $purchaseRequisitionItem = $item->getPurchaseRequisitionItem();
+
+                    $quantityOld = $purchaseRequisitionItem->getReceivedQuantity();
+                    $purchaseRequisitionItem->setReceivedQuantity($quantityOld + $item->getQuantity());
+
                     $item->setReceive($receivedItem);
                 }
 

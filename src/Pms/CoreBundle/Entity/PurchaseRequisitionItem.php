@@ -81,6 +81,14 @@ class PurchaseRequisitionItem
      */
     private $purchaseOrderQuantity;
 
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="received_quantity", type="integer", nullable=true)
+     */
+    private $receivedQuantity;
+
     /**
      * @var User
      *
@@ -340,6 +348,29 @@ class PurchaseRequisitionItem
     public function getPurchaseOrderQuantity()
     {
         return $this->purchaseOrderQuantity;
+    }
+
+    /**
+     * Set receivedQuantity
+     *
+     * @param integer $receivedQuantity
+     * @return PurchaseRequisitionItem
+     */
+    public function setReceivedQuantity($receivedQuantity)
+    {
+        $this->receivedQuantity = $receivedQuantity;
+
+        return $this;
+    }
+
+    /**
+     * Get receivedQuantity
+     *
+     * @return integer
+     */
+    public function getReceivedQuantity()
+    {
+        return $this->receivedQuantity;
     }
 
     public function getItemName(){

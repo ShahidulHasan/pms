@@ -111,7 +111,6 @@
                 </div>
             </li>
 <br/>
-<br/>
             {% set Route, Dashboard, User, Item, Project, Cost, Report, Category, SubCategory, OverView, PR, PO, Vendor, Upload, Received, Setting, Type, Area = app.request.attributes.get('_route'), [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "] %}
             {% set Url = Route|split('_') %}
             {% if Url[0] == 'homepage' %}{% set Dashboard = Dashboard|merge(["active"]) %}
