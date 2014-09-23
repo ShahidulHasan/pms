@@ -1,5 +1,15 @@
 /* here you can put your own css to customize and override the theme */
 
+.btnColor{
+    font-family: 'Open Sans', sans-serif;
+    color: black !important;
+}
+
+.btn{
+    font-family: 'Open Sans', sans-serif;
+    color: black !important;
+}
+
 thead, tr, th, a{
     font-family: 'Open Sans', sans-serif;
     color: #fff !important;
@@ -8,6 +18,7 @@ thead, tr, th, a{
 table, tr, td{
     font-family: 'Open Sans', sans-serif;
     color: black !important;
+    font-weight: normal !important;
 }
 
 [tooltip]:before {
@@ -17,8 +28,16 @@ table, tr, td{
 }
 
 [tooltip]:hover:before {
-    padding-left:100px ;
+    margin-top: -30px;
     opacity : 1;
+    width: auto;
+    background: #4b8df8;
+    color: #fff;
+    text-align: center;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 [tooltip]:not([tooltip-persistent]):before {

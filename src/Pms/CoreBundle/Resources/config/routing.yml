@@ -1,18 +1,18 @@
 receive_add:
     pattern: /receive/item
-    defaults: { _controller: PmsCoreBundle:Core:receiveAdd }
+    defaults: { _controller: PmsCoreBundle:Receive:receiveAdd }
 
 receive_add_new:
     pattern: /receive/item/new
-    defaults: { _controller: PmsCoreBundle:Core:receiveNew }
+    defaults: { _controller: PmsCoreBundle:Receive:receiveNew }
 
 receive_save:
     pattern: /receive/save
-    defaults: { _controller: PmsCoreBundle:Core:receiveSave }
+    defaults: { _controller: PmsCoreBundle:Receive:receiveSave }
 
 upload_add:
     pattern: /upload/file
-    defaults: { _controller: PmsCoreBundle:Core:uploadAdd }
+    defaults: { _controller: PmsCoreBundle:Upload:uploadAdd }
 
 vendor_add:
     pattern: /vendor
@@ -169,52 +169,6 @@ category_wise_item:
     defaults: { _controller: PmsCoreBundle:PurchaseRequisition:categoryWiseItem }
     options:
         expose: true
-
-buyer_add:
-    pattern: /buyer
-    defaults: { _controller: PmsCoreBundle:Buyer:buyerAdd }
-
-buyer_list:
-    pattern: /buyer/list
-    defaults: { _controller: PmsCoreBundle:Buyer:buyerList }
-
-buyer_ajax_add:
-    pattern: /buyer/add
-    defaults: { _controller: PmsCoreBundle:Buyer:buyerAjaxAdd }
-    options:
-            expose: true
-
-buyer_check:
-    pattern: /buyer/check
-    defaults: { _controller: PmsCoreBundle:Buyer:buyerCheck }
-    options:
-            expose: true
-
-buyer_deleted:
-    pattern: /buyer/deleted
-    defaults: { _controller: PmsCoreBundle:Buyer:buyerDeleted }
-
-buyer_deleted_list:
-    pattern: /buyer/deleted/list
-    defaults: { _controller: PmsCoreBundle:Buyer:buyerDeletedList }
-
-buyer_delete:
-    pattern: /buyer/delete/{id}
-    defaults: { _controller: PmsCoreBundle:Buyer:buyerDelete }
-    requirements:
-          id: \d+
-
-buyer_active:
-    pattern: /buyer/active/{id}
-    defaults: { _controller: PmsCoreBundle:Buyer:buyerActive }
-    requirements:
-          id: \d+
-
-buyer_update:
-    pattern: /buyer/update/{id}
-    defaults: { _controller: PmsCoreBundle:Buyer:buyerUpdate }
-    requirements:
-          id:  \d+
 
 area_add:
     pattern: /area

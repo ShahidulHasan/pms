@@ -18,7 +18,7 @@
             </a>
         </li>
     </ul>
-    <div class="tab-content" style="height: auto;">
+    <div class="tab-content" style="height: auto;background: #eee;">
     <div class="tab-pane active" id="tab_1_1">
     <div class="" data-always-visible="1" data-rail-visible="0">
 
@@ -28,69 +28,114 @@
                     <table class="table bold" style="border: 1px solid ghostwhite;">
                         <thead style="background: #4b8df8;color: #fff;">
                         <tr>
-                            <th style="height: 42px;">Sl</th>
-                            <th{% if purchaseRequisitions.isSorted('a.dateOfRequisition') %} class="sorted tableThTd" {% endif %}>{{ knp_pagination_sortable(purchaseRequisitions, 'Date', 'a.dateOfRequisition') }}</th>
-                            <th{% if purchaseRequisitions.isSorted('a.requisitionNo') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(purchaseRequisitions, 'PR No', 'a.requisitionNo') }}</th>
-                            <th>Project</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <th style="">Sl</th>
+                            <th{% if allPurchaseRequisitions.isSorted('a.dateOfRequisition') %} class="sorted col-md-2" {% endif %} class="col-md-2">{{ knp_pagination_sortable(allPurchaseRequisitions, 'Date', 'a.dateOfRequisition') }}</th>
+                            <th{% if allPurchaseRequisitions.isSorted('a.requisitionNo') %} class="sorted col-md-1" {% endif %} class="col-md-1">{{ knp_pagination_sortable(allPurchaseRequisitions, 'PR No', 'a.requisitionNo') }}</th>
+                            <th class="col-md-1">Project</th>
+                            <th class="col-md-1">creator</th>
+                            <th class="col-md-1">status</th>
+                            <th class="col-md-1" style="text-align: center;">PRa%</th>
+                            <th class="col-md-1" style="text-align: center;">PRc%</th>
+                            <th class="col-md-1" style="text-align: center;">PO%</th>
+                            <th class="col-md-1">approval</th>
+                            <th class="col-md-1">edit</th>
+                            <th style="text-align: right;">view</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% if page == 1 %}{% set i = 0 %}
-                        {% else %}{% set i = (page * 50) -50 %}
+                        {% if allPage == 1 %}{% set i = 0 %}
+                        {% else %}{% set i = (allPage * 50) -50 %}
                         {% endif %}
 
-                        {% for purchaseRequisition in purchaseRequisitions %}
+                        {% for purchaseRequisition in allPurchaseRequisitions %}
                             {% set i = i + 1 %}
-                            {% set bgColor = ["#eee"] %}
+                            {% set bgColor = ["#fff"] %}
 
-                            <tr style="background: {{ bgColor|join("") }};border-top: 3px solid white !important;">
-                                <td class="col-md-1">{{ i }} .</td>
-                                <td class="col-md-1">{{ purchaseRequisition.dateOfRequisition|date('Y-m-d') }}</td>
-                                <td class="col-md-1">{{ purchaseRequisition.requisitionNo }}</td>
-                                <td class="col-md-3" tooltip="{{ purchaseRequisition.project.projectName }}">{{ purchaseRequisition.project.projectName | length > 12 ? purchaseRequisition.project.projectName | slice(0, 12) ~ '...' : purchaseRequisition.project.projectName }}</td>
-                                {% if purchaseRequisition.approvedByProjectHead == null %}
-                                    <td class="col-md-1">
-                                        <a href="/purchase/requisition/approve/projectHead/{{ purchaseRequisition.id }}" class="btn default btn-xs green-stripe">Rise</a>
-                                    </td>
-                                {% endif %}
-                                {% if purchaseRequisition.approvedByProjectHead != null and purchaseRequisition.approvedByCategoryHeadOne == null %}
-                                    <td class="col-md-1">
-                                        <a href="/purchase/requisition/approve/CategoryHeadOne/{{ purchaseRequisition.id }}" class="btn default btn-xs green-stripe">Approved</a>
-                                    </td>
-                                {% endif %}
-                                {% if purchaseRequisition.approvedByCategoryHeadOne != null and purchaseRequisition.approvedByCategoryHeadTwo == null %}
-                                    <td class="col-md-1">
-                                        <a href="/purchase/requisition/approve/CategoryHeadTwo/{{ purchaseRequisition.id }}" class="btn default btn-xs green-stripe">Validated</a>
-                                    </td>
-                                {% endif %}
-                                {% if purchaseRequisition.approvedByCategoryHeadTwo != null %}
-                                    <td class="col-md-1">
-                                        <a class="btn default btn-xs green-stripe">
-                                            Verified
-                                        </a>
-                                    </td>
-                                    <td class="col-md-1">
-
-                                    </td>
-                                {% endif %}
-                                {% if purchaseRequisition.approvedByProjectHead == null or purchaseRequisition.approvedByCategoryHeadOne == null or purchaseRequisition.approvedByCategoryHeadTwo == null %}
-                                    <td>
-                                        <a href="/purchase/requisition/edit/{{ purchaseRequisition.id }}" class="btn default btn-xs green-stripe"><i
+                            <tr style="height: 62px;background: {{ bgColor|join("") }};border-top: 3px solid #eee !important;">
+                                <td style="padding-left: 8px !important;">{{ i }}.</td>
+                                <td>{{ purchaseRequisition.dateOfRequisition|date('D j F Y') }}</td>
+                                <td>{{ purchaseRequisition.requisitionNo }}</td>
+                                <td tooltip="{{ purchaseRequisition.project.projectName }}">{{ purchaseRequisition.project.projectName | length > 12 ? purchaseRequisition.project.projectName | slice(0, 12) ~ '...' : purchaseRequisition.project.projectName }}</td>
+                                <td>{{ purchaseRequisition.createdBy }} </td>
+                                <td>
+                                    {% if purchaseRequisition.approveStatus == 0 %}
+                                    <div style="text-align:center;background: #35aa47; color: #ffffff; width: 62px; height: 20px;">
+                                            created
+                                    </div>
+                                    {% endif %}
+                                    {% if purchaseRequisition.approveStatus == 1 %}
+                                    <div style="text-align:center;background: #ffb848; color: #ffffff; width: 62px; height: 20px;">
+                                        approved
+                                    </div>
+                                    {% endif %}
+                                    {% if purchaseRequisition.approveStatus == 2 %}
+                                    <div style="text-align:center;background: #852b99; color: #ffffff; width: 62px; height: 20px;">
+                                            validated
+                                    </div>
+                                    {% endif %}
+                                    {% if purchaseRequisition.approveStatus == 3 %}
+                                        <div style="text-align:center;background: #555555; color: #ffffff; width: 62px; height: 20px;">
+                                            verified
+                                        </div>
+                                    {% endif %}
+                                    {% if purchaseRequisition.approveStatus == 4 %}
+                                        <div style="text-align:center;background: #27a9e3; color: #ffffff; width: 62px; height: 20px;">
+                                            open
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="easy-pie-chart">
+                                        <div class="number visits" data-percent="85"><span>+85</span>%</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="easy-pie-chart">
+                                        <div class="number transactions" data-percent="55"><span>+55</span>%</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="easy-pie-chart">
+                                        <div class="number bounce" data-percent="46"><span>-46</span>%</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    {% if purchaseRequisition.approvedByProjectHead == null %}
+                                            <a href="/purchase/requisition/approve/projectHead/{{ purchaseRequisition.id }}"
+                                               class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>
+                                    {% endif %}
+                                    {% if purchaseRequisition.approvedByProjectHead != null and purchaseRequisition.approvedByCategoryHeadOne == null %}
+                                            <a href="/purchase/requisition/approve/CategoryHeadOne/{{ purchaseRequisition.id }}"
+                                               class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>
+                                    {% endif %}
+                                    {% if purchaseRequisition.approvedByCategoryHeadOne != null and purchaseRequisition.approvedByCategoryHeadTwo == null %}
+                                            <a href="/purchase/requisition/approve/CategoryHeadTwo/{{ purchaseRequisition.id }}"
+                                               class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>
+                                    {% endif %}
+                                    {% if purchaseRequisition.approvedByCategoryHeadTwo != null %}
+                                            <a class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if purchaseRequisition.approvedByProjectHead == null or purchaseRequisition.approvedByCategoryHeadOne == null or purchaseRequisition.approvedByCategoryHeadTwo == null %}
+                                            <a href="/purchase/requisition/edit/{{ purchaseRequisition.id }}" style="width: 65px; color:#ffffff !important;" class="btn blue btn-xs"><i
+                                               class="fa fa-edit"></i> Edit</a>
+                                    {% endif %}
+                                    {% if purchaseRequisition.approvedByCategoryHeadTwo != null %}
+                                        <a style="width: 65px; background: #8A8585; color:#ffffff !important;" class="btn btn-xs"><i
                                                     class="fa fa-edit"></i> Edit</a>
-                                    </td>
-                                {% endif %}
-                                <td class="col-md-1">
-                                    <a href="/purchase/requisition/details/{{ purchaseRequisition.id }}" data-target="#ajax" data-toggle="modal" class="btn default btn-xs"><i class="fa fa-info-circle"></i></a>
+                                    {% endif %}
+                                </td>
+                                <td style="text-align: right">
+                                    <a href="/purchase/requisition/details/{{ purchaseRequisition.id }}" data-target="#ajax" data-toggle="modal"
+                                       class="btn btn-xs"><i class="fa fa-info-circle" style="font-size: 20px;"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}
                         </tbody>
                     </table>
                     <div class="navigation" style="text-align: right">
-                        {{ knp_pagination_render(purchaseRequisitions) }}
+                        {{ knp_pagination_render(allPurchaseRequisitions) }}
                     </div>
                 </div>
             </div>
@@ -99,77 +144,122 @@
     </div>
     </div>
     <div class="tab-pane" id="tab_1_2">
-    <div class="scroller" style="height: 290px;" data-always-visible="1" data-rail-visible1="1">
+    <div class="" style="" data-always-visible="1" data-rail-visible1="1">
 
         <div class="fluid" id="project-list-div">
             <div class="form-group">
                 <div class="col-md-12" style="margin-top: 30px;">
                     <table class="table bold" style="border: 1px solid ghostwhite;">
-                        <thead style="background: #4b8df8;">
+                        <thead style="background: #4b8df8;color: #fff;">
                         <tr>
-                            <th style="height: 42px;">Sl</th>
-                            <th{% if purchaseRequisitions2.isSorted('a.dateOfRequisition') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(purchaseRequisitions2, 'Date', 'a.dateOfRequisition') }}</th>
-                            <th{% if purchaseRequisitions2.isSorted('a.requisitionNo') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(purchaseRequisitions2, 'PR No', 'a.requisitionNo') }}</th>
-                            <th>Project</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <th style="">Sl</th>
+                            <th>Date</th>
+                            <th>PR No</th>
+                            <th class="col-md-1">Project</th>
+                            <th class="col-md-1">creator</th>
+                            <th class="col-md-1">status</th>
+                            <th class="col-md-1" style="text-align: center;">PRa%</th>
+                            <th class="col-md-1" style="text-align: center;">PRc%</th>
+                            <th class="col-md-1" style="text-align: center;">PO%</th>
+                            <th class="col-md-1">approval</th>
+                            <th class="col-md-1">edit</th>
+                            <th style="text-align: right;">view</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% if page == 1 %}{% set i = 0 %}
-                        {% else %}{% set i = (page * 50) -50 %}
+                        {% if openPage == 1 %}{% set i = 0 %}
+                        {% else %}{% set i = (openPage * 50) -50 %}
                         {% endif %}
 
-                        {% for purchaseRequisition in purchaseRequisitions2 %}
+                        {% for purchaseRequisition in openPurchaseRequisitions %}
                             {% set i = i + 1 %}
-                            {% set bgColor = ["#eee"] %}
+                            {% set bgColor = ["#fff"] %}
 
-                            <tr style="background: {{ bgColor|join("") }};border-top: 3px solid white !important;">
-                                <td class="col-md-1">{{ i }} .</td>
-                                <td class="col-md-1">{{ purchaseRequisition.dateOfRequisition|date('Y-m-d') }}</td>
-                                <td class="col-md-1">{{ purchaseRequisition.requisitionNo }}</td>
-                                <td class="col-md-3" title="{{ purchaseRequisition.project.projectName }}">{{ purchaseRequisition.project.projectName | length > 12 ? purchaseRequisition.project.projectName | slice(0, 12) ~ '...' : purchaseRequisition.project.projectName }}</td>
-                                {% if purchaseRequisition.approvedByProjectHead == null %}
-                                    <td class="col-md-1">
-                                        <a href="/purchase/requisition/approve/projectHead/{{ purchaseRequisition.id }}" class="btn default btn-xs green-stripe">Rise</a>
-                                    </td>
-                                {% endif %}
-                                {% if purchaseRequisition.approvedByProjectHead != null and purchaseRequisition.approvedByCategoryHeadOne == null %}
-                                    <td class="col-md-1">
-                                        <a href="/purchase/requisition/approve/CategoryHeadOne/{{ purchaseRequisition.id }}" class="btn default btn-xs green-stripe">Approved</a>
-                                    </td>
-                                {% endif %}
-                                {% if purchaseRequisition.approvedByCategoryHeadOne != null and purchaseRequisition.approvedByCategoryHeadTwo == null %}
-                                    <td class="col-md-1">
-                                        <a href="/purchase/requisition/approve/CategoryHeadTwo/{{ purchaseRequisition.id }}" class="btn default btn-xs green-stripe">Validated</a>
-                                    </td>
-                                {% endif %}
-                                {% if purchaseRequisition.approvedByCategoryHeadTwo != null %}
-                                    <td class="col-md-1">
-                                        <a class="btn default btn-xs green-stripe">
-                                            Verified
-                                        </a>
-                                    </td>
-                                    <td class="col-md-1">
-
-                                    </td>
-                                {% endif %}
-                                {% if purchaseRequisition.approvedByProjectHead == null or purchaseRequisition.approvedByCategoryHeadOne == null or purchaseRequisition.approvedByCategoryHeadTwo == null %}
-                                    <td>
-                                        <a href="/purchase/requisition/edit/{{ purchaseRequisition.id }}" class="btn default btn-xs green-stripe"><i
+                            <tr style="height: 62px;background: {{ bgColor|join("") }};border-top: 3px solid #eee !important;">
+                                <td style="padding-left: 8px !important;">{{ i }}.</td>
+                                <td>{{ purchaseRequisition.dateOfRequisition|date('D j F Y') }}</td>
+                                <td>{{ purchaseRequisition.requisitionNo }}</td>
+                                <td tooltip="{{ purchaseRequisition.project.projectName }}">{{ purchaseRequisition.project.projectName | length > 12 ? purchaseRequisition.project.projectName | slice(0, 12) ~ '...' : purchaseRequisition.project.projectName }}</td>
+                                <td>{{ purchaseRequisition.createdBy }} </td>
+                                <td>
+                                    {% if purchaseRequisition.approveStatus == 0 %}
+                                        <div style="text-align:center;background: #35aa47; color: #ffffff; width: 62px; height: 20px;">
+                                            created
+                                        </div>
+                                    {% endif %}
+                                    {% if purchaseRequisition.approveStatus == 1 %}
+                                        <div style="text-align:center;background: #ffb848; color: #ffffff; width: 62px; height: 20px;">
+                                            approved
+                                        </div>
+                                    {% endif %}
+                                    {% if purchaseRequisition.approveStatus == 2 %}
+                                        <div style="text-align:center;background: #852b99; color: #ffffff; width: 62px; height: 20px;">
+                                            validated
+                                        </div>
+                                    {% endif %}
+                                    {% if purchaseRequisition.approveStatus == 3 %}
+                                        <div style="text-align:center;background: #555555; color: #ffffff; width: 62px; height: 20px;">
+                                            verified
+                                        </div>
+                                    {% endif %}
+                                    {% if purchaseRequisition.approveStatus == 4 %}
+                                        <div style="text-align:center;background: #27a9e3; color: #ffffff; width: 62px; height: 20px;">
+                                            open
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="easy-pie-chart">
+                                        <div class="number visits" data-percent="85"><span>+85</span>%</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="easy-pie-chart">
+                                        <div class="number transactions" data-percent="55"><span>+55</span>%</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="easy-pie-chart">
+                                        <div class="number bounce" data-percent="46"><span>-46</span>%</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    {% if purchaseRequisition.approvedByProjectHead == null %}
+                                        <a href="/purchase/requisition/approve/projectHead/{{ purchaseRequisition.id }}"
+                                           class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>
+                                    {% endif %}
+                                    {% if purchaseRequisition.approvedByProjectHead != null and purchaseRequisition.approvedByCategoryHeadOne == null %}
+                                        <a href="/purchase/requisition/approve/CategoryHeadOne/{{ purchaseRequisition.id }}"
+                                           class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>
+                                    {% endif %}
+                                    {% if purchaseRequisition.approvedByCategoryHeadOne != null and purchaseRequisition.approvedByCategoryHeadTwo == null %}
+                                        <a href="/purchase/requisition/approve/CategoryHeadTwo/{{ purchaseRequisition.id }}"
+                                           class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>
+                                    {% endif %}
+                                    {% if purchaseRequisition.approvedByCategoryHeadTwo != null %}
+                                        <a class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if purchaseRequisition.approvedByProjectHead == null or purchaseRequisition.approvedByCategoryHeadOne == null or purchaseRequisition.approvedByCategoryHeadTwo == null %}
+                                        <a href="/purchase/requisition/edit/{{ purchaseRequisition.id }}" style="width: 65px; color:#ffffff !important;" class="btn blue btn-xs"><i
                                                     class="fa fa-edit"></i> Edit</a>
-                                    </td>
-                                {% endif %}
-                                <td class="col-md-1">
-                                    <a href="/purchase/requisition/details/{{ purchaseRequisition.id }}" data-target="#ajax" data-toggle="modal" class="btn default btn-xs"><i class="fa fa-info-circle"></i></a>
+                                    {% endif %}
+                                    {% if purchaseRequisition.approvedByCategoryHeadTwo != null %}
+                                        <a style="width: 65px; background: #8A8585; color:#ffffff !important;" class="btn btn-xs"><i
+                                                    class="fa fa-edit"></i> Edit</a>
+                                    {% endif %}
+                                </td>
+                                <td style="text-align: right">
+                                    <a href="/purchase/requisition/details/{{ purchaseRequisition.id }}" data-target="#ajax" data-toggle="modal"
+                                       class="btn btn-xs"><i class="fa fa-info-circle" style="font-size: 20px;"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}
                         </tbody>
                     </table>
                     <div class="navigation" style="text-align: right">
-                        {{ knp_pagination_render(purchaseRequisitions2) }}
+                        {{ knp_pagination_render(openPurchaseRequisitions) }}
                     </div>
                 </div>
             </div>
@@ -178,77 +268,122 @@
     </div>
     </div>
     <div class="tab-pane" id="tab_1_3">
-        <div class="scroller" style="height: 290px;" data-always-visible="1" data-rail-visible1="1">
+        <div class="" style="" data-always-visible="1" data-rail-visible1="1">
 
             <div class="fluid" id="project-list-div">
                 <div class="form-group">
                     <div class="col-md-12" style="margin-top: 30px;">
                         <table class="table bold" style="border: 1px solid ghostwhite;">
-                            <thead style="background: #4b8df8;">
+                            <thead style="background: #4b8df8;color: #fff;">
                             <tr>
-                                <th style="height: 42px;">Sl</th>
-                                <th{% if purchaseRequisitions1.isSorted('a.dateOfRequisition') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(purchaseRequisitions1, 'Date', 'a.dateOfRequisition') }}</th>
-                                <th{% if purchaseRequisitions1.isSorted('a.requisitionNo') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(purchaseRequisitions1, 'PR No', 'a.requisitionNo') }}</th>
-                                <th>Project</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
+                                <th style="">Sl</th>
+                                <th>Date</th>
+                                <th>PR No</th>
+                                <th class="col-md-1">Project</th>
+                                <th class="col-md-1">creator</th>
+                                <th class="col-md-1">status</th>
+                                <th class="col-md-1" style="text-align: center;">PRa%</th>
+                                <th class="col-md-1" style="text-align: center;">PRc%</th>
+                                <th class="col-md-1" style="text-align: center;">PO%</th>
+                                <th class="col-md-1">approval</th>
+                                <th class="col-md-1">edit</th>
+                                <th style="text-align: right;">view</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% if page == 1 %}{% set i = 0 %}
-                            {% else %}{% set i = (page * 50) -50 %}
+                            {% if closePage == 1 %}{% set i = 0 %}
+                            {% else %}{% set i = (closePage * 50) -50 %}
                             {% endif %}
 
-                            {% for purchaseRequisition in purchaseRequisitions1 %}
+                            {% for purchaseRequisition in closePurchaseRequisitions %}
                                 {% set i = i + 1 %}
-                                {% set bgColor = ["#eee"] %}
+                                {% set bgColor = ["#fff"] %}
 
-                                <tr style="background: {{ bgColor|join("") }};border-top: 3px solid white !important;">
-                                    <td class="col-md-1">{{ i }} .</td>
-                                    <td class="col-md-1">{{ purchaseRequisition.dateOfRequisition|date('Y-m-d') }}</td>
-                                    <td class="col-md-1">{{ purchaseRequisition.requisitionNo }}</td>
-                                    <td class="col-md-3" title="{{ purchaseRequisition.project.projectName }}">{{ purchaseRequisition.project.projectName | length > 12 ? purchaseRequisition.project.projectName | slice(0, 12) ~ '...' : purchaseRequisition.project.projectName }}</td>
-                                    {% if purchaseRequisition.approvedByProjectHead == null %}
-                                        <td class="col-md-1">
-                                            <a href="/purchase/requisition/approve/projectHead/{{ purchaseRequisition.id }}" class="btn default btn-xs green-stripe">Rise</a>
-                                        </td>
-                                    {% endif %}
-                                    {% if purchaseRequisition.approvedByProjectHead != null and purchaseRequisition.approvedByCategoryHeadOne == null %}
-                                        <td class="col-md-1">
-                                            <a href="/purchase/requisition/approve/CategoryHeadOne/{{ purchaseRequisition.id }}" class="btn default btn-xs green-stripe">Approved</a>
-                                        </td>
-                                    {% endif %}
-                                    {% if purchaseRequisition.approvedByCategoryHeadOne != null and purchaseRequisition.approvedByCategoryHeadTwo == null %}
-                                        <td class="col-md-1">
-                                            <a href="/purchase/requisition/approve/CategoryHeadTwo/{{ purchaseRequisition.id }}" class="btn default btn-xs green-stripe">Validated</a>
-                                        </td>
-                                    {% endif %}
-                                    {% if purchaseRequisition.approvedByCategoryHeadTwo != null %}
-                                        <td class="col-md-1">
-                                            <a class="btn default btn-xs">
-                                                Verified
-                                            </a>
-                                        </td>
-                                        <td class="col-md-1">
-
-                                        </td>
-                                    {% endif %}
-                                    {% if purchaseRequisition.approvedByProjectHead == null or purchaseRequisition.approvedByCategoryHeadOne == null or purchaseRequisition.approvedByCategoryHeadTwo == null %}
-                                        <td>
-                                            <a href="/purchase/requisition/edit/{{ purchaseRequisition.id }}" class="btn default btn-xs green-stripe"><i
+                                <tr style="height: 62px;background: {{ bgColor|join("") }};border-top: 3px solid #eee !important;">
+                                    <td style="padding-left: 8px !important;">{{ i }}.</td>
+                                    <td>{{ purchaseRequisition.dateOfRequisition|date('D j F Y') }}</td>
+                                    <td>{{ purchaseRequisition.requisitionNo }}</td>
+                                    <td tooltip="{{ purchaseRequisition.project.projectName }}">{{ purchaseRequisition.project.projectName | length > 12 ? purchaseRequisition.project.projectName | slice(0, 12) ~ '...' : purchaseRequisition.project.projectName }}</td>
+                                    <td>{{ purchaseRequisition.createdBy }} </td>
+                                    <td>
+                                        {% if purchaseRequisition.approveStatus == 0 %}
+                                            <div style="text-align:center;background: #35aa47; color: #ffffff; width: 62px; height: 20px;">
+                                                created
+                                            </div>
+                                        {% endif %}
+                                        {% if purchaseRequisition.approveStatus == 1 %}
+                                            <div style="text-align:center;background: #ffb848; color: #ffffff; width: 62px; height: 20px;">
+                                                approved
+                                            </div>
+                                        {% endif %}
+                                        {% if purchaseRequisition.approveStatus == 2 %}
+                                            <div style="text-align:center;background: #852b99; color: #ffffff; width: 62px; height: 20px;">
+                                                validated
+                                            </div>
+                                        {% endif %}
+                                        {% if purchaseRequisition.approveStatus == 3 %}
+                                            <div style="text-align:center;background: #555555; color: #ffffff; width: 62px; height: 20px;">
+                                                verified
+                                            </div>
+                                        {% endif %}
+                                        {% if purchaseRequisition.approveStatus == 4 %}
+                                            <div style="text-align:center;background: #27a9e3; color: #ffffff; width: 62px; height: 20px;">
+                                                open
+                                            </div>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="easy-pie-chart">
+                                            <div class="number visits" data-percent="85"><span>+85</span>%</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="easy-pie-chart">
+                                            <div class="number transactions" data-percent="55"><span>+55</span>%</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="easy-pie-chart">
+                                            <div class="number bounce" data-percent="46"><span>-46</span>%</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {% if purchaseRequisition.approvedByProjectHead == null %}
+                                            <a href="/purchase/requisition/approve/projectHead/{{ purchaseRequisition.id }}"
+                                               class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>
+                                        {% endif %}
+                                        {% if purchaseRequisition.approvedByProjectHead != null and purchaseRequisition.approvedByCategoryHeadOne == null %}
+                                            <a href="/purchase/requisition/approve/CategoryHeadOne/{{ purchaseRequisition.id }}"
+                                               class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>
+                                        {% endif %}
+                                        {% if purchaseRequisition.approvedByCategoryHeadOne != null and purchaseRequisition.approvedByCategoryHeadTwo == null %}
+                                            <a href="/purchase/requisition/approve/CategoryHeadTwo/{{ purchaseRequisition.id }}"
+                                               class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>
+                                        {% endif %}
+                                        {% if purchaseRequisition.approvedByCategoryHeadTwo != null %}
+                                            <a class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if purchaseRequisition.approvedByProjectHead == null or purchaseRequisition.approvedByCategoryHeadOne == null or purchaseRequisition.approvedByCategoryHeadTwo == null %}
+                                            <a href="/purchase/requisition/edit/{{ purchaseRequisition.id }}" style="width: 65px; color:#ffffff !important;" class="btn blue btn-xs"><i
                                                         class="fa fa-edit"></i> Edit</a>
-                                        </td>
-                                    {% endif %}
-                                    <td class="col-md-1">
-                                        <a href="/purchase/requisition/details/{{ purchaseRequisition.id }}" data-target="#ajax" data-toggle="modal" class="btn default btn-xs"><i class="fa fa-info-circle"></i></a>
+                                        {% endif %}
+                                        {% if purchaseRequisition.approvedByCategoryHeadTwo != null %}
+                                            <a style="width: 65px; background: #8A8585; color:#ffffff !important;" class="btn btn-xs"><i
+                                                        class="fa fa-edit"></i> Edit</a>
+                                        {% endif %}
+                                    </td>
+                                    <td style="text-align: right">
+                                        <a href="/purchase/requisition/details/{{ purchaseRequisition.id }}" data-target="#ajax" data-toggle="modal"
+                                           class="btn btn-xs"><i class="fa fa-info-circle" style="font-size: 20px;"></i></a>
                                     </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
                         </table>
                         <div class="navigation" style="text-align: right">
-                            {{ knp_pagination_render(purchaseRequisitions1) }}
+                            {{ knp_pagination_render(closePurchaseRequisitions) }}
                         </div>
                     </div>
                 </div>

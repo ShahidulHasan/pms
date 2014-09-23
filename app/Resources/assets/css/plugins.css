@@ -622,6 +622,7 @@ Dashboard Charts(new in v1.2.1)
 .easy-pie-chart,
 .sparkline-chart {
     text-align: center;
+    margin-top: -7px;
 }
 
 .sparkline-chart {
@@ -630,16 +631,16 @@ Dashboard Charts(new in v1.2.1)
 }
 
 .easy-pie-chart .number {
-    font-size: 16px;
-    font-weight: 300;
-    width: 85px;
+    font-size: 12px;
+    font-weight: 200;
+    width: 75px;
     margin: 0 auto;
 }
 
 .sparkline-chart .number {
-    width: 100px;
+    width: 80px;
     margin: 0 auto;
-    margin-bottom: 10px;
+    margin-bottom: 0;
 }
 
 .sparkline-chart .title,

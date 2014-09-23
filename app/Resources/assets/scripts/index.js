@@ -552,21 +552,21 @@ var Index = function () {
 
             $('.easy-pie-chart .number.transactions').easyPieChart({
                 animate: 1000,
-                size: 75,
+                size: 50,
                 lineWidth: 3,
                 barColor: App.getLayoutColorCode('yellow')
             });
 
             $('.easy-pie-chart .number.visits').easyPieChart({
                 animate: 1000,
-                size: 75,
+                size: 50,
                 lineWidth: 3,
-                barColor: App.getLayoutColorCode('green')
+                barColor: App.getLayoutColorCode('blue')
             });
 
             $('.easy-pie-chart .number.bounce').easyPieChart({
                 animate: 1000,
-                size: 75,
+                size: 50,
                 lineWidth: 3,
                 barColor: App.getLayoutColorCode('red')
             });

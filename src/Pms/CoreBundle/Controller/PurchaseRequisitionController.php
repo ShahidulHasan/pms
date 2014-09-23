@@ -57,25 +57,28 @@ class PurchaseRequisitionController extends Controller
 
     public function purchaseRequisitionAddAction(Request $request)
     {
-        $dql = "SELECT a FROM PmsCoreBundle:PurchaseRequisition a WHERE a.status = 1 ORDER BY a.id DESC";
+        $dqlAll = "SELECT a FROM PmsCoreBundle:PurchaseRequisition a WHERE a.status = 1 ORDER BY a.id DESC";
 
-        list($purchaseRequisitions, $page) = $this->paginate($dql);
+        $allPurchaseRequisitions = $this->details($dqlAll);
+        $allPage = $allPurchaseRequisitions->getCurrentPageNumber();
 
-        $dql1 = "SELECT a FROM PmsCoreBundle:PurchaseRequisition a WHERE a.approveStatus = 3 ORDER BY a.id DESC";
+        $dqlOpen = "SELECT a FROM PmsCoreBundle:PurchaseRequisition a WHERE a.approveStatus = 3 ORDER BY a.id DESC";
 
-        list($purchaseRequisitions1, $page1) = $this->paginate($dql1);
+        $openPurchaseRequisitions= $this->details($dqlOpen);
+        $openPage = $openPurchaseRequisitions->getCurrentPageNumber();
 
-        $dql2 = "SELECT a FROM PmsCoreBundle:PurchaseRequisition a WHERE a.approveStatus = 4 ORDER BY a.id DESC";
+        $dqlClose = "SELECT a FROM PmsCoreBundle:PurchaseRequisition a WHERE a.status = 0 ORDER BY a.id DESC";
 
-        list($purchaseRequisitions2, $page2) = $this->paginate($dql2);
+        $closePurchaseRequisitions = $this->details($dqlClose);
+        $closePage = $closePurchaseRequisitions->getCurrentPageNumber();
 
         return $this->render('PmsCoreBundle:PurchaseRequisition:add.html.twig', array(
-            'purchaseRequisitions' => $purchaseRequisitions,
-            'purchaseRequisitions1' => $purchaseRequisitions1,
-            'purchaseRequisitions2' => $purchaseRequisitions2,
-            'page' => $page,
-            'page1' => $page1,
-            'page2' => $page2,
+            'allPurchaseRequisitions' => $allPurchaseRequisitions,
+            'openPurchaseRequisitions' => $openPurchaseRequisitions,
+            'closePurchaseRequisitions' => $closePurchaseRequisitions,
+            'allPage' => $allPage,
+            'openPage' => $openPage,
+            'closePage' => $closePage,
         ));
     }
 
