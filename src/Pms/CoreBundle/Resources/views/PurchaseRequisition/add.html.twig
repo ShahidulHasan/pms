@@ -13,7 +13,7 @@
         <li><a href="index.html#tab_1_2" style="color: black !important;" data-toggle="tab">Open</a></li>
         <li><a href="index.html#tab_1_3" style="color: black !important;" data-toggle="tab">Closed</a></li>
         <li style="float: right;margin-right: -1px;">
-            <a href="/purchase/requisition/new" class="btn green" style="float: right;height: 40px;padding: 9px 14px !important;">
+            <a href="/purchase/requisition/new" style="background: #4b8df8; float: right; height: 40px; color:#ffffff; padding: 9px 14px !important;">
                 Create PR
             </a>
         </li>
@@ -32,13 +32,13 @@
                             <th{% if allPurchaseRequisitions.isSorted('a.dateOfRequisition') %} class="sorted col-md-2" {% endif %} class="col-md-2">{{ knp_pagination_sortable(allPurchaseRequisitions, 'Date', 'a.dateOfRequisition') }}</th>
                             <th{% if allPurchaseRequisitions.isSorted('a.requisitionNo') %} class="sorted col-md-1" {% endif %} class="col-md-1">{{ knp_pagination_sortable(allPurchaseRequisitions, 'PR No', 'a.requisitionNo') }}</th>
                             <th class="col-md-1">Project</th>
-                            <th class="col-md-1">creator</th>
-                            <th class="col-md-1">status</th>
-                            <th class="col-md-1" style="text-align: center;">PRa%</th>
-                            <th class="col-md-1" style="text-align: center;">PRc%</th>
-                            <th class="col-md-1" style="text-align: center;">PO%</th>
-                            <th class="col-md-1">approval</th>
-                            <th class="col-md-1">edit</th>
+                            <th class="col-md-1">CreatedBy</th>
+                            <th class="col-md-1">Status</th>
+                            <th class="col-md-1" Style="text-align: center;">Claimed%</th>
+                            <th class="col-md-1" Style="text-align: center;">Assigned%</th>
+                            <th class="col-md-1" Style="text-align: center;">Closing%</th>
+                            <th class="col-md-1">Approval</th>
+                            <th class="col-md-1">Edit</th>
                             <th style="text-align: right;">view</th>
                         </tr>
                         </thead>
@@ -51,12 +51,16 @@
                             {% set i = i + 1 %}
                             {% set bgColor = ["#fff"] %}
 
+                            {% if purchaseRequisition.approveStatus == 0 %} {% set pra = 0 %}
+                            {% elseif purchaseRequisition.approveStatus == 1 %} {% set pra = 25 %}
+                            {% endif %}
+
                             <tr style="height: 62px;background: {{ bgColor|join("") }};border-top: 3px solid #eee !important;">
                                 <td style="padding-left: 8px !important;">{{ i }}.</td>
-                                <td>{{ purchaseRequisition.dateOfRequisition|date('D j F Y') }}</td>
+                                <td>{{ purchaseRequisition.dateOfRequisition|date('d M Y') }}</td>
                                 <td>{{ purchaseRequisition.requisitionNo }}</td>
                                 <td tooltip="{{ purchaseRequisition.project.projectName }}">{{ purchaseRequisition.project.projectName | length > 12 ? purchaseRequisition.project.projectName | slice(0, 12) ~ '...' : purchaseRequisition.project.projectName }}</td>
-                                <td>{{ purchaseRequisition.createdBy }} </td>
+                                <td>{{ purchaseRequisition.createdBy }}</td>
                                 <td>
                                     {% if purchaseRequisition.approveStatus == 0 %}
                                     <div style="text-align:center;background: #35aa47; color: #ffffff; width: 62px; height: 20px;">
@@ -122,7 +126,7 @@
                                                class="fa fa-edit"></i> Edit</a>
                                     {% endif %}
                                     {% if purchaseRequisition.approvedByCategoryHeadTwo != null %}
-                                        <a style="width: 65px; background: #8A8585; color:#ffffff !important;" class="btn btn-xs"><i
+                                        <a style="width: 65px; background: #DDDADA; color:#ffffff !important;" class="btn btn-xs"><i
                                                     class="fa fa-edit"></i> Edit</a>
                                     {% endif %}
                                 </td>
@@ -156,13 +160,13 @@
                             <th>Date</th>
                             <th>PR No</th>
                             <th class="col-md-1">Project</th>
-                            <th class="col-md-1">creator</th>
-                            <th class="col-md-1">status</th>
-                            <th class="col-md-1" style="text-align: center;">PRa%</th>
-                            <th class="col-md-1" style="text-align: center;">PRc%</th>
-                            <th class="col-md-1" style="text-align: center;">PO%</th>
-                            <th class="col-md-1">approval</th>
-                            <th class="col-md-1">edit</th>
+                            <th class="col-md-1">CreatedBy</th>
+                            <th class="col-md-1">Status</th>
+                            <th class="col-md-1" Style="text-align: center;">Claimed%</th>
+                            <th class="col-md-1" Style="text-align: center;">Assigned%</th>
+                            <th class="col-md-1" Style="text-align: center;">Closing%</th>
+                            <th class="col-md-1">Approval</th>
+                            <th class="col-md-1">Edit</th>
                             <th style="text-align: right;">view</th>
                         </tr>
                         </thead>
@@ -175,12 +179,16 @@
                             {% set i = i + 1 %}
                             {% set bgColor = ["#fff"] %}
 
+                            {% if purchaseRequisition.approveStatus == 0 %} {% set pra = 0 %}
+                            {% elseif purchaseRequisition.approveStatus == 1 %} {% set pra = 25 %}
+                            {% endif %}
+
                             <tr style="height: 62px;background: {{ bgColor|join("") }};border-top: 3px solid #eee !important;">
                                 <td style="padding-left: 8px !important;">{{ i }}.</td>
-                                <td>{{ purchaseRequisition.dateOfRequisition|date('D j F Y') }}</td>
+                                <td>{{ purchaseRequisition.dateOfRequisition|date('d M Y') }}</td>
                                 <td>{{ purchaseRequisition.requisitionNo }}</td>
                                 <td tooltip="{{ purchaseRequisition.project.projectName }}">{{ purchaseRequisition.project.projectName | length > 12 ? purchaseRequisition.project.projectName | slice(0, 12) ~ '...' : purchaseRequisition.project.projectName }}</td>
-                                <td>{{ purchaseRequisition.createdBy }} </td>
+                                <td>{{ purchaseRequisition.createdBy }}</td>
                                 <td>
                                     {% if purchaseRequisition.approveStatus == 0 %}
                                         <div style="text-align:center;background: #35aa47; color: #ffffff; width: 62px; height: 20px;">
@@ -246,7 +254,7 @@
                                                     class="fa fa-edit"></i> Edit</a>
                                     {% endif %}
                                     {% if purchaseRequisition.approvedByCategoryHeadTwo != null %}
-                                        <a style="width: 65px; background: #8A8585; color:#ffffff !important;" class="btn btn-xs"><i
+                                        <a style="width: 65px; background: #DDDADA; color:#ffffff !important;" class="btn btn-xs"><i
                                                     class="fa fa-edit"></i> Edit</a>
                                     {% endif %}
                                 </td>
@@ -280,13 +288,13 @@
                                 <th>Date</th>
                                 <th>PR No</th>
                                 <th class="col-md-1">Project</th>
-                                <th class="col-md-1">creator</th>
-                                <th class="col-md-1">status</th>
-                                <th class="col-md-1" style="text-align: center;">PRa%</th>
-                                <th class="col-md-1" style="text-align: center;">PRc%</th>
-                                <th class="col-md-1" style="text-align: center;">PO%</th>
-                                <th class="col-md-1">approval</th>
-                                <th class="col-md-1">edit</th>
+                                <th class="col-md-1">CreatedBy</th>
+                                <th class="col-md-1">Status</th>
+                                <th class="col-md-1" Style="text-align: center;">Claimed%</th>
+                                <th class="col-md-1" Style="text-align: center;">Assigned%</th>
+                                <th class="col-md-1" Style="text-align: center;">Closing%</th>
+                                <th class="col-md-1">Approval</th>
+                                <th class="col-md-1">Edit</th>
                                 <th style="text-align: right;">view</th>
                             </tr>
                             </thead>
@@ -299,12 +307,16 @@
                                 {% set i = i + 1 %}
                                 {% set bgColor = ["#fff"] %}
 
+                                {% if purchaseRequisition.approveStatus == 0 %} {% set pra = 0 %}
+                                {% elseif purchaseRequisition.approveStatus == 1 %} {% set pra = 25 %}
+                                {% endif %}
+
                                 <tr style="height: 62px;background: {{ bgColor|join("") }};border-top: 3px solid #eee !important;">
                                     <td style="padding-left: 8px !important;">{{ i }}.</td>
-                                    <td>{{ purchaseRequisition.dateOfRequisition|date('D j F Y') }}</td>
+                                    <td>{{ purchaseRequisition.dateOfRequisition|date('d M Y') }}</td>
                                     <td>{{ purchaseRequisition.requisitionNo }}</td>
                                     <td tooltip="{{ purchaseRequisition.project.projectName }}">{{ purchaseRequisition.project.projectName | length > 12 ? purchaseRequisition.project.projectName | slice(0, 12) ~ '...' : purchaseRequisition.project.projectName }}</td>
-                                    <td>{{ purchaseRequisition.createdBy }} </td>
+                                    <td>{{ purchaseRequisition.createdBy }}</td>
                                     <td>
                                         {% if purchaseRequisition.approveStatus == 0 %}
                                             <div style="text-align:center;background: #35aa47; color: #ffffff; width: 62px; height: 20px;">
@@ -370,7 +382,7 @@
                                                         class="fa fa-edit"></i> Edit</a>
                                         {% endif %}
                                         {% if purchaseRequisition.approvedByCategoryHeadTwo != null %}
-                                            <a style="width: 65px; background: #8A8585; color:#ffffff !important;" class="btn btn-xs"><i
+                                            <a style="width: 65px; background: #DDDADA; color:#ffffff !important;" class="btn btn-xs"><i
                                                         class="fa fa-edit"></i> Edit</a>
                                         {% endif %}
                                     </td>
