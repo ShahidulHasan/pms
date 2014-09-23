@@ -172,6 +172,41 @@ class PurchaseRequisition
      */
     private $approveStatus;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="total_requisition_item_quantity", type="integer", nullable=true)
+     */
+    private $totalRequisitionItemQuantity;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="total_receive_item_quantity", type="integer", nullable=true)
+     */
+    private $totalReceiveItemQuantity;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="total_order_item_quantity", type="integer", nullable=true)
+     */
+    private $totalOrderItemQuantity;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="total_requisition_item", type="integer", nullable=true)
+     */
+    private $totalRequisitionItem;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="total_requisition_item_claimed", type="integer", nullable=true)
+     */
+    private $totalRequisitionItemClaimed;
+
     public function __construct()
     {
         $this->purchaseRequisitionItems = new ArrayCollection();
@@ -275,6 +310,121 @@ class PurchaseRequisition
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set totalRequisitionItemQuantity
+     *
+     * @param integer $totalRequisitionItemQuantity
+     * @return PurchaseRequisition
+     */
+    public function setTotalRequisitionItemQuantity($totalRequisitionItemQuantity)
+    {
+        $this->totalRequisitionItemQuantity = $totalRequisitionItemQuantity;
+
+        return $this;
+    }
+
+    /**
+     * Get totalRequisitionItemQuantity
+     *
+     * @return integer
+     */
+    public function getTotalRequisitionItemQuantity()
+    {
+        return $this->totalRequisitionItemQuantity;
+    }
+
+    /**
+     * Set totalReceiveItemQuantity
+     *
+     * @param integer $totalReceiveItemQuantity
+     * @return PurchaseRequisition
+     */
+    public function setTotalReceiveItemQuantity($totalReceiveItemQuantity)
+    {
+        $this->totalReceiveItemQuantity = $totalReceiveItemQuantity;
+
+        return $this;
+    }
+
+    /**
+     * Get totalReceiveItemQuantity
+     *
+     * @return integer
+     */
+    public function getTotalReceiveItemQuantity()
+    {
+        return $this->totalReceiveItemQuantity;
+    }
+
+    /**
+     * Set totalOrderItemQuantity
+     *
+     * @param integer $totalOrderItemQuantity
+     * @return PurchaseRequisition
+     */
+    public function setTotalOrderItemQuantity($totalOrderItemQuantity)
+    {
+        $this->totalOrderItemQuantity = $totalOrderItemQuantity;
+
+        return $this;
+    }
+
+    /**
+     * Get totalOrderItemQuantity
+     *
+     * @return integer
+     */
+    public function getTotalOrderItemQuantity()
+    {
+        return $this->totalOrderItemQuantity;
+    }
+
+    /**
+     * Set totalRequisitionItem
+     *
+     * @param integer $totalRequisitionItem
+     * @return PurchaseRequisition
+     */
+    public function setTotalRequisitionItem($totalRequisitionItem)
+    {
+        $this->totalRequisitionItem = $totalRequisitionItem;
+
+        return $this;
+    }
+
+    /**
+     * Get totalRequisitionItem
+     *
+     * @return integer
+     */
+    public function getTotalRequisitionItem()
+    {
+        return $this->totalRequisitionItem;
+    }
+
+    /**
+     * Set totalRequisitionItemClaimed
+     *
+     * @param integer $totalRequisitionItemClaimed
+     * @return PurchaseRequisition
+     */
+    public function setTotalRequisitionItemClaimed($totalRequisitionItemClaimed)
+    {
+        $this->totalRequisitionItemClaimed = $totalRequisitionItemClaimed;
+
+        return $this;
+    }
+
+    /**
+     * Get totalRequisitionItemClaimed
+     *
+     * @return integer
+     */
+    public function getTotalRequisitionItemClaimed()
+    {
+        return $this->totalRequisitionItemClaimed;
     }
 
     /**

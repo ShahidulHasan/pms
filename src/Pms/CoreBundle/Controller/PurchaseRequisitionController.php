@@ -171,6 +171,11 @@ class PurchaseRequisitionController extends Controller
                 $purchaseRequisition->setDateOfRequisition(new \DateTime());
                 $purchaseRequisition->setStatus('1');
                 $purchaseRequisition->setApproveStatus('0');
+                $purchaseRequisition->setTotalRequisitionItemQuantity('0');
+                $purchaseRequisition->setTotalOrderItemQuantity('0');
+                $purchaseRequisition->setTotalReceiveItemQuantity('0');
+                $purchaseRequisition->setTotalRequisitionItem('0');
+                $purchaseRequisition->setTotalRequisitionItemClaimed('0');
 
                 /** @var PurchaseRequisitionItem $item */
                 foreach ($purchaseRequisition->getPurchaseRequisitionItems() as $item) {
@@ -178,6 +183,10 @@ class PurchaseRequisitionController extends Controller
                     $item->setPurchaseRequisition($purchaseRequisition);
                     $item->setPurchaseOrderQuantity('0');
                     $item->setStatus('1');
+
+                    $quantity = $item->getQuantity();
+                    $purchaseRequisition->setTotalRequisitionItemQuantity($quantity + $purchaseRequisition->getTotalRequisitionItemQuantity());
+                    $purchaseRequisition->setTotalRequisitionItem(1 + $purchaseRequisition->getTotalRequisitionItem());
                 }
 
                 $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisition')->create($purchaseRequisition);
@@ -269,6 +278,9 @@ class PurchaseRequisitionController extends Controller
         $user = $this->get('security.context')->getToken()->getUser()->getId();
         $purchaseRequisitionItem->setClaimedBy($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
         $purchaseRequisitionItem->setClaimedDate(new \DateTime());
+
+        $purchaseRequisitionItem->getPurchaseRequisition()->setTotalRequisitionItemClaimed(1 + $purchaseRequisitionItem->getPurchaseRequisition()->getTotalRequisitionItemClaimed());
+
         $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseRequisition')->update($purchaseRequisitionItem);
         $this->get('session')->getFlashBag()->add(
             'notice',

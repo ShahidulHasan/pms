@@ -84,6 +84,8 @@ class PurchaseOrderController extends Controller
                     $item->setPurchaseRequisitionItem($purchaseRequisitionItem);
                     $item->setPurchaseOrder($purchaseOrder);
                     $item->setStatus('1');
+
+                    $purchaseRequisitionItem->getPurchaseRequisition()->setTotalOrderItemQuantity($purchaseRequisitionItem->getPurchaseOrderQuantity() + $purchaseRequisitionItem->getPurchaseRequisition()->getTotalOrderItemQuantity());
                 }
 
                 $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseOrder')->create($purchaseOrder);

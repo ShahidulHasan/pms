@@ -96,6 +96,8 @@ class ReceiveController extends Controller
                     $purchaseRequisitionItem->setReceivedQuantity($quantityOld + $item->getQuantity());
 
                     $item->setReceive($receivedItem);
+
+                    $purchaseRequisitionItem->getPurchaseRequisition()->setTotalReceiveItemQuantity($purchaseRequisitionItem->getPurchaseOrderQuantity() + $purchaseRequisitionItem->getPurchaseRequisition()->getTotalReceiveItemQuantity());
                 }
 
                 $this->getDoctrine()->getRepository('PmsCoreBundle:Receive')->create($receivedItem);
