@@ -876,6 +876,10 @@ Bootstrap Colorpicker
 Bootstrap  Datetimepicker
 ***/
 
+.datepicker > div{
+    background: #3974D1 !important;
+}
+
 .datetimepicker table td {
     font-weight: 300 !important;
     font-family: 'Open Sans' !important;

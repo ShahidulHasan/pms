@@ -4,8 +4,8 @@
 
     <div class="modal-dialog" style="width: 1000px;">
         <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title bold" style="text-align: center;"> Open Item List</h4>
+            <div class="modal-header" style="background: #4b8df8;">
+                <h4 class="modal-title bold" style="text-align: center;color: white;"> Open Item List</h4>
             </div>
             <form method="post" action="">
                 <div class="modal-body">
@@ -13,12 +13,15 @@
 
                         <div class="col-md-12">
                             <table class="table table-striped" style="margin-top: 0;">
-                                <thead>
+                                <thead style="background: #4b8df8;">
                                 <tr>
                                     <th class="col-md-1" style="">Check</th>
-                                    <th class="col-md-3" style="">Particulars</th>
+                                    <th class="col-md-2" style="">Particulars</th>
                                     <th class="col-md-2" style="">Quantity</th>
-                                    <th class="col-md-3" style="">Project</th>
+                                    <th class="col-md-2" style="">Project</th>
+                                    <th class="col-md-2" style=""></th>
+                                    <th class="col-md-2" style=""></th>
+                                    <th class="col-md-1" style=""></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -27,7 +30,6 @@
                                     {% set quantityRequisition = orderItem.quantity %}
                                     {% set quantityOrder = orderItem.purchaseOrderQuantity %}
                                     {% set quantityNeed = quantityRequisition - quantityOrder %}
-
 
                                     <tr>
                                         <td class="col-md-1">
@@ -42,6 +44,9 @@
                                         <td class="col-md-2">
                                             {{ orderItem.purchaseRequisition.project.projectName | default() }}
                                         </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -50,9 +55,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer" style="background: #4b8df8;">
                     <div class="btn-group">
-                        <button type="submit" class="btn green">
+                        <button type="submit" class="btn" style="width: 100px;background: #0353D6; color: white !important;">
                             Next <i class="fa icon-next"></i>
                         </button>
                     </div>

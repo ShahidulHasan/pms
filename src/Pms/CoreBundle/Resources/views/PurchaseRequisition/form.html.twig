@@ -3,9 +3,9 @@
 {% block body %}
 
     <div class="modal-dialog" style="width: 1000px;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title bold" style="text-align: center;"> Purchase Requisition Form</h4>
+        <div class="modal-content" style="background: white;">
+            <div class="modal-header" style="background:#4b8df8;">
+                <h4 class="modal-title bold" style="text-align: center;color: white;">Purchase Requisition Form</h4>
             </div>
 
             {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'purchase-form', 'novalidate': 'novalidate'} }) }}
@@ -15,7 +15,7 @@
                     <div class="col-md-12">
                         <div class="col-md-6" style="height:70px;float: left;text-align: left;">
                             <div class="form-group">
-                                {{ form_label(form.project, 'Project Name :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left: -10px;font-weight:bold;' } }
+                                {{ form_label(form.project, 'Project Name :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left: -10px;' } }
                                 ) }}
                                 <div class="col-md-6">
                                     <div class="input-icon">
@@ -23,15 +23,33 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                {{ form_label(form.requisitionNo, 'Requisition No :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left: -10px;' } }
+                                ) }}
+                                <div class="col-md-6" style="">
+                                    <div class="input-icon">
+                                        {{ form_widget(form.requisitionNo, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;' } }) }}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-6" style="height:100px;float: right;">
                             <div class="col-md-12" style="height:50px;float:left;">
                                 <div class="form-group">
-                                    {{ form_label(form.requisitionNo, 'Requisition No :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }
-                                    ) }}
-                                    <div class="col-md-6" style="margin-left: 55px;">
-                                        <div class="input-icon">
-                                            {{ form_widget(form.requisitionNo, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;' } }) }}
+                                    <label  class="col-md-3 control-label">Created :</label>
+                                    <div class="col-md-6">
+                                        <div class="input-icon right">
+                                            <i class="fa fa-user"></i>
+                                            <input type="text" class="form-control" placeholder="{{ app.user.username }}" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-md-3 control-label">Date :</label>
+                                    <div class="col-md-6">
+                                        <div class="input-icon right">
+                                            <i class="fa fa-calendar"></i>
+                                            <input type="text" class="form-control" placeholder="{{ "now"|date("m/d/Y") }}" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -41,14 +59,14 @@
 <br/>
 <br/>
                     <div class="col-md-12">
-                        <table class="table table-striped" style="border:1px solid grey;margin-top: 100px;">
-                            <thead>
+                        <table class="table" style="margin-top: 100px;border: 1px solid ghostwhite;">
+                            <thead style="background:#4b8df8;">
                             <tr>
                                 <th class="col-md-3" style="padding-left: 30px;">Particulars</th>
-                                <th class="col-md-2" style="padding-left: 12px;">Quantity</th>
-                                <th class="col-md-2" style="padding-left: 12px;">Required By</th>
+                                <th class="col-md-3" style="padding-left: 12px;">Quantity</th>
+                                <th class="col-md-3" style="padding-left: 12px;">Required By</th>
                                 <th class="col-md-3" style="padding-left: 12px;">Remarks</th>
-                                <th class="col-md-2"></th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody id="purchaseItems" class="tags" data-prototype="{% filter escape %}
@@ -72,7 +90,7 @@
                                         {{ form_widget(requisitionItem.comment, { 'attr': {'class': 'form-control', 'style': 'width: 200px;padding-left: 10px! important;'} }) }}
                                     </td>
                                     <td>
-                                        {{ form_widget(requisitionItem.delete, { 'attr': {'class': 'btn default btn-xs blue-stripe', 'style': 'height:20px;width: 70px;font-size:13px;' } }) }}
+                                        {{ form_widget(form.remove, { 'attr': {'class': 'btn blue btn-xs', 'style': 'height:23px;width: 70px;font-size:13px;margin-left:10px;color: white !important;' } }) }}
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -83,13 +101,13 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" style="background: #4b8df8;">
                 <div class="btn-group">
-                    <a href="/purchase/requisition" class="btn green" style="width: 100px;">
+                    <a href="/purchase/requisition" class="btn" style="width: 100px;background: #0353D6; color: white !important;">
                         <i class="fa fa-ban"> Cancel</i>
                     </a>
                 </div>
-                {{ form_widget(form.save, { 'attr': {'class': 'btn green button-width', 'style': 'width:100px;'} }) }}
+                {{ form_widget(form.save, { 'attr': {'class': 'btn button-width', 'style': 'width: 100px;background: #0353D6; color: white !important;'} }) }}
             </div>
             {{ form_end(form) }}
         </div>
@@ -141,7 +159,7 @@
             });
         });
 
-        $("#purchaserequisition_purchaseRequisitionItems_" + index + "_delete").click(function () {
+        $("#purchaserequisition_purchaseRequisitionItems_" + index + "_remove").click(function () {
             var parent = $(this).closest('tr');
             parent.remove();
         });
@@ -151,7 +169,7 @@
     var $collectionHolder;
 
     // setup an "add a tag" link
-    var $addTagLink = $('<td colspan ="5"><div style="text-align: left;margin-left: 20px;"><a href="#" class="btn default btn-xs green-stripe add_tag_link"><i class="fa fa-plus"></i> Add Item</a></div></td>');
+    var $addTagLink = $('<td colspan ="5"><div style="text-align: left;margin-left: 20px;"><a href="#" style="background: #4b8df8;color: white !important;" class="btn btn-xs add_tag_link"><i class="fa fa-plus"></i> Add Item</a></div></td>');
     var $newLinkLi = $('<tr></tr>').append($addTagLink);
 
     // Get the ul that holds the collection of tags
