@@ -22,13 +22,28 @@ class PurchaseOrderController extends Controller
 {
     public function purchaseOrderAddAction(Request $request)
     {
-        $dql = "SELECT a FROM PmsCoreBundle:PurchaseOrder a WHERE a.status = 1 ORDER BY a.id DESC";
+        $dqlAll = "SELECT a FROM PmsCoreBundle:PurchaseOrder a WHERE a.status = 1 ORDER BY a.id DESC";
 
-        list($purchaseOrders, $page) = $this->paginate($dql);
+        $allPurchaseOrders = $this->details($dqlAll);
+        $allPage = $allPurchaseOrders->getCurrentPageNumber();
+
+        $dqlOpen = "SELECT a FROM PmsCoreBundle:PurchaseOrder a WHERE a.approveStatus = 3 ORDER BY a.id DESC";
+
+        $openPurchaseOrders= $this->details($dqlOpen);
+        $openPage = $openPurchaseOrders->getCurrentPageNumber();
+
+        $dqlClose = "SELECT a FROM PmsCoreBundle:PurchaseOrder a WHERE a.status = 0 ORDER BY a.id DESC";
+
+        $closePurchaseOrders = $this->details($dqlClose);
+        $closePage = $closePurchaseOrders->getCurrentPageNumber();
 
         return $this->render('PmsCoreBundle:PurchaseOrder:add.html.twig', array(
-            'purchaseOrders' => $purchaseOrders,
-            'page' => $page,
+            'allPurchaseOrders' => $allPurchaseOrders,
+            'openPurchaseOrders' => $openPurchaseOrders,
+            'closePurchaseOrders' => $closePurchaseOrders,
+            'allPage' => $allPage,
+            'openPage' => $openPage,
+            'closePage' => $closePage,
         ));
     }
 

@@ -152,16 +152,23 @@ class PurchaseOrder
     /**
      * @var integer
      *
-     * @ORM\Column(name="total_requisition_item_quantity", type="integer", nullable=true)
+     * @ORM\Column(name="total_order_item_quantity", type="integer", nullable=true)
      */
     private $totalOrderItemQuantity;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="total_requisition_item", type="integer", nullable=true)
+     * @ORM\Column(name="total_order_item", type="integer", nullable=true)
      */
     private $totalOrderItem;
+
+//    /**
+//     * @var integer
+//     *
+//     * @ORM\Column(name="total_receive_item", type="integer", nullable=true)
+//     */
+//    private $totalReceiveItem;
 
     public function __construct()
     {
@@ -213,6 +220,29 @@ class PurchaseOrder
     {
         return $this->totalOrderItem;
     }
+//
+//    /**
+//     * Set totalReceiveItem
+//     *
+//     * @param integer $totalReceiveItem
+//     * @return PurchaseOrder
+//     */
+//    public function setTotalReceiveItem($totalReceiveItem)
+//    {
+//        $this->totalReceiveItem = $totalReceiveItem;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get totalReceiveItem
+//     *
+//     * @return integer
+//     */
+//    public function getTotalReceiveItem()
+//    {
+//        return $this->totalReceiveItem;
+//    }
 
     public function addPurchaseOrderItem(PurchaseOrderItem $item)
     {

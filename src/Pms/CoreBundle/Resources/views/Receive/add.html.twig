@@ -6,74 +6,327 @@
 
     <span class="buyerMessege"></span>
 
-    <div class="row">
-        <div class="col-md-12">
+    <!--BEGIN TABS-->
+    <div class="tabbable tabbable-custom">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="index.html#tab_1_1" style="color: black !important;" data-toggle="tab">All</a></li>
+        <li><a href="index.html#tab_1_2" style="color: black !important;" data-toggle="tab">Open</a></li>
+        <li><a href="index.html#tab_1_3" style="color: black !important;" data-toggle="tab">Closed</a></li>
+        <li style="float: right;margin-right: -1px;">
+            <a href="/receive/item/new" style="background: #852b99; float: right; height: 40px; color:#ffffff; padding: 9px 14px !important;">
+                Receive
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content" style="height: auto;background: #eee;">
+    <div class="tab-pane active" id="tab_1_1">
+        <div class="" data-always-visible="1" data-rail-visible="0">
 
-            <div class="portlet box light-grey">
+            <div class="fluid" id="project-list-div">
+                <div class="form-group">
+                    <div class="col-md-12" style="margin-top: 30px;">
+                        <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
+                            <thead style="background: #852b99;">
+                            <tr>
+                                <th>Sl</th>
+                                <th class="col-md-2">Received Date</th>
+                                <th class="col-md-2">Received By</th>
+                                <th class="col-md-2">GRN</th>
+                                <th class="col-md-2">Invoice</th>
+                                <th class="col-md-2">Calan</th>
+                                <th class="col-md-2">Vendor/Buyer</th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                <div class="portlet-title">
-                    <div class="caption"><i class="fa fa-reorder"></i> Received List</div>
-                </div>
+                            {% if page == 1 %}{% set i = 0 %}
+                            {% else %}{% set i = (page * 50) - 50 %}
+                            {% endif %}
 
-                <div class="form-body left">
-                    <div class="form-actions fluid">
-                        <div class="table-toolbar" style="float: right;margin-right: 20px;">
-                            <div class="btn-group">
-                                <a href="/receive/item/new" class="btn green">
-                                    Receive
-                                </a>
-                            </div>
+                            {% for receivedItem in receivedI %}
+                                {% set i = i + 1 %}
+                                {% set bgColor = ["#fff"] %}
+
+                                <tr style="height: 62px;background: {{ bgColor|join("") }};border-top: 3px solid #eee !important;">
+                                    <td>{{ i }}.</td>
+                                    <td>{{ receivedItem.receivedDate | date('d M Y') }}</td>
+                                    <td>{{ receivedItem.receivedBy.username }}</td>
+                                    <td>{{ receivedItem.grn }}</td>
+                                    <td>{{ receivedItem.invoice.title }}</td>
+                                    <td>{{ receivedItem.calan.title }}</td>
+                                    <td>{{ receivedItem.vendor.vendorName |default() }} {{ receivedItem.buyer.username |default() }}</td>
+                                </tr>
+
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="navigation" style="text-align: right">
+                            {{ knp_pagination_render(receivedI) }}
                         </div>
                     </div>
                 </div>
-
-    <div class="form-actions fluid" id="project-list-div">
-        <div class="form-group">
-            <div class="col-md-12">
-
-                <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
-                    <thead style="background: #852b99;">
-                    <tr>
-                        <th>Sl</th>
-                        <th>Received Date</th>
-                        <th>Received By</th>
-                        <th>GRN</th>
-                        <th>Invoice</th>
-                        <th>Calan</th>
-                        <th>Vendor/Buyer</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    {% if page == 1 %}{% set i = 0 %}
-                    {% else %}{% set i = (page * 50) - 50 %}
-                    {% endif %}
-
-                    {% for receivedItem in receivedI %}
-                        {% set i = i + 1 %}
-                        {% set color = [" "] %}
-
-                        <tr>
-                            <td class="col-md-1">{{ i }} .</td>
-                            <td class="col-md-1" style="color: {{ color|join("") }};">{{ receivedItem.receivedDate | date('Y-m-d') }}</td>
-                            <td class="col-md-1" style="color: {{ color|join("") }};">{{ receivedItem.receivedBy.username }}</td>
-                            <td class="col-md-1" style="color: {{ color|join("") }};">{{ receivedItem.grn }}</td>
-                            <td class="col-md-1" style="color: {{ color|join("") }};">{{ receivedItem.invoice.title }}</td>
-                            <td class="col-md-1" style="color: {{ color|join("") }};">{{ receivedItem.calan.title }}</td>
-                            <td class="col-md-1" style="color: {{ color|join("") }};">{{ receivedItem.vendor.vendorName |default() }} {{ receivedItem.buyer.username |default() }}</td>
-                        </tr>
-
-                    {% endfor %}
-                    </tbody>
-                </table>
-                <div class="navigation" style="text-align: right">
-                    {{ knp_pagination_render(receivedI) }}
-                </div>
             </div>
+
         </div>
     </div>
+    <div class="tab-pane" id="tab_1_2">
+        <div class="" style="" data-always-visible="1" data-rail-visible1="1">
+
+            <div class="fluid" id="project-list-div">
+                <div class="form-group">
+                    {#<div class="col-md-12" style="margin-top: 30px;">#}
+                    {#<table class="table bold" style="border: 1px solid ghostwhite;">#}
+                    {#<thead style="background: #4b8df8;color: #fff;">#}
+                    {#<tr>#}
+                    {#<th style="">Sl</th>#}
+                    {#<th class="col-md-2">Date</th>#}
+                    {#<th class="col-md-1">PR No</th>#}
+                    {#<th class="col-md-1">Project</th>#}
+                    {#<th class="col-md-1">CreatedBy</th>#}
+                    {#<th class="col-md-1">Status</th>#}
+                    {#<th class="col-md-1" Style="text-align: center;">Claimed%</th>#}
+                    {#<th class="col-md-1" Style="text-align: center;">Assigned%</th>#}
+                    {#<th class="col-md-1" Style="text-align: center;">Closing%</th>#}
+                    {#<th class="col-md-1"></th>#}
+                    {#<th class="col-md-1"></th>#}
+                    {#<th style="text-align: right;"></th>#}
+                    {#</tr>#}
+                    {#</thead>#}
+                    {#<tbody>#}
+                    {#{% if openPage == 1 %}{% set i = 0 %}#}
+                    {#{% else %}{% set i = (openPage * 50) -50 %}#}
+                    {#{% endif %}#}
+
+                    {#{% for purchaseRequisition in openPurchaseRequisitions %}#}
+                    {#{% set i = i + 1 %}#}
+                    {#{% set bgColor = ["#fff"] %}#}
+
+                    {#{% if purchaseRequisition.approveStatus == 0 %} {% set pra = 0 %}#}
+                    {#{% elseif purchaseRequisition.approveStatus == 1 %} {% set pra = 25 %}#}
+                    {#{% endif %}#}
+
+                    {#<tr style="height: 62px;background: {{ bgColor|join("") }};border-top: 3px solid #eee !important;">#}
+                    {#<td style="padding-left: 8px !important;">{{ i }}.</td>#}
+                    {#<td>{{ purchaseRequisition.dateOfRequisition|date('d M Y') }}</td>#}
+                    {#<td>{{ purchaseRequisition.requisitionNo }}</td>#}
+                    {#<td tooltip="{{ purchaseRequisition.project.projectName }}">{{ purchaseRequisition.project.projectName | length > 12 ? purchaseRequisition.project.projectName | slice(0, 12) ~ '...' : purchaseRequisition.project.projectName }}</td>#}
+                    {#<td>{{ purchaseRequisition.createdBy }}</td>#}
+                    {#<td>#}
+                    {#{% if purchaseRequisition.approveStatus == 0 %}#}
+                    {#<div style="text-align:center;background: #35aa47; color: #ffffff; width: 62px; height: 20px;">#}
+                    {#created#}
+                    {#</div>#}
+                    {#{% endif %}#}
+                    {#{% if purchaseRequisition.approveStatus == 1 %}#}
+                    {#<div style="text-align:center;background: #ffb848; color: #ffffff; width: 62px; height: 20px;">#}
+                    {#approved#}
+                    {#</div>#}
+                    {#{% endif %}#}
+                    {#{% if purchaseRequisition.approveStatus == 2 %}#}
+                    {#<div style="text-align:center;background: #852b99; color: #ffffff; width: 62px; height: 20px;">#}
+                    {#validated#}
+                    {#</div>#}
+                    {#{% endif %}#}
+                    {#{% if purchaseRequisition.approveStatus == 3 %}#}
+                    {#<div style="text-align:center;background: #555555; color: #ffffff; width: 62px; height: 20px;">#}
+                    {#verified#}
+                    {#</div>#}
+                    {#{% endif %}#}
+                    {#{% if purchaseRequisition.approveStatus == 4 %}#}
+                    {#<div style="text-align:center;background: #27a9e3; color: #ffffff; width: 62px; height: 20px;">#}
+                    {#open#}
+                    {#</div>#}
+                    {#{% endif %}#}
+                    {#</td>#}
+                    {#<td>#}
+                    {#<div class="easy-pie-chart">#}
+                    {#<div class="number visits" data-percent="85"><span>+85</span>%</div>#}
+                    {#</div>#}
+                    {#</td>#}
+                    {#<td>#}
+                    {#<div class="easy-pie-chart">#}
+                    {#<div class="number transactions" data-percent="55"><span>+55</span>%</div>#}
+                    {#</div>#}
+                    {#</td>#}
+                    {#<td>#}
+                    {#<div class="easy-pie-chart">#}
+                    {#<div class="number bounce" data-percent="46"><span>-46</span>%</div>#}
+                    {#</div>#}
+                    {#</td>#}
+                    {#<td>#}
+                    {#{% if purchaseRequisition.approvedByProjectHead == null %}#}
+                    {#<a href="/purchase/requisition/approve/projectHead/{{ purchaseRequisition.id }}"#}
+                    {#class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>#}
+                    {#{% endif %}#}
+                    {#{% if purchaseRequisition.approvedByProjectHead != null and purchaseRequisition.approvedByCategoryHeadOne == null %}#}
+                    {#<a href="/purchase/requisition/approve/CategoryHeadOne/{{ purchaseRequisition.id }}"#}
+                    {#class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>#}
+                    {#{% endif %}#}
+                    {#{% if purchaseRequisition.approvedByCategoryHeadOne != null and purchaseRequisition.approvedByCategoryHeadTwo == null %}#}
+                    {#<a href="/purchase/requisition/approve/CategoryHeadTwo/{{ purchaseRequisition.id }}"#}
+                    {#class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>#}
+                    {#{% endif %}#}
+                    {#{% if purchaseRequisition.approvedByCategoryHeadTwo != null %}#}
+                    {#<a class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>#}
+                    {#{% endif %}#}
+                    {#</td>#}
+                    {#<td>#}
+                    {#{% if purchaseRequisition.approvedByProjectHead == null or purchaseRequisition.approvedByCategoryHeadOne == null or purchaseRequisition.approvedByCategoryHeadTwo == null %}#}
+                    {#<a href="/purchase/requisition/edit/{{ purchaseRequisition.id }}" style="width: 65px; color:#ffffff !important;" class="btn blue btn-xs"><i#}
+                    {#class="fa fa-edit"></i> Edit</a>#}
+                    {#{% endif %}#}
+                    {#{% if purchaseRequisition.approvedByCategoryHeadTwo != null %}#}
+                    {#<a style="width: 65px; background: #DDDADA; color:#ffffff !important;" class="btn btn-xs"><i#}
+                    {#class="fa fa-edit"></i> Edit</a>#}
+                    {#{% endif %}#}
+                    {#</td>#}
+                    {#<td style="text-align: right">#}
+                    {#<a href="/purchase/requisition/details/{{ purchaseRequisition.id }}" data-target="#ajax" data-toggle="modal"#}
+                    {#class="btn btn-xs"><i class="fa fa-info-circle" style="font-size: 20px;"></i></a>#}
+                    {#</td>#}
+                    {#</tr>#}
+                    {#{% endfor %}#}
+                    {#</tbody>#}
+                    {#</table>#}
+                    {#<div class="navigation" style="text-align: right">#}
+                    {#{{ knp_pagination_render(openPurchaseRequisitions) }}#}
+                    {#</div>#}
+                    {#</div>#}
+                </div>
             </div>
+
+        </div>
     </div>
-</div>
+    <div class="tab-pane" id="tab_1_3">
+        <div class="" style="" data-always-visible="1" data-rail-visible1="1">
+
+            <div class="fluid" id="project-list-div">
+                <div class="form-group">
+                    {#<div class="col-md-12" style="margin-top: 30px;">#}
+                    {#<table class="table bold" style="border: 1px solid ghostwhite;">#}
+                    {#<thead style="background: #4b8df8;color: #fff;">#}
+                    {#<tr>#}
+                    {#<th style="">Sl</th>#}
+                    {#<th class="col-md-2">Date</th>#}
+                    {#<th class="col-md-1">PR No</th>#}
+                    {#<th class="col-md-1">Project</th>#}
+                    {#<th class="col-md-1">CreatedBy</th>#}
+                    {#<th class="col-md-1">Status</th>#}
+                    {#<th class="col-md-1" Style="text-align: center;">Claimed%</th>#}
+                    {#<th class="col-md-1" Style="text-align: center;">Assigned%</th>#}
+                    {#<th class="col-md-1" Style="text-align: center;">Closing%</th>#}
+                    {#<th class="col-md-1"></th>#}
+                    {#<th class="col-md-1"></th>#}
+                    {#<th style="text-align: right;"></th>#}
+                    {#</tr>#}
+                    {#</thead>#}
+                    {#<tbody>#}
+                    {#{% if closePage == 1 %}{% set i = 0 %}#}
+                    {#{% else %}{% set i = (closePage * 50) -50 %}#}
+                    {#{% endif %}#}
+
+                    {#{% for purchaseRequisition in closePurchaseRequisitions %}#}
+                    {#{% set i = i + 1 %}#}
+                    {#{% set bgColor = ["#fff"] %}#}
+
+                    {#{% if purchaseRequisition.approveStatus == 0 %} {% set pra = 0 %}#}
+                    {#{% elseif purchaseRequisition.approveStatus == 1 %} {% set pra = 25 %}#}
+                    {#{% endif %}#}
+
+                    {#<tr style="height: 62px;background: {{ bgColor|join("") }};border-top: 3px solid #eee !important;">#}
+                    {#<td style="padding-left: 8px !important;">{{ i }}.</td>#}
+                    {#<td>{{ purchaseRequisition.dateOfRequisition|date('d M Y') }}</td>#}
+                    {#<td>{{ purchaseRequisition.requisitionNo }}</td>#}
+                    {#<td tooltip="{{ purchaseRequisition.project.projectName }}">{{ purchaseRequisition.project.projectName | length > 12 ? purchaseRequisition.project.projectName | slice(0, 12) ~ '...' : purchaseRequisition.project.projectName }}</td>#}
+                    {#<td>{{ purchaseRequisition.createdBy }}</td>#}
+                    {#<td>#}
+                    {#{% if purchaseRequisition.approveStatus == 0 %}#}
+                    {#<div style="text-align:center;background: #35aa47; color: #ffffff; width: 62px; height: 20px;">#}
+                    {#created#}
+                    {#</div>#}
+                    {#{% endif %}#}
+                    {#{% if purchaseRequisition.approveStatus == 1 %}#}
+                    {#<div style="text-align:center;background: #ffb848; color: #ffffff; width: 62px; height: 20px;">#}
+                    {#approved#}
+                    {#</div>#}
+                    {#{% endif %}#}
+                    {#{% if purchaseRequisition.approveStatus == 2 %}#}
+                    {#<div style="text-align:center;background: #852b99; color: #ffffff; width: 62px; height: 20px;">#}
+                    {#validated#}
+                    {#</div>#}
+                    {#{% endif %}#}
+                    {#{% if purchaseRequisition.approveStatus == 3 %}#}
+                    {#<div style="text-align:center;background: #555555; color: #ffffff; width: 62px; height: 20px;">#}
+                    {#verified#}
+                    {#</div>#}
+                    {#{% endif %}#}
+                    {#{% if purchaseRequisition.approveStatus == 4 %}#}
+                    {#<div style="text-align:center;background: #27a9e3; color: #ffffff; width: 62px; height: 20px;">#}
+                    {#open#}
+                    {#</div>#}
+                    {#{% endif %}#}
+                    {#</td>#}
+                    {#<td>#}
+                    {#<div class="easy-pie-chart">#}
+                    {#<div class="number visits" data-percent="85"><span>+85</span>%</div>#}
+                    {#</div>#}
+                    {#</td>#}
+                    {#<td>#}
+                    {#<div class="easy-pie-chart">#}
+                    {#<div class="number transactions" data-percent="55"><span>+55</span>%</div>#}
+                    {#</div>#}
+                    {#</td>#}
+                    {#<td>#}
+                    {#<div class="easy-pie-chart">#}
+                    {#<div class="number bounce" data-percent="46"><span>-46</span>%</div>#}
+                    {#</div>#}
+                    {#</td>#}
+                    {#<td>#}
+                    {#{% if purchaseRequisition.approvedByProjectHead == null %}#}
+                    {#<a href="/purchase/requisition/approve/projectHead/{{ purchaseRequisition.id }}"#}
+                    {#class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>#}
+                    {#{% endif %}#}
+                    {#{% if purchaseRequisition.approvedByProjectHead != null and purchaseRequisition.approvedByCategoryHeadOne == null %}#}
+                    {#<a href="/purchase/requisition/approve/CategoryHeadOne/{{ purchaseRequisition.id }}"#}
+                    {#class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>#}
+                    {#{% endif %}#}
+                    {#{% if purchaseRequisition.approvedByCategoryHeadOne != null and purchaseRequisition.approvedByCategoryHeadTwo == null %}#}
+                    {#<a href="/purchase/requisition/approve/CategoryHeadTwo/{{ purchaseRequisition.id }}"#}
+                    {#class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>#}
+                    {#{% endif %}#}
+                    {#{% if purchaseRequisition.approvedByCategoryHeadTwo != null %}#}
+                    {#<a class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>#}
+                    {#{% endif %}#}
+                    {#</td>#}
+                    {#<td>#}
+                    {#{% if purchaseRequisition.approvedByProjectHead == null or purchaseRequisition.approvedByCategoryHeadOne == null or purchaseRequisition.approvedByCategoryHeadTwo == null %}#}
+                    {#<a href="/purchase/requisition/edit/{{ purchaseRequisition.id }}" style="width: 65px; color:#ffffff !important;" class="btn blue btn-xs"><i#}
+                    {#class="fa fa-edit"></i> Edit</a>#}
+                    {#{% endif %}#}
+                    {#{% if purchaseRequisition.approvedByCategoryHeadTwo != null %}#}
+                    {#<a style="width: 65px; background: #DDDADA; color:#ffffff !important;" class="btn btn-xs"><i#}
+                    {#class="fa fa-edit"></i> Edit</a>#}
+                    {#{% endif %}#}
+                    {#</td>#}
+                    {#<td style="text-align: right">#}
+                    {#<a href="/purchase/requisition/details/{{ purchaseRequisition.id }}" data-target="#ajax" data-toggle="modal"#}
+                    {#class="btn btn-xs"><i class="fa fa-info-circle" style="font-size: 20px;"></i></a>#}
+                    {#</td>#}
+                    {#</tr>#}
+                    {#{% endfor %}#}
+                    {#</tbody>#}
+                    {#</table>#}
+                    {#<div class="navigation" style="text-align: right">#}
+                    {#{{ knp_pagination_render(closePurchaseRequisitions) }}#}
+                    {#</div>#}
+                    {#</div>#}
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+    </div>
+    <!--END TABS-->
 
 {% endblock %}

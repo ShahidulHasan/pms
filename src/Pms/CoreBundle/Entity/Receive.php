@@ -82,12 +82,6 @@ class Receive
      * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="buyers", nullable=true)
      */
-//    /**
-//     * @var Buyer
-//     *
-//     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Buyer", inversedBy="receive")
-//     * @ORM\JoinColumn(name="buyers", nullable=true)
-//     */
     private $buyer;
 
     public function __construct()

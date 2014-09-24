@@ -106,18 +106,18 @@
                                 <td>
                                     {% if purchaseRequisition.approvedByProjectHead == null %}
                                             <a href="/purchase/requisition/approve/projectHead/{{ purchaseRequisition.id }}"
-                                               class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>
+                                               class="btn blue btn-xs" style="width: 65px;color:#ffffff !important;">Approve</a>
                                     {% endif %}
                                     {% if purchaseRequisition.approvedByProjectHead != null and purchaseRequisition.approvedByCategoryHeadOne == null %}
                                             <a href="/purchase/requisition/approve/CategoryHeadOne/{{ purchaseRequisition.id }}"
-                                               class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>
+                                               class="btn blue btn-xs" style="width: 65px;color:#ffffff !important;">Approve</a>
                                     {% endif %}
                                     {% if purchaseRequisition.approvedByCategoryHeadOne != null and purchaseRequisition.approvedByCategoryHeadTwo == null %}
                                             <a href="/purchase/requisition/approve/CategoryHeadTwo/{{ purchaseRequisition.id }}"
-                                               class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>
+                                               class="btn blue btn-xs" style="width: 65px;color:#ffffff !important;">Approve</a>
                                     {% endif %}
                                     {% if purchaseRequisition.approvedByCategoryHeadTwo != null %}
-                                            <a class="btn blue btn-xs" style="color:#ffffff !important;">Approved</a>
+                                            <a class="btn btn-xs" style="background:#C0D0E9;width: 65px;color:#ffffff !important;">Approved</a>
                                     {% endif %}
                                 </td>
                                 <td>

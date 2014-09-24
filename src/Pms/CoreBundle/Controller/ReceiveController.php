@@ -21,7 +21,8 @@ class ReceiveController extends Controller
         $em = $this->getDoctrine()->getManager();
         $query = $em->getRepository('PmsCoreBundle:PurchaseRequisitionItem')
             ->createQueryBuilder('pri')
-            ->where('pri.status = 1');
+            ->where('pri.status = 1')
+            ->andWhere('pri.quantity > pri.purchaseOrderQuantity');
         $pri = $query->getQuery()->getResult();
 
         return $this->render('PmsCoreBundle:Receive:new.html.twig', array(
