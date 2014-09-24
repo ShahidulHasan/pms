@@ -73,6 +73,8 @@ class PurchaseOrderController extends Controller
                 $purchaseOrder->setCreatedDate(new \DateTime());
                 $purchaseOrder->setStatus('1');
                 $purchaseOrder->setApproveStatus('0');
+                $purchaseOrder->setTotalOrderItem('0');
+                $purchaseOrder->setTotalOrderItemQuantity('0');
 
                 /** @var PurchaseOrderItem $item */
                 foreach ($purchaseOrder->getPurchaseOrderItems() as $item) {
@@ -84,6 +86,9 @@ class PurchaseOrderController extends Controller
                     $item->setPurchaseRequisitionItem($purchaseRequisitionItem);
                     $item->setPurchaseOrder($purchaseOrder);
                     $item->setStatus('1');
+
+                    $purchaseOrder->setTotalOrderItem(1 + $purchaseOrder->getTotalOrderItem());
+                    $purchaseOrder->setTotalOrderItemQuantity($item->getQuantity() + $purchaseOrder->getTotalOrderItemQuantity());
 
                     $purchaseRequisitionItem->getPurchaseRequisition()->setTotalOrderItemQuantity($purchaseRequisitionItem->getPurchaseOrderQuantity() + $purchaseRequisitionItem->getPurchaseRequisition()->getTotalOrderItemQuantity());
                 }

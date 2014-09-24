@@ -73,12 +73,6 @@ class PurchaseOrder
      * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="buyers", nullable=true)
      */
-//    /**
-//     * @var Buyer
-//     *
-//     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Buyer", inversedBy="purchaseOrder")
-//     * @ORM\JoinColumn(name="buyers", nullable=true)
-//     */
     private $buyer;
 
     /**
@@ -155,11 +149,70 @@ class PurchaseOrder
      */
     private $approvedThreeDate;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="total_requisition_item_quantity", type="integer", nullable=true)
+     */
+    private $totalOrderItemQuantity;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="total_requisition_item", type="integer", nullable=true)
+     */
+    private $totalOrderItem;
+
     public function __construct()
     {
         $this->purchaseOrderItems = new ArrayCollection();
     }
 
+    /**
+     * Set totalOrderItemQuantity
+     *
+     * @param integer $totalOrderItemQuantity
+     * @return PurchaseOrder
+     */
+    public function setTotalOrderItemQuantity($totalOrderItemQuantity)
+    {
+        $this->totalOrderItemQuantity = $totalOrderItemQuantity;
+
+        return $this;
+    }
+
+    /**
+     * Get totalOrderItemQuantity
+     *
+     * @return integer
+     */
+    public function getTotalOrderItemQuantity()
+    {
+        return $this->totalOrderItemQuantity;
+    }
+
+    /**
+     * Set totalOrderItem
+     *
+     * @param integer $totalOrderItem
+     * @return PurchaseOrder
+     */
+    public function setTotalOrderItem($totalOrderItem)
+    {
+        $this->totalOrderItem = $totalOrderItem;
+
+        return $this;
+    }
+
+    /**
+     * Get totalOrderItem
+     *
+     * @return integer
+     */
+    public function getTotalOrderItem()
+    {
+        return $this->totalOrderItem;
+    }
 
     public function addPurchaseOrderItem(PurchaseOrderItem $item)
     {
