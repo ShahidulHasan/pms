@@ -10,6 +10,14 @@ receive_save:
     pattern: /receive/save
     defaults: { _controller: PmsCoreBundle:Receive:receiveSave }
 
+receive_details:
+    pattern: /receive/details/{id}
+    defaults: { _controller: PmsCoreBundle:Receive:receiveDetails }
+
+receive_delivery:
+    pattern: /receive/delivery/{id}
+    defaults: { _controller: PmsCoreBundle:Receive:receiveDelivery }
+
 upload_add:
     pattern: /upload/file
     defaults: { _controller: PmsCoreBundle:Upload:uploadAdd }

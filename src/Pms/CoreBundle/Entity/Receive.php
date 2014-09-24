@@ -84,9 +84,100 @@ class Receive
      */
     private $buyer;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="status", type="integer")
+     */
+    private $status;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="Pms\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="closed_by", nullable=true)
+     */
+    private $closedBy;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="closed_date", type="datetime", nullable=true)
+     */
+    private $closedDate;
+
     public function __construct()
     {
         $this->receiveItems = new ArrayCollection();
+    }
+
+    /**
+     * Set closedBy
+     *
+     * @param User $closedBy
+     * @return Receive
+     */
+    public function setClosedBy($closedBy)
+    {
+        $this->closedBy = $closedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get closedBy
+     *
+     * @return User
+     */
+    public function getClosedBy()
+    {
+        return $this->closedBy;
+    }
+
+    /**
+     * Set closedDate
+     *
+     * @param \DateTime $closedDate
+     * @return Receive
+     */
+    public function setClosedDate($closedDate)
+    {
+        $this->closedDate = $closedDate;
+
+        return $this;
+    }
+
+    /**
+     * Get closedDate
+     *
+     * @return \DateTime
+     */
+    public function getClosedDate()
+    {
+        return $this->closedDate;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     * @return Receive
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     /**

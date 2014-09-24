@@ -30,6 +30,32 @@ class ReceiveController extends Controller
         ));
     }
 
+    public function receiveDetailsAction($id)
+    {
+        $dql = "SELECT a FROM PmsCoreBundle:Receive a WHERE a.id = '$id'";
+
+        $receives = $this->details($dql);
+
+        return $this->render('PmsCoreBundle:Receive:details.html.twig', array(
+            'receives' => $receives,
+        ));
+    }
+
+    public function receiveDeliveryAction(Receive $receive)
+    {
+        $receive->setStatus('0');
+        $user = $this->get('security.context')->getToken()->getUser()->getId();
+        $receive->setClosedBy($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
+        $receive->setClosedDate(new \DateTime());
+        $this->getDoctrine()->getRepository('PmsCoreBundle:Receive')->update($receive);
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            'Delivered Successfully'
+        );
+
+        return $this->redirect($this->generateUrl('receive_add'));
+    }
+
     public function receiveNewAction(Request $request)
     {
         $items = $request->request->get('items');
@@ -64,13 +90,21 @@ class ReceiveController extends Controller
 
     public function receiveAddAction(Request $request)
     {
-        $dql = "SELECT a FROM PmsCoreBundle:Receive a ORDER BY a.id DESC";
+        $dqlAll = "SELECT a FROM PmsCoreBundle:Receive a WHERE a.status = 1 ORDER BY a.id DESC";
 
-        list($receivedItems, $page) = $this->paginate($dql);
+        $allReceives = $this->paginate($dqlAll);
+        $allPage = $allReceives->getCurrentPageNumber();
+
+        $dqlClose = "SELECT a FROM PmsCoreBundle:Receive a WHERE a.status = 0 ORDER BY a.id DESC";
+
+        $closeReceives = $this->paginate($dqlClose);
+        $closePage = $closeReceives->getCurrentPageNumber();
 
         return $this->render('PmsCoreBundle:Receive:add.html.twig', array(
-            'receivedI' => $receivedItems,
-            'page' => $page,
+            'allReceives' => $allReceives,
+            'closeReceives' => $closeReceives,
+            'allPage' => $allPage,
+            'closePage' => $closePage,
         ));
     }
 
@@ -88,6 +122,7 @@ class ReceiveController extends Controller
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
                 $receivedItem->setReceivedBy($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
                 $receivedItem->setReceivedDate(new \DateTime());
+                $receivedItem->setStatus('1');
 
                 /** @var ReceivedItem $item */
                 foreach ($receivedItem->getReceiveItems() as $item) {
@@ -135,6 +170,6 @@ class ReceiveController extends Controller
             50/*limit per page*/
         );
 
-        return array($value, $page);
+        return $value;
     }
 }
