@@ -55,7 +55,7 @@ class PurchaseOrderItem
     /**
      * @var PurchaseRequisitionItem
      *
-     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisitionItem")
+     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisitionItem", inversedBy="purchaseOrderItems", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="purchase_requisition_item", nullable=true)
      */
     private $purchaseRequisitionItem;

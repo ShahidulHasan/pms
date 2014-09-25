@@ -19,8 +19,12 @@ receive_delivery:
     defaults: { _controller: PmsCoreBundle:Receive:receiveDelivery }
 
 upload_add:
-    pattern: /upload/file
+    pattern: /upload
     defaults: { _controller: PmsCoreBundle:Upload:uploadAdd }
+
+upload_file:
+    pattern: /upload/file
+    defaults: { _controller: PmsCoreBundle:Upload:uploadFile }
 
 vendor_add:
     pattern: /vendor

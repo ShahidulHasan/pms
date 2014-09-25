@@ -68,13 +68,6 @@ class PurchaseRequisition
     private $purchaseRequisitionItems;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\Invoice", mappedBy="purchaseRequisition", cascade={"persist", "remove"})
-     */
-    private $invoice;
-
-    /**
      * @var Project
      *
      * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\Project", inversedBy="purchaseRequisition")
@@ -789,14 +782,6 @@ class PurchaseRequisition
     public function getPurchaseRequisitionItems()
     {
         return $this->purchaseRequisitionItems;
-    }
-
-    /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function getInvoice()
-    {
-        return $this->invoice;
     }
 
     public function getDateOfRequisitionText()

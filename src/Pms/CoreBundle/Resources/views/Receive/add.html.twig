@@ -10,7 +10,7 @@
     <div class="tabbable tabbable-custom">
     <ul class="nav nav-tabs">
         <li class="active"><a href="index.html#tab_1_1" style="color: black !important;" data-toggle="tab">All</a></li>
-        <li><a href="index.html#tab_1_2" style="color: black !important;" data-toggle="tab">Delivery</a></li>
+        <li><a href="index.html#tab_1_2" style="color: black !important;" data-toggle="tab">Delivered</a></li>
         <li style="float: right;margin-right: -1px;">
             <a href="/receive/item/new" style="background: #4b8df8; float: right; height: 40px; color:#ffffff; padding: 9px 14px !important;">
                 Receive
@@ -59,7 +59,7 @@
                                     <td>{{ receivedItem.calan.title | default() }}</td>
                                     <td>{{ receivedItem.vendor.vendorName |default() }} {{ receivedItem.buyer.username |default() }}</td>
                                     <td>
-                                        <a href="/receive/delivery/{{ receivedItem.id }}" class="btn blue btn-xs" style="width: 65px;color:#ffffff !important;">Delivery</a>
+                                        <a href="/receive/delivery/{{ receivedItem.id }}" class="btn blue btn-xs" style="width: 65px;color:#ffffff !important;">Close</a>
                                     </td>
                                     <td style="text-align: right">
                                         <a href="/receive/details/{{ receivedItem.id }}" data-target="#ajax" data-toggle="modal"
@@ -123,7 +123,7 @@
                                         <a href="/receive/delivery/{{ receivedItem.id }}" class="btn blue btn-xs" style="width: 65px;color:#ffffff !important;">Delivery</a>
                                     {% endif %}
                                     {% if receivedItem.status == 0 %}
-                                        <a class="btn btn-xs" style="background:#C0D0E9;width: 65px;color:#ffffff !important;">Delivery</a>
+                                        <a class="btn btn-xs" style="background:#C0D0E9;width: 65px;color:#ffffff !important;">Closed</a>
                                     {% endif %}
                                 </td>
                                 <td style="text-align: right">

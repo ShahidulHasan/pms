@@ -47,6 +47,13 @@ class PurchaseRequisitionItem
     private $receivedItem;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\PurchaseOrderItem", mappedBy="purchaseRequisitionItem", cascade={"persist", "remove"})
+     */
+    private $purchaseOrderItems;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="quantities", type="integer", nullable=true)
@@ -163,6 +170,14 @@ class PurchaseRequisitionItem
     public function getReceivedItem()
     {
         return $this->receivedItem;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getPurchaseOrderItems()
+    {
+        return $this->purchaseOrderItems;
     }
 
     public function __toString()

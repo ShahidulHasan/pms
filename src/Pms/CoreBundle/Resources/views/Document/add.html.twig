@@ -6,111 +6,122 @@
 
     <span class="buyerMessege"></span>
 
-    <div class="row">
-        <div class="col-md-12">
+    <!--BEGIN TABS-->
+    <div class="tabbable tabbable-custom">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="index.html#tab_1_1" style="color: black !important;" data-toggle="tab">Invoice</a></li>
+            <li><a href="index.html#tab_1_2" style="color: black !important;" data-toggle="tab">Calan</a></li>
+            <li style="float: right;margin-right: -1px;">
+                <a href="/upload/file" style="background: #4b8df8; float: right; height: 40px; color:#ffffff; padding: 9px 14px !important;">
+                    File Upload
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content" style="height: auto;background: #eee;">
+            <div class="tab-pane active" id="tab_1_1">
+                <div class="" data-always-visible="1" data-rail-visible="0">
 
-            <div class="portlet box light-grey">
+                    <div class="fluid" id="project-list-div">
+                        <div class="form-group">
+                            <div class="col-md-12" style="margin-top: 30px;">
+                                <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
+                                    <thead style="background: #4b8df8;">
+                                    <tr>
+                                        <th>Sl</th>
+                                        <th class="col-md-2">Title</th>
+                                        <th class="col-md-1">UploadBy</th>
+                                        <th class="col-md-2">Upload Date</th>
+                                        <th class="col-md-4">Description</th>
+                                        <th class="col-md-1"></th>
+                                        <th class="col-md-1"></th>
+                                        <th class="col-md-1"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
 
-                <div class="portlet-title">
-                    <div class="caption"><i class="fa fa-reorder"></i> Attach</div>
-                </div>
+                                    {% if invoicePage == 1 %}{% set i = 0 %}
+                                    {% else %}{% set i = (invoicePage * 50) - 50 %}
+                                    {% endif %}
 
-                <div class="form-body left">
-                {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'upload-form', 'novalidate': 'novalidate'} }) }}
-                    <div class="form-actions fluid">
-                        <div class="form-group">
-                            {{ form_label(form.file, 'File Attach :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' }}
-                            ) }}
-                            <div class="col-md-6">
-                                <div class="fileupload fileupload-new" data-provides="fileupload">
-                                    <div class="input-group">
-                                                <span class="input-group-btn">
-                                                    <span class="uneditable-input">
-                                                        <i class="fa fa-file fileupload-exists"></i>
-                                                        <span class="fileupload-preview"></span>
-                                                    </span>
-                                                </span>
-                                                <span class="btn default btn-file">
-                                                    <span class="fileupload-new">
-                                                        <i class="fa fa-paper-clip"></i>Select file
-                                                    </span>
-                                                    <span class="fileupload-exists">
-                                                        <i class="fa fa-undo"></i>Change
-                                                    </span>
-                                                    {{ form_widget(form.file, { 'attr': {'class': 'default form-control'} }) }}
-                                                </span>
-                                        <a href="form_component.html#" class="btn red fileupload-exists"
-                                           data-dismiss="fileupload"><i class="fa fa-trash-o"></i> Remove</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            {{ form_label(form.title, 'Title :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }
-                            ) }}
-                            <div class="col-md-8">
-                                <div class="input-icon">
-                                    {{ form_widget(form.title, { 'attr': {'class': 'form-control col-md-4', 'style': 'padding-left: 10px !important;'} }) }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            {{ form_label(form.description, 'Description :', {'label_attr': {'class': 'control-label col-md-2', 'style': 'font-weight:bold;' } }
-                            ) }}
-                            <div class="col-md-8">
-                                <div class="input-icon">
-                                    {{ form_widget(form.description, { 'attr': {'class': 'form-control col-md-4', 'style': 'height:72px;'} }) }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-11" style="text-align: right;">
-                                <div class="input-icon">
-                                    {{ form_widget(form.save, { 'attr': {'class': 'btn green button-width', 'style': 'width:100px;margin-right:25px;' } } ) }}
+                                    {% for invoice in invoices %}
+                                        {% set i = i + 1 %}
+                                        {% set bgColor = ["#fff"] %}
+
+                                        <tr style="height: 40px;background: {{ bgColor|join("") }};border-top: 3px solid #eee !important;">
+                                            <td>{{ i }}.</td>
+                                            <td>{{ invoice.title }}</td>
+                                            <td>{{ invoice.uploadedBy }}</td>
+                                            <td>{{ invoice.uploadedDate | date('d M Y') }}</td>
+                                            <td>{{ invoice.description }}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                <div class="navigation" style="text-align: right">
+                                    {{ knp_pagination_render(invoices) }}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {{ form_end(form) }}
+
+                </div>
+            </div>
+            <div class="tab-pane" id="tab_1_2">
+                <div class="" style="" data-always-visible="1" data-rail-visible1="1">
+
+                    <div class="fluid" id="project-list-div">
+                        <div class="form-group">
+                            <div class="col-md-12" style="margin-top: 30px;">
+                                <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
+                                    <thead style="background: #4b8df8;">
+                                    <tr>
+                                        <th>Sl</th>
+                                        <th class="col-md-2">Title</th>
+                                        <th class="col-md-1">UploadBy</th>
+                                        <th class="col-md-2">Upload Date</th>
+                                        <th class="col-md-4">Description</th>
+                                        <th class="col-md-1"></th>
+                                        <th class="col-md-1"></th>
+                                        <th class="col-md-1"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    {% if calanPage == 1 %}{% set i = 0 %}
+                                    {% else %}{% set i = (calanPage * 50) - 50 %}
+                                    {% endif %}
+
+                                    {% for invoice in calans %}
+                                        {% set i = i + 1 %}
+                                        {% set bgColor = ["#fff"] %}
+
+                                        <tr style="height: 40px;background: {{ bgColor|join("") }};border-top: 3px solid #eee !important;">
+                                            <td>{{ i }}.</td>
+                                            <td>{{ invoice.title }}</td>
+                                            <td>{{ invoice.uploadedBy }}</td>
+                                            <td>{{ invoice.uploadedDate | date('d M Y') }}</td>
+                                            <td>{{ invoice.description }}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                <div class="navigation" style="text-align: right">
+                                    {{ knp_pagination_render(calans) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="form-actions fluid" id="project-list-div">
-        <div class="form-group">
-            <div class="col-md-12">
-                <table class="table table-striped bold" style="border: 1px solid ghostwhite;">
-                    <thead>
-                    <tr>
-                        <th>Sl</th>
-                        <th>Title</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    {% if page == 1 %}{% set i = 0 %}
-                    {% else %}{% set i = (page * 10) - 10 %}
-                    {% endif %}
-
-                    {% for invoice in invoices %}
-                        {% set i = i + 1 %}
-                        {% set color = [" "] %}
-
-                        <tr>
-                            <td>{{ i }} .</td>
-                            <td class="col-md-8" style="color: {{ color|join("") }};">{{ invoice.title }}</td>
-                        </tr>
-
-                    {% endfor %}
-                    </tbody>
-                </table>
-                <div class="navigation" style="text-align: right">
-                    {{ knp_pagination_render(invoices) }}
-                </div>
-            </div>
-        </div>
-    </div>
+    <!--END TABS-->
 
 {% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="modal-dialog" style="width: 1000px;">
+        <div class="modal-content" style="background: white;">
+            <div class="modal-header" style="background: lightgrey;">
+                <h4 class="modal-title bold" style="text-align: center;color: white;">File Upload Form</h4>
+            </div>
+<br/>
+            {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'upload-form', 'novalidate': 'novalidate'} }) }}
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                            <div class="col-md-12" style="height:50px;float:left;">
+                                <div class="form-group">
+                                    {{ form_label(form.invoiceOrCalan, 'Invoice/Calan :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left: 44px;' } }
+                                    ) }}
+                                    <div class="col-md-6">
+                                        <div class="input-icon">
+                                            {{ form_widget(form.invoiceOrCalan, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;width: 205px;margin-left: -150px;' } }) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.file, 'File Attach :', {'label_attr': {'class': 'control-label col-md-2', 'style': '' }}
+                                ) }}
+                                <div class="col-md-6">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                        <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <span class="uneditable-input">
+                                                        <i class="fa fa-file fileupload-exists"></i>
+                                                        <span class="fileupload-preview"></span>
+                                                    </span>
+                                                </span>
+                                                <span class="btn default btn-file">
+                                                    <span class="fileupload-new">
+                                                        <i class="fa fa-paper-clip"></i>Select file
+                                                    </span>
+                                                    <span class="fileupload-exists">
+                                                        <i class="fa fa-undo"></i>Change
+                                                    </span>
+                                                    {{ form_widget(form.file, { 'attr': {'class': 'default form-control'} }) }}
+                                                </span>
+                                            <a href="form_component.html#" class="btn red fileupload-exists"
+                                               data-dismiss="fileupload"><i class="fa fa-trash-o"></i> Remove</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.title, 'Title :', {'label_attr': {'class': 'control-label col-md-2', 'style': '' } }
+                                ) }}
+                                <div class="col-md-8">
+                                    <div class="input-icon">
+                                        {{ form_widget(form.title, { 'attr': {'class': 'form-control col-md-4', 'style': 'padding-left: 10px !important;'} }) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.description, 'Description :', {'label_attr': {'class': 'control-label col-md-2', 'style': '' } }
+                                ) }}
+                                <div class="col-md-8">
+                                    <div class="input-icon">
+                                        {{ form_widget(form.description, { 'attr': {'class': 'form-control col-md-4', 'style': 'height:72px;max-height:72px;width:615px;max-width:615px;'} }) }}
+                                    </div>
+                                </div>
+                        </div>
+
+                    </div>
+                    <br/>
+                </div>
+            </div>
+            <div class="modal-footer" style="background: lightgrey;">
+                <div class="btn-group">
+                    <a href="/upload" class="btn" style="width: 100px;background: #0353D6; color: white !important;">
+                        <i class="fa fa-ban"> Cancel</i>
+                    </a>
+                </div>
+                {{ form_widget(form.save, { 'attr': {'class': 'btn button-width', 'style': 'width: 100px;background: #0353D6; color: white !important;'} }) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}
