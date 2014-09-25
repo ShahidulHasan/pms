@@ -180,4 +180,19 @@ class ReceiveController extends Controller
 
         return $value;
     }
+
+    public function details($dql)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $query = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $value = $paginator->paginate(
+            $query,
+            $page = $this->get('request')->query->get('page', 1) /*page number*/,
+            50/*limit per page*/
+        );
+
+        return $value;
+    }
 }
