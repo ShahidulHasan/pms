@@ -26,6 +26,13 @@
                                 <tbody>
                                 {% for orderItem in pri %}
 
+                                    {% set quantityRequisition = orderItem.quantity %}
+                                    {% set quantityOrder = orderItem.purchaseOrderQuantity %}
+                                    {% set quantityNeed = quantityRequisition - quantityOrder %}
+
+                                    {% if quantityNeed == 0 %}{% set quantityNeed = orderItem.quantity - orderItem.receivedQuantity %}
+                                    {% endif %}
+
                                     {% if orderItem.purchaseRequisition.createdBy.id == app.user.id %}
 
                                         <tr>

@@ -54,6 +54,7 @@ class PurchaseOrderController extends Controller
         $query = $em->getRepository('PmsCoreBundle:PurchaseRequisitionItem')
             ->createQueryBuilder('pri')
             ->where('pri.status = 1')
+            ->andWhere('pri.claimedBy > 0')
             ->andWhere('pri.quantity > pri.purchaseOrderQuantity or pri.quantity > pri.receivedQuantity');
         $pri = $query->getQuery()->getResult();
 
