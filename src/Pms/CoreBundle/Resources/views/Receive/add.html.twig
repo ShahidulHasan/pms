@@ -29,13 +29,14 @@
                             <tr>
                                 <th>Sl</th>
                                 <th class="col-md-2">Date</th>
-                                <th class="col-md-2">Received By</th>
                                 <th class="col-md-1">GRN</th>
-                                <th class="col-md-2">Invoice</th>
+                                <th class="col-md-1">Invoice</th>
+                                <th class="col-md-1">ReceivedBy</th>
+                                <th class="col-md-2">Received Date</th>
                                 <th class="col-md-1">Calan</th>
-                                <th class="col-md-2">Vendor/Buyer</th>
+                                <th class="col-md-1">Vendor/Buyer</th>
                                 <th class="col-md-1"></th>
-                                <th class="col-md-1"></th>
+                                <th class="col-md-2"></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -51,10 +52,11 @@
                                 <tr style="height: 62px;background: {{ bgColor|join("") }};border-top: 3px solid #eee !important;">
                                     <td>{{ i }}.</td>
                                     <td>{{ receivedItem.receivedDate | date('d M Y') }}</td>
-                                    <td>{{ receivedItem.receivedBy.username }}</td>
                                     <td>{{ receivedItem.grn }}</td>
-                                    <td>{{ receivedItem.invoice.title }}</td>
-                                    <td>{{ receivedItem.calan.title }}</td>
+                                    <td>{{ receivedItem.invoice.title | default() }}</td>
+                                    <td>{{ receivedItem.receivedBy.username }}</td>
+                                    <td>{{ receivedItem.receivedDate | date('d M Y') }}</td>
+                                    <td>{{ receivedItem.calan.title | default() }}</td>
                                     <td>{{ receivedItem.vendor.vendorName |default() }} {{ receivedItem.buyer.username |default() }}</td>
                                     <td>
                                         <a href="/receive/delivery/{{ receivedItem.id }}" class="btn blue btn-xs" style="width: 65px;color:#ffffff !important;">Delivery</a>
@@ -87,13 +89,14 @@
                         <tr>
                             <th>Sl</th>
                             <th class="col-md-2">Date</th>
-                            <th class="col-md-2">Received By</th>
                             <th class="col-md-1">GRN</th>
-                            <th class="col-md-2">Invoice</th>
+                            <th class="col-md-1">Invoice</th>
+                            <th class="col-md-1">ReceivedBy</th>
+                            <th class="col-md-2">Received Date</th>
                             <th class="col-md-1">Calan</th>
-                            <th class="col-md-2">Vendor/Buyer</th>
+                            <th class="col-md-1">Vendor/Buyer</th>
                             <th class="col-md-1"></th>
-                            <th class="col-md-1"></th>
+                            <th class="col-md-2"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -109,10 +112,11 @@
                             <tr style="height: 62px;background: {{ bgColor|join("") }};border-top: 3px solid #eee !important;">
                                 <td>{{ i }}.</td>
                                 <td>{{ receivedItem.receivedDate | date('d M Y') }}</td>
-                                <td>{{ receivedItem.receivedBy.username }}</td>
                                 <td>{{ receivedItem.grn }}</td>
-                                <td>{{ receivedItem.invoice.title }}</td>
-                                <td>{{ receivedItem.calan.title }}</td>
+                                <td>{{ receivedItem.invoice.title | default() }}</td>
+                                <td>{{ receivedItem.receivedBy.username }}</td>
+                                <td>{{ receivedItem.receivedDate | date('d M Y') }}</td>
+                                <td>{{ receivedItem.calan.title | default() }}</td>
                                 <td>{{ receivedItem.vendor.vendorName |default() }} {{ receivedItem.buyer.username |default() }}</td>
                                 <td>
                                     {% if receivedItem.status == 1 %}

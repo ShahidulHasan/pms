@@ -53,7 +53,8 @@ class PurchaseOrderController extends Controller
 
         $query = $em->getRepository('PmsCoreBundle:PurchaseRequisitionItem')
             ->createQueryBuilder('pri')
-            ->where('pri.quantity > pri.purchaseOrderQuantity');
+            ->where('pri.status = 1')
+            ->andWhere('pri.quantity > pri.purchaseOrderQuantity or pri.quantity > pri.receivedQuantity');
         $pri = $query->getQuery()->getResult();
 
         return $this->render('PmsCoreBundle:PurchaseOrder:new.html.twig', array(
@@ -203,6 +204,13 @@ class PurchaseOrderController extends Controller
         $user = $this->get('security.context')->getToken()->getUser()->getId();
         $purchaseOrder->setApprovedOne($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
         $purchaseOrder->setApprovedOneDate(new \DateTime());
+
+        /** @var PurchaseOrderItem $item */
+        foreach ($purchaseOrder->getPurchaseOrderItems() as $item) {
+            $purchaseRequisitionItem = $item->getPurchaseRequisitionItem();
+            $purchaseRequisitionItem->setPoApprovalStatus(1);
+        }
+
         $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseOrder')->update($purchaseOrder);
         $this->get('session')->getFlashBag()->add(
             'notice',
@@ -219,6 +227,13 @@ class PurchaseOrderController extends Controller
         $user = $this->get('security.context')->getToken()->getUser()->getId();
         $purchaseOrder->setApprovedTwo($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
         $purchaseOrder->setApprovedTwoDate(new \DateTime());
+
+        /** @var PurchaseOrderItem $item */
+        foreach ($purchaseOrder->getPurchaseOrderItems() as $item) {
+            $purchaseRequisitionItem = $item->getPurchaseRequisitionItem();
+            $purchaseRequisitionItem->setPoApprovalStatus(2);
+        }
+
         $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseOrder')->update($purchaseOrder);
         $this->get('session')->getFlashBag()->add(
             'notice',
@@ -235,6 +250,13 @@ class PurchaseOrderController extends Controller
         $user = $this->get('security.context')->getToken()->getUser()->getId();
         $purchaseOrder->setApprovedThree($this->getDoctrine()->getRepository('UserBundle:User')->findOneById($user));
         $purchaseOrder->setApprovedThreeDate(new \DateTime());
+
+        /** @var PurchaseOrderItem $item */
+        foreach ($purchaseOrder->getPurchaseOrderItems() as $item) {
+            $purchaseRequisitionItem = $item->getPurchaseRequisitionItem();
+            $purchaseRequisitionItem->setPoApprovalStatus(3);
+        }
+
         $this->getDoctrine()->getRepository('PmsCoreBundle:PurchaseOrder')->update($purchaseOrder);
         $this->get('session')->getFlashBag()->add(
             'notice',
@@ -293,11 +315,16 @@ class PurchaseOrderController extends Controller
             $quantityRequisition = $it->getQuantity();
             $quantityPurchaseOrder = $it->getPurchaseOrderQuantity();
             $quantityRest = ($quantityRequisition - $quantityPurchaseOrder);
+
+            if($quantityRest == 0){
+                $quantityRest = $it->getQuantity() - $it->getReceivedQuantity();
+            }
+
             $pi->setPurchaseRequisitionItem($it);
             $pi->setQuantity($quantityRest);
             $purchaseOrder->addPurchaseOrderItem($pi);
-            $it1[]                     = $ite->getItemName();
-            $pr1[]                     = $itpr->getProjectName();
+            $it1[]    = $ite->getItemName();
+            $pr1[]    = $itpr->getProjectName();
         }
 
         $form = $this->createForm(new PurchaseOrderType(), $purchaseOrder);

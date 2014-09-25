@@ -15,13 +15,14 @@
                             <table class="table table-striped" style="margin-top: 0;">
                                 <thead style="background: #4b8df8;">
                                 <tr>
-                                    <th class="col-md-1" style="">Check</th>
+                                    <th style="">Check</th>
                                     <th class="col-md-2" style="">Particulars</th>
-                                    <th class="col-md-2" style="">Quantity</th>
+                                    <th class="col-md-2" style="">required Q.</th>
+                                    <th class="col-md-1" style="">Need Q.</th>
+                                    <th class="col-md-2" style="">Delivered Q.</th>
                                     <th class="col-md-2" style="">Project</th>
-                                    <th class="col-md-2" style=""></th>
-                                    <th class="col-md-2" style=""></th>
-                                    <th class="col-md-1" style=""></th>
+                                    <th class="col-md-2" style="">Required Date</th>
+                                    <th class="col-md-1" style="">Req. No</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -31,22 +32,34 @@
                                     {% set quantityOrder = orderItem.purchaseOrderQuantity %}
                                     {% set quantityNeed = quantityRequisition - quantityOrder %}
 
+                                    {% if quantityNeed == 0 %}{% set quantityNeed = orderItem.quantity - orderItem.receivedQuantity %}
+                                    {% endif %}
+
                                     <tr>
-                                        <td class="col-md-1">
+                                        <td>
                                             <input type="checkbox" name="items[]" value="{{ orderItem.id }}">
                                         </td>
-                                        <td class="col-md-3">
+                                        <td>
                                             {{ orderItem.item.itemName }}
                                         </td>
-                                        <td class="col-md-2">
+                                        <td>
+                                            {{ orderItem.quantity }}
+                                        </td>
+                                        <td>
                                             {{ quantityNeed }}
                                         </td>
-                                        <td class="col-md-2">
+                                        <td>
+                                            {{ orderItem.receivedQuantity | default('0')  }}
+                                        </td>
+                                        <td>
                                             {{ orderItem.purchaseRequisition.project.projectName | default() }}
                                         </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>
+                                            {{ orderItem.dateOfRequired | date('d M Y') }}
+                                        </td>
+                                        <td>
+                                            {{ orderItem.purchaseRequisition.requisitionNo | default() }}
+                                        </td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>

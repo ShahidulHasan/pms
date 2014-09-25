@@ -151,6 +151,13 @@ class PurchaseRequisitionItem
     }
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="po_approval_status", type="integer", nullable=true)
+     */
+    private $poApprovalStatus;
+
+    /**
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function getReceivedItem()
@@ -325,6 +332,29 @@ class PurchaseRequisitionItem
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set poApprovalStatus
+     *
+     * @param integer $poApprovalStatus
+     * @return PurchaseRequisition
+     */
+    public function setPoApprovalStatus($poApprovalStatus)
+    {
+        $this->poApprovalStatus = $poApprovalStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get poApprovalStatus
+     *
+     * @return integer
+     */
+    public function getPoApprovalStatus()
+    {
+        return $this->poApprovalStatus;
     }
 
     /**

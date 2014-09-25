@@ -28,7 +28,8 @@ class PurchaseOrderType extends AbstractType
                 ),
                 'choices' => array(
                     '1' => 'PO',
-                    '0' => 'Non-PO'
+                    '0' => 'Non-PO',
+                    '2' => 'Direct'
                 )
             ))
             ->add($builder->create('dateOfDelivered', 'text', array(

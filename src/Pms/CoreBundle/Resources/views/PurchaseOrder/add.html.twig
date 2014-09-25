@@ -27,17 +27,18 @@
                     <div class="col-md-12" style="margin-top: 30px;">
                         <table class="table bold" style="border: 1px solid ghostwhite;">
                             <thead style="background: #4b8df8;">
-                                <tr>
-                                    <th>Sl</th>
-                                    <th class="col-md-2">Date</th>
-                                    <th class="col-md-1">PO No</th>
-                                    <th class="col-md-1">CreatedBy</th>
-                                    <th class="col-md-1">Status</th>
-                                    <th class="col-md-2">Delivery Date</th>
-                                    <th class="col-md-2">Vendor/Buyer</th>
-                                    <th class="col-md-2"></th>
-                                    <th class="col-md-1"></th>
-                                </tr>
+                            <tr>
+                                <th>Sl</th>
+                                <th class="col-md-2">Date</th>
+                                <th class="col-md-1">PO No</th>
+                                <th class="col-md-1">CreatedBy</th>
+                                <th class="col-md-2">Delivery Date</th>
+                                <th class="col-md-2">Vendor/Buyer</th>
+                                <th class="col-md-1">Status</th>
+                                <th class="col-md-1"></th>
+                                <th class="col-md-1"></th>
+                                <th class="col-md-1"></th>
+                            </tr>
                             </thead>
                             <tbody>
 
@@ -54,6 +55,8 @@
                                     <td>{{ purchaseOrder.createdDate|date('d M Y') }}</td>
                                     <td>{{ purchaseOrder.orderNo }}</td>
                                     <td>{{ purchaseOrder.createdBy }}</td>
+                                    <td>{{ purchaseOrder.dateOfDelivered|date('d M Y') }}</td>
+                                    <td>{{ purchaseOrder.vendor.vendorName |default() }}{{ purchaseOrder.buyer.username |default() }}</td>
                                     <td>
                                         {% if purchaseOrder.approveStatus == 0 %}
                                             <div style="text-align:center;background: #35aa47; color: #ffffff; width: 62px; height: 20px;">
@@ -76,8 +79,6 @@
                                             </div>
                                         {% endif %}
                                     </td>
-                                    <td>{{ purchaseOrder.dateOfDelivered|date('d M Y') }}</td>
-                                    <td>{{ purchaseOrder.vendor.vendorName |default() }}{{ purchaseOrder.buyer.username |default() }}</td>
                                     {#<td>#}
                                         {#<div class="easy-pie-chart">#}
                                             {#<div class="number visits" data-percent="85"><span>+85</span>%</div>#}
@@ -88,6 +89,7 @@
                                             {#<div class="number transactions" data-percent="55"><span>+55</span>%</div>#}
                                         {#</div>#}
                                     {#</td>#}
+                                    <td></td>
                                     <td>
                                         {% if purchaseOrder.approveStatus == 0 %}
                                             <a href="/purchase/order/approve/one/{{ purchaseOrder.id }}"
@@ -150,10 +152,11 @@
                                 <th class="col-md-2">Date</th>
                                 <th class="col-md-1">PO No</th>
                                 <th class="col-md-1">CreatedBy</th>
-                                <th class="col-md-1">Status</th>
                                 <th class="col-md-2">Delivery Date</th>
                                 <th class="col-md-2">Vendor/Buyer</th>
-                                <th class="col-md-2"></th>
+                                <th class="col-md-1">Status</th>
+                                <th class="col-md-1"></th>
+                                <th class="col-md-1"></th>
                                 <th class="col-md-1"></th>
                             </tr>
                             </thead>
@@ -172,6 +175,8 @@
                                     <td>{{ purchaseOrder.createdDate|date('d M Y') }}</td>
                                     <td>{{ purchaseOrder.orderNo }}</td>
                                     <td>{{ purchaseOrder.createdBy }}</td>
+                                    <td>{{ purchaseOrder.dateOfDelivered|date('d M Y') }}</td>
+                                    <td>{{ purchaseOrder.vendor.vendorName |default() }}{{ purchaseOrder.buyer.username |default() }}</td>
                                     <td>
                                         {% if purchaseOrder.approveStatus == 0 %}
                                             <div style="text-align:center;background: #35aa47; color: #ffffff; width: 62px; height: 20px;">
@@ -194,8 +199,6 @@
                                             </div>
                                         {% endif %}
                                     </td>
-                                    <td>{{ purchaseOrder.dateOfDelivered|date('d M Y') }}</td>
-                                    <td>{{ purchaseOrder.vendor.vendorName |default() }}{{ purchaseOrder.buyer.username |default() }}</td>
                                     {#<td>#}
                                     {#<div class="easy-pie-chart">#}
                                     {#<div class="number visits" data-percent="85"><span>+85</span>%</div>#}
@@ -206,6 +209,7 @@
                                     {#<div class="number transactions" data-percent="55"><span>+55</span>%</div>#}
                                     {#</div>#}
                                     {#</td>#}
+                                    <td></td>
                                     <td>
                                         {% if purchaseOrder.approveStatus == 0 %}
                                             <a href="/purchase/order/approve/one/{{ purchaseOrder.id }}"
@@ -268,10 +272,11 @@
                                 <th class="col-md-2">Date</th>
                                 <th class="col-md-1">PO No</th>
                                 <th class="col-md-1">CreatedBy</th>
-                                <th class="col-md-1">Status</th>
                                 <th class="col-md-2">Delivery Date</th>
                                 <th class="col-md-2">Vendor/Buyer</th>
-                                <th class="col-md-2"></th>
+                                <th class="col-md-1">Status</th>
+                                <th class="col-md-1"></th>
+                                <th class="col-md-1"></th>
                                 <th class="col-md-1"></th>
                             </tr>
                             </thead>
@@ -290,6 +295,9 @@
                                     <td>{{ purchaseOrder.createdDate|date('d M Y') }}</td>
                                     <td>{{ purchaseOrder.orderNo }}</td>
                                     <td>{{ purchaseOrder.createdBy }}</td>
+                                    <td>{{ purchaseOrder.dateOfDelivered|date('d M Y') }}</td>
+                                    <td>{{ purchaseOrder.vendor.vendorName |default() }}{{ purchaseOrder.buyer.username |default() }}</td>
+                                    <td></td>
                                     <td>
                                         {% if purchaseOrder.approveStatus == 0 %}
                                             <div style="text-align:center;background: #35aa47; color: #ffffff; width: 62px; height: 20px;">
@@ -312,8 +320,6 @@
                                             </div>
                                         {% endif %}
                                     </td>
-                                    <td>{{ purchaseOrder.dateOfDelivered|date('d M Y') }}</td>
-                                    <td>{{ purchaseOrder.vendor.vendorName |default() }}{{ purchaseOrder.buyer.username |default() }}</td>
                                     {#<td>#}
                                     {#<div class="easy-pie-chart">#}
                                     {#<div class="number visits" data-percent="85"><span>+85</span>%</div>#}

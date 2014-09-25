@@ -53,6 +53,13 @@ class ReceivedItem
     private $quantity;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="comments", type="string", nullable=true)
+     */
+    private $comment;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -60,6 +67,29 @@ class ReceivedItem
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set comment
+     *
+     * @param string $comment
+     * @return ReceivedItem
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Get comment
+     *
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
     }
 
     /**

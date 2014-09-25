@@ -3,9 +3,9 @@
 {% block body %}
 
     <div class="modal-dialog" style="width: 1000px;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title bold" style="text-align: center;"> Purchase Order Form</h4>
+        <div class="modal-content" style="background: white;">
+            <div class="modal-header" style="background: lightgrey;">
+                <h4 class="modal-title bold" style="text-align: center;color: white;"> Purchase Order Form</h4>
             </div>
 
             {{ form_start(form, {'action': path('purchase_order_new_save'), 'attr': {'class': 'form-horizontal', 'id': 'purchase-form', 'novalidate': 'novalidate'} } ) }}
@@ -16,31 +16,31 @@
                         <div class="col-md-6" style="height:100px;float: left;text-align: left;">
                             <div class="col-md-12" style="height:50px;float:left;">
                                 <div class="form-group">
-                                    {{ form_label(form.poNonpo, 'PO/NONPO :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left: -28px;margin-right:-12px;font-weight:bold;' } }
+                                    {{ form_label(form.poNonpo, 'PO/NONPO :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left: -28px;margin-right:-12px;' } }
                                     ) }}
                                     <div class="col-md-6">
                                         <div class="input-icon">
-                                            {{ form_widget(form.poNonpo, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;width: 178px;' } }) }}
+                                            {{ form_widget(form.poNonpo, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;width: 188px;margin-left: -10px;' } }) }}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12" style="height:35px;float:left;">
                                 <div class="form-group" id="vendor-group">
-                                    {{ form_label(form.vendor, 'Vendor :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left: -30px;margin-right:-20px;font-weight:bold;' } }
+                                    {{ form_label(form.vendor, 'Vendor :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left: -30px;margin-right:-20px;' } }
                                     ) }}
                                     <div class="col-md-6">
                                         <div class="input-icon">
-                                            {{ form_widget(form.vendor, { 'attr': {'class': 'form-control select2me', 'style': 'padding-left: 10px !important;', 'placeholder': ' Select Vendor' } }) }}
+                                            {{ form_widget(form.vendor, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;', 'placeholder': ' Select Vendor' } }) }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group" id="buyer-group">
-                                    {{ form_label(form.buyer, 'Buyer :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left: -30px;margin-right:-20px;font-weight:bold;' } }
+                                    {{ form_label(form.buyer, 'Buyer :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left: -30px;margin-right:-20px;' } }
                                     ) }}
                                     <div class="col-md-6">
                                         <div class="input-icon">
-                                            {{ form_widget(form.buyer, { 'attr': {'class': 'form-control select2me', 'style': 'padding-left: 10px !important;', 'placeholder': ' Select Buyer' } }) }}
+                                            {{ form_widget(form.buyer, { 'attr': {'class': 'form-control', 'style': 'padding-left: 10px !important;', 'placeholder': ' Select Buyer' } }) }}
                                         </div>
                                     </div>
                                 </div>
@@ -49,7 +49,7 @@
                         <div class="col-md-6" style="height:100px;float: right;">
                             <div class="col-md-12" style="height:50px;float:left;">
                                 <div class="form-group">
-                                    {{ form_label(form.orderNo, 'Order No :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }
+                                    {{ form_label(form.orderNo, 'Order No :', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;' } }
                                     ) }}
                                     <div class="col-md-6">
                                         <div class="input-icon">
@@ -60,7 +60,7 @@
                             </div>
                             <div class="col-md-12" style="height:35px;float:left;">
                                 <div class="form-group">
-                                    {{ form_label(form.dateOfDelivered, 'Date Of Delivery:', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;font-weight:bold;' } }
+                                    {{ form_label(form.dateOfDelivered, 'Date Of Delivery:', {'label_attr': {'class': 'control-label col-md-4', 'style': 'margin-left:15px;' } }
                                     ) }}
                                     <div class="col-md-6">
                                         <div class="input-icon">
@@ -78,39 +78,39 @@
 <br/>
 <br/>
                     <div class="col-md-12">
-                        <table class="table table-striped" style="border:1px solid grey;margin-top: 100px;">
-                            <thead>
+                        <table class="table" style="margin-top: 100px;border: 1px solid ghostwhite;">
+                            <thead style="background:#4b8df8;">
                             <tr>
-                                <th class="col-md-1" style="">Sl</th>
-                                <th class="col-md-3" style="padding-left: 30px;">Particulars</th>
-                                <th class="col-md-2" style="padding-left: 12px;">Quantity</th>
-                                <th class="col-md-2" style="padding-left: 12px;">Project</th>
-                                <th class="col-md-3" style="padding-left: 12px;">Remarks</th>
+                                <th class="col-md-1" style="padding-left: 15px;">Sl</th>
+                                <th class="col-md-3" style="padding-left: 15px;">Particulars</th>
+                                <th class="col-md-2" style="padding-left: 15px;">Quantity</th>
+                                <th class="col-md-2" style="padding-left: 15px;">Project</th>
+                                <th class="col-md-3" style="padding-left: 15px;">Remarks</th>
                             </tr>
                             </thead>
 
                             <tbody id="orderItems" class="tags" data-prototype="{% filter escape %}
-                                {{ include('PmsCoreBundle:PurchaseOrder:purchaseOrderItemPrototype.html.twig', { 'form': form.purchaseOrderItems.vars.prototype }) }}
-                                {% endfilter %}}">
+                            {{ include('PmsCoreBundle:PurchaseOrder:purchaseOrderItemPrototype.html.twig', { 'form': form.purchaseOrderItems.vars.prototype }) }}
+                            {% endfilter %}}">
                             {% set i = 0 %}
                             {% set j = 1 %}
                                 {% for orderItem in form.purchaseOrderItems %}
                                     <tr>
-                                        <td>
-                                            {{ j }}
+                                        <td style="padding-left: 15px;">
+                                            {{ j }}.
                                         </td>
-                                        <td>
+                                        <td style="padding-left: 15px;">
                                             {{ form_widget(orderItem.purchaseRequisitionItem, { 'attr': {'class': 'form-control', 'style': 'margin-left: 20px;width: 200px;padding-left: 10px! important;'} }) }}
                                             <span>{{ item[i] }}</span>
                                         </td>
-                                        <td>
+                                        <td style="padding-left: 15px;">
                                             {{ form_widget(orderItem.quantity, { 'attr': {'class': 'form-control', 'style': 'width: 120px;padding-left: 10px! important;'} }) }}
                                         </td>
-                                        <td>
+                                        <td style="padding-left: 15px;">
                                             <span>{{ project[i] }}</span>
                                         </td>
-                                        <td>
-                                            {{ form_widget(orderItem.comment, { 'attr': {'class': 'form-control', 'style': 'width: 188px;padding-left: 10px! important;'} }) }}
+                                        <td style="padding-left: 15px;">
+                                            {{ form_widget(orderItem.comment, { 'attr': {'class': 'form-control', 'style': 'width: 240px;max-height: 54px;max-width: 240px;padding-left: 10px! important;'} }) }}
                                         </td>
                                     </tr>
                                     {% set i = i + 1 %}
@@ -122,18 +122,18 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" style="background: lightgrey;">
                 <div class="btn-group">
-                    <a href="javascript:history.back()" class="btn green" style="width: 100px;" onclick="window.history.back();">
+                    <a href="javascript:history.back()" class="btn" style="width: 100px;background: #0353D6; color: white !important;" onclick="window.history.back();">
                         << Previous
                     </a>
                 </div>
                 <div class="btn-group">
-                    <a href="/purchase/order" class="btn green" style="width: 100px;">
+                    <a href="/purchase/order" class="btn" style="width: 100px;background: #0353D6; color: white !important;">
                         <i class="fa fa-ban"> Cancel</i>
                     </a>
                 </div>
-                {{ form_widget(form.save, { 'attr': {'class': 'btn green button-width', 'style': 'width: 100px;' } }) }}
+                {{ form_widget(form.save, { 'attr': {'class': 'btn button-width', 'style': 'width: 100px;background: #0353D6; color: white !important;' } }) }}
             </div>
             {{ form_end(form) }}
         </div>

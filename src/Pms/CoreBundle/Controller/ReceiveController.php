@@ -22,7 +22,7 @@ class ReceiveController extends Controller
         $query = $em->getRepository('PmsCoreBundle:PurchaseRequisitionItem')
             ->createQueryBuilder('pri')
             ->where('pri.status = 1')
-            ->andWhere('pri.quantity > pri.purchaseOrderQuantity');
+            ->andWhere('pri.poApprovalStatus = 3');
         $pri = $query->getQuery()->getResult();
 
         return $this->render('PmsCoreBundle:Receive:new.html.twig', array(
@@ -69,11 +69,14 @@ class ReceiveController extends Controller
                 $pi = new ReceivedItem();
                 $it = $em->getRepository('PmsCoreBundle:PurchaseRequisitionItem')->find($item);
                 $ite = $em->getRepository('PmsCoreBundle:Item')->find($it->getItem());
+                $itp = $em->getRepository('PmsCoreBundle:PurchaseRequisition')->find($it->getPurchaseRequisition());
+                $itpr = $em->getRepository('PmsCoreBundle:Project')->find($itp->getProject());
                 $pi->setPurchaseRequisitionItem($it);
                 $pi->setItem($it->getItem());
                 $pi->setQuantity($it->getQuantity());
                 $pir->addReceiveItem($pi);
                 $it1[]       = $ite->getItemName();
+                $pr1[]       = $itpr->getProjectName();
             }
 
             $form = $this->createForm(new ReceiveType(), $pir);
@@ -81,6 +84,7 @@ class ReceiveController extends Controller
             return $this->render('PmsCoreBundle:Receive:form.html.twig', array(
                 'orderItems' => $items,
                 'item' => $it1,
+                'project' => $pr1,
                 'form' => $form->createView(),
             ));
         }
@@ -130,6 +134,10 @@ class ReceiveController extends Controller
 
                     $quantityOld = $purchaseRequisitionItem->getReceivedQuantity();
                     $purchaseRequisitionItem->setReceivedQuantity($quantityOld + $item->getQuantity());
+
+                    if($purchaseRequisitionItem->getReceivedQuantity() >= $purchaseRequisitionItem->getQuantity()) {
+                        $purchaseRequisitionItem->setStatus('0');
+                    }
 
                     $item->setReceive($receivedItem);
 

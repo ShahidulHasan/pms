@@ -22,6 +22,7 @@ class ReceivedItemType extends AbstractType
             ->add('purchaseRequisitionItem', 'entity_hidden', array(
                 "class" => "PmsCoreBundle:PurchaseRequisitionItem",
             ))
+            ->add('comment', 'textarea')
         ;
     }
     
