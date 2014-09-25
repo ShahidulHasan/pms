@@ -15,7 +15,7 @@
                             <table class="table table-striped" style="margin-top: 0;">
                                 <thead style="background: #4b8df8;">
                                 <tr>
-                                    <th class="col-md-1" style="">Check</th>
+                                    <th style="">Check</th>
                                     <th class="col-md-2" style="">Particulars</th>
                                     <th class="col-md-2" style="">Quantity</th>
                                     <th class="col-md-2" style="">Project</th>
@@ -26,32 +26,27 @@
                                 <tbody>
                                 {% for orderItem in pri %}
 
-                                    {% set quantityRequisition = orderItem.quantity %}
-                                    {% set quantityOrder = orderItem.purchaseOrderQuantity %}
-                                    {% set quantityNeed = quantityRequisition - quantityOrder %}
-
-                                    {% if quantityNeed == 0 %}{% set quantityNeed = orderItem.quantity - orderItem.receivedQuantity %}
-                                    {% endif %}
+                                    {% set quantityNeed = orderItem.purchaseOrderQuantity - orderItem.receivedQuantity %}
 
                                     {% if orderItem.purchaseRequisition.createdBy.id == app.user.id %}
 
                                         <tr>
-                                            <td class="col-md-1">
+                                            <td>
                                                 <input type="checkbox" name="items[]" value="{{ orderItem.id }}">
                                             </td>
-                                            <td class="col-md-2">
+                                            <td>
                                                 {{ orderItem.item.itemName }}
                                             </td>
-                                            <td class="col-md-2">
-                                                {{ orderItem.quantity }}
+                                            <td>
+                                                {{ quantityNeed }}
                                             </td>
-                                            <td class="col-md-2">
+                                            <td>
                                                 {{ orderItem.purchaseRequisition.project.projectName | default() }}
                                             </td>
-                                            <td class="col-md-2">
+                                            <td>
                                                 {{ orderItem.purchaseRequisition.requisitionNo | default() }}
                                             </td>
-                                            <td class="col-md-2">
+                                            <td>
                                                 {{ orderItem.purchaseRequisition.dateOfRequisition | date("Y/m/d") }}
                                             </td>
                                         </tr>
