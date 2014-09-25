@@ -176,7 +176,6 @@ class PurchaseRequisitionController extends Controller
                 $purchaseRequisition->setTotalReceiveItemQuantity('0');
                 $purchaseRequisition->setTotalRequisitionItem('0');
                 $purchaseRequisition->setTotalRequisitionItemClaimed('0');
-                $purchaseRequisition->setPoApprovalStatus('0');
 
                 /** @var PurchaseRequisitionItem $item */
                 foreach ($purchaseRequisition->getPurchaseRequisitionItems() as $item) {
