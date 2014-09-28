@@ -23,6 +23,15 @@ class InvoiceType extends AbstractType
                     'placeholder' => 'Description'
                 )
             ))
+            ->add('invoiceOrCalan', 'choice', array(
+                'constraints' => array(
+                    new NotBlank()
+                ),
+                'choices' => array(
+                    '1' => 'invoice',
+                    '0' => 'calan',
+                )
+            ))
             ->add('title', 'text', array(
                 'attr' => array(
                     'placeholder' => 'Title'

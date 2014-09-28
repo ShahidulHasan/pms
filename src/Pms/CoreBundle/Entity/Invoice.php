@@ -23,14 +23,6 @@ class Invoice
     private $id;
 
     /**
-     * @var PurchaseRequisition
-     *
-     * @ORM\ManyToOne(targetEntity="Pms\CoreBundle\Entity\PurchaseRequisition", inversedBy="invoice")
-     * @ORM\JoinColumn(name="purchase_requisitions", nullable=true)
-     */
-    private $purchaseRequisition;
-
-    /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Pms\CoreBundle\Entity\Receive", mappedBy="invoice", cascade={"persist", "remove"})
@@ -92,7 +84,38 @@ class Invoice
 //    public $fileCalan;
 
     public $temp;
+
 //    public $tempCalan;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="invoice_or_calan", type="integer")
+     */
+    private $invoiceOrCalan;
+
+    /**
+     * Set invoiceOrCalan
+     *
+     * @param integer $invoiceOrCalan
+     * @return Invoice
+     */
+    public function setInvoiceOrCalan($invoiceOrCalan)
+    {
+        $this->invoiceOrCalan = $invoiceOrCalan;
+
+        return $this;
+    }
+
+    /**
+     * Get invoiceOrCalan
+     *
+     * @return integer
+     */
+    public function getInvoiceOrCalan()
+    {
+        return $this->invoiceOrCalan;
+    }
 
     /**
      * @return \Doctrine\Common\Collections\ArrayCollection
@@ -226,29 +249,6 @@ class Invoice
 //    {
 //        return $this->invoiceNumber;
 //    }
-
-    /**
-     * Set purchaseRequisition
-     *
-     * @param integer $purchaseRequisition
-     * @return Invoice
-     */
-    public function setPurchaseRequisition($purchaseRequisition)
-    {
-        $this->purchaseRequisition = $purchaseRequisition;
-
-        return $this;
-    }
-
-    /**
-     * Get purchaseRequisition
-     *
-     * @return integer
-     */
-    public function getPurchaseRequisition()
-    {
-        return $this->purchaseRequisition;
-    }
 
     /**
      * @ORM\PrePersist()

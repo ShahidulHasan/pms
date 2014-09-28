@@ -16,6 +16,26 @@ class UploadController extends Controller
 {
     public function uploadAddAction(Request $request)
     {
+        $invoiceDql = "SELECT a FROM PmsCoreBundle:Invoice a WHERE a.invoiceOrCalan = 1 ORDER BY a.id DESC";
+
+        $invoices = $this->paginate($invoiceDql);
+        $invoicePage = $invoices->getCurrentPageNumber();
+
+        $calanDql = "SELECT a FROM PmsCoreBundle:Invoice a WHERE a.invoiceOrCalan = 0 ORDER BY a.id DESC";
+
+        $calans = $this->paginate($calanDql);
+        $calanPage = $calans->getCurrentPageNumber();
+
+        return $this->render('PmsCoreBundle:Document:add.html.twig', array(
+            'invoices' => $invoices,
+            'calans' => $calans,
+            'invoicePage' => $invoicePage,
+            'calanPage' => $calanPage,
+        ));
+    }
+
+    public function uploadFileAction(Request $request)
+    {
         $invoice = new Invoice();
 
         $form = $this->createForm(new InvoiceType(), $invoice);
@@ -40,14 +60,8 @@ class UploadController extends Controller
             }
         }
 
-        $dql = "SELECT a FROM PmsCoreBundle:Invoice a ORDER BY a.id DESC";
-
-        list($invoices, $page) = $this->paginate($dql);
-
-        return $this->render('PmsCoreBundle:Document:add.html.twig', array(
+        return $this->render('PmsCoreBundle:Document:form.html.twig', array(
             'form' => $form->createView(),
-            'invoices' => $invoices,
-            'page' => $page,
         ));
     }
 
@@ -63,6 +77,6 @@ class UploadController extends Controller
             50/*limit per page*/
         );
 
-        return array($value, $page);
+        return $value;
     }
 }
